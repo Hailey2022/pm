@@ -1,0 +1,73 @@
+<include file="public@header" />
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>合同</title>
+</head>
+
+<body>
+    <h3 style="text-align: center;">{$contractName}</h3>
+    <!-- <a class="btn btn-primary" href="#">导出</a> -->
+    <a class="btn btn-primary" href="javascript:history.go(-1)">返回</a>
+    <table class="table table-hover table-bordered">
+        <thead>
+            <tr>
+                <!-- <th style="text-align: center;">合同名称</th> -->
+                <!-- <th style="text-align: center;">资金名称</th> -->
+                <th style="text-align: center; vertical-align: middle;" rowspan="3">进度款（期数）</th>
+                <th style="text-align: center; vertical-align: middle;" rowspan="3">合同总价（申请拨付金额）</th>
+                <th style="text-align: center; vertical-align: text-top;" colspan="6">资金来源</th>
+                <th style="text-align: center; vertical-align: text-top;">已支付</th>
+                <th style="text-align: center; vertical-align: middle;" rowspan="3">未付款</th>
+                <th style="text-align: center; vertical-align: middle;" rowspan="3">资金名称</th>
+                <th style="text-align: center; vertical-align: middle;" rowspan="3">支付凭证</th>
+                <th style="text-align: center; vertical-align: middle;" rowspan="3">操作</th>
+            </tr>
+            <tr>
+                <th style="text-align: center; vertical-align: text-top;" rowspan="2">中央</th>
+                <th style="text-align: center; vertical-align: text-top;" rowspan="2">省</th>
+                <th style="text-align: center; vertical-align: text-top;" rowspan="2">市</th>
+                <th style="text-align: center; vertical-align: text-top;" colspan="2">区</th>
+                <th style="text-align: center; vertical-align: text-top;" rowspan="2">其他</th>
+                <th style="text-align: center; vertical-align: text-top;" rowspan="2">小计</th>
+            </tr>
+            <tr>
+                <th style="text-align: center; vertical-align: text-top;">专项债</th>
+                <th style="text-align: center; vertical-align: text-top;">预算</th>
+            </tr>
+        </thead>
+        <tbody>
+            <foreach name="data" item="d">
+                <tr>
+                    <td style="text-align: center; vertical-align: middle;">{$d.installment}</td>
+                    <td style="text-align: center; vertical-align: middle;">{$d.contractAmount}</td>
+                    <td style="text-align: center; vertical-align: middle;">{$d.ccp}</td>
+                    <td style="text-align: center; vertical-align: middle;">{$d.provice}</td>
+                    <td style="text-align: center; vertical-align: middle;">{$d.city}</td>
+                    <td style="text-align: center; vertical-align: middle;">{$d.bond}</td>
+                    <td style="text-align: center; vertical-align: middle;">{$d.budget}</td>
+                    <td style="text-align: center; vertical-align: middle;">{$d.others}</td>
+                    <td style="text-align: center; vertical-align: middle;">{$d.total}</td>
+                    <td style="text-align: center; vertical-align: middle;">{$d.contractAmount - $d.total}</td>
+                    <td style="text-align: center; vertical-align: middle;">{$d.comment}</td>
+                    <td style="text-align: center; vertical-align: middle;"><a class="btn btn-primary"
+                            href="javascript:handlePreview('{:url('manager/viewPaymentfiles',array('paymentId'=>$d['paymentId']))}')">点击查看</a>
+                    </td>
+                    <td style="text-align: center; vertical-align: middle;"><a class="btn btn-primary"
+                            href="{:url('manager/updatePayment',array('paymentId'=>$d['paymentId']))}">修改</a></td>
+                </tr>
+            </foreach>
+        </tbody>
+    </table>
+</body>
+<script>
+    function handlePreview(url) {
+        parent.openIframeLayer(url, '附件');
+    }
+</script>
+
+</html>

@@ -1,0 +1,173 @@
+<include file="public@header" />
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add</title>
+    <link href="__STATIC__/js/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css" rel="stylesheet"
+        media="screen">
+</head>
+
+<body>
+    <form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('manager/postProjectAdd')}">
+        <div class="form-group">
+            <label for="input-project-name" class="col-sm-2 control-label">工程名称</label>
+            <div class="col-md-6 col-sm-10">
+                <input id="input-project-name" name="project-name" type="text" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="input-building-name" class="col-sm-2 control-label">施工方</label>
+            <div class="col-md-6 col-sm-10">
+                <input id="input-building-name" name="building-name" type="text">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="input-building-contract-name" class="col-sm-2 control-label">施工方合同名称</label>
+            <div class="col-md-6 col-sm-10">
+                <input id="input-building-contract-name" name="building-contract-name" type="text">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="input-building-contract-number" class="col-sm-2 control-label">施工方合同编号</label>
+            <div class="col-md-6 col-sm-10">
+                <input id="input-building-contract-number" name="building-contract-number" type="text">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="input-building-contract-time" class="col-sm-2 control-label">施工方签约时间</label>
+            <div class="col-md-6 col-sm-10">
+                <input id="input-building-contract-time" name="building-contract-time" type="text">
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label for="input-building-contract-amount" class="col-sm-2 control-label">施工方金额</label>
+            <div class="col-md-6 col-sm-10">
+                <input id="input-building-contract-amount" name="building-contract-amount" type="text">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="input-designer-name" class="col-sm-2 control-label">设计方</label>
+            <div class="col-md-6 col-sm-10">
+                <input id="input-designer-name" name="designer-name" type="text">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="input-designer-contract-name" class="col-sm-2 control-label">设计方合同名称</label>
+            <div class="col-md-6 col-sm-10">
+                <input id="input-designer-contract-name" name="designer-contract-name" type="text">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="input-designer-contract-number" class="col-sm-2 control-label">设计方合同编号</label>
+            <div class="col-md-6 col-sm-10">
+                <input id="input-designer-contract-number" name="designer-contract-number" type="text">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="input-designer-contract-time" class="col-sm-2 control-label">设计方签约时间</label>
+            <div class="col-md-6 col-sm-10">
+                <input id="input-designer-contract-time" name="designer-contract-time" type="text">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="input-designer-contract-amount" class="col-sm-2 control-label">设计方金额</label>
+            <div class="col-md-6 col-sm-10">
+                <input id="input-designer-contract-amount" name="designer-contract-amount" type="text">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="input-managerment-name" class="col-sm-2 control-label">监理方</label>
+            <div class="col-md-6 col-sm-10">
+                <input id="input-managerment-name" name="managerment-name" type="text">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="input-managerment-contract-name" class="col-sm-2 control-label">监理方合同名称</label>
+            <div class="col-md-6 col-sm-10">
+                <input id="input-managerment-contract-name" name="managerment-contract-name" type="text">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="input-managerment-contract-number" class="col-sm-2 control-label">监理方合同编号</label>
+            <div class="col-md-6 col-sm-10">
+                <input id="input-managerment-contract-number" name="managerment-contract-number" type="text">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="input-managerment-contract-time" class="col-sm-2 control-label">监理方签约时间</label>
+            <div class="col-md-6 col-sm-10">
+                <input id="input-managerment-contract-time" name="managerment-contract-time" type="text">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="input-managerment-contract-amount" class="col-sm-2 control-label">监理方金额</label>
+            <div class="col-md-6 col-sm-10">
+                <input id="input-managerment-contract-amount" name="managerment-contract-amount" type="text">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="input-checker-name" class="col-sm-2 control-label">检测方</label>
+            <div class="col-md-6 col-sm-10">
+                <input id="input-checker-name" name="checker-name" type="text">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="input-checker-contract-name" class="col-sm-2 control-label">检测方合同名称</label>
+            <div class="col-md-6 col-sm-10">
+                <input id="input-checker-contract-name" name="checker-contract-name" type="text">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="input-checker-contract-number" class="col-sm-2 control-label">检测方合同编号</label>
+            <div class="col-md-6 col-sm-10">
+                <input id="input-checker-contract-number" name="checker-contract-number" type="text">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="input-checker-contract-time" class="col-sm-2 control-label">检测方签约时间</label>
+            <div class="col-md-6 col-sm-10">
+                <input id="input-checker-contract-time" name="checker-contract-time" type="text">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="input-checker-contract-amount" class="col-sm-2 control-label">检测方金额</label>
+            <div class="col-md-6 col-sm-10">
+                <input id="input-checker-contract-amount" name="checker-contract-amount" type="text">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('ADD')}</button>
+                <a class="btn btn-default" href="javascript:history.go(-1)">{:lang('BACK')}</a>
+            </div>
+        </div>
+    </form>
+</body>
+
+</html>

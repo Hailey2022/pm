@@ -1,0 +1,56 @@
+<include file="public@header" />
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>合同</title>
+</head>
+
+<body>
+    <table class="table table-hover table-bordered">
+        <thead>
+            <tr>
+                <th style="text-align: center;">合同名称</th>
+                <th style="text-align: center;">资金名称</th>
+                <th style="text-align: center;">进度款（期数）</th>
+                <th style="text-align: center;">支付金额</th>
+                <!-- <th style="text-align: center;">中央，省，市</th>
+                <th style="text-align: center;">市</th>
+                <th style="text-align: center;">专项债</th>
+                <th style="text-align: center;">预算</th>
+                <th style="text-align: center;">其他</th> -->
+                <th style="text-align: center;">附件</th>
+                <th style="text-align: center;">操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <foreach name="data" item="d">
+                <tr>
+                    <td style="text-align: center;">{$d.contractName}</td>
+                    <td style="text-align: center;">{$d.comment}</td>
+                    <td style="text-align: center;">{$d.installment}</td>
+                    <td style="text-align: center;">{$d.total}</td>
+                    <!-- <td style="text-align: center;">{$d.provice}</td>
+                    <td style="text-align: center;">{$d.city}</td>
+                    <td style="text-align: center;">{$d.bond}</td>
+                    <td style="text-align: center;">{$d.budget}</td>
+                    <td style="text-align: center;">{$d.others}</td> -->
+                    <td style="text-align: center;"><a class="btn btn-primary"
+                            href="javascript:handlePreview('{:url('manager/viewPaymentFiles',array('paymentId'=>$d['paymentId']))}')">点击查看</a></td>
+                    <td style="text-align: center;"><a class="btn btn-primary"
+                            href="{:url('manager/updatePayment',array('paymentId'=>$d['paymentId']))}">修改</a></td>
+                </tr>
+            </foreach>
+        </tbody>
+    </table>
+</body>
+<script>
+    function handlePreview(url) {
+        parent.openIframeLayer(url, '附件');
+    }
+</script>
+
+</html>

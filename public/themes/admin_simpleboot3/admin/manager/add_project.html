@@ -1,0 +1,147 @@
+<include file="public@header" />
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add</title>
+    <link href="__STATIC__/js/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css" rel="stylesheet"
+        media="screen">
+    <style>
+        .信息框大框 {
+            width: 90%;
+            margin-top: 30px;
+        }
+
+        .信息框标题 {
+            width: 200px;
+            height: 20px;
+            line-height: 20px;
+            text-align: center;
+            font-weight: bolder;
+        }
+
+        .信息框标题 span {
+            padding: 1px 1px;
+            border: 1px solid #222;
+            background-color: #ccc;
+            float: left;
+            margin-right: 10px;
+        }
+
+        .信息框标题 span.工程加号 span.工程减号 {
+            cursor: pointer
+        }
+
+        .信息框边框 {
+            border: 1px solid #333;
+            /* width: 100%; */
+            padding: 15px;
+            clear: both;
+        }
+
+        ul {
+            list-style-type: none;
+        }
+
+        .上下宽度 {
+            padding: 15px;
+        }
+    </style>
+    <script>
+        $(function () {
+            $('span.工程加号').on("click", function () {
+                var 信息框边框 = $(this).parent().next();
+                信息框边框.find('li').eq(0).clone().appendTo(信息框边框.children());
+            });
+            $('span.工程减号').on("click", function () {
+                var 信息框边框 = $(this).parent().next();
+                if (信息框边框.find('li').length == 1) {
+                    alert("不能再减少了");
+                    return
+                }
+                信息框边框.find('li').last().remove();
+            });
+        })
+    </script>
+</head>
+
+<body>
+    <form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('manager/postProjectAdd')}">
+        <div class="信息框大框">
+            <div class="信息框标题"><span>工程基本信息</span></div>
+            <div class="信息框边框">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-2">
+
+                        </div>
+                        <div class="col-md-6">
+                            <input class="form-control" id="input-project-name" name="project-name" type="text" required
+                                placeholder="请在这里输入工程的名称">
+                        </div>
+                        <div class="col-md-2">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="信息框大框">
+            <div class="信息框标题">
+                <span>服务商基本信息</span>
+                <span class="工程加号">增加</span>
+                <span class="工程减号">减少</span>
+            </div>
+            <div class="信息框边框">
+                <ul>
+                    <li>
+                        <div class="row 上下宽度">
+
+                            <div class="col-sm-3">
+                                <select class="form-control" list="users" name="clientType[]" id="input-clientType" required>
+                                    <datalist id="users">
+                                        <option name="clientType" value="">类别</option>
+                                        <foreach name="types" item="u">
+                                            <option name="clientType" value="{:$u.id}"> {$u.name}
+                                            </option>
+                                        </foreach>
+                                    </datalist>
+                                </select>
+                            </div>
+
+                            <div class="col-sm-5">
+                                <select class="form-control" list="clientId" name="clientId[]" id="input-clientId" required>
+                                    <datalist id="clientId">
+                                        <option name="clientId" value="">公司</option>
+                                        <foreach name="users" item="u">
+                                            <option name="clientId" value="{:$u.id}"> {$u.user_login}
+                                            </option>
+                                        </foreach>
+                                    </datalist>
+                                </select>
+                            </div>
+                            <div class="col-sm-4">
+                                <input class="form-control" id="input-clientAlias" name="clientAlias[]" type="text"
+                                    placeholder="备注(可选)">
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="">
+                <div class="col-sm-3">
+                    <button type="submit" class="btn btn-primary js-ajax-submit">提交</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+
+</html>

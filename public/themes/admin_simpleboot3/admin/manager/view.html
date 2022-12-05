@@ -1,0 +1,43 @@
+<include file="public@header" />
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>工程</title>
+</head>
+
+<body>
+    <table class="table table-hover table-bordered">
+        <thead>
+            <tr>
+                <th style="text-align: center;">工程名称</th>
+                <th style="text-align: center;">总金额</th>
+                <th style="text-align: center;">已支付</th>
+                <th style="text-align: center;">未支付</th>
+                <th style="text-align: center;">操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <foreach name="data" item="d">
+                <tr>
+                    <td style="text-align: center;">{$d.projectName}</td>
+                    <td style="text-align: center;">{$d.total}</td>
+                    <td style="text-align: center;">{$d.paid}</td>
+                    <td style="text-align: center;">{$d.total - $d.paid}</td>
+                    <td style="text-align: center;">
+                        <a class="btn btn-primary"
+                            href="{:url('manager/listContract',array('projectId'=>$d['projectId']))}">查看详情</a>
+
+                        <a class="btn btn-danger" onclick="javascript:return confirm('删除了不可以还原，确定删除？')"
+                            href="{:url('manager/deleteProject',array('projectId'=>$d['projectId']))}">删除工程</a>
+                    </td>
+                </tr>
+            </foreach>
+        </tbody>
+    </table>
+</body>
+
+</html>

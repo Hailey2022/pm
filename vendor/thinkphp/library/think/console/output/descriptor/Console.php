@@ -1,13 +1,13 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkPHP [ WE CAN DO IT JUST THINK ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2006~2015 http://thinkphp.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: yunwuxin <448901948@qq.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 
 namespace think\console\output\descriptor;
 
@@ -19,45 +19,29 @@ class Console
 
     const GLOBAL_NAMESPACE = '_global';
 
-    /**
-     * @var ThinkConsole
-     */
+    
     private $console;
 
-    /**
-     * @var null|string
-     */
+    
     private $namespace;
 
-    /**
-     * @var array
-     */
+    
     private $namespaces;
 
-    /**
-     * @var Command[]
-     */
+    
     private $commands;
 
-    /**
-     * @var Command[]
-     */
+    
     private $aliases;
 
-    /**
-     * 构造方法
-     * @param ThinkConsole $console
-     * @param string|null  $namespace
-     */
+    
     public function __construct(ThinkConsole $console, $namespace = null)
     {
         $this->console   = $console;
         $this->namespace = $namespace;
     }
 
-    /**
-     * @return array
-     */
+    
     public function getNamespaces()
     {
         if (null === $this->namespaces) {
@@ -67,9 +51,7 @@ class Console
         return $this->namespaces;
     }
 
-    /**
-     * @return Command[]
-     */
+    
     public function getCommands()
     {
         if (null === $this->commands) {
@@ -79,11 +61,7 @@ class Console
         return $this->commands;
     }
 
-    /**
-     * @param string $name
-     * @return Command
-     * @throws \InvalidArgumentException
-     */
+    
     public function getCommand($name)
     {
         if (!isset($this->commands[$name]) && !isset($this->aliases[$name])) {
@@ -102,7 +80,7 @@ class Console
         foreach ($this->sortCommands($all) as $namespace => $commands) {
             $names = [];
 
-            /** @var Command $command */
+            
             foreach ($commands as $name => $command) {
                 if (is_string($command)) {
                     $command = new $command();
@@ -125,10 +103,7 @@ class Console
         }
     }
 
-    /**
-     * @param array $commands
-     * @return array
-     */
+    
     private function sortCommands(array $commands)
     {
         $namespacedCommands = [];
@@ -145,7 +120,7 @@ class Console
         foreach ($namespacedCommands as &$commandsSet) {
             ksort($commandsSet);
         }
-        // unset reference to keep scope clear
+        
         unset($commandsSet);
 
         return $namespacedCommands;

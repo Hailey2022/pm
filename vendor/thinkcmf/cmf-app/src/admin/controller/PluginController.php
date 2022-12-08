@@ -1,13 +1,13 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2013-present http://www.thinkcmf.com All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: 老猫 <zxxjjforever@163.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 namespace app\admin\controller;
 
 use app\admin\logic\PluginLogic;
@@ -18,37 +18,13 @@ use mindplay\annotations\Annotations;
 use think\facade\Cache;
 use think\Validate;
 
-/**
- * Class PluginController
- * @package app\admin\controller
- * @adminMenuRoot(
- *     'name'   =>'插件中心',
- *     'action' =>'default',
- *     'parent' =>'',
- *     'display'=> true,
- *     'order'  => 20,
- *     'icon'   =>'cloud',
- *     'remark' =>'插件中心'
- * )
- */
+
 class PluginController extends AdminBaseController
 {
 
     protected $pluginModel;
 
-    /**
-     * 插件列表
-     * @adminMenu(
-     *     'name'   => '插件列表',
-     *     'parent' => 'admin/Plugin/default',
-     *     'display'=> true,
-     *     'hasView'=> true,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '插件列表',
-     *     'param'  => ''
-     * )
-     */
+    
     public function index()
     {
         $pluginModel = new PluginModel();
@@ -57,19 +33,7 @@ class PluginController extends AdminBaseController
         return $this->fetch();
     }
 
-    /**
-     * 插件启用/禁用
-     * @adminMenu(
-     *     'name'   => '插件启用禁用',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> false,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '插件启用禁用',
-     *     'param'  => ''
-     * )
-     */
+    
     public function toggle()
     {
         if ($this->request->isPost()) {
@@ -114,19 +78,7 @@ class PluginController extends AdminBaseController
         }
     }
 
-    /**
-     * 插件设置
-     * @adminMenu(
-     *     'name'   => '插件设置',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> true,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '插件设置',
-     *     'param'  => ''
-     * )
-     */
+    
     public function setting()
     {
         $id = $this->request->param('id', 0, 'intval');
@@ -171,28 +123,16 @@ class PluginController extends AdminBaseController
         }
 
         $this->assign('data', $plugin);
-//        if ($plugin['custom_config']) {
-//            $this->assign('custom_config', $this->fetch($plugin['plugin_path'] . $plugin['custom_config']));
-//        }
+
+
+
 
         $this->assign('id', $id);
         return $this->fetch();
 
     }
 
-    /**
-     * 插件设置提交
-     * @adminMenu(
-     *     'name'   => '插件设置提交',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> false,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '插件设置提交',
-     *     'param'  => ''
-     * )
-     */
+    
     public function settingPost()
     {
         if ($this->request->isPost()) {
@@ -262,11 +202,7 @@ class PluginController extends AdminBaseController
         }
     }
 
-    /**
-     * 解析插件配置验证规则
-     * @param $rules
-     * @return array
-     */
+    
     private function _parseRules($rules)
     {
         $newRules = [];
@@ -286,19 +222,7 @@ class PluginController extends AdminBaseController
         return $newRules;
     }
 
-    /**
-     * 插件安装
-     * @adminMenu(
-     *     'name'   => '插件安装',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> false,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '插件安装',
-     *     'param'  => ''
-     * )
-     */
+    
     public function install()
     {
         if ($this->request->isPost()) {
@@ -313,19 +237,7 @@ class PluginController extends AdminBaseController
         }
     }
 
-    /**
-     * 插件更新
-     * @adminMenu(
-     *     'name'   => '插件更新',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> false,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '插件更新',
-     *     'param'  => ''
-     * )
-     */
+    
     public function update()
     {
         if ($this->request->isPost()) {
@@ -339,19 +251,7 @@ class PluginController extends AdminBaseController
         }
     }
 
-    /**
-     * 卸载插件
-     * @adminMenu(
-     *     'name'   => '卸载插件',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> false,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '卸载插件',
-     *     'param'  => ''
-     * )
-     */
+    
     public function uninstall()
     {
         if ($this->request->isPost()) {
@@ -365,7 +265,7 @@ class PluginController extends AdminBaseController
             }
 
             Cache::clear('init_hook_plugins');
-            Cache::clear('admin_menus');// 删除后台菜单缓存
+            Cache::clear('admin_menus');
 
             $this->success('卸载成功!');
         }

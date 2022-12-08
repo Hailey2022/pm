@@ -1,26 +1,10 @@
 <?php
-/**
- * phpQuery plugin class extending phpQuery object.
- * Methods from this class are callable on every phpQuery object.
- *
- * Class name prefix 'phpQueryObjectPlugin_' must be preserved.
- */
+
 abstract class phpQueryObjectPlugin_Scripts {
-	/**
-	 * Limit binded methods.
-	 *
-	 * null means all public.
-	 * array means only specified ones.
-	 *
-	 * @var array|null
-	 */
+	
 	public static $phpQueryMethods = null;
 	public static $config = array();
-	/**
-	 * Enter description here...
-	 *
-	 * @param phpQueryObject $self
-	 */
+	
 	public static function script($self, $arg1) {
 		$params = func_get_args();
 		$params = array_slice($params, 2);
@@ -50,19 +34,7 @@ abstract class phpQueryPlugin_Scripts {
 			phpQueryObjectPlugin_Scripts::$config = $config;
 		}
 	}
-	/**
-	 * Extend scripts' namespace with $name related with $callback.
-	 * 
-	 * Callback parameter order looks like this:
-	 * - $this
-	 * - $params
-	 * - &$return
-	 * - $config
-	 * 
-	 * @param $name
-	 * @param $callback
-	 * @return bool
-	 */
+	
 	public static function script($name, $callback) {
 		if (phpQueryPlugin_Scripts::$scriptMethods[$name])
 			throw new Exception("Script name conflict - '$name'");

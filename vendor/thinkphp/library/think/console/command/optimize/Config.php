@@ -1,13 +1,4 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkPHP [ WE CAN DO IT JUST THINK IT ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2006-2017 http://thinkphp.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: yunwuxin <448901948@qq.com>
-// +----------------------------------------------------------------------
 namespace think\console\command\optimize;
 
 use think\console\Command;
@@ -66,7 +57,7 @@ class Config extends Command
             }
         }
 
-        // 加载行为扩展文件
+        
         if (is_file($path . 'tags.php')) {
             $tags = include $path . 'tags.php';
             if (is_array($tags)) {
@@ -74,7 +65,7 @@ class Config extends Command
             }
         }
 
-        // 加载公共文件
+        
         if (is_file($path . 'common.php')) {
             $common = substr(php_strip_whitespace($path . 'common.php'), 6);
             if ($common) {

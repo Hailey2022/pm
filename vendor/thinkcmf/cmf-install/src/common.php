@@ -1,13 +1,5 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2013-present http://www.thinkcmf.com All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: 老猫 <thinkcmf@126.com>
-// +----------------------------------------------------------------------
+
 function sp_testwrite($d)
 {
     $tfile = "_test.txt";
@@ -88,10 +80,7 @@ function sp_execute_sql($db, $sql)
     }
 }
 
-/**
- * 显示提示信息
- * @param  string $msg 提示信息
- */
+
 function sp_show_msg($msg, $class = '')
 {
     echo "<script type=\"text/javascript\">showmsg(\"{$msg}\", \"{$class}\")</script>";
@@ -153,9 +142,9 @@ function sp_create_db_config($config)
         }
 
         if (strpos(cmf_version(), '5.0.') === false) {
-            $confDir = CMF_DATA . 'config/'; // 5.1
+            $confDir = CMF_DATA . 'config/'; 
         } else {
-            $confDir = CMF_DATA . 'conf/'; // 5.0
+            $confDir = CMF_DATA . 'conf/'; 
         }
 
         try {

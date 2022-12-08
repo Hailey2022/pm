@@ -42,7 +42,7 @@
 <div id="allmap"></div>
 <script type="text/javascript">
 
-    // 百度地图API功能
+    
     var center = new BMap.Point({$lng}, {$lat});
 
     var map = new BMap.Map("allmap");
@@ -56,8 +56,8 @@
             "location": map
         });
 
-    var marker = new BMap.Marker(center);  // 创建标注
-    map.addOverlay(marker);              // 将标注添加到地图中
+    var marker = new BMap.Marker(center);  
+    map.addOverlay(marker);              
     marker.enableDragging();    //可拖拽
     //marker.setAnimation(BMAP_ANIMATION_BOUNCE);
 
@@ -80,13 +80,13 @@
 
 
     var opts       = {
-        width: 200,     // 信息窗口宽度
-        height: 30,     // 信息窗口高度
-        title: "", // 信息窗口标题
+        width: 200,     
+        height: 30,     
+        title: "", 
         enableMessage: false,//设置允许信息窗发送短息
 
     };
-    var infoWindow = new BMap.InfoWindow("拖动我设置你的位置", opts);  // 创建信息窗口对象
+    var infoWindow = new BMap.InfoWindow("拖动我设置你的位置", opts);  
     marker.openInfoWindow(infoWindow);
 
     var gc = new BMap.Geocoder();
@@ -121,7 +121,7 @@
     function tilesloaded() {
         map.setCenter(center);   //设置地图中心点。center除了可以为坐标点以外，还支持城市名
         mgetLocation(center);
-        // map.setZoom(8);  //将视图切换到指定的缩放等级，中心点坐标不变
+        
         map.removeEventListener("tilesloaded", tilesloaded);
     }
 

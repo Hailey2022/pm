@@ -1,13 +1,5 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2013-present http://www.thinkcmf.com All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: 老猫 <thinkcmf@126.com>
-// +----------------------------------------------------------------------
+
 namespace app\admin\model;
 
 use think\Model;
@@ -15,21 +7,10 @@ use think\facade\Cache;
 
 class AdminMenuModel extends Model
 {
-    /**
-     * 模型名称
-     * @var string
-     */
+    
     protected $name = 'admin_menu';
 
-    /**
-     * 按父ID查找菜单子项
-     * @param int     $parentId 父菜单ID
-     * @param boolean $withSelf 是否包括他自己
-     * @return array|string|\think\Collection
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
-     */
+    
     public function adminMenu($parentId, $withSelf = false)
     {
         //父节点ID
@@ -65,7 +46,7 @@ class AdminMenuModel extends Model
                 }
 
                 $ruleName = strtolower($v['app'] . "/" . $v['controller'] . "/" . $action);
-//                print_r($ruleName);
+
                 if (cmf_auth_check(cmf_get_current_admin_id(), $ruleName)) {
                     $array[] = $v;
                 }
@@ -76,15 +57,7 @@ class AdminMenuModel extends Model
         return $array;
     }
 
-    /**
-     * 获取菜单 头部菜单导航
-     * @param string $parentId 菜单id
-     * @param bool   $bigMenu
-     * @return array|string|\think\Collection
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
-     */
+    
     public function subMenu($parentId = '', $bigMenu = false)
     {
         $array   = $this->adminMenu($parentId, 1);
@@ -95,25 +68,14 @@ class AdminMenuModel extends Model
         return $array;
     }
 
-    /**
-     * 菜单树状结构集合
-     */
+    
     public function menuTree()
     {
         $data = $this->getTree(0);
         return $data;
     }
 
-    /**
-     * 取得树形结构的菜单
-     * @param        $myId
-     * @param string $parent
-     * @param int    $Level
-     * @return bool|null
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
-     */
+    
     public function getTree($myId, $parent = "", $Level = 1)
     {
         $data = $this->adminMenu($myId);
@@ -165,11 +127,7 @@ class AdminMenuModel extends Model
         return false;
     }
 
-    /**
-     * 更新缓存
-     * @param null $data
-     * @return array|null
-     */
+    
     public function menuCache($data = null)
     {
         if (empty($data)) {
@@ -193,14 +151,7 @@ class AdminMenuModel extends Model
         return $result;
     }
 
-    /**
-     * 得到某父级菜单所有子菜单，包括自己
-     * @param int $parentId
-     * @return array|string|\think\Collection
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
-     */
+    
     public function getMenuTree($parentId = 0)
     {
         $menus = $this->where("parent_id", $parentId)->order(["list_order" => "ASC"])->select();

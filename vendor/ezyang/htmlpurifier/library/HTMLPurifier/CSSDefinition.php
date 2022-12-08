@@ -1,24 +1,15 @@
 <?php
 
-/**
- * Defines allowed CSS attributes and what their values are.
- * @see HTMLPurifier_HTMLDefinition
- */
+
 class HTMLPurifier_CSSDefinition extends HTMLPurifier_Definition
 {
 
     public $type = 'CSS';
 
-    /**
-     * Assoc array of attribute name to definition object.
-     * @type HTMLPurifier_AttrDef[]
-     */
+    
     public $info = array();
 
-    /**
-     * Constructs the info array.  The meat of this class.
-     * @param HTMLPurifier_Config $config
-     */
+    
     protected function doSetup($config)
     {
         $this->info['text-align'] = new HTMLPurifier_AttrDef_Enum(
@@ -175,7 +166,7 @@ class HTMLPurifier_CSSDefinition extends HTMLPurifier_Definition
         $this->info['line-height'] = new HTMLPurifier_AttrDef_CSS_Composite(
             array(
                 new HTMLPurifier_AttrDef_Enum(array('normal')),
-                new HTMLPurifier_AttrDef_CSS_Number(true), // no negatives
+                new HTMLPurifier_AttrDef_CSS_Number(true), 
                 new HTMLPurifier_AttrDef_CSS_Length('0'),
                 new HTMLPurifier_AttrDef_CSS_Percentage(true)
             )
@@ -195,7 +186,7 @@ class HTMLPurifier_CSSDefinition extends HTMLPurifier_Definition
 
         $this->info['margin'] = new HTMLPurifier_AttrDef_CSS_Multiple($margin);
 
-        // non-negative
+        
         $padding =
             $this->info['padding-top'] =
             $this->info['padding-bottom'] =
@@ -245,14 +236,14 @@ class HTMLPurifier_CSSDefinition extends HTMLPurifier_Definition
                 $trusted_wh :
                 new HTMLPurifier_AttrDef_Switch(
                     'img',
-                    // For img tags:
+                    
                     new HTMLPurifier_AttrDef_CSS_Composite(
                         array(
                             new HTMLPurifier_AttrDef_CSS_Length('0', $max),
                             new HTMLPurifier_AttrDef_Enum(array('auto'))
                         )
                     ),
-                    // For everyone else:
+                    
                     $trusted_wh
                 );
         $this->info['min-width'] =
@@ -261,14 +252,14 @@ class HTMLPurifier_CSSDefinition extends HTMLPurifier_Definition
                 $trusted_min_wh :
                 new HTMLPurifier_AttrDef_Switch(
                     'img',
-                    // For img tags:
+                    
                     new HTMLPurifier_AttrDef_CSS_Composite(
                         array(
                             new HTMLPurifier_AttrDef_CSS_Length('0', $max),
                             new HTMLPurifier_AttrDef_Enum(array('initial', 'inherit'))
                         )
                     ),
-                    // For everyone else:
+                    
                     $trusted_min_wh
                 );
         $this->info['max-width'] =
@@ -277,14 +268,14 @@ class HTMLPurifier_CSSDefinition extends HTMLPurifier_Definition
                 $trusted_max_wh :
                 new HTMLPurifier_AttrDef_Switch(
                     'img',
-                    // For img tags:
+                    
                     new HTMLPurifier_AttrDef_CSS_Composite(
                         array(
                             new HTMLPurifier_AttrDef_CSS_Length('0', $max),
                             new HTMLPurifier_AttrDef_Enum(array('none', 'initial', 'inherit'))
                         )
                     ),
-                    // For everyone else:
+                    
                     $trusted_max_wh
                 );
 
@@ -292,7 +283,7 @@ class HTMLPurifier_CSSDefinition extends HTMLPurifier_Definition
 
         $this->info['font-family'] = new HTMLPurifier_AttrDef_CSS_FontFamily();
 
-        // this could use specialized code
+        
         $this->info['font-weight'] = new HTMLPurifier_AttrDef_Enum(
             array(
                 'normal',
@@ -312,11 +303,11 @@ class HTMLPurifier_CSSDefinition extends HTMLPurifier_Definition
             false
         );
 
-        // MUST be called after other font properties, as it references
-        // a CSSDefinition object
+        
+        
         $this->info['font'] = new HTMLPurifier_AttrDef_CSS_Font($config);
 
-        // same here
+        
         $this->info['border'] =
         $this->info['border-bottom'] =
         $this->info['border-top'] =
@@ -356,8 +347,8 @@ class HTMLPurifier_CSSDefinition extends HTMLPurifier_Definition
 
         $this->info['border-spacing'] = new HTMLPurifier_AttrDef_CSS_Multiple(new HTMLPurifier_AttrDef_CSS_Length(), 2);
 
-        // These CSS properties don't work on many browsers, but we live
-        // in THE FUTURE!
+        
+        
         $this->info['white-space'] = new HTMLPurifier_AttrDef_Enum(
             array('nowrap', 'normal', 'pre', 'pre-wrap', 'pre-line')
         );
@@ -375,7 +366,7 @@ class HTMLPurifier_CSSDefinition extends HTMLPurifier_Definition
         }
 
         $allow_important = $config->get('CSS.AllowImportant');
-        // wrap all attr-defs with decorator that handles !important
+        
         foreach ($this->info as $k => $v) {
             $this->info[$k] = new HTMLPurifier_AttrDef_CSS_ImportantDecorator($v, $allow_important);
         }
@@ -383,12 +374,10 @@ class HTMLPurifier_CSSDefinition extends HTMLPurifier_Definition
         $this->setupConfigStuff($config);
     }
 
-    /**
-     * @param HTMLPurifier_Config $config
-     */
+    
     protected function doSetupProprietary($config)
     {
-        // Internet Explorer only scrollbar colors
+        
         $this->info['scrollbar-arrow-color'] = new HTMLPurifier_AttrDef_CSS_Color();
         $this->info['scrollbar-base-color'] = new HTMLPurifier_AttrDef_CSS_Color();
         $this->info['scrollbar-darkshadow-color'] = new HTMLPurifier_AttrDef_CSS_Color();
@@ -396,14 +385,14 @@ class HTMLPurifier_CSSDefinition extends HTMLPurifier_Definition
         $this->info['scrollbar-highlight-color'] = new HTMLPurifier_AttrDef_CSS_Color();
         $this->info['scrollbar-shadow-color'] = new HTMLPurifier_AttrDef_CSS_Color();
 
-        // vendor specific prefixes of opacity
+        
         $this->info['-moz-opacity'] = new HTMLPurifier_AttrDef_CSS_AlphaValue();
         $this->info['-khtml-opacity'] = new HTMLPurifier_AttrDef_CSS_AlphaValue();
 
-        // only opacity, for now
+        
         $this->info['filter'] = new HTMLPurifier_AttrDef_CSS_Filter();
 
-        // more CSS3
+        
         $this->info['page-break-after'] =
         $this->info['page-break-before'] = new HTMLPurifier_AttrDef_Enum(
             array(
@@ -418,22 +407,20 @@ class HTMLPurifier_CSSDefinition extends HTMLPurifier_Definition
 
         $border_radius = new HTMLPurifier_AttrDef_CSS_Composite(
             array(
-                new HTMLPurifier_AttrDef_CSS_Percentage(true), // disallow negative
-                new HTMLPurifier_AttrDef_CSS_Length('0') // disallow negative
+                new HTMLPurifier_AttrDef_CSS_Percentage(true), 
+                new HTMLPurifier_AttrDef_CSS_Length('0') 
             ));
 
         $this->info['border-top-left-radius'] =
         $this->info['border-top-right-radius'] =
         $this->info['border-bottom-right-radius'] =
         $this->info['border-bottom-left-radius'] = new HTMLPurifier_AttrDef_CSS_Multiple($border_radius, 2);
-        // TODO: support SLASH syntax
+        
         $this->info['border-radius'] = new HTMLPurifier_AttrDef_CSS_Multiple($border_radius, 4);
 
     }
 
-    /**
-     * @param HTMLPurifier_Config $config
-     */
+    
     protected function doSetupTricky($config)
     {
         $this->info['display'] = new HTMLPurifier_AttrDef_Enum(
@@ -465,9 +452,7 @@ class HTMLPurifier_CSSDefinition extends HTMLPurifier_Definition
         $this->info['opacity'] = new HTMLPurifier_AttrDef_CSS_AlphaValue();
     }
 
-    /**
-     * @param HTMLPurifier_Config $config
-     */
+    
     protected function doSetupTrusted($config)
     {
         $this->info['position'] = new HTMLPurifier_AttrDef_Enum(
@@ -491,16 +476,10 @@ class HTMLPurifier_CSSDefinition extends HTMLPurifier_Definition
         );
     }
 
-    /**
-     * Performs extra config-based processing. Based off of
-     * HTMLPurifier_HTMLDefinition.
-     * @param HTMLPurifier_Config $config
-     * @todo Refactor duplicate elements into common class (probably using
-     *       composition, not inheritance).
-     */
+    
     protected function setupConfigStuff($config)
     {
-        // setup allowed elements
+        
         $support = "(for information on implementing this, see the " .
             "support forums) ";
         $allowed_properties = $config->get('CSS.AllowedProperties');
@@ -511,9 +490,9 @@ class HTMLPurifier_CSSDefinition extends HTMLPurifier_Definition
                 }
                 unset($allowed_properties[$name]);
             }
-            // emit errors
+            
             foreach ($allowed_properties as $name => $d) {
-                // :TODO: Is this htmlspecialchars() call really necessary?
+                
                 $name = htmlspecialchars($name);
                 trigger_error("Style attribute '$name' is not supported $support", E_USER_WARNING);
             }
@@ -530,4 +509,4 @@ class HTMLPurifier_CSSDefinition extends HTMLPurifier_Definition
     }
 }
 
-// vim: et sw=4 sts=4
+

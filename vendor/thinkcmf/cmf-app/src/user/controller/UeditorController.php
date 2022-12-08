@@ -1,13 +1,13 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2013-present http://www.thinkcmf.com All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: kane <chengjin005@163.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 namespace app\user\controller;
 
 use cmf\controller\HomeBaseController;
@@ -15,11 +15,7 @@ use cmf\lib\Upload;
 use think\exception\HttpResponseException;
 use think\Response;
 
-/**
- * 百度编辑器文件上传处理控制器
- * Class Ueditor
- * @package app\asset\controller
- */
+
 class UeditorController extends HomeBaseController
 {
 
@@ -45,9 +41,7 @@ class UeditorController extends HomeBaseController
         "ERROR_HTTP_CONTENTTYPE"   => "链接contentType不正确"
     ];
 
-    /**
-     * 初始化
-     */
+    
     public function initialize()
     {
         $adminId = cmf_get_current_admin_id();
@@ -57,13 +51,11 @@ class UeditorController extends HomeBaseController
         }
     }
 
-    /**
-     * 处理上传处理
-     */
+    
     public function upload()
     {
-//        error_reporting(E_ERROR);
-//        header("Content-Type: text/html; charset=utf-8");
+
+
 
         $action = $this->request->param('action');
 
@@ -73,33 +65,33 @@ class UeditorController extends HomeBaseController
                 $result = $this->ueditorConfig();
                 break;
 
-            /* 上传图片 */
+            
             case 'uploadimage':
                 $result = $this->ueditorUpload("image");
                 break;
-            /* 上传涂鸦 */
+            
             case 'uploadscrawl':
                 $result = $this->ueditorUpload("image");
                 break;
-            /* 上传视频 */
+            
             case 'uploadvideo':
                 $result = $this->ueditorUpload("video");
                 break;
-            /* 上传文件 */
+            
             case 'uploadfile':
                 $result = $this->ueditorUpload("file");
                 break;
 
-            /* 列出图片 */
+            
             case 'listimage':
                 $result = "";
                 break;
-            /* 列出文件 */
+            
             case 'listfile':
                 $result = "";
                 break;
 
-            /* 抓取远程文件 */
+            
             case 'catchimage':
                 $result = $this->_get_remote_image();
                 break;
@@ -109,7 +101,7 @@ class UeditorController extends HomeBaseController
                 break;
         }
 
-        /* 输出结果 */
+        
         if (isset($_GET["callback"]) && false) {//TODO 跨域上传
             if (preg_match("/^[\w_]+$/", $_GET["callback"])) {
                 echo htmlspecialchars($_GET["callback"]) . '(' . $result . ')';
@@ -125,9 +117,7 @@ class UeditorController extends HomeBaseController
     }
 
 
-    /**
-     * 获取远程图片
-     */
+    
     private function _get_remote_image()
     {
 
@@ -151,7 +141,7 @@ class UeditorController extends HomeBaseController
         //远程抓取图片配置
         $config = [
             "savePath"   => $strSavePath,            //保存路径
-            "allowFiles" => $allowedExts,// [".gif", ".png", ".jpg", ".jpeg", ".bmp"], //文件允许格式
+            "allowFiles" => $allowedExts,
             "maxSize"    => $uploadMaxFileSize                    //文件大小限制，单位KB
         ];
 
@@ -179,7 +169,7 @@ class UeditorController extends HomeBaseController
             }
 
             //获取请求头
-            // is_sae()
+            
 
             if (!cmf_is_sae()) {//SAE下无效
                 $heads = get_headers($imgUrl);
@@ -204,7 +194,7 @@ class UeditorController extends HomeBaseController
             $context = stream_context_create(
                 [
                     'http' => [
-                        'follow_location' => false // don't follow redirects
+                        'follow_location' => false 
                     ]
                 ]
             );
@@ -260,11 +250,7 @@ class UeditorController extends HomeBaseController
         ]);
     }
 
-    /**
-     * 文件上传
-     * @param string $fileType 文件类型
-     * @return string
-     */
+    
     private function ueditorUpload($fileType = 'image')
     {
         $uploader = new Upload();
@@ -287,9 +273,7 @@ class UeditorController extends HomeBaseController
 
     }
 
-    /**
-     * 获取百度编辑器配置
-     */
+    
     private function ueditorConfig()
     {
         $config_text    = preg_replace("/\/\*[\s\S]+?\*\//", "", file_get_contents(WEB_ROOT . "static/js/ueditor/config.json"));
@@ -312,11 +296,7 @@ class UeditorController extends HomeBaseController
         return json_encode($config);
     }
 
-    /**
-     * 格式化后缀
-     * @param $str
-     * @return string
-     */
+    
     private function ueditorExtension($str)
     {
         return "." . trim($str, '.');

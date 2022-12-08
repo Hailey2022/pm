@@ -1,11 +1,6 @@
 <?php
 
-/**
- * Japanese PHPMailer language file: refer to English translation for definitive list
- * @package PHPMailer
- * @author Mitsuhiro Yoshida <http://mitstek.com/>
- * @author Yoshi Sakai <http://bluemooninc.jp/>
- */
+
 
 $PHPMAILER_LANG['authenticate']         = 'SMTPエラー: 認証できませんでした。';
 $PHPMAILER_LANG['connect_host']         = 'SMTPエラー: SMTPホストに接続できませんでした。';

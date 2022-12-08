@@ -1,13 +1,13 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkPHP [ WE CAN DO IT JUST THINK ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2006~2015 http://thinkphp.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: yunwuxin <448901948@qq.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 
 namespace think\console;
 
@@ -21,23 +21,7 @@ use think\console\output\Question;
 use think\console\output\question\Choice;
 use think\console\output\question\Confirmation;
 
-/**
- * Class Output
- * @package think\console
- *
- * @see     \think\console\output\driver\Console::setDecorated
- * @method void setDecorated($decorated)
- *
- * @see     \think\console\output\driver\Buffer::fetch
- * @method string fetch()
- *
- * @method void info($message)
- * @method void error($message)
- * @method void comment($message)
- * @method void warning($message)
- * @method void highlight($message)
- * @method void question($message)
- */
+
 class Output
 {
     const VERBOSITY_QUIET        = 0;
@@ -52,7 +36,7 @@ class Output
 
     private $verbosity = self::VERBOSITY_NORMAL;
 
-    /** @var Buffer|Console|Nothing */
+    
     private $handle = null;
 
     protected $styles = [
@@ -94,9 +78,7 @@ class Output
         return $this->askQuestion($input, new Confirmation($question, $default));
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    
     public function choice(Input $input, $question, array $choices, $default = null)
     {
         if (null !== $default) {
@@ -124,31 +106,19 @@ class Output
         $this->writeln("<{$style}>{$message}</$style>");
     }
 
-    /**
-     * 输出空行
-     * @param int $count
-     */
+    
     public function newLine($count = 1)
     {
         $this->write(str_repeat(PHP_EOL, $count));
     }
 
-    /**
-     * 输出信息并换行
-     * @param string $messages
-     * @param int    $type
-     */
+    
     public function writeln($messages, $type = self::OUTPUT_NORMAL)
     {
         $this->write($messages, true, $type);
     }
 
-    /**
-     * 输出信息
-     * @param string $messages
-     * @param bool   $newline
-     * @param int    $type
-     */
+    
     public function write($messages, $newline = false, $type = self::OUTPUT_NORMAL)
     {
         $this->handle->write($messages, $newline, $type);
@@ -159,17 +129,13 @@ class Output
         $this->handle->renderException($e);
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    
     public function setVerbosity($level)
     {
         $this->verbosity = (int) $level;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    
     public function getVerbosity()
     {
         return $this->verbosity;

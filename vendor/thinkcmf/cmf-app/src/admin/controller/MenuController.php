@@ -1,13 +1,13 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2013-present http://www.thinkcmf.com All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: 小夏 < 449134904@qq.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 namespace app\admin\controller;
 
 use app\admin\logic\MenuLogic;
@@ -20,23 +20,7 @@ use mindplay\annotations\Annotations;
 
 class MenuController extends AdminBaseController
 {
-    /**
-     * 后台菜单管理
-     * @adminMenu(
-     *     'name'   => '后台菜单',
-     *     'parent' => 'admin/Setting/default',
-     *     'display'=> false,
-     *     'hasView'=> true,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '后台菜单管理',
-     *     'param'  => ''
-     * )
-     * @return mixed
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
-     */
+    
     public function index()
     {
         $content = hook_one('admin_menu_index_view');
@@ -82,23 +66,7 @@ class MenuController extends AdminBaseController
         return $this->fetch();
     }
 
-    /**
-     * 后台所有菜单列表
-     * @adminMenu(
-     *     'name'   => '所有菜单',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> true,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '后台所有菜单列表',
-     *     'param'  => ''
-     * )
-     * @return mixed
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
-     */
+    
     public function lists()
     {
         session('admin_menu_index', 'Menu/lists');
@@ -107,23 +75,7 @@ class MenuController extends AdminBaseController
         return $this->fetch();
     }
 
-    /**
-     * 后台菜单添加
-     * @adminMenu(
-     *     'name'   => '后台菜单添加',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> true,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '后台菜单添加',
-     *     'param'  => ''
-     * )
-     * @return mixed
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
-     */
+    
     public function add()
     {
         $tree     = new Tree();
@@ -141,19 +93,7 @@ class MenuController extends AdminBaseController
         return $this->fetch();
     }
 
-    /**
-     * 后台菜单添加提交保存
-     * @adminMenu(
-     *     'name'   => '后台菜单添加提交保存',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> false,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '后台菜单添加提交保存',
-     *     'param'  => ''
-     * )
-     */
+    
     public function addPost()
     {
         if ($this->request->isPost()) {
@@ -188,29 +128,13 @@ class MenuController extends AdminBaseController
                 $sessionAdminMenuIndex = session('admin_menu_index');
                 $to                    = empty($sessionAdminMenuIndex) ? "Menu/index" : $sessionAdminMenuIndex;
                 $this->_exportAppMenuDefaultLang();
-                Cache::clear('admin_menus');// 删除后台菜单缓存
+                Cache::clear('admin_menus');
                 $this->success("添加成功！", url($to));
             }
         }
     }
 
-    /**
-     * 后台菜单编辑
-     * @adminMenu(
-     *     'name'   => '后台菜单编辑',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> true,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '后台菜单编辑',
-     *     'param'  => ''
-     * )
-     * @return mixed
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
-     */
+    
     public function edit()
     {
         $tree      = new Tree();
@@ -230,24 +154,7 @@ class MenuController extends AdminBaseController
         return $this->fetch();
     }
 
-    /**
-     * 后台菜单编辑提交保存
-     * @adminMenu(
-     *     'name'   => '后台菜单编辑提交保存',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> false,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '后台菜单编辑提交保存',
-     *     'param'  => ''
-     * )
-     * @throws \think\Exception
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
-     * @throws \think\exception\PDOException
-     */
+    
     public function editPost()
     {
         if ($this->request->isPost()) {
@@ -302,27 +209,13 @@ class MenuController extends AdminBaseController
                     ])->update(["title" => $menuName, 'param' => $param]);//type 1-admin rule;2-user rule
                 }
                 $this->_exportAppMenuDefaultLang();
-                Cache::clear('admin_menus');// 删除后台菜单缓存
+                Cache::clear('admin_menus');
                 $this->success("保存成功！");
             }
         }
     }
 
-    /**
-     * 后台菜单删除
-     * @adminMenu(
-     *     'name'   => '后台菜单删除',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> false,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '后台菜单删除',
-     *     'param'  => ''
-     * )
-     * @throws \think\Exception
-     * @throws \think\exception\PDOException
-     */
+    
     public function delete()
     {
         if ($this->request->isPost()) {
@@ -339,19 +232,7 @@ class MenuController extends AdminBaseController
         }
     }
 
-    /**
-     * 后台菜单排序
-     * @adminMenu(
-     *     'name'   => '后台菜单排序',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> false,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '后台菜单排序',
-     *     'param'  => ''
-     * )
-     */
+    
     public function listOrder()
     {
         $adminMenuModel = new AdminMenuModel();
@@ -359,26 +240,7 @@ class MenuController extends AdminBaseController
         $this->success("排序更新成功！");
     }
 
-    /**
-     * 导入新后台菜单
-     * @adminMenu(
-     *     'name'   => '导入新后台菜单',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> true,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '导入新后台菜单',
-     *     'param'  => ''
-     * )
-     * @return mixed
-     * @throws \ReflectionException
-     * @throws \think\Exception
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
-     * @throws \think\exception\PDOException
-     */
+    
     public function getActions()
     {
         $apps = cmf_scan_dir(APP_PATH . '*', GLOB_ONLYDIR);
@@ -406,18 +268,13 @@ class MenuController extends AdminBaseController
         $this->assign("app", $app);
         $this->assign("new_menus", $newMenus);
 
-        Cache::clear('admin_menus');// 删除后台菜单缓存
+        Cache::clear('admin_menus');
 
         return $this->fetch();
 
     }
 
-    /**
-     * 导出后台菜单语言包
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
-     */
+    
     private function _exportAppMenuDefaultLang()
     {
         $menus         = AdminMenuModel::order(["app" => "ASC", "controller" => "ASC", "action" => "ASC"])->select();

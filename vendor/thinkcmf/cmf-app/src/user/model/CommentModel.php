@@ -6,37 +6,23 @@ use think\Model;
 
 class CommentModel extends Model
 {
-    /**
-     * 模型名称
-     * @var string
-     */
+    
     protected $name = 'comment';
 
-    /**
-     * 关联 user表
-     * @return $this
-     */
+    
     public function user()
     {
         return $this->belongsTo('UserModel', 'user_id');
     }
 
 
-    /**
-     * content 自动转化
-     * @param $value
-     * @return string
-     */
+    
     public function getContentAttr($value)
     {
         return cmf_replace_content_file_url(htmlspecialchars_decode($value));
     }
 
-    /**
-     * content 自动转化
-     * @param $value
-     * @return string
-     */
+    
     public function setContentAttr($value)
     {
 

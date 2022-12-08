@@ -35,7 +35,7 @@ var NotyObject = {
 
   init: function (options) {
 
-    // Mix in the passed in options with the default options
+    
     this.options = $.extend({}, $.noty.defaults, options);
 
     this.options.layout = (this.options.custom) ? $.noty.layouts['inline'] : $.noty.layouts[this.options.layout];
@@ -62,16 +62,16 @@ var NotyObject = {
       this.options.id = 'noty_' + (new Date().getTime() * Math.floor(Math.random() * 1000000));
     }
 
-    // Build the noty dom initial structure
+    
     this._build();
 
-    // return this so we can chain/use the bridge with less code.
+    
     return this;
-  }, // end init
+  }, 
 
   _build: function () {
 
-    // Generating noty bar
+    
     var $bar = $('<div class="noty_bar noty_type_' + this.options.type + '"></div>').attr('id', this.options.id);
     $bar.append(this.options.template).find('.noty_text').html(this.options.text);
 
@@ -80,11 +80,11 @@ var NotyObject = {
     if (this.options.themeClassName)
       this.$bar.addClass(this.options.themeClassName).addClass('noty_container_type_' + this.options.type);
 
-    // Set buttons if available
+    
     if (this.options.buttons) {
 
       var $buttons;
-      // Try find container for buttons in presented template, and create it if not found
+      
       if (this.$bar.find('.noty_buttons').length > 0) {
         $buttons = this.$bar.find('.noty_buttons');
       } else {
@@ -105,7 +105,7 @@ var NotyObject = {
             });
       });
     } else {
-      // If buttons is not available, then remove containers if exist
+      
       this.$bar.find('.noty_buttons').remove();
     }
 
@@ -114,15 +114,15 @@ var NotyObject = {
       (this.options.layout.parent.object !== null) ? this.$bar.find('.noty_bar').append($progressBar) : this.$bar.append($progressBar);
     }
 
-    // For easy access
+    
     this.$message     = this.$bar.find('.noty_message');
     this.$closeButton = this.$bar.find('.noty_close');
     this.$buttons     = this.$bar.find('.noty_buttons');
     this.$progressBar = this.$bar.find('.noty_progress_bar');
 
-    $.noty.store[this.options.id] = this; // store noty for api
+    $.noty.store[this.options.id] = this; 
 
-  }, // end _build
+  }, 
 
   show: function () {
 
@@ -229,12 +229,12 @@ var NotyObject = {
 
     return this;
 
-  }, // end show
+  }, 
 
   bindTimeout: function () {
     var self = this;
 
-    // If noty is have a timeout option
+    
     if (self.options.timeout) {
 
       if (self.options.progressBar && self.$progressBar) {
@@ -308,7 +308,7 @@ var NotyObject = {
       });
     }
 
-    if (!this.shown && !this.showing) { // If we are still waiting in the queue just delete from queue
+    if (!this.shown && !this.showing) { 
       var queue = [];
       $.each($.noty.queue, function (i, n) {
         if (n.options.id != self.options.id) {
@@ -350,13 +350,13 @@ var NotyObject = {
       });
     }
 
-  }, // end close
+  }, 
 
   closeCleanUp: function () {
 
     var self = this;
 
-    // Modal Cleaning
+    
     if (self.options.modal) {
       $.notyRenderer.setModalCount(-1);
       if ($.notyRenderer.getModalCount() == 0 && !$.noty.queue.length) $('.noty_modal').fadeOut(self.options.animation.fadeSpeed, function () {
@@ -364,11 +364,11 @@ var NotyObject = {
       });
     }
 
-    // Layout Cleaning
+    
     $.notyRenderer.setLayoutCountFor(self, -1);
     if ($.notyRenderer.getLayoutCountFor(self) == 0) $(self.options.layout.container.selector).remove();
 
-    // Make sure self.$bar has not been removed before attempting to remove it
+    
     if (typeof self.$bar !== 'undefined' && self.$bar !== null) {
 
       if (typeof self.options.animation.close == 'string') {
@@ -395,19 +395,19 @@ var NotyObject = {
       self.handleNext();
     }
 
-  }, // end close clean up
+  }, 
 
   handleNext: function () {
     var self = this;
 
-    delete $.noty.store[self.options.id]; // deleting noty from store
+    delete $.noty.store[self.options.id]; 
 
     if (self.options.theme.callback && self.options.theme.callback.onClose) {
       self.options.theme.callback.onClose.apply(self);
     }
 
     if (!self.options.dismissQueue) {
-      // Queue render
+      
       $.noty.ontap = true;
 
       $.notyRenderer.render();
@@ -460,13 +460,13 @@ var NotyObject = {
   showing: false,
   shown  : false
 
-}; // end NotyObject
+}; 
 
 $.notyRenderer = {};
 
 $.notyRenderer.init = function (options) {
 
-  // Renderer creates a new noty
+  
   var notification = Object.create(NotyObject).init(options);
 
   if (notification.options.killer)
@@ -505,7 +505,7 @@ $.notyRenderer.render = function () {
     }
   }
   else {
-    $.noty.ontap = true; // Queue is over
+    $.noty.ontap = true; 
   }
 
 };
@@ -517,7 +517,7 @@ $.notyRenderer.show = function (notification) {
     $.notyRenderer.setModalCount(+1);
   }
 
-  // Where is the container?
+  
   if (notification.options.custom) {
     if (notification.options.custom.find(notification.options.layout.container.selector).length == 0) {
       notification.options.custom.append($(notification.options.layout.container.object).addClass('i-am-new'));
@@ -572,7 +572,7 @@ $.notyRenderer.setModalCount = function (arg) {
   return $('.noty_modal').data('noty_modal_count', $.notyRenderer.getModalCount() + arg);
 };
 
-// This is for custom container
+
 $.fn.noty = function (options) {
   options.custom = $(this);
   return $.notyRenderer.init(options);
@@ -674,7 +674,7 @@ $(window).on('resize', function () {
   });
 });
 
-// Helpers
+
 window.noty = function noty(options) {
   return $.notyRenderer.init(options);
 };
@@ -712,7 +712,7 @@ $.noty.layouts.bottom = {
 
 $.noty.layouts.bottomCenter = {
     name     : 'bottomCenter',
-    options  : { // overrides options
+    options  : { 
 
     },
     container: {
@@ -751,7 +751,7 @@ $.noty.layouts.bottomCenter = {
 
 $.noty.layouts.bottomLeft = {
     name     : 'bottomLeft',
-    options  : { // overrides options
+    options  : { 
 
     },
     container: {
@@ -790,7 +790,7 @@ $.noty.layouts.bottomLeft = {
 };
 $.noty.layouts.bottomRight = {
     name     : 'bottomRight',
-    options  : { // overrides options
+    options  : { 
 
     },
     container: {
@@ -829,7 +829,7 @@ $.noty.layouts.bottomRight = {
 };
 $.noty.layouts.center = {
     name     : 'center',
-    options  : { // overrides options
+    options  : { 
 
     },
     container: {
@@ -846,7 +846,7 @@ $.noty.layouts.center = {
                 zIndex       : 10000000
             });
 
-            // getting hidden height
+            
             var dupe = $(this).clone().css({visibility: "hidden", display: "block", position: "absolute", top: 0, left: 0}).attr('id', 'dupe');
             $("body").append(dupe);
             dupe.find('.i-am-closing-now').remove();
@@ -882,7 +882,7 @@ $.noty.layouts.center = {
 };
 $.noty.layouts.centerLeft = {
     name     : 'centerLeft',
-    options  : { // overrides options
+    options  : { 
 
     },
     container: {
@@ -900,7 +900,7 @@ $.noty.layouts.centerLeft = {
                 zIndex       : 10000000
             });
 
-            // getting hidden height
+            
             var dupe = $(this).clone().css({visibility: "hidden", display: "block", position: "absolute", top: 0, left: 0}).attr('id', 'dupe');
             $("body").append(dupe);
             dupe.find('.i-am-closing-now').remove();
@@ -941,7 +941,7 @@ $.noty.layouts.centerLeft = {
 
 $.noty.layouts.centerRight = {
     name     : 'centerRight',
-    options  : { // overrides options
+    options  : { 
 
     },
     container: {
@@ -959,7 +959,7 @@ $.noty.layouts.centerRight = {
                 zIndex       : 10000000
             });
 
-            // getting hidden height
+            
             var dupe = $(this).clone().css({visibility: "hidden", display: "block", position: "absolute", top: 0, left: 0}).attr('id', 'dupe');
             $("body").append(dupe);
             dupe.find('.i-am-closing-now').remove();
@@ -1056,7 +1056,7 @@ $.noty.layouts.top = {
 };
 $.noty.layouts.topCenter = {
     name     : 'topCenter',
-    options  : { // overrides options
+    options  : { 
 
     },
     container: {
@@ -1094,7 +1094,7 @@ $.noty.layouts.topCenter = {
 
 $.noty.layouts.topLeft = {
     name     : 'topLeft',
-    options  : { // overrides options
+    options  : { 
 
     },
     container: {
@@ -1133,7 +1133,7 @@ $.noty.layouts.topLeft = {
 };
 $.noty.layouts.topRight = {
     name     : 'topRight',
-    options  : { // overrides options
+    options  : { 
 
     },
     container: {
@@ -1862,9 +1862,9 @@ $.noty.themes.semanticUI = {
   },
   callback: {
     onShow : function () {
-      // Enable transition
+      
       this.$bar.addClass('transition');
-      // Actual transition
+      
       this.$bar.transition(this.options.animation.open);
     },
     onClose: function () {
@@ -1882,26 +1882,26 @@ $.noty.defaults = {
     layout: 'top',
     theme: 'defaultTheme',
     type: 'alert',
-    text: '', // can be html or string
-    dismissQueue: true, // If you want to use queue feature set this true
+    text: '', 
+    dismissQueue: true, 
     template: '<div class="noty_message"><span class="noty_text"></span><div class="noty_close"></div></div>',
     animation: {
         open: {height: 'toggle'},
         close: {height: 'toggle'},
         easing: 'swing',
-        speed: 500 // opening & closing animation speed
+        speed: 500 
     },
-    timeout: 1000, // delay for closing event. Set false for sticky notifications
-    force: false, // adds notification to the beginning of queue when set to true
+    timeout: 1000, 
+    force: false, 
     modal: false,
-    maxVisible: 5, // you can set max visible notification for dismissQueue true option,
-    killer: false, // for close all notifications before show
-    closeWith: ['click'], // ['click', 'button', 'hover', 'backdrop'] // backdrop click will close all open notifications
+    maxVisible: 5, 
+    killer: false, 
+    closeWith: ['click'], 
     callback: {
         onShow: function() {},
         afterShow: function() {},
         onClose: function() {},
         afterClose: function() {}
     },
-    buttons: false // an array of buttons
+    buttons: false 
 };

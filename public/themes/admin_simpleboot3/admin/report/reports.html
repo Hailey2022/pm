@@ -1,0 +1,117 @@
+<include file="public@header" />
+<style>
+    .deleteBtn {
+        color: #ff0000;
+    }
+
+    .deleteBtn:hover {
+        color: #ff0000;
+    }
+</style>
+
+<body>
+    <div class="wrap js-check-wrap">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="{:url('Report/reports')}">查看报表</a></li>
+            <li><a href="{:url('Report/addReport')}">添加报表</a></li>
+        </ul>
+        <table class="table table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th style="text-align: center;">序号</th>
+                    <th style="text-align: center;">类别</th>
+                    <th style="text-align: center;">报表名</th>
+                    <th style="text-align: center;">工程名称</th>
+                    <th style="text-align: center;">合同</th>
+                    <th style="text-align: center;">服务商</th>
+                    <th style="text-align: center;">报表时间</th>
+                    <th style="text-align: center;">附件</th>
+                    <th style="text-align: center;">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <foreach name="reports" item="r" key="k">
+                    <if condition="$k%2!=0">
+                        <switch name="r.reportType">
+                            <case value="日报">
+                                <tr class="daily" style='background-color:rgb(255, 255, 255)'>
+                            </case>
+                            <case value="月报">
+                                <tr class="monthly" style='background-color:rgb(255, 255, 255)'>
+                            </case>
+                        </switch>
+                        <else />
+                        <switch name="r.reportType">
+                            <case value="日报">
+                                <tr class="daily" style='background-color:rgb(245, 247, 250)'>
+                            </case>
+                            <case value="月报">
+                                <tr class="monthly" style='background-color:rgb(245, 247, 250)'>
+                            </case>
+                        </switch>
+                    </if>
+                    <td style="text-align: center;">{$k + 1}</td>
+                    <td style="text-align: center;">{$r.reportType}</td>
+                    <td style="text-align: center;">{$r.reportName}</td>
+                    <td style="text-align: center;">{$r.projectName}</td>
+                    <td style="text-align: center;">{$r.contractName}</td>
+                    <td style="text-align: center;">{$r.user_login}</td>
+                    <td style="text-align: center;">{$r.reportTime}</td>
+                    <td style="text-align: center;">
+                        <if condition="$r.file_urls != 'null'">
+                            <a
+                                href="javascript:display('{:url('report/listReportFiles', ['reportId'=>$r['reportId']])}', '{$r.user_login}', '{$r.contractName}', '{$r.reportTime}', '{$r.reportType}')">查看</a>
+                        </if>
+                    </td>
+                    <td style="text-align: center;">
+                        <a href="{:url('report/updateReport', ['reportId'=>$r['reportId']])}">修改</a>
+                        <a href="{:url('report/deleteReport', ['reportId'=>$r['reportId']])}"
+                            onclick="return handleDelete()" class="deleteBtn">删除</a>
+                    </td>
+                    </tr>
+                </foreach>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+<script src="__STATIC__/js/admin.js"></script>
+<script>
+    function display(url, user_login, contractName, reportTime, reportType) {
+        var title = '预览 ';
+        if (user_login) {
+            title += user_login;
+            title += " "
+        }
+        if (contractName) {
+            title += "针对"
+            title += contractName
+            title += " "
+        }
+        if (reportTime) {
+            title += "在"
+            title += reportTime
+            title += "上传的 "
+        }
+        if (reportType) {
+            title += reportType
+        }
+        parent.openIframeLayer(url, title, {
+            skin: 'layui-layer-rim',
+            closeBtn: 1,
+            shadeClose: true,
+            area: ['1200px', '600px']
+        })
+    }
+
+    function handleDelete() {
+        var tmp = "{:cmf_random_string($len = 8)}";
+        var input = prompt("正在删除报表，删除后不可还原，请输入 " + tmp + " 删除");
+        if (input == tmp) {
+            return true
+        } else if (input != null) {
+            alert("输入错误，取消删除")
+        }
+        return false
+    }
+</script>

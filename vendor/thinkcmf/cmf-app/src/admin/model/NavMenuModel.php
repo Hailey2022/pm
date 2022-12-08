@@ -1,13 +1,5 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2013-present http://www.thinkcmf.com All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: 老猫 <thinkcmf@126.com>
-// +----------------------------------------------------------------------
+
 namespace app\admin\model;
 
 use think\Exception;
@@ -16,21 +8,10 @@ use tree\Tree;
 
 class NavMenuModel extends Model
 {
-    /**
-     * 模型名称
-     * @var string
-     */
+    
     protected $name = 'nav_menu';
 
-    /**
-     * 获取某导航下所有菜单树形结构数组
-     * @param int $navId    导航id
-     * @param int $maxLevel 最大获取层级,默认不限制
-     * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
-     */
+    
     public function navMenusTreeArray($navId = 0, $maxLevel = 0)
     {
         if (empty($navId)) {
@@ -49,14 +30,7 @@ class NavMenuModel extends Model
         return $navMenusTree;
     }
 
-    /**
-     * 获取某导航菜单下的所有子菜单树形结构数组
-     * @param $menuId 导航菜单 id
-     * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
-     */
+    
     public function subNavMenusTreeArray($menuId)
     {
 
@@ -101,10 +75,7 @@ class NavMenuModel extends Model
         }
     }
 
-    /**
-     * 获取共享nav模板结构
-     * @return array
-     */
+    
     public function selectNavs()
     {
 
@@ -125,10 +96,7 @@ class NavMenuModel extends Model
 
     }
 
-    /**
-     * 获取共享nav数据
-     * @return array
-     */
+    
     private function getNavData()
     {
         $apps = cmf_scan_dir(APP_PATH . "*");
@@ -176,11 +144,7 @@ class NavMenuModel extends Model
         return $navs;
     }
 
-    /**
-     * 解析导航数据
-     * @param $navData
-     * @param $navApi
-     */
+    
     private function parseNavData(&$navData, $navApi)
     {
         //TODO 检查导航数据合法性

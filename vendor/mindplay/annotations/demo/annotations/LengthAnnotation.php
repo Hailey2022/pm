@@ -1,41 +1,22 @@
 <?php
 
-/**
- * This file is part of the php-annotation framework.
- *
- * (c) Rasmus Schultz <rasmus@mindplay.dk>
- *
- * This software is licensed under the GNU LGPL license
- * for more information, please see:
- *
- * <https://github.com/mindplay-dk/php-annotations>
- */
+
 
 namespace mindplay\demo\annotations;
 
 
 use mindplay\annotations\AnnotationException;
 
-/**
- * Specifies validation of a string, requiring a minimum and/or maximum length.
- *
- * @usage('property'=>true, 'inherited'=>true)
- */
+
 class LengthAnnotation extends ValidationAnnotationBase
 {
-    /**
-     * @var int|null Minimum string length (or null, if no minimum)
-     */
+    
     public $min = null;
 
-    /**
-     * @var int|null Maximum string length (or null, if no maximum)
-     */
+    
     public $max = null;
 
-    /**
-     * Initialize the annotation.
-     */
+    
     public function initAnnotation(array $properties)
     {
         if (isset($properties[0])) {

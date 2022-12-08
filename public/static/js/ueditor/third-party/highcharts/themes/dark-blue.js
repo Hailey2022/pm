@@ -147,7 +147,7 @@ Highcharts.theme = {
 		}
 	},
 
-	// scroll charts
+	
 	rangeSelector: {
 		buttonTheme: {
 			fill: {
@@ -242,7 +242,7 @@ Highcharts.theme = {
 		trackBorderColor: '#666'
 	},
 
-	// special colors for some of the
+	
 	legendBackgroundColor: 'rgba(0, 0, 0, 0.5)',
 	legendBackgroundColorSolid: 'rgb(35, 35, 70)',
 	dataLabelsColor: '#444',
@@ -250,5 +250,5 @@ Highcharts.theme = {
 	maskColor: 'rgba(255,255,255,0.3)'
 };
 
-// Apply the theme
+
 var highchartsOptions = Highcharts.setOptions(Highcharts.theme);

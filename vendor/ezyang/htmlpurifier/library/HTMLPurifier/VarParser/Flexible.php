@@ -1,28 +1,18 @@
 <?php
 
-/**
- * Performs safe variable parsing based on types which can be used by
- * users. This may not be able to represent all possible data inputs,
- * however.
- */
+
 class HTMLPurifier_VarParser_Flexible extends HTMLPurifier_VarParser
 {
-    /**
-     * @param mixed $var
-     * @param int $type
-     * @param bool $allow_null
-     * @return array|bool|float|int|mixed|null|string
-     * @throws HTMLPurifier_VarParserException
-     */
+    
     protected function parseImplementation($var, $type, $allow_null)
     {
         if ($allow_null && $var === null) {
             return null;
         }
         switch ($type) {
-            // Note: if code "breaks" from the switch, it triggers a generic
-            // exception to be thrown. Specific errors can be specifically
-            // done here.
+            
+            
+            
             case self::C_MIXED:
             case self::ISTRING:
             case self::C_STRING:
@@ -56,25 +46,25 @@ class HTMLPurifier_VarParser_Flexible extends HTMLPurifier_VarParser
             case self::HASH:
             case self::LOOKUP:
                 if (is_string($var)) {
-                    // special case: technically, this is an array with
-                    // a single empty string item, but having an empty
-                    // array is more intuitive
+                    
+                    
+                    
                     if ($var == '') {
                         return array();
                     }
                     if (strpos($var, "\n") === false && strpos($var, "\r") === false) {
-                        // simplistic string to array method that only works
-                        // for simple lists of tag names or alphanumeric characters
+                        
+                        
                         $var = explode(',', $var);
                     } else {
                         $var = preg_split('/(,|[\n\r]+)/', $var);
                     }
-                    // remove spaces
+                    
                     foreach ($var as $i => $j) {
                         $var[$i] = trim($j);
                     }
                     if ($type === self::HASH) {
-                        // key:value,key2:value2
+                        
                         $nvar = array();
                         foreach ($var as $keypair) {
                             $c = explode(':', $keypair, 2);
@@ -127,4 +117,4 @@ class HTMLPurifier_VarParser_Flexible extends HTMLPurifier_VarParser
     }
 }
 
-// vim: et sw=4 sts=4
+

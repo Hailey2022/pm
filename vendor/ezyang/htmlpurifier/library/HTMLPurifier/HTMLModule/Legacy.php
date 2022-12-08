@@ -1,31 +1,13 @@
 <?php
 
-/**
- * XHTML 1.1 Legacy module defines elements that were previously
- * deprecated.
- *
- * @note Not all legacy elements have been implemented yet, which
- *       is a bit of a reverse problem as compared to browsers! In
- *       addition, this legacy module may implement a bit more than
- *       mandated by XHTML 1.1.
- *
- * This module can be used in combination with TransformToStrict in order
- * to transform as many deprecated elements as possible, but retain
- * questionably deprecated elements that do not have good alternatives
- * as well as transform elements that don't have an implementation.
- * See docs/ref-strictness.txt for more details.
- */
+
 
 class HTMLPurifier_HTMLModule_Legacy extends HTMLPurifier_HTMLModule
 {
-    /**
-     * @type string
-     */
+    
     public $name = 'Legacy';
 
-    /**
-     * @param HTMLPurifier_Config $config
-     */
+    
     public function setup($config)
     {
         $this->addElement(
@@ -35,8 +17,8 @@ class HTMLPurifier_HTMLModule_Legacy extends HTMLPurifier_HTMLModule
             null,
             array(
                 'color' => 'Color',
-                'face' => 'Text', // extremely broad, we should
-                'size' => 'Text', // tighten it
+                'face' => 'Text', 
+                'size' => 'Text', 
                 'id' => 'ID'
             )
         );
@@ -57,8 +39,8 @@ class HTMLPurifier_HTMLModule_Legacy extends HTMLPurifier_HTMLModule
             array('Core', 'I18N'),
             array(
                 'color' => 'Color',
-                'face' => 'Text', // extremely broad, we should
-                'size' => 'Text', // tighten it
+                'face' => 'Text', 
+                'size' => 'Text', 
             )
         );
         $this->addElement(
@@ -80,7 +62,7 @@ class HTMLPurifier_HTMLModule_Legacy extends HTMLPurifier_HTMLModule
         $u = $this->addElement('u', 'Inline', 'Inline', 'Common');
         $u->formatting = true;
 
-        // setup modifications to old elements
+        
 
         $align = 'Enum#left,right,center,justify';
 
@@ -123,7 +105,7 @@ class HTMLPurifier_HTMLModule_Legacy extends HTMLPurifier_HTMLModule
         $img->attr['hspace'] = 'Pixels';
         $img->attr['vspace'] = 'Pixels';
 
-        // figure out this integer business
+        
 
         $li = $this->addBlankElement('li');
         $li->attr['value'] = new HTMLPurifier_AttrDef_Integer();
@@ -140,7 +122,7 @@ class HTMLPurifier_HTMLModule_Legacy extends HTMLPurifier_HTMLModule
         $pre = $this->addBlankElement('pre');
         $pre->attr['width'] = 'Number';
 
-        // script omitted
+        
 
         $table = $this->addBlankElement('table');
         $table->attr['align'] = 'Enum#left,center,right';
@@ -165,10 +147,10 @@ class HTMLPurifier_HTMLModule_Legacy extends HTMLPurifier_HTMLModule
         $ul->attr['compact'] = 'Bool#compact';
         $ul->attr['type'] = 'Enum#square,disc,circle';
 
-        // "safe" modifications to "unsafe" elements
-        // WARNING: If you want to add support for an unsafe, legacy
-        // attribute, make a new TrustedLegacy module with the trusted
-        // bit set appropriately
+        
+        
+        
+        
 
         $form = $this->addBlankElement('form');
         $form->content_model = 'Flow | #PCDATA';
@@ -183,4 +165,4 @@ class HTMLPurifier_HTMLModule_Legacy extends HTMLPurifier_HTMLModule
     }
 }
 
-// vim: et sw=4 sts=4
+

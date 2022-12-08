@@ -1,13 +1,13 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkPHP [ WE CAN DO IT JUST THINK ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2006~2015 http://thinkphp.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: yunwuxin <448901948@qq.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 
 namespace think\console\output\question;
 
@@ -21,12 +21,7 @@ class Choice extends Question
     private $prompt       = ' > ';
     private $errorMessage = 'Value "%s" is invalid';
 
-    /**
-     * 构造方法
-     * @param string $question 问题
-     * @param array  $choices  选项
-     * @param mixed  $default  默认答案
-     */
+    
     public function __construct($question, array $choices, $default = null)
     {
         parent::__construct($question, $default);
@@ -36,20 +31,13 @@ class Choice extends Question
         $this->setAutocompleterValues($choices);
     }
 
-    /**
-     * 可选项
-     * @return array
-     */
+    
     public function getChoices()
     {
         return $this->choices;
     }
 
-    /**
-     * 设置可否多选
-     * @param bool $multiselect
-     * @return self
-     */
+    
     public function setMultiselect($multiselect)
     {
         $this->multiselect = $multiselect;
@@ -63,20 +51,13 @@ class Choice extends Question
         return $this->multiselect;
     }
 
-    /**
-     * 获取提示
-     * @return string
-     */
+    
     public function getPrompt()
     {
         return $this->prompt;
     }
 
-    /**
-     * 设置提示
-     * @param string $prompt
-     * @return self
-     */
+    
     public function setPrompt($prompt)
     {
         $this->prompt = $prompt;
@@ -84,11 +65,7 @@ class Choice extends Question
         return $this;
     }
 
-    /**
-     * 设置错误提示信息
-     * @param string $errorMessage
-     * @return self
-     */
+    
     public function setErrorMessage($errorMessage)
     {
         $this->errorMessage = $errorMessage;
@@ -97,10 +74,7 @@ class Choice extends Question
         return $this;
     }
 
-    /**
-     * 获取默认的验证方法
-     * @return callable
-     */
+    
     private function getDefaultValidator()
     {
         $choices      = $this->choices;
@@ -109,11 +83,11 @@ class Choice extends Question
         $isAssoc      = $this->isAssoc($choices);
 
         return function ($selected) use ($choices, $errorMessage, $multiselect, $isAssoc) {
-            // Collapse all spaces.
+            
             $selectedChoices = str_replace(' ', '', $selected);
 
             if ($multiselect) {
-                // Check for a separated comma values
+                
                 if (!preg_match('/^[a-zA-Z0-9_-]+(?:,[a-zA-Z0-9_-]+)*$/', $selectedChoices, $matches)) {
                     throw new \InvalidArgumentException(sprintf($errorMessage, $selected));
                 }

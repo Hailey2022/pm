@@ -1,48 +1,24 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2013-present http://www.thinkcmf.com All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: 小夏 < 449134904@qq.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 namespace app\admin\controller;
 
 use app\admin\model\RouteModel;
 use app\admin\model\UserModel;
 use cmf\controller\AdminBaseController;
 
-/**
- * Class SettingController
- * @package app\admin\controller
- * @adminMenuRoot(
- *     'name'   =>'设置',
- *     'action' =>'default',
- *     'parent' =>'',
- *     'display'=> true,
- *     'order'  => 0,
- *     'icon'   =>'cogs',
- *     'remark' =>'系统设置入口'
- * )
- */
+
 class SettingController extends AdminBaseController
 {
 
-    /**
-     * 网站信息
-     * @adminMenu(
-     *     'name'   => '网站信息',
-     *     'parent' => 'default',
-     *     'display'=> true,
-     *     'hasView'=> true,
-     *     'order'  => 0,
-     *     'icon'   => '',
-     *     'remark' => '网站信息',
-     *     'param'  => ''
-     * )
-     */
+    
     public function site()
     {
         $content = hook_one('admin_setting_site_view');
@@ -68,7 +44,7 @@ class SettingController extends AdminBaseController
             }
         }
 
-        if (APP_DEBUG && false) { // TODO 没确定要不要可以设置默认应用
+        if (APP_DEBUG && false) { 
             $apps = cmf_scan_dir(APP_PATH . '*', GLOB_ONLYDIR);
             $apps = array_diff($apps, $noNeedDirs);
             $this->assign('apps', $apps);
@@ -148,37 +124,13 @@ class SettingController extends AdminBaseController
         }
     }
 
-    /**
-     * 密码修改
-     * @adminMenu(
-     *     'name'   => '密码修改',
-     *     'parent' => 'default',
-     *     'display'=> false,
-     *     'hasView'=> true,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '密码修改',
-     *     'param'  => ''
-     * )
-     */
+    
     public function password()
     {
         return $this->fetch();
     }
 
-    /**
-     * 密码修改提交
-     * @adminMenu(
-     *     'name'   => '密码修改提交',
-     *     'parent' => 'password',
-     *     'display'=> false,
-     *     'hasView'=> false,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '密码修改提交',
-     *     'param'  => ''
-     * )
-     */
+    
     public function passwordPost()
     {
         if ($this->request->isPost()) {
@@ -218,19 +170,7 @@ class SettingController extends AdminBaseController
         }
     }
 
-    /**
-     * 上传限制设置界面
-     * @adminMenu(
-     *     'name'   => '上传设置',
-     *     'parent' => 'default',
-     *     'display'=> true,
-     *     'hasView'=> true,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '上传设置',
-     *     'param'  => ''
-     * )
-     */
+    
     public function upload()
     {
         $uploadSetting = cmf_get_upload_setting();
@@ -238,19 +178,7 @@ class SettingController extends AdminBaseController
         return $this->fetch();
     }
 
-    /**
-     * 上传限制设置界面提交
-     * @adminMenu(
-     *     'name'   => '上传设置提交',
-     *     'parent' => 'upload',
-     *     'display'=> false,
-     *     'hasView'=> false,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '上传设置提交',
-     *     'param'  => ''
-     * )
-     */
+    
     public function uploadPost()
     {
         if ($this->request->isPost()) {
@@ -263,19 +191,7 @@ class SettingController extends AdminBaseController
 
     }
 
-    /**
-     * 清除缓存
-     * @adminMenu(
-     *     'name'   => '清除缓存',
-     *     'parent' => 'default',
-     *     'display'=> false,
-     *     'hasView'=> true,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '清除缓存',
-     *     'param'  => ''
-     * )
-     */
+    
     public function clearCache()
     {
         $content = hook_one('admin_setting_clear_cache_view');

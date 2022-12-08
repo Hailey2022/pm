@@ -1,48 +1,85 @@
 <include file="public@header" />
 <!DOCTYPE html>
-<html lang="en">
+<html style="background-color:#f8f9fa">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="__STATIC__/css/newbootstrap.min.css" rel="stylesheet">
+
     <title>合同</title>
-    <script type="text/html" id="files-item-tpl">
-        <li id="saved-file{id}">
-            <input id="file-{id}" type="hidden" name="file_urls[]" value="{filepath}">
-            <input class="form-control" id="file-{id}-name" type="text" name="file_names[]" value="{name}"
-                   style="width: 200px;" title="文件名称">
-            <a id="file-{id}-preview" href="{preview_url}" target="_blank">下载</a>
-            <a href="javascript:uploadOne('文件上传','#file-{id}','file');">替换</a>
-            <a href="javascript:(function(){$('#saved-file{id}').remove();})();">移除</a>
-        </li>
-    </script>
 </head>
+<style>
+    .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+    }
+
+    @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+            font-size: 3.5rem;
+        }
+    }
+
+    .bi {
+        vertical-align: -.125em;
+        fill: currentColor;
+    }
+
+    .nav-scroller {
+        position: relative;
+        z-index: 2;
+        height: 2.75rem;
+        overflow-y: hidden;
+    }
+
+    .nav-scroller .nav {
+        display: flex;
+        flex-wrap: nowrap;
+        padding-bottom: 1rem;
+        margin-top: -1px;
+        overflow-x: auto;
+        text-align: center;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+    }
+</style>
 
 <body>
-    <div class="col-md-6 col-sm-10">
-        <tr>
-            <td>
-                <ul id="files" class="pic-list list-unstyled form-inline">
+    <main>
+        <div class="album py-3 bg-light">
+            <div class="container">
+                <div class="row row-cols-3 row-cols-sm-3 row-cols-md-3 g-3">
                     <notempty name="files">
                         <foreach name="files" key="url" item="name">
                             <php>$file_url=cmf_get_file_download_url($url);</php>
                             <php>$file_id=hash("sha256", $url);</php>
-                            <li id="saved-file{$file_id}">
-                                <input id="file-{$file_id}" type="hidden" name="file_urls[]" value="{$url}">
-                                <input class="form-control" id="file-{$file_id}-name" type="text" name="file_names[]"
-                                    value="{$name}" style="width: 200px;" title="文件名称">
-                                <a class="btn" id="file-{$file_id}-download" href="{$file_url}" target="_blank"
-                                   class="btn"  download="{$name}">下载</a>
-                                <a class="btn" id="file-{$file_id}-preview" onclick='handlePreview("{$file_url}")'
-                                    target="_blank">预览</a>
-                            </li>
+                            <div class="col">
+                                <div class="card shadow-sm">
+                                    <div class="card-body d-flex flex-column">
+                                        <p class="card-text">{$name}</p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="btn-group">
+                                                <a type="button" class="btn btn-sm btn-outline-secondary"
+                                                    onclick='handlePreview("{$file_url}")'>预览</a>
+                                                <a type="button" class="btn btn-sm btn-outline-secondary"
+                                                    href="{$file_url}" target="_blank" download="{$name}">下载</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </foreach>
                     </notempty>
-                </ul>
-            </td>
-        </tr>
-    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
 
 </html>
 
@@ -51,7 +88,8 @@
 <script type="text/javascript">
     function handlePreview(url) {
         if (url.slice(-3) == 'pdf') {
-            var openstr = '<object><iframe align="center" height="550" style="margin-top:8px;margin-left:8px" src="' + url + '" ></iframe></object>';
+            window.open(url, '预览pdf');
+            return;
         } else if (url.slice(-3) == 'png' || url.slice(-3) == 'jpg' || url.slice(-4) == 'jepg') {
             var openstr = '<img align="center" height="550" style="margin-top:8px;margin-left:8px" src="' + url + '" />';
         } else {

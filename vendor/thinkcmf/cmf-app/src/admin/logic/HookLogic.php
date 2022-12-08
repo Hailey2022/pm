@@ -1,13 +1,5 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2013-present http://www.thinkcmf.com All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: 老猫 <thinkcmf@126.com>
-// +----------------------------------------------------------------------
+
 
 namespace app\admin\logic;
 
@@ -15,17 +7,7 @@ use app\admin\model\HookModel;
 
 class HookLogic
 {
-    /**
-     * 导入应用钩子
-     * @param $app
-     * @return array
-     * @throws \ReflectionException
-     * @throws \think\Exception
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
-     * @throws \think\exception\PDOException
-     */
+    
     public static function importHooks($app)
     {
         $hookConfigFile = cmf_get_app_config_file($app, 'hooks');

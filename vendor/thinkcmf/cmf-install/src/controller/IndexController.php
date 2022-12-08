@@ -1,13 +1,5 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2013-present http://www.thinkcmf.com All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: 老猫 <thinkcmf@126.com>
-// +----------------------------------------------------------------------
+
 namespace app\install\controller;
 
 use app\admin\logic\HookLogic;
@@ -44,7 +36,7 @@ class IndexController extends BaseController
         config('template.view_path', dirname(__DIR__) . '/view/');
     }
 
-    // 安装首页
+    
     public function index()
     {
         return $this->fetch(":index");
@@ -52,20 +44,20 @@ class IndexController extends BaseController
 
     public function step2()
     {
-//        if (file_exists_case('data/conf/config.php')) {
-//            @unlink('data/conf/config.php');
-//        }
+
+
+
         $data               = [];
         $data['phpversion'] = @phpversion();
         $data['os']         = PHP_OS;
         $tmp                = function_exists('gd_info') ? gd_info() : [];
-//        $server             = $_SERVER["SERVER_SOFTWARE"];
-//        $host               = $this->request->host();
-//        $name               = $_SERVER["SERVER_NAME"];
-//        $max_execution_time = ini_get('max_execution_time');
-//        $allow_reference    = (ini_get('allow_call_time_pass_reference') ? '<font color=green>[√]On</font>' : '<font color=red>[×]Off</font>');
-//        $allow_url_fopen    = (ini_get('allow_url_fopen') ? '<font color=green>[√]On</font>' : '<font color=red>[×]Off</font>');
-//        $safe_mode          = (ini_get('safe_mode') ? '<font color=red>[×]On</font>' : '<font color=green>[√]Off</font>');
+
+
+
+
+
+
+
 
         $err = 0;
         if (empty($tmp['GD Version'])) {
@@ -341,7 +333,7 @@ class IndexController extends BaseController
             $this->error('模板不存在!');
         }
 
-//        session("install.step", 4);
+
         $this->success("模板安装成功");
     }
 
@@ -349,7 +341,7 @@ class IndexController extends BaseController
     {
         $apps = cmf_scan_dir(CMF_ROOT . 'app/*', GLOB_ONLYDIR);
         foreach ($apps as $app) {
-            // 导入后台菜单
+            
             MenuLogic::importMenus($app);
         }
 
@@ -361,7 +353,7 @@ class IndexController extends BaseController
         $apps = cmf_scan_dir(CMF_ROOT . 'app/*', GLOB_ONLYDIR);
         foreach ($apps as $app) {
 
-            // 导入应用钩子
+            
             HookLogic::importHooks($app);
         }
 
@@ -373,7 +365,7 @@ class IndexController extends BaseController
     {
         $apps = cmf_scan_dir(CMF_ROOT . 'app/*', GLOB_ONLYDIR);
         foreach ($apps as $app) {
-            // 导入应用用户行为
+            
             UserActionLogic::importUserActions($app);
         }
 
@@ -400,7 +392,7 @@ class IndexController extends BaseController
             $supportInnoDb = false;
 
             try {
-//                Db::connect($dbConfig)->query("SELECT VERSION();");
+
                 $engines = Db::connect($dbConfig)->query("SHOW ENGINES;");
 
                 foreach ($engines as $engine) {
@@ -436,7 +428,7 @@ class IndexController extends BaseController
             try {
                 //检查 cmf_admin_menu  
                 $table = $dbConfig['dbprefix']."admin_menu";
-                // Db::connect($dbConfig)->query("use ".$dbConfig['dbname'].";");
+                
                 $tableExist = Db::connect($dbConfig)->query("show tables like '".$table."';");
                 if($tableExist){
                     $dataExist = Db::connect($dbConfig)->query("select * from ".$table." where 1;");

@@ -1,13 +1,13 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2013-present http://www.thinkcmf.com All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: 小夏 < 449134904@qq.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 namespace app\admin\validate;
 
 use think\Validate;
@@ -24,7 +24,7 @@ class RouteValidate extends Validate
         'full_url.require' => '原始网址不能为空',
     ];
 
-    // 自定义验证规则
+    
     protected function checkUrl($value, $rule, $data)
     {
         $value = htmlspecialchars_decode($value);
@@ -35,7 +35,7 @@ class RouteValidate extends Validate
         return true;
     }
 
-    // 自定义验证规则
+    
     protected function checkFullUrl($value, $rule, $data)
     {
         $value = htmlspecialchars_decode($value);

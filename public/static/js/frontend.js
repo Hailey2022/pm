@@ -287,14 +287,14 @@
                                     type: 'error',
                                     layout: 'center',
                                     callback: {
-                                        // afterClose: function () {
-                                        //     if (window.parent.art) {
-                                        //         reloadPage(window.parent);
-                                        //     } else {
-                                        //         //刷新当前页
-                                        //         reloadPage(window);
-                                        //     }
-                                        // }
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
                                     }
                                 });
                             },
@@ -809,7 +809,7 @@
         });
     }
 
-    // bootstrap年选择器
+    
     var bootstrapYearInput = $("input.js-bootstrap-year")
     if (bootstrapYearInput.length) {
         Wind.css('bootstrapDatetimePicker');
@@ -825,7 +825,7 @@
         });
     }
 
-    // bootstrap年月份选择器
+    
     var bootstrapYearMonthInput = $("input.js-bootstrap-year-month");
     if (bootstrapYearMonthInput.length) {
         Wind.css('bootstrapDatetimePicker');
@@ -841,7 +841,7 @@
         });
     }
 
-    // bootstrap日期选择器
+    
     var bootstrapDateInput = $("input.js-bootstrap-date")
     if (bootstrapDateInput.length) {
         Wind.css('bootstrapDatetimePicker');
@@ -856,7 +856,7 @@
         });
     }
 
-    // bootstrap日期选择器日期+时间选择器
+    
     var bootstrapDateTimeInput = $("input.js-bootstrap-datetime");
     if (bootstrapDateTimeInput.length) {
         Wind.css('bootstrapDatetimePicker');
@@ -1130,7 +1130,7 @@ function getCookie(name) {
         var cookies = document.cookie.split(';');
         for (var i = 0; i < cookies.length; i++) {
             var cookie = jQuery.trim(cookies[i]);
-            // Does this cookie string begin with the name we want?
+            
             if (cookie.substring(0, name.length + 1) == (name + '=')) {
                 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
                 break;
@@ -1158,7 +1158,7 @@ function setCookie(name, value, options) {
         } else {
             date = options.expires;
         }
-        expires = '; expires=' + date.toUTCString(); // use expires attribute, max-age is not supported by IE
+        expires = '; expires=' + date.toUTCString(); 
     }
     var path        = options.path ? '; path=' + options.path : '';
     var domain      = options.domain ? '; domain=' + options.domain : '';
@@ -1357,7 +1357,7 @@ function openIframeLayer(url, title, options) {
         type: 2,
         title: title,
         shadeClose: true,
-        // skin: 'layui-layer-nobg',
+        
         shade: [0.001, '#000000'],
         shadeClose: true,
         area: ['95%', '90%'],

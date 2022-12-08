@@ -2,74 +2,33 @@
 namespace mindplay\test\lib;
 use mindplay\test\lib\ResultPrinter\ResultPrinter;
 
-/**
- * A base class to support simple unit tests.
- *
- * To define a test, declare a method with no arguments, prefixing it's name with "test",
- * for example: function testCanReadXmlFeed().
- *
- * If you declare an init() method, this will be run once before proceeding with the tests.
- *
- * If you declare a setup() and/or teardown() method, these will be run before/after each test.
- *
- * @todo document missing parameters and return-types
- */
+
 abstract class xTest
 {
     private $result;
 
-    /**
-     * Test runner.
-     *
-     * @var xTestRunner
-     */
+    
     private $testRunner;
 
-    /**
-     * Result printer.
-     *
-     * @var ResultPrinter
-     */
+    
     private $resultPrinter;
 
-    /**
-     * The name of the expected Exception.
-     *
-     * @var mixed
-     */
+    
     private $expectedException = null;
 
-    /**
-     * The message of the expected Exception.
-     *
-     * @var string
-     */
+    
     private $expectedExceptionMessage = '';
 
-    /**
-     * The code of the expected Exception.
-     *
-     * @var integer
-     */
+    
     private $expectedExceptionCode;
 
-    /**
-     * Sets result printer.
-     *
-     * @param ResultPrinter $resultPrinter Result printer.
-     * @return void
-     */
+    
     public function setResultPrinter(ResultPrinter $resultPrinter)
     {
         $this->resultPrinter = $resultPrinter;
     }
 
-    /**
-     * Run this test.
-     *
-     * @param xTestRunner $testRunner Test runner.
-     * @return boolean
-     */
+    
     public function run(xTestRunner $testRunner)
     {
         $this->testRunner = $testRunner;
@@ -142,12 +101,7 @@ abstract class xTest
         return $passed == $count;
     }
 
-    /**
-     * Checks that given exception matches expected one.
-     *
-     * @param \Exception $e Exception.
-     * @return void
-     */
+    
     private function assertException(\Exception $e = null)
     {
         if (!is_string($this->expectedException)) {
@@ -184,11 +138,7 @@ abstract class xTest
         $this->pass();
     }
 
-    /**
-     * Returns test result color.
-     *
-     * @return string
-     */
+    
     private function getResultColor()
     {
         if ($this->result !== true) {
@@ -202,11 +152,7 @@ abstract class xTest
         return $color;
     }
 
-    /**
-     * Returns test result message.
-     *
-     * @return string
-     */
+    
     private function getResultMessage()
     {
         if ($this->result === true) {
@@ -220,12 +166,7 @@ abstract class xTest
         return $result;
     }
 
-    /**
-     * Calling this method during a test flags a test as passed or failed.
-     *
-     * @param bool        $pass   bool If this expression evaluates as true, the test is passed
-     * @param bool|string $result string Optional - if supplied, should contain a brief description of why the test failed
-     */
+    
     protected function check($pass, $result = false)
     {
         if ($pass) {
@@ -235,9 +176,7 @@ abstract class xTest
         }
     }
 
-    /**
-     * Calling this method during a test manually flags a test as passed
-     */
+    
     protected function pass()
     {
         if ($this->result === null) {
@@ -245,26 +184,14 @@ abstract class xTest
         }
     }
 
-    /**
-     * Calling this method during a test manually flags a test as failed
-     *
-     * @param bool|string $result string Optional - if supplied, should contain a brief description of why the test failed
-     *
-     * @throws xTestException
-     */
+    
     protected function fail($result = false)
     {
         $this->result = $result;
         throw new xTestException();
     }
 
-    /**
-     * Calling this method during a test flags a test as passed if two values are exactly (===) the same.
-     *
-     * @param mixed       $a    mixed Any value
-     * @param mixed       $b    mixed Any value - if exactly the same as $a, the test is passed
-     * @param bool|string $fail string Optional - if supplied, should contain a brief description of why the test failed
-     */
+    
     protected function eq($a, $b, $fail = false)
     {
         if ($a === $b) {
@@ -274,13 +201,7 @@ abstract class xTest
         }
     }
 
-    /**
-     * Sets expected exception.
-     *
-     * @param mixed   $exceptionName    Exception class name.
-     * @param string  $exceptionMessage Exception message.
-     * @param integer $exceptionCode    Exception code.
-     */
+    
     public function setExpectedException($exceptionName, $exceptionMessage = '', $exceptionCode = null)
     {
         $this->expectedException = $exceptionName;

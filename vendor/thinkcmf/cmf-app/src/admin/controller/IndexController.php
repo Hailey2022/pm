@@ -1,13 +1,13 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2013-present http://www.thinkcmf.com All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: 小夏 < 449134904@qq.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 namespace app\admin\controller;
 
 use cmf\controller\AdminBaseController;
@@ -30,9 +30,7 @@ class IndexController extends AdminBaseController
         parent::initialize();
     }
 
-    /**
-     * 后台首页
-     */
+    
     public function index()
     {
         $content = hook_one('admin_index_index_view');

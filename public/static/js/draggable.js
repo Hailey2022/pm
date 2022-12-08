@@ -9,7 +9,7 @@
 ;(function ( $, window, document, undefined ) {
     var pluginName = 'draggable';
     var defaults = {
-		handle	: '.handle',	// 要拖拽的手柄
+		handle	: '.handle',	
 		limit	: true
     };
 	var lastMouseX,lastMouseY;

@@ -1,44 +1,21 @@
 <?php
 
 namespace tree;
-/**
- * 通用的树型类，可以生成任何树型结构
- */
+
 class Tree
 {
 
-    /**
-     * 生成树型结构所需要的2维数组
-     * @var array
-     */
+    
     public $arr = [];
 
-    /**
-     * 生成树型结构所需修饰符号，可以换成图片
-     * @var array
-     */
+    
     public $icon = ['│', '├', '└'];
     public $nbsp = "&nbsp;";
     private $str = '';
-    /**
-     * @access private
-     */
+    
     public $ret = '';
 
-    /**
-     * 构造函数，初始化类
-     * @param array 2维数组，例如：
-     *      array(
-     *      1 => array('id'=>'1','parent_id'=>0,'name'=>'一级栏目一'),
-     *      2 => array('id'=>'2','parent_id'=>0,'name'=>'一级栏目二'),
-     *      3 => array('id'=>'3','parent_id'=>1,'name'=>'二级栏目一'),
-     *      4 => array('id'=>'4','parent_id'=>1,'name'=>'二级栏目二'),
-     *      5 => array('id'=>'5','parent_id'=>2,'name'=>'二级栏目三'),
-     *      6 => array('id'=>'6','parent_id'=>3,'name'=>'三级栏目一'),
-     *      7 => array('id'=>'7','parent_id'=>3,'name'=>'三级栏目二')
-     *      )
-     * @return array
-     */
+    
     public function init($arr = [])
     {
         $this->arr = $arr;
@@ -46,11 +23,7 @@ class Tree
         return is_array($arr);
     }
 
-    /**
-     * 得到父级数组
-     * @param int
-     * @return array
-     */
+    
     public function getParent($myId)
     {
         $newArr = [];
@@ -67,11 +40,7 @@ class Tree
         return $newArr;
     }
 
-    /**
-     * 得到子级数组
-     * @param int
-     * @return array
-     */
+    
     public function getChild($myId)
     {
         $newArr = [];
@@ -87,11 +56,7 @@ class Tree
         return $newArr ? $newArr : false;
     }
 
-    /**
-     * 得到当前位置数组
-     * @param int
-     * @return array
-     */
+    
     public function getPosition($myId, &$newArr)
     {
         $a = [];
@@ -111,13 +76,7 @@ class Tree
         return $a;
     }
 
-    /**
-     * 得到树型结构
-     * @param int ID，表示获得这个ID下的所有子级
-     * @param string 生成树型结构的基本代码，例如："<option value=\$id \$selected>\$spacer\$name</option>"
-     * @param int 被选中的ID，比如在做树型下拉框的时候需要用到
-     * @return string
-     */
+    
     public function getTree($myId, $str, $sid = 0, $adds = '', $str_group = '')
     {
         $number = 1;
@@ -154,13 +113,7 @@ class Tree
         return $this->ret;
     }
 
-    /**
-     * 生成树型结构数组
-     * @param int myID，表示获得这个ID下的所有子级
-     * @param int $maxLevel 最大获取层级,默认不限制
-     * @param int $level    当前层级,只在递归调用时使用,真实使用时不传入此参数
-     * @return array
-     */
+    
     public function getTreeArray($myId, $maxLevel = 0, $level = 1)
     {
         $returnArray = [];
@@ -199,9 +152,7 @@ class Tree
         return $tree;
     }
 
-    /**
-     * 同上一方法类似,但允许多选
-     */
+    
     public function getTreeMulti($myId, $str, $sid = 0, $adds = '')
     {
         $number = 1;
@@ -229,13 +180,7 @@ class Tree
         return $this->ret;
     }
 
-    /**
-     * @param integer $myId 要查询的ID
-     * @param string  $str  第一种HTML代码方式
-     * @param string  $str2 第二种HTML代码方式
-     * @param integer $sid  默认选中
-     * @param integer $adds 前缀
-     */
+    
     public function getTreeCategory($myId, $str, $str2, $sid = 0, $adds = '')
     {
         $number = 1;
@@ -267,18 +212,7 @@ class Tree
         return $this->ret;
     }
 
-    /**
-     * 同上一类方法，jquery treeview 风格，可伸缩样式（需要treeview插件支持）
-     * @param $myId         表示获得这个ID下的所有子级
-     * @param $effected_id  需要生成treeview目录数的id
-     * @param $str          末级样式
-     * @param $str2         目录级别样式
-     * @param $showlevel    直接显示层级数，其余为异步显示，0为全部限制
-     * @param $style        目录样式 默认 filetree 可增加其他样式如'filetree treeview-famfamfam'
-     * @param $currentlevel 计算当前层级，递归使用 适用改函数时不需要用该参数
-     * @param $recursion    递归使用 外部调用时为FALSE
-     * @return string
-     */
+    
     function getTreeView($myId, $effected_id = 'example', $str = "<span class='file'>\$name</span>", $str2 = "<span class='folder'>\$name</span>", $showlevel = 0, $style = 'filetree ', $currentlevel = 1, $recursion = FALSE)
     {
         $child = $this->getChild($myId);
@@ -319,18 +253,7 @@ class Tree
         return $this->str;
     }
 
-    /**
-     * 同上一类方法，jquery treeview 风格，可伸缩样式（需要treeview插件支持）
-     * @param $myId         表示获得这个ID下的所有子级
-     * @param $effected_id  需要生成treeview目录数的id
-     * @param $str          末级样式
-     * @param $str2         目录级别样式
-     * @param $showlevel    直接显示层级数，其余为异步显示，0为全部限制
-     * @param $style        目录样式 默认 filetree 可增加其他样式如'filetree treeview-famfamfam'
-     * @param $currentlevel 计算当前层级，递归使用 适用改函数时不需要用该参数
-     * @param $recursion    递归使用 外部调用时为FALSE
-     * @param $dropdown     有子元素时li的class
-     */
+    
 
     function getTreeViewMenu($myId, $effected_id = 'example', $str = "<span class='file'>\$name</span>", $str2 = "<span class='folder'>\$name</span>", $showlevel = 0, $ul_class = "", $li_class = "", $style = 'filetree ', $currentlevel = 1, $recursion = FALSE, $dropdown = 'hasChild')
     {
@@ -376,11 +299,7 @@ class Tree
         return $this->str;
     }
 
-    /**
-     * 获取子栏目json
-     * Enter description here ...
-     * @param unknown_type $myId
-     */
+    
     public function createSubJson($myId, $str = '')
     {
         $sub_cats = $this->getChild($myId);

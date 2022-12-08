@@ -2,19 +2,13 @@
 
 class HTMLPurifier_HTMLModule_Tidy_XHTML extends HTMLPurifier_HTMLModule_Tidy
 {
-    /**
-     * @type string
-     */
+    
     public $name = 'Tidy_XHTML';
 
-    /**
-     * @type string
-     */
+    
     public $defaultLevel = 'medium';
 
-    /**
-     * @return array
-     */
+    
     public function makeFixes()
     {
         $r = array();
@@ -23,4 +17,4 @@ class HTMLPurifier_HTMLModule_Tidy_XHTML extends HTMLPurifier_HTMLModule_Tidy
     }
 }
 
-// vim: et sw=4 sts=4
+

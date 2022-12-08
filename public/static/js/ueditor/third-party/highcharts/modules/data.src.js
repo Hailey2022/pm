@@ -77,21 +77,21 @@
  * endRow, startColumn and endColumn to delimit what part of the table is used.
  */
 
-// JSLint options:
+
 /*global jQuery */
 
 (function (Highcharts) {	
 	
-	// Utilities
+	
 	var each = Highcharts.each;
 	
 	
-	// The Data constructor
+	
 	var Data = function (dataOptions, chartOptions) {
 		this.init(dataOptions, chartOptions);
 	};
 	
-	// Set the prototype properties
+	
 	Highcharts.extend(Data.prototype, {
 		
 	/**
@@ -102,20 +102,20 @@
 		this.chartOptions = chartOptions;
 		this.columns = options.columns || this.rowsToColumns(options.rows) || [];
 
-		// No need to parse or interpret anything
+		
 		if (this.columns.length) {
 			this.dataFound();
 
-		// Parse and interpret
+		
 		} else {
 
-			// Parse a CSV string if options.csv is given
+			
 			this.parseCSV();
 			
-			// Parse a HTML table if options.table is given
+			
 			this.parseTable();
 
-			// Parse a Google Spreadsheet 
+			
 			this.parseGoogleSpreadsheet();	
 		}
 
@@ -146,16 +146,16 @@
 
 
 	dataFound: function () {
-		// Interpret the values into right types
+		
 		this.parseTypes();
 		
-		// Use first row for series names?
+		
 		this.findHeaderRow();
 		
-		// Handle columns if a handleColumns callback is given
+		
 		this.parsed();
 		
-		// Complete if a complete callback is given
+		
 		this.complete();
 		
 	},
@@ -178,8 +178,8 @@
 		if (csv) {
 			
 			lines = csv
-				.replace(/\r\n/g, "\n") // Unix
-				.replace(/\r/g, "\n") // Mac
+				.replace(/\r\n/g, "\n") 
+				.replace(/\r/g, "\n") 
 				.split(options.lineDelimiter || "\n");
 			
 			each(lines, function (line, rowNo) {
@@ -242,7 +242,7 @@
 				}
 			});
 
-			this.dataFound(); // continue
+			this.dataFound(); 
 		}
 	},
 
@@ -259,8 +259,8 @@
 			endRow = options.endRow || Number.MAX_VALUE,
 			startColumn = options.startColumn || 0,
 			endColumn = options.endColumn || Number.MAX_VALUE,
-			gr, // google row
-			gc; // google column
+			gr, 
+			gc; 
 
 		if (googleSpreadsheetKey) {
 			jQuery.getJSON('https://spreadsheets.google.com/feeds/cells/' + 
@@ -268,7 +268,7 @@
 					  '/public/values?alt=json-in-script&callback=?',
 					  function (json) {
 					
-				// Prepare the data from the spreadsheat
+				
 				var cells = json.feed.entry,
 					cell,
 					cellCount = cells.length,
@@ -276,34 +276,34 @@
 					rowCount = 0,
 					i;
 			
-				// First, find the total number of columns and rows that 
-				// are actually filled with data
+				
+				
 				for (i = 0; i < cellCount; i++) {
 					cell = cells[i];
 					colCount = Math.max(colCount, cell.gs$cell.col);
 					rowCount = Math.max(rowCount, cell.gs$cell.row);			
 				}
 			
-				// Set up arrays containing the column data
+				
 				for (i = 0; i < colCount; i++) {
 					if (i >= startColumn && i <= endColumn) {
-						// Create new columns with the length of either end-start or rowCount
+						
 						columns[i - startColumn] = [];
 
-						// Setting the length to avoid jslint warning
+						
 						columns[i - startColumn].length = Math.min(rowCount, endRow - startRow);
 					}
 				}
 				
-				// Loop over the cells and assign the value to the right
-				// place in the column arrays
+				
+				
 				for (i = 0; i < cellCount; i++) {
 					cell = cells[i];
-					gr = cell.gs$cell.row - 1; // rows start at 1
-					gc = cell.gs$cell.col - 1; // columns start at 1
+					gr = cell.gs$cell.row - 1; 
+					gc = cell.gs$cell.col - 1; 
 
-					// If both row and col falls inside start and end
-					// set the transposed cell value in the newly created columns
+					
+					
 					if (gc >= startColumn && gc <= endColumn &&
 						gr >= startRow && gr <= endRow) {
 						columns[gc - startColumn][gr - startRow] = cell.content.$t;
@@ -357,25 +357,25 @@
 				trimVal = this.trim(val);
 
 				/*jslint eqeq: true*/
-				if (trimVal == floatVal) { // is numeric
+				if (trimVal == floatVal) { 
 				/*jslint eqeq: false*/
 					columns[col][row] = floatVal;
 					
-					// If the number is greater than milliseconds in a year, assume datetime
+					
 					if (floatVal > 365 * 24 * 3600 * 1000) {
 						columns[col].isDatetime = true;
 					} else {
 						columns[col].isNumeric = true;
 					}					
 				
-				} else { // string, continue to determine if it is a date string or really a string
+				} else { 
 					dateVal = this.parseDate(val);
 					
-					if (col === 0 && typeof dateVal === 'number' && !isNaN(dateVal)) { // is date
+					if (col === 0 && typeof dateVal === 'number' && !isNaN(dateVal)) { 
 						columns[col][row] = dateVal;
 						columns[col].isDatetime = true;
 					
-					} else { // string
+					} else { 
 						columns[col][row] = trimVal === '' ? null : trimVal;
 					}
 				}
@@ -392,7 +392,7 @@
 			}
 		}
 	},
-	// */
+	
 	/**
 	 * Parse a date and return it as a number. Overridable through options.parseDate.
 	 */
@@ -476,11 +476,11 @@
 
 			this.getColumnDistribution();
 			
-			// Use first column for X data or categories?
+			
 			if (columns.length > 1) {
 				firstCol = columns.shift();
 				if (this.headerRow === 0) {
-					firstCol.shift(); // remove the first cell
+					firstCol.shift(); 
 				}
 				
 				
@@ -491,21 +491,21 @@
 				}
 			}
 
-			// Get the names and shift the top row
+			
 			for (i = 0; i < columns.length; i++) {
 				if (this.headerRow === 0) {
 					columns[i].name = columns[i].shift();
 				}
 			}
 			
-			// Use the next columns for series
+			
 			series = [];
 			for (i = 0, seriesIndex = 0; i < columns.length; seriesIndex++) {
 
-				// This series' value count
+				
 				valueCount = Highcharts.pick(this.valueCount.individual[seriesIndex], this.valueCount.global);
 				
-				// Iterate down the cells of each column and add data to the series
+				
 				data = [];
 				for (j = 0; j < columns[i].length; j++) {
 					data[j] = [
@@ -526,7 +526,7 @@
 					}
 				}
 
-				// Add the series
+				
 				series[seriesIndex] = {
 					name: columns[i].name,
 					data: data
@@ -535,7 +535,7 @@
 				i += valueCount;
 			}
 			
-			// Do the callback
+			
 			options.complete({
 				xAxis: {
 					type: type
@@ -546,14 +546,14 @@
 	}
 	});
 	
-	// Register the Data prototype and data function on Highcharts
+	
 	Highcharts.Data = Data;
 	Highcharts.data = function (options, chartOptions) {
 		return new Data(options, chartOptions);
 	};
 
-	// Extend Chart.init so that the Chart constructor accepts a new configuration
-	// option group, data.
+	
+	
 	Highcharts.wrap(Highcharts.Chart.prototype, 'init', function (proceed, userOptions, callback) {
 		var chart = this;
 
@@ -561,14 +561,14 @@
 			Highcharts.data(Highcharts.extend(userOptions.data, {
 				complete: function (dataOptions) {
 					
-					// Merge series configs
+					
 					if (userOptions.series) {
 						each(userOptions.series, function (series, i) {
 							userOptions.series[i] = Highcharts.merge(series, dataOptions.series[i]);
 						});
 					}
 
-					// Do the merge
+					
 					userOptions = Highcharts.merge(dataOptions, userOptions);
 
 					proceed.call(chart, userOptions, callback);

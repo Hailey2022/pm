@@ -1,33 +1,15 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2013-present http://www.thinkcmf.com All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: 老猫 <thinkcmf@126.com>
-// +----------------------------------------------------------------------
+
 namespace app\admin\model;
 
 use think\Model;
 
 class RouteModel extends Model
 {
-    /**
-     * 模型名称
-     * @var string
-     */
+    
     protected $name = 'route';
 
-    /**
-     * 获取所有url美化规则
-     * @param boolean $refresh 是否强制刷新
-     * @return array|mixed|string|\think\Collection
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
-     */
+    
     public function getRoutes($refresh = false)
     {
         $routes = cache("routes");
@@ -43,12 +25,12 @@ class RouteModel extends Model
         foreach ($routes as $er) {
             $fullUrl = htmlspecialchars_decode($er['full_url']);
 
-            // 解析URL
+            
             $info = parse_url($fullUrl);
 
             $vars = [];
-            // 解析参数
-            if (isset($info['query'])) { // 解析地址里面参数 合并到vars
+            
+            if (isset($info['query'])) { 
                 parse_str($info['query'], $vars);
                 ksort($vars);
             }
@@ -69,7 +51,7 @@ class RouteModel extends Model
 
                 $fullUrl = $path . (empty($vars) ? '' : '&') . http_build_query($vars);
 
-            } else { // 应用
+            } else { 
                 $path = explode("/", $info['path']);
                 if (count($path) != 3) {//必须是完整 url
                     continue;
@@ -91,11 +73,11 @@ class RouteModel extends Model
 
             //$cacheRoutes[$fullUrl] = true;
 
-//            if (strpos($url, ':') === false) {
-//                $cacheRoutes['static'][$fullUrl] = $url;
-//            } else {
-//                $cacheRoutes['dynamic'][$path][] = ["query" => $vars, "url" => $url];
-//            }
+
+
+
+
+
             if (empty($appUrls[$path]['pattern'])) {
                 $allRoutes[$url] = $fullUrl;
             } else {
@@ -107,9 +89,9 @@ class RouteModel extends Model
 
         if (strpos(cmf_version(), '5.') === 0) {
             if (strpos(cmf_version(), '5.0.') === false) {
-                $routeDir = CMF_DATA . "route/"; // 5.1
+                $routeDir = CMF_DATA . "route/"; 
             } else {
-                $routeDir = CMF_DATA . "conf/"; // 5.0
+                $routeDir = CMF_DATA . "conf/"; 
             }
 
             $content = "<?php\treturn " . var_export($allRoutes, true) . ";";
@@ -142,7 +124,7 @@ class RouteModel extends Model
                 }
 
                 $routeCode = "Route::get('$rule', '$ruleName')";
-//                $routeCode .= "->name('$ruleName')";
+
 
                 if (!empty($query)) {
                     $query     = var_export($query, true);
@@ -173,9 +155,7 @@ class RouteModel extends Model
         return $cacheRoutes;
     }
 
-    /**
-     * @return array
-     */
+    
     public function getAppUrls()
     {
         $apps = cmf_scan_dir(APP_PATH . '*', GLOB_ONLYDIR);
@@ -225,9 +205,9 @@ class RouteModel extends Model
 
     public function buildFullUrl($action, $vars)
     {
-        // 解析参数
+        
         if (is_string($vars)) {
-            // aaa=1&bbb=2 转换成数组
+            
             parse_str($vars, $vars);
         }
 
@@ -280,12 +260,7 @@ class RouteModel extends Model
         }
     }
 
-    /**
-     * @param $action
-     * @param $vars
-     * @return bool
-     * @throws \Exception
-     */
+    
     public function deleteRoute($action, $vars)
     {
         $fullUrl = $this->buildFullUrl($action, $vars);

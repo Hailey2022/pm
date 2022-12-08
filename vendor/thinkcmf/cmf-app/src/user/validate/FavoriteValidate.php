@@ -1,13 +1,13 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2013-present http://www.thinkcmf.com All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: Powerless < wzxaini9@gmail.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 namespace app\user\validate;
 
 use think\Validate;
@@ -31,7 +31,7 @@ class FavoriteValidate extends Validate
     protected $scene = [
     ];
 
-    // 验证url 格式
+    
     protected function checkUrl($value, $rule, $data)
     {
         $url = json_decode(base64_decode($value), true);
@@ -42,7 +42,7 @@ class FavoriteValidate extends Validate
         return '收藏内容链接格式不正确!';
     }
 
-    // 验证url 格式
+    
     protected function checkTitle($value, $rule, $data)
     {
         if (base64_decode($value)!==false) {

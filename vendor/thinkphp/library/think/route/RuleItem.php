@@ -1,13 +1,13 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkPHP [ WE CAN DO IT JUST THINK ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2006~2018 http://thinkphp.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: liu21st <liu21st@gmail.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 
 namespace think\route;
 
@@ -19,18 +19,7 @@ class RuleItem extends Rule
 {
     protected $hasSetRule;
 
-    /**
-     * 架构函数
-     * @access public
-     * @param  Route             $router 路由实例
-     * @param  RuleGroup         $parent 上级对象
-     * @param  string            $name 路由标识
-     * @param  string|array      $rule 路由规则
-     * @param  string|\Closure   $route 路由地址
-     * @param  string            $method 请求类型
-     * @param  array             $option 路由参数
-     * @param  array             $pattern 变量规则
-     */
+    
     public function __construct(Route $router, RuleGroup $parent, $name, $rule, $route, $method = '*', $option = [], $pattern = [])
     {
         $this->router  = $router;
@@ -48,16 +37,11 @@ class RuleItem extends Rule
         }
     }
 
-    /**
-     * 路由规则预处理
-     * @access public
-     * @param  string      $rule     路由规则
-     * @return void
-     */
+    
     public function setRule($rule)
     {
         if ('$' == substr($rule, -1, 1)) {
-            // 是否完整匹配
+            
             $rule = substr($rule, 0, -1);
 
             $this->option['complete_match'] = true;
@@ -75,16 +59,11 @@ class RuleItem extends Rule
             $this->rule = $rule;
         }
 
-        // 生成路由标识的快捷访问
+        
         $this->setRuleName();
     }
 
-    /**
-     * 检查后缀
-     * @access public
-     * @param  string     $ext
-     * @return $this
-     */
+    
     public function ext($ext = '')
     {
         $this->option('ext', $ext);
@@ -93,12 +72,7 @@ class RuleItem extends Rule
         return $this;
     }
 
-    /**
-     * 设置别名
-     * @access public
-     * @param  string     $name
-     * @return $this
-     */
+    
     public function name($name)
     {
         $this->name = $name;
@@ -107,12 +81,7 @@ class RuleItem extends Rule
         return $this;
     }
 
-    /**
-     * 设置路由标识 用于URL反解生成
-     * @access protected
-     * @param  bool     $first   是否插入开头
-     * @return void
-     */
+    
     protected function setRuleName($first = false)
     {
         if ($this->name) {
@@ -138,23 +107,15 @@ class RuleItem extends Rule
         }
     }
 
-    /**
-     * 检测路由
-     * @access public
-     * @param  Request      $request  请求对象
-     * @param  string       $url      访问地址
-     * @param  array        $match    匹配路由变量
-     * @param  bool         $completeMatch   路由是否完全匹配
-     * @return Dispatch|false
-     */
+    
     public function checkRule($request, $url, $match = null, $completeMatch = false)
     {
-        // 检查参数有效性
+        
         if (!$this->checkOption($this->option, $request)) {
             return false;
         }
 
-        // 合并分组参数
+        
         $option = $this->mergeGroupOptions();
 
         $url = $this->urlSuffixCheck($request, $url, $option);
@@ -166,14 +127,14 @@ class RuleItem extends Rule
         if (false !== $match) {
             if (!empty($option['cross_domain'])) {
                 if ($dispatch = $this->checkCrossDomain($request)) {
-                    // 允许跨域
+                    
                     return $dispatch;
                 }
 
                 $option['header'] = $this->option['header'];
             }
 
-            // 检查前置行为
+            
             if (isset($option['before']) && false === $this->checkBefore($option['before'])) {
                 return false;
             }
@@ -184,52 +145,30 @@ class RuleItem extends Rule
         return false;
     }
 
-    /**
-     * 检测路由（含路由匹配）
-     * @access public
-     * @param  Request      $request  请求对象
-     * @param  string       $url      访问地址
-     * @param  string       $depr     路径分隔符
-     * @param  bool         $completeMatch   路由是否完全匹配
-     * @return Dispatch|false
-     */
+    
     public function check($request, $url, $completeMatch = false)
     {
         return $this->checkRule($request, $url, null, $completeMatch);
     }
 
-    /**
-     * URL后缀及Slash检查
-     * @access protected
-     * @param  Request      $request  请求对象
-     * @param  string       $url      访问地址
-     * @param  array        $option   路由参数
-     * @return string
-     */
+    
     protected function urlSuffixCheck($request, $url, $option = [])
     {
-        // 是否区分 / 地址访问
+        
         if (!empty($option['remove_slash']) && '/' != $this->rule) {
             $this->rule = rtrim($this->rule, '/');
             $url        = rtrim($url, '|');
         }
 
         if (isset($option['ext'])) {
-            // 路由ext参数 优先于系统配置的URL伪静态后缀参数
+            
             $url = preg_replace('/\.(' . $request->ext() . ')$/i', '', $url);
         }
 
         return $url;
     }
 
-    /**
-     * 检测URL和规则路由是否匹配
-     * @access private
-     * @param  string    $url URL地址
-     * @param  array     $option    路由参数
-     * @param  bool      $completeMatch   路由是否完全匹配
-     * @return array|false
-     */
+    
     private function match($url, $option, $completeMatch)
     {
         if (isset($option['complete_match'])) {
@@ -239,7 +178,7 @@ class RuleItem extends Rule
         $pattern = array_merge($this->parent->getPattern(), $this->pattern);
         $depr    = $this->router->config('pathinfo_depr');
 
-        // 检查完整规则定义
+        
         if (isset($pattern['__url__']) && !preg_match(0 === strpos($pattern['__url__'], '/') ? $pattern['__url__'] : '/^' . $pattern['__url__'] . '/', str_replace('|', $depr, $url))) {
             return false;
         }
@@ -285,7 +224,7 @@ class RuleItem extends Rule
             }
         }
 
-        // 成功匹配后返回URL中的动态变量数组
+        
         return $var;
     }
 

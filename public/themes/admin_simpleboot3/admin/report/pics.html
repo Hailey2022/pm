@@ -1,0 +1,105 @@
+<include file="public@header" />
+<style>
+    .deleteBtn {
+        color: #ff0000;
+    }
+
+    .deleteBtn:hover {
+        color: #ff0000;
+    }
+</style>
+
+<body id="container">
+    <div class="wrap js-check-wrap">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="{:url('Report/pics')}">查看图片</a></li>
+            <li><a href="{:url('Report/addPic')}">添加图片</a></li>
+        </ul>
+        <table class="table table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th style="text-align: center;">序号</th>
+                    <th style="text-align: center;">图片主题名</th>
+                    <th style="text-align: center;">工程名称</th>
+                    <th style="text-align: center;">合同名称</th>
+                    <th style="text-align: center;">服务商</th>
+                    <th style="text-align: center;">日期</th>
+                    <th style="text-align: center;">图片</th>
+                    <th style="text-align: center;">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <foreach name="pics" item="p" key="k">
+                    <if condition="$k%2!=0">
+                        <tr style='background-color:rgb(255, 255, 255)'>
+                            <else />
+                        <tr style='background-color:rgb(245, 247, 250)'>
+                    </if>
+                    <td style="text-align: center;">{$k + 1}</td>
+                    <td style="text-align: center;">{$p.picName}</td>
+                    <td style="text-align: center;">{$p.projectName}</td>
+                    <td style="text-align: center;">{$p.contractName}</td>
+                    <td style="text-align: center;">{$p.user_login}</td>
+                    <td style="text-align: center;">{$p.picTime}</td>
+                    <td style="text-align: center;">
+                        <if condition="$p.file_urls != 'null'">
+                            <a
+                                href="javascript:display('{:url('report/listPicFiles', ['picId'=>$p['picId']])}', '{$p.picName}', '{$p.projectName}', '{$p.contractName}', '{$p.user_login}', '{$p.picTime}')">查看</a>
+                        </if>
+                    </td>
+                    <td style="text-align: center;">
+                        <a href="{:url('report/updatePic', ['picId'=>$p['picId']])}">修改</a>
+                        <a href="{:url('report/deletePic', ['picId'=>$p['picId']])}" onclick="return handleDelete()"
+                            class="deleteBtn">删除</a>
+                    </td>
+                    </tr>
+                </foreach>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+<script src="__STATIC__/js/admin.js"></script>
+<script>
+    function display(url, picName, projectName, contractName, clientName, time) {
+        var title = "浏览";
+        if (clientName != "") {
+            title += clientName
+        }
+        if (contractName != "") {
+            title += "针对"
+            title += contractName
+        }
+        if (time != "") {
+            title += "在"
+            title += time
+            title += "时"
+        }
+        title += "上传的图片"
+        
+        
+        
+
+        
+        
+        var clientWidth = $(window).width();
+        var clientHeight = $(window).height();
+        parent.openIframeLayer(url, title, {
+            skin: 'layui-layer-rim',
+            closeBtn: 1,
+            shadeClose: true,
+            area: [0.9 * clientWidth + 'px', 0.9 * clientHeight + 'px']
+        })
+    }
+
+    function handleDelete() {
+        var tmp = "{:cmf_random_string($len = 8)}";
+        var input = prompt("正在删除图片，删除后不可还原，请输入 " + tmp + " 删除");
+        if (input == tmp) {
+            return true
+        } else if (input != null) {
+            alert("输入错误，取消删除")
+        }
+        return false
+    }
+</script>

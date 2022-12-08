@@ -2,17 +2,10 @@
 
 class HTMLPurifier_AttrTransform_SafeEmbed extends HTMLPurifier_AttrTransform
 {
-    /**
-     * @type string
-     */
+    
     public $name = "SafeEmbed";
 
-    /**
-     * @param array $attr
-     * @param HTMLPurifier_Config $config
-     * @param HTMLPurifier_Context $context
-     * @return array
-     */
+    
     public function transform($attr, $config, $context)
     {
         $attr['allowscriptaccess'] = 'never';
@@ -22,4 +15,4 @@ class HTMLPurifier_AttrTransform_SafeEmbed extends HTMLPurifier_AttrTransform
     }
 }
 
-// vim: et sw=4 sts=4
+

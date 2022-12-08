@@ -9,14 +9,10 @@ phpQuery::$ajaxAllowedHosts[] = 'www.google.com';
 phpQuery::$ajaxAllowedHosts[] = 'www.google.pl';
 phpQuery::$ajaxAllowedHosts[] = 'mail.google.com';
 
-// Google search results
+
 if (0) {
 	phpQuery::$plugins->browserGet('http://google.com/', 'success1');
-	/**
-	*
-	* @param $pq phpQueryObject
-	* @return unknown_type
-	*/
+	
 	function success1($pq) {
 		print 'success1 callback';
 		$pq
@@ -27,11 +23,7 @@ if (0) {
 					->submit()
 		;
 	}
-	/**
-	*
-	* @param $html phpQueryObject
-	* @return unknown_type
-	*/
+	
 	function success2($pq) {
 		print 'success2 callback';
 		print $pq
@@ -39,7 +31,7 @@ if (0) {
 	}
 }
 
-// Gmail login (not working...)
+
 if (0) {
 	phpQuery::plugin("Scripts");
 	phpQuery::newDocument('<div/>')
@@ -51,7 +43,7 @@ if (0) {
 	}
 }
 
-// Gmail login v2 (not working...)
+
 if (0) {
 	$browser = null;
 	$browserCallback = new CallbackReference($browser);

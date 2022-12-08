@@ -1,25 +1,25 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2013-2018 http://www.thinkcmf.com All rights reserved.
-// +----------------------------------------------------------------------
-// | Author: Dean <zxxjjforever@163.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
 return [
-    'custom_config' => [// 在后台插件配置表单中的键名 ,会是config[custom_config]，这个键值很特殊，是自定义插件配置的开关
-        'title' => '自定义配置处理', // 表单的label标题
-        'type'  => 'text', // 表单的类型：text,password,textarea,checkbox,radio,select等
-        'value' => '0', // 如果值为1，表示由插件自己处理插件配置，配置入口在 AdminIndex/setting
+    'custom_config' => [
+        'title' => '自定义配置处理', 
+        'type'  => 'text', 
+        'value' => '0', 
         'tip'   => '自定义配置处理', //表单的帮助提示
     ],
-    'text'          => [// 在后台插件配置表单中的键名 ,会是config[text]
-        'title' => '文本', // 表单的label标题
-        'type'  => 'text', // 表单的类型：text,password,textarea,checkbox,radio,select等
-        'value' => 'hello,ThinkCMF!', // 表单的默认值
+    'text'          => [
+        'title' => '文本', 
+        'type'  => 'text', 
+        'value' => 'hello,ThinkCMF!', 
         'tip'   => '这是文本组件的演示', //表单的帮助提示
     ],
-    'password'      => [// 在后台插件配置表单中的键名 ,会是config[password]
+    'password'      => [
         'title' => '密码',
         'type'  => 'password',
         'value' => '',
@@ -31,11 +31,11 @@ return [
         'value' => '1.0',
         'tip'   => '这是数字组件的演示',
     ],
-    'select'        => [// 在后台插件配置表单中的键名 ,会是config[select]
+    'select'        => [
         'title'   => '下拉列表',
         'type'    => 'select',
         'options' => [//select 和radio,checkbox的子选项
-            '1' => 'ThinkCMFX', // 值=>显示
+            '1' => 'ThinkCMFX', 
             '2' => 'ThinkCMF',
             '3' => '跟猫玩糗事',
             '4' => '门户应用',

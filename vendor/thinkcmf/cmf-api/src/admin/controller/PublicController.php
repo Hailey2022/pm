@@ -1,11 +1,11 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2013-present http://www.thinkcmf.com All rights reserved.
-// +----------------------------------------------------------------------
-// | Author: Dean <zxxjjforever@163.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
 namespace api\admin\controller;
 
 use cmf\controller\RestBaseController;
@@ -15,7 +15,7 @@ use think\facade\Validate;
 class PublicController extends RestBaseController
 {
 
-    // 用户登录 TODO 增加最后登录信息记录,如 ip
+    
     public function login()
     {
         $validate = new \think\Validate([
@@ -101,7 +101,7 @@ class PublicController extends RestBaseController
         $this->success("登录成功!", ['token' => $token]);
     }
 
-    // 管理员退出
+    
     public function logout()
     {
         $userId = $this->getUserId();

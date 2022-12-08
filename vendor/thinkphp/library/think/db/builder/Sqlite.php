@@ -1,32 +1,24 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkPHP [ WE CAN DO IT JUST THINK ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2006~2018 http://thinkphp.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: liu21st <liu21st@gmail.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 
 namespace think\db\builder;
 
 use think\db\Builder;
 use think\db\Query;
 
-/**
- * Sqlite数据库驱动
- */
+
 class Sqlite extends Builder
 {
 
-    /**
-     * limit
-     * @access public
-     * @param  Query     $query        查询对象
-     * @param  mixed     $limit
-     * @return string
-     */
+    
     public function parseLimit(Query $query, $limit)
     {
         $limitStr = '';
@@ -43,25 +35,13 @@ class Sqlite extends Builder
         return $limitStr;
     }
 
-    /**
-     * 随机排序
-     * @access protected
-     * @param  Query     $query        查询对象
-     * @return string
-     */
+    
     protected function parseRand(Query $query)
     {
         return 'RANDOM()';
     }
 
-    /**
-     * 字段和表名处理
-     * @access public
-     * @param  Query     $query     查询对象
-     * @param  mixed     $key       字段名
-     * @param  bool      $strict   严格检测
-     * @return string
-     */
+    
     public function parseKey(Query $query, $key, $strict = false)
     {
         if (is_numeric($key)) {

@@ -1,0 +1,144 @@
+<include file="public@header" />
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/html" id="photos-item-tpl">
+        <li id="saved-image{id}">
+            <input id="photo-{id}" type="hidden" name="file_urls[]" value="{filepath}">
+            <input class="form-control" id="photo-{id}-name" type="text" name="file_names[]" value="{name}"
+                   style="width: 465px;" title="图片名称">
+            <img id="photo-{id}-preview" src="{url}" style="height:36px;width: 36px;"
+                 onclick="imagePreviewDialog(this.src);">
+            <a class="btn" href="javascript:uploadOneImage('图片上传','#photo-{id}');">替换</a>
+            <a class="btn" href="javascript:(function(){$('#saved-image{id}').remove();})();">移除</a>
+        </li>
+    </script>
+</head>
+
+<body>
+    <div class="wrap js-check-wrap">
+        <ul class="nav nav-tabs">
+            <li><a href="{:url('Report/pics')}">查看图片</a></li>
+            <li><a href="{:url('Report/addPic')}">添加图片</a></li>
+            <li class="active"><a>修改图片</a></li>
+        </ul>
+        <form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('report/postPicUpdate')}">
+            <input name="picId" style="display: none;" value="{$pics.picId}">
+
+            <div class="form-group">
+                <label for="input-picName" class="col-sm-2 control-label">图片主题</label>
+                <div class="col-sm-3">
+                    <input class="form-control" list="picName" name="picName" id="input-picName"
+                        value="{$pics.picName}">
+                    </input>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="input-projectId" class="col-sm-2 control-label">工程名称</label>
+                <div class="col-sm-3">
+                    <select class="form-control" list="users" name="projectId" id="input-projectId" required
+                        onchange="updateContractList()">
+                        <datalist id="users">
+                            <foreach name="projects" item="p">
+                                <if condition="$pics.projectId==$p.projectId">
+                                    <option name="projectId" selected value="{:$p.projectId}"> {$p.projectName}</option>
+                                    <else />
+                                    <option name="projectId" value="{:$p.projectId}"> {$p.projectName}</option>
+                                </if>
+                            </foreach>
+                        </datalist>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="input-contractName" class="col-sm-2 control-label">合同名称</label>
+                <div class="col-sm-7">
+                    <select class="form-control" list="contractName" name="contractId" id="input-contractName" required
+                        placeholder="合同名称">
+                        <datalist id="contractName">
+                            <option class="contractName" name="contractName" value="">合同名称</option>
+                        </datalist>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="input-picTime" class="col-sm-2 control-label">时间</label>
+                <div class="col-md-3 col-sm-5">
+                    <input class="form-control" id="input-picTime" name="picTime" type="date" value="{$pics.picTime}">
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label for="input-files" class="col-sm-2 control-label">附件</label>
+                <div class="col-md-6 col-sm-10">
+                    <tr>
+                        <td>
+                            <ul id="files" class="pic-list list-unstyled form-inline">
+                                <notempty name="files">
+                                    <foreach name="files" key="url" item="name">
+                                        <php>$file_url=cmf_get_file_download_url($url);</php>
+                                        <php>$file_id=hash("sha256", $url);</php>
+                                        <li id="saved-file{$file_id}">
+                                            <input class="form-control" id="file-{$file_id}" type="hidden"
+                                                name="file_urls[]" value="{$url}">
+                                            <input class="form-control" id="file-{$file_id}-name" type="text"
+                                                name="file_names[]" value="{$name}" style="width: 465px;" title="文件名称">
+                                            <img id="photo-{id}-preview"
+                                                src="{:str_replace('upload/default','upload/mini/default',$file_url)}"
+                                                style="height:36px;width: 36px;"
+                                                onclick="imagePreviewDialog(this.src);">
+                                            <a class="btn" id="file-{$file_id}-preview" href="{$file_url}"
+                                                target="_blank" download="{$name}">下载</a>
+                                            <a class="btn"
+                                                href="javascript:uploadOne('替换图片','#file-{$file_id}','image');">替换</a>
+                                            <a class="btn"
+                                                href="javascript:(function(){$('#saved-file{$file_id}').remove();})();">移除</a>
+                                        </li>
+                                    </foreach>
+                                </notempty>
+                            </ul>
+                            <a href="javascript:uploadMultiFile('图片上传','#files','photos-item-tpl','image');"
+                                class="btn btn-default">选择图片</a>
+                        </td>
+                    </tr>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-primary js-ajax-submit">提交</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</body>
+
+<script>
+    function updateContractList(contractId = undefined) {
+        var contracts = {$contracts};
+        $(".contractName").each(function () {
+            $(this).remove();
+        })
+        for (var i = 0; i < contracts.length; i++) {
+            if (contracts[i]['projectId'] == $("#input-projectId").val()) {
+                $("#input-contractName").append($('<option>', {
+                    class: 'contractName',
+                    value: contracts[i]['contractId'],
+                    text: contracts[i]['name'] + "---" + contracts[i]['user_login'] + "---" + contracts[i]['contractName'],
+                    selected: contractId == contracts[i]['contractId']
+                }));
+            }
+        }
+    }
+    (function () {
+        updateContractList("{$pics.contractId}")
+    })()
+</script>
+
+<script src="__STATIC__/js/admin.js"></script>

@@ -4,14 +4,10 @@ namespace mindplay\test\traits;
 
 trait AnotherSimpleTrait
 {
-    /**
-     * @note('another-simple-trait')
-     */
+    
     protected $sampleFromAnotherTrait = 'test';
 
-    /**
-     * @Note('another-simple-trait')
-     */
+    
     public function runFromAnotherTrait()
     {
     }
@@ -19,9 +15,7 @@ trait AnotherSimpleTrait
 
 trait AliasBaseTrait
 {
-    /**
-     * @Note('alias-base-trait')
-     */
+    
     public function run()
     {
     }
@@ -33,9 +27,7 @@ trait AliasTrait
         \mindplay\test\traits\AliasBaseTrait::run as baseTraitRun;
     }
 
-    /**
-     * @Note('alias-trait')
-     */
+    
     public function run()
     {
     }
@@ -43,9 +35,7 @@ trait AliasTrait
 
 trait InsteadofBaseTraitA
 {
-    /**
-     * @Note('insteadof-base-trait-a')
-     */
+    
     public function baseTrait()
     {
     }
@@ -53,9 +43,7 @@ trait InsteadofBaseTraitA
 
 trait InsteadofBaseTraitB
 {
-    /**
-     * @Note('insteadof-base-trait-b')
-     */
+    
     public function baseTrait()
     {
     }
@@ -67,9 +55,7 @@ trait InsteadofTraitA
         InsteadofBaseTraitA::baseTrait insteadof InsteadofBaseTraitB;
     }
 
-    /**
-     * @Note('insteadof-trait-a')
-     */
+    
     public function trate()
     {
     }
@@ -81,9 +67,7 @@ trait InsteadofTraitB
         InsteadofBaseTraitB::baseTrait insteadof InsteadofBaseTraitA;
     }
 
-    /**
-     * @Note('insteadof-trait-b')
-     */
+    
     public function trate()
     {
     }

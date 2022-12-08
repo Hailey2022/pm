@@ -1,13 +1,13 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkPHP [ WE CAN DO IT JUST THINK IT ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2006-2016 http://thinkphp.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: yunwuxin <448901948@qq.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 namespace think\console\command\optimize;
 
 use think\console\Command;
@@ -28,9 +28,7 @@ class Autoload extends Command
 
         $classmapFile = <<<EOF
 <?php
-/**
- * 类库映射
- */
+
 
 return [
 
@@ -159,7 +157,7 @@ EOF;
 
                 $path = [];
 
-                /** @var \SplFileInfo $object */
+                
                 foreach ($objects as $object) {
                     if ($object->isFile() && $object->getExtension() == 'php') {
                         $path[] = $object;
@@ -175,7 +173,7 @@ EOF;
 
         $map = [];
 
-        /** @var \SplFileInfo $file */
+        
         foreach ($path as $file) {
             $filePath = $file->getRealPath();
 
@@ -230,20 +228,20 @@ EOF;
             return [];
         }
 
-        // strip heredocs/nowdocs
+        
         $contents = preg_replace('{<<<\s*(\'?)(\w+)\\1(?:\r\n|\n|\r)(?:.*?)(?:\r\n|\n|\r)\\2(?=\r\n|\n|\r|;)}s', 'null', $contents);
-        // strip strings
+        
         $contents = preg_replace('{"[^"\\\\]*+(\\\\.[^"\\\\]*+)*+"|\'[^\'\\\\]*+(\\\\.[^\'\\\\]*+)*+\'}s', 'null', $contents);
-        // strip leading non-php code if needed
+        
         if (substr($contents, 0, 2) !== '<?') {
             $contents = preg_replace('{^.+?<\?}s', '<?', $contents, 1, $replacements);
             if (0 === $replacements) {
                 return [];
             }
         }
-        // strip non-php blocks in the file
+        
         $contents = preg_replace('{\?>.+<\?}s', '?><?', $contents);
-        // strip trailing non-php code if needed
+        
         $pos = strrpos($contents, '?>');
         if (false !== $pos && false === strpos(substr($contents, $pos), '<?')) {
             $contents = substr($contents, 0, $pos);

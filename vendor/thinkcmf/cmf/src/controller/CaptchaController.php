@@ -1,13 +1,13 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2013-present http://www.thinkcmf.com All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +---------------------------------------------------------------------
-// | Author: Dean <zxxjjforever@163.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 
 namespace cmf\controller;
 
@@ -17,23 +17,19 @@ use think\Request;
 
 class CaptchaController
 {
-    /**
-     * new_captcha?height=50&width=200&font_size=25&length=4&bg=243,251,254&id=1
-     * @param Request $request
-     * @return \think\Response
-     */
+    
     public function index(Request $request)
     {
         $config = [
-            // 验证码字体大小(px)
+            
             'fontSize' => 25,
-            // 验证码图片高度
+            
             'imageH'   => 38,
-            // 验证码图片宽度
+            
             'imageW'   => 120,
-            // 验证码位数
+            
             'length'   => 4,
-            // 背景颜色
+            
             'bg'       => [255, 255, 255],
         ];
 
@@ -83,7 +79,7 @@ class CaptchaController
             $captcha  = new Captcha($config);
             $response = $captcha->entry($id);
         }
-        @ob_clean();// 清除输出缓存
+        @ob_clean();
         return $response;
     }
 }

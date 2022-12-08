@@ -53,7 +53,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Attempt to read annotations from non-existing class properties now ends up in exception.
 * Don't throw exception, when either of these annotations are encountered: "@api", "@source", "@version".
 * No PHP notice is triggered, when malformed (no type) "@param" annotation is being used.
-* Inline annotations (e.g. "// @codeCoverageIgnore") were processed by mistake.
+* Inline annotations (e.g. "
 
 ### Removed
 * Standard annotation stubs (e.g. "@display", "@format", "@length", etc.) were removed.

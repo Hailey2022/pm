@@ -1,13 +1,13 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkPHP [ WE CAN DO IT JUST THINK ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2006~2015 http://thinkphp.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: yunwuxin <448901948@qq.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 
 namespace think\process\pipes;
 
@@ -16,16 +16,16 @@ use think\Process;
 class Windows extends Pipes
 {
 
-    /** @var array */
+    
     private $files = [];
-    /** @var array */
+    
     private $fileHandles = [];
-    /** @var array */
+    
     private $readBytes = [
         Process::STDOUT => 0,
         Process::STDERR => 0,
     ];
-    /** @var bool */
+    
     private $disableOutput;
 
     public function __construct($disableOutput, $input)
@@ -59,9 +59,7 @@ class Windows extends Pipes
         $this->removeFiles();
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    
     public function getDescriptors()
     {
         if ($this->disableOutput) {
@@ -81,17 +79,13 @@ class Windows extends Pipes
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    
     public function getFiles()
     {
         return $this->files;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    
     public function readAndWrite($blocking, $close = false)
     {
         $this->write($blocking, $close);
@@ -123,17 +117,13 @@ class Windows extends Pipes
         return $read;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    
     public function areOpen()
     {
         return (bool) $this->pipes && (bool) $this->fileHandles;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    
     public function close()
     {
         parent::close();
@@ -143,20 +133,13 @@ class Windows extends Pipes
         $this->fileHandles = [];
     }
 
-    /**
-     * 创建一个新的 WindowsPipes 实例。
-     * @param Process $process
-     * @param         $input
-     * @return self
-     */
+    
     public static function create(Process $process, $input)
     {
         return new static($process->isOutputDisabled(), $input);
     }
 
-    /**
-     * 删除临时文件
-     */
+    
     private function removeFiles()
     {
         foreach ($this->files as $filename) {
@@ -167,11 +150,7 @@ class Windows extends Pipes
         $this->files = [];
     }
 
-    /**
-     * 写入到 stdin 输入
-     * @param bool $blocking
-     * @param bool $close
-     */
+    
     private function write($blocking, $close)
     {
         if (empty($this->pipes)) {

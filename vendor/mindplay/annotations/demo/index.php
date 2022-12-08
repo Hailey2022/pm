@@ -43,25 +43,13 @@ Package::register(Annotations::getManager());
 
 class Person
 {
-    /**
-     * @var string
-     * @required
-     * @length(50)
-     * @text('label' => 'Full Name')
-     */
+    
     public $name;
 
-    /**
-     * @var string
-     * @length(50)
-     * @text('label' => 'Street Address')
-     */
+    
     public $address;
 
-    /**
-     * @var int
-     * @range(0, 100)
-     */
+    
     public $age;
 }
 
@@ -228,11 +216,7 @@ class Form
 {
     private $object;
 
-    /**
-     * Widget list.
-     *
-     * @var Widget[]
-     */
+    
     private $widgets = array();
 
     ## The constructor just needs to know which object we're editing.

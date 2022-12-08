@@ -1,13 +1,13 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2013-present http://www.thinkcmf.com All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +---------------------------------------------------------------------
-// | Author: Dean <zxxjjforever@163.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 namespace cmf\controller;
 
 use cmf\model\ThemeFileModel;
@@ -19,7 +19,7 @@ class HomeBaseController extends BaseController
 
     protected function initialize()
     {
-        // 监听home_init
+        
         hook('home_init');
         parent::initialize();
         $siteInfo = cmf_get_site_info();
@@ -69,14 +69,7 @@ class HomeBaseController extends BaseController
 
     }
 
-    /**
-     * 加载模板输出
-     * @access protected
-     * @param string $template 模板文件名
-     * @param array  $vars     模板输出变量
-     * @param array  $config   模板参数
-     * @return mixed
-     */
+    
     protected function fetch($template = '', $vars = [], $config = [])
     {
         $template = $this->parseTemplate($template);
@@ -117,26 +110,21 @@ hello;
         return $content;
     }
 
-    /**
-     * 自动定位模板文件
-     * @access private
-     * @param string $template 模板文件规则
-     * @return string
-     */
+    
     private function parseTemplate($template)
     {
-        // 分析模板文件规则
+        
         $request = $this->request;
-        // 获取视图根目录
+        
         if (strpos($template, '@')) {
-            // 跨模块调用
+            
             list($module, $template) = explode('@', $template);
         }
 
         $viewBase = config('template.view_base');
 
         if ($viewBase) {
-            // 基础视图目录
+            
             $module = isset($module) ? $module : $request->module();
             $path   = $viewBase . ($module ? $module . DIRECTORY_SEPARATOR : '');
         } else {
@@ -149,7 +137,7 @@ hello;
             $controller = cmf_parse_name($request->controller());
             if ($controller) {
                 if ('' == $template) {
-                    // 如果模板文件名为空 按照默认规则定位
+                    
                     $template = str_replace('.', DIRECTORY_SEPARATOR, $controller) . $depr . cmf_parse_name($request->action(true));
                 } elseif (false === strpos($template, $depr)) {
                     $template = str_replace('.', DIRECTORY_SEPARATOR, $controller) . $depr . $template;
@@ -161,19 +149,14 @@ hello;
         return $path . ltrim($template, '/') . '.' . ltrim(config('template.view_suffix'), '.');
     }
 
-    /**
-     * 获取模板文件变量
-     * @param string $file
-     * @param string $theme
-     * @return array
-     */
+    
     private function getThemeFileMore($file, $theme = "")
     {
 
         //TODO 增加缓存
         $theme = empty($theme) ? cmf_get_current_theme() : $theme;
 
-        // 调试模式下自动更新模板
+        
         if (APP_DEBUG) {
             $themeModel = new ThemeModel();
             $themeModel->updateTheme($theme);

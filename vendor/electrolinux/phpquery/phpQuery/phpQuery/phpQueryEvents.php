@@ -1,25 +1,9 @@
 <?php
-/**
- * Event handling class.
- *
- * @author Tobiasz Cudnik
- * @package phpQuery
- * @static
- */
+
 abstract class phpQueryEvents {
-	/**
-	 * Trigger a type of event on every matched element.
-	 *
-	 * @param DOMNode|phpQueryObject|string $document
-	 * @param unknown_type $type
-	 * @param unknown_type $data
-	 *
-	 * @TODO exclusive events (with !)
-	 * @TODO global events (test)
-	 * @TODO support more than event in $type (space-separated)
-	 */
+	
 	public static function trigger($document, $type, $data = array(), $node = null) {
-		// trigger: function(type, data, elem, donative, extra) {
+		
 		$documentID = phpQuery::getDocumentID($document);
 		$namespace = null;
 		if (strpos($type, '.') !== false)
@@ -29,7 +13,7 @@ abstract class phpQueryEvents {
 		if (! $node) {
 			if (self::issetGlobal($documentID, $type)) {
 				$pq = phpQuery::getDocument($documentID);
-				// TODO check add($pq->document)
+				
 				$pq->find('*')->add($pq->document)
 					->trigger($type, $data);
 			}
@@ -48,7 +32,7 @@ abstract class phpQueryEvents {
 			}
 			$i = 0;
 			while($node) {
-				// TODO whois
+				
 				phpQuery::debug("Triggering ".($i?"bubbled ":'')."event '{$type}' on "
 					."node \n");//.phpQueryObject::whois($node)."\n");
 				$event->currentTarget = $node;
@@ -77,7 +61,7 @@ abstract class phpQueryEvents {
 						}
 					}
 				}
-				// to bubble or not to bubble...
+				
 				if (! $event->bubbles)
 					break;
 				$node = $node->parentNode;
@@ -85,19 +69,7 @@ abstract class phpQueryEvents {
 			}
 		}
 	}
-	/**
-	 * Binds a handler to one or more events (like click) for each matched element.
-	 * Can also bind custom events.
-	 *
-	 * @param DOMNode|phpQueryObject|string $document
-	 * @param unknown_type $type
-	 * @param unknown_type $data Optional
-	 * @param unknown_type $callback
-	 *
-	 * @TODO support '!' (exclusive) events
-	 * @TODO support more than event in $type (space-separated)
-	 * @TODO support binding to global events
-	 */
+	
 	public static function add($document, $node, $type, $data, $callback = null) {
 		phpQuery::debug("Binding '$type' event");
 		$documentID = phpQuery::getDocumentID($document);
@@ -115,16 +87,7 @@ abstract class phpQueryEvents {
 			'data' => $data,
 		);
 	}
-	/**
-	 * Enter description here...
-	 *
-	 * @param DOMNode|phpQueryObject|string $document
-	 * @param unknown_type $type
-	 * @param unknown_type $callback
-	 *
-	 * @TODO namespace events
-	 * @TODO support more than event in $type (space-separated)
-	 */
+	
 	public static function remove($document, $node, $type = null, $callback = null) {
 		$documentID = phpQuery::getDocumentID($document);
 		$eventNode = self::getNode($documentID, $node);

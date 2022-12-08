@@ -1,13 +1,13 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2013-present http://www.thinkcmf.com All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: 小夏 < 449134904@qq.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 namespace app\admin\controller;
 
 use app\admin\model\RoleUserModel;
@@ -20,9 +20,7 @@ class PublicController extends AdminBaseController
     {
     }
 
-    /**
-     * 后台登陆界面
-     */
+    
     public function login()
     {
         $loginAllowed = session("__LOGIN_BY_CMF_ADMIN_PW__");
@@ -44,9 +42,7 @@ class PublicController extends AdminBaseController
         }
     }
 
-    /**
-     * 登录验证
-     */
+    
     public function doLogin()
     {
         if (!$this->request->isPost()) {
@@ -61,14 +57,14 @@ class PublicController extends AdminBaseController
             $this->error('非法登录!', cmf_get_root() . '/');
         }
 
-        // $captcha = $this->request->param('captcha');
-        // if (empty($captcha)) {
-        //     $this->error(lang('CAPTCHA_REQUIRED'));
-        // }
+        
+        
+        
+        
         //验证码
-        // if (!cmf_captcha_check($captcha)) {
-        //     $this->error(lang('CAPTCHA_NOT_RIGHT'));
-        // }
+        
+        
+        
 
         $name = $this->request->param("username");
         if (empty($name)) {
@@ -78,7 +74,7 @@ class PublicController extends AdminBaseController
         if (empty($pass)) {
             $this->error(lang('PASSWORD_REQUIRED'));
         }
-        if (strpos($name, "@") > 0) {//邮箱登陆
+        if (strpos($name, "@") > 0) {
             $where['user_email'] = $name;
         } else {
             $where['user_login'] = $name;
@@ -110,16 +106,14 @@ class PublicController extends AdminBaseController
                 session("__LOGIN_BY_CMF_ADMIN_PW__", null);
                 $this->success(lang('LOGIN_SUCCESS'), url("admin/Index/index"));
             } else {
-                $this->error(lang('PASSWORD_NOT_RIGHT'));
+                $this->error('用户名或者密码错误');
             }
         } else {
-            $this->error(lang('USERNAME_NOT_EXIST'));
+            $this->error('用户名或者密码错误');
         }
     }
 
-    /**
-     * 后台管理员退出
-     */
+    
     public function logout()
     {
         session('ADMIN_ID', null);

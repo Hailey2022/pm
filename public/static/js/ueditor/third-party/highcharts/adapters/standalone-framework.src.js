@@ -48,7 +48,7 @@ function augment(obj) {
 		} else if (el.attachEvent) {
 			remove = IERemoveOneEvent;
 		} else {
-			return; // break on non-DOM events
+			return; 
 		}
 
 
@@ -80,11 +80,11 @@ function augment(obj) {
 					events = this.HCEvents,
 					wrappedFn;
 
-				// handle DOM events in modern browsers
+				
 				if (el.addEventListener) {
 					el.addEventListener(name, fn, false);
 
-				// handle old IE implementation
+				
 				} else if (el.attachEvent) {
 					
 					wrappedFn = function (e) {
@@ -95,7 +95,7 @@ function augment(obj) {
 						el.HCProxiedMethods = {};
 					}
 
-					// link wrapped fn with original fn, so we can get this in removeEvent
+					
 					el.HCProxiedMethods[fn.toString()] = wrappedFn;
 
 					el.attachEvent('on' + name, wrappedFn);
@@ -144,7 +144,7 @@ function augment(obj) {
 					preventDefault,
 					fn;
 
-				// Attach a simple preventDefault function to skip default handler if called
+				
 				preventDefault = function () {
 					args.defaultPrevented = true;
 				};
@@ -152,16 +152,16 @@ function augment(obj) {
 				for (i = 0; i < len; i++) {
 					fn = events[i];
 
-					// args is never null here
+					
 					if (args.stopped) {
 						return;
 					}
 
 					args.preventDefault = preventDefault;
 					args.target = target;
-					args.type = name; // #2297	
+					args.type = name; 
 					
-					// If the event handler return false, prevent the default handler from executing
+					
 					if (fn.call(this, args) === false) {
 						args.preventDefault();
 					}
@@ -218,7 +218,7 @@ return {
 		}
 
 		if (!Array.prototype.forEach) {
-			this.each = function (arr, fn) { // legacy
+			this.each = function (arr, fn) { 
 				var i = 0, 
 					len = arr.length;
 				for (; i < len; i++) {
@@ -281,19 +281,19 @@ return {
 				var styles,
 					paths = this.paths,
 					elem = this.elem,
-					elemelem = elem.element; // if destroyed, it is null
+					elemelem = elem.element; 
 
-				// Animating a path definition on SVGElement
+				
 				if (paths && elemelem) {
 					elem.attr('d', pathAnim.step(paths[0], paths[1], this.now, this.toD));
 				
-				// Other animations on SVGElement
+				
 				} else if (elem.attr) {
 					if (elemelem) {
 						elem.attr(this.prop, this.now);
 					}
 
-				// HTML styles
+				
 				} else {
 					styles = {};
 					styles[elem] = this.now + this.unit;
@@ -391,7 +391,7 @@ return {
 				args,
 				name;
 
-			el.stopAnimation = false; // ready for new
+			el.stopAnimation = false; 
 
 			if (typeof opt !== 'object' || opt === null) {
 				args = arguments;
@@ -450,7 +450,7 @@ return {
 	 * @param {Function} callback
 	 */
 	getScript: function (scriptLocation, callback) {
-		// We cannot assume that Assets class from mootools-more is available so instead insert a script tag to download script.
+		
 		var head = doc.getElementsByTagName('head')[0],
 			script = doc.createElement('script');
 
@@ -576,7 +576,7 @@ return {
 	 * @param {Array} arr
 	 * @param {Function} fn
 	 */
-	each: function (arr, fn) { // modern browsers
+	each: function (arr, fn) { 
 		return Array.prototype.forEach.call(arr, fn);
 	}
 };

@@ -1,13 +1,13 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2013-present http://www.thinkcmf.com All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: Powerless < wzxaini9@gmail.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 namespace app\user\controller;
 
 use think\facade\Validate;
@@ -17,9 +17,7 @@ use app\user\model\UserModel;
 class LoginController extends HomeBaseController
 {
 
-    /**
-     * 登录
-     */
+    
     public function index()
     {
         $redirect = $this->request->param("redirect");
@@ -41,9 +39,7 @@ class LoginController extends HomeBaseController
         }
     }
 
-    /**
-     * 登录验证提交
-     */
+    
     public function doLogin()
     {
         if ($this->request->isPost()) {
@@ -105,17 +101,13 @@ class LoginController extends HomeBaseController
         }
     }
 
-    /**
-     * 找回密码
-     */
+    
     public function findPassword()
     {
         return $this->fetch('/find_password');
     }
 
-    /**
-     * 用户密码重置
-     */
+    
     public function passwordReset()
     {
 

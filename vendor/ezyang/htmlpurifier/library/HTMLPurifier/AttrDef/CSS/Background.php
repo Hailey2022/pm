@@ -1,22 +1,13 @@
 <?php
 
-/**
- * Validates shorthand CSS property background.
- * @warning Does not support url tokens that have internal spaces.
- */
+
 class HTMLPurifier_AttrDef_CSS_Background extends HTMLPurifier_AttrDef
 {
 
-    /**
-     * Local copy of component validators.
-     * @type HTMLPurifier_AttrDef[]
-     * @note See HTMLPurifier_AttrDef_Font::$info for a similar impl.
-     */
+    
     protected $info;
 
-    /**
-     * @param HTMLPurifier_Config $config
-     */
+    
     public function __construct($config)
     {
         $def = $config->getCSSDefinition();
@@ -27,25 +18,20 @@ class HTMLPurifier_AttrDef_CSS_Background extends HTMLPurifier_AttrDef
         $this->info['background-position'] = $def->info['background-position'];
     }
 
-    /**
-     * @param string $string
-     * @param HTMLPurifier_Config $config
-     * @param HTMLPurifier_Context $context
-     * @return bool|string
-     */
+    
     public function validate($string, $config, $context)
     {
-        // regular pre-processing
+        
         $string = $this->parseCDATA($string);
         if ($string === '') {
             return false;
         }
 
-        // munge rgb() decl if necessary
+        
         $string = $this->mungeRgb($string);
 
-        // assumes URI doesn't have spaces in it
-        $bits = explode(' ', $string); // bits to process
+        
+        $bits = explode(' ', $string); 
 
         $caught = array();
         $caught['color'] = false;
@@ -54,7 +40,7 @@ class HTMLPurifier_AttrDef_CSS_Background extends HTMLPurifier_AttrDef
         $caught['attachment'] = false;
         $caught['position'] = false;
 
-        $i = 0; // number of catches
+        $i = 0; 
 
         foreach ($bits as $bit) {
             if ($bit === '') {
@@ -108,4 +94,4 @@ class HTMLPurifier_AttrDef_CSS_Background extends HTMLPurifier_AttrDef
     }
 }
 
-// vim: et sw=4 sts=4
+

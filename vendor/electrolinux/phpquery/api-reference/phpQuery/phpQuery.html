@@ -2472,7 +2472,7 @@ $context = null])</code>
     </td></tr></table><br />
 	
 		Multi-purpose function.<br /><br /><p>Use pq() as shortcut.</p><p>In below examples, $pq is any result of pq(); function.</p><p><ol><li>Import markup into existing document (without any attaching):</li></ol><ul><li>Import into selected document:
-   pq('&lt;div/&gt;')				// DOESNT accept text nodes at beginning of input string !</li><li>Import into document with ID from $pq-&gt;getDocumentID():
+   pq('&lt;div/&gt;')				
    pq('&lt;div/&gt;', $pq-&gt;getDocumentID())</li><li>Import into same document as DOMNode belongs to:
    pq('&lt;div/&gt;', DOMNode)</li><li>Import into document from phpQuery object:
    pq('&lt;div/&gt;', $pq)</li></ul>  2. Run query: <ul><li>Run query on last selected document:

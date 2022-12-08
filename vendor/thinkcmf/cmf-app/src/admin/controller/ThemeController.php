@@ -1,13 +1,13 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2013-present http://www.thinkcmf.com All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: 老猫 <zxxjjforever@163.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 namespace app\admin\controller;
 
 use app\admin\model\ThemeFileModel;
@@ -18,19 +18,7 @@ use tree\Tree;
 
 class ThemeController extends AdminBaseController
 {
-    /**
-     * 模板管理
-     * @adminMenu(
-     *     'name'   => '模板管理',
-     *     'parent' => 'admin/Setting/default',
-     *     'display'=> true,
-     *     'hasView'=> true,
-     *     'order'  => 20,
-     *     'icon'   => '',
-     *     'remark' => '模板管理',
-     *     'param'  => ''
-     * )
-     */
+    
     public function index()
     {
 
@@ -46,19 +34,7 @@ class ThemeController extends AdminBaseController
         return $this->fetch();
     }
 
-    /**
-     * 安装模板
-     * @adminMenu(
-     *     'name'   => '安装模板',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> true,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '安装模板',
-     *     'param'  => ''
-     * )
-     */
+    
     public function install()
     {
         $themesDirs = cmf_scan_dir("themes/*", GLOB_ONLYDIR);
@@ -116,19 +92,7 @@ class ThemeController extends AdminBaseController
         }
     }
 
-    /**
-     * 模板安装
-     * @adminMenu(
-     *     'name'   => '模板安装',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> false,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '模板安装',
-     *     'param'  => ''
-     * )
-     */
+    
     public function installTheme()
     {
         if ($this->request->isPost()) {
@@ -147,19 +111,7 @@ class ThemeController extends AdminBaseController
         }
     }
 
-    /**
-     * 模板更新
-     * @adminMenu(
-     *     'name'   => '模板更新',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> false,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '模板更新',
-     *     'param'  => ''
-     * )
-     */
+    
     public function update()
     {
         if ($this->request->isPost()) {
@@ -178,19 +130,7 @@ class ThemeController extends AdminBaseController
         }
     }
 
-    /**
-     * 启用模板
-     * @adminMenu(
-     *     'name'   => '启用模板',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> false,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '启用模板',
-     *     'param'  => ''
-     * )
-     */
+    
     public function active()
     {
         if ($this->request->isPost()) {
@@ -218,19 +158,7 @@ class ThemeController extends AdminBaseController
         }
     }
 
-    /**
-     * 模板文件列表
-     * @adminMenu(
-     *     'name'   => '模板文件列表',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> true,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '启用模板',
-     *     'param'  => ''
-     * )
-     */
+    
     public function files()
     {
         $theme = $this->request->param('theme');
@@ -239,19 +167,7 @@ class ThemeController extends AdminBaseController
         return $this->fetch();
     }
 
-    /**
-     * 模板文件设置
-     * @adminMenu(
-     *     'name'   => '模板文件设置',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> true,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '模板文件设置',
-     *     'param'  => ''
-     * )
-     */
+    
     public function fileSetting()
     {
         $tab    = $this->request->param('tab', 'widget');
@@ -311,19 +227,7 @@ class ThemeController extends AdminBaseController
         return $this->fetch($tpl);
     }
 
-    /**
-     * 模板文件数组数据列表
-     * @adminMenu(
-     *     'name'   => '模板文件数组数据列表',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> true,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '模板文件数组数据列表',
-     *     'param'  => ''
-     * )
-     */
+    
     public function fileArrayData()
     {
         $tab        = $this->request->param('tab', 'widget');
@@ -378,19 +282,7 @@ class ThemeController extends AdminBaseController
         return $this->fetch('file_array_data');
     }
 
-    /**
-     * 模板文件数组数据添加编辑
-     * @adminMenu(
-     *     'name'   => '模板文件数组数据添加编辑',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> false,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '模板文件数组数据添加编辑',
-     *     'param'  => ''
-     * )
-     */
+    
     public function fileArrayDataEdit()
     {
         $tab        = $this->request->param('tab', 'widget');
@@ -476,19 +368,7 @@ class ThemeController extends AdminBaseController
         return $this->fetch('file_array_data_edit');
     }
 
-    /**
-     * 模板文件数组数据添加编辑提交保存
-     * @adminMenu(
-     *     'name'   => '模板文件数组数据添加编辑提交保存',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> false,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '模板文件数组数据添加编辑提交保存',
-     *     'param'  => ''
-     * )
-     */
+    
     public function fileArrayDataEditPost()
     {
         if (!$this->request->isPost()) {
@@ -604,19 +484,7 @@ class ThemeController extends AdminBaseController
 
     }
 
-    /**
-     * 模板文件数组数据删除
-     * @adminMenu(
-     *     'name'   => '模板文件数组数据删除',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> false,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '模板文件数组数据删除',
-     *     'param'  => ''
-     * )
-     */
+    
     public function fileArrayDataDelete()
     {
         if (!$this->request->isPost()) {
@@ -675,19 +543,7 @@ class ThemeController extends AdminBaseController
         $this->success("删除成功！", url('theme/fileArrayData', ['tab' => $tab, 'var' => $varName, 'file_id' => $fileId, 'widget' => $widgetName]));
     }
 
-    /**
-     * 模板文件编辑提交保存
-     * @adminMenu(
-     *     'name'   => '模板文件编辑提交保存',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> false,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '模板文件编辑提交保存',
-     *     'param'  => ''
-     * )
-     */
+    
     public function settingPost()
     {
         if ($this->request->isPost()) {
@@ -786,11 +642,7 @@ class ThemeController extends AdminBaseController
         }
     }
 
-    /**
-     * 解析模板变量验证规则
-     * @param $rules
-     * @return array
-     */
+    
     private function _parseRules($rules)
     {
         $newRules = [];
@@ -810,19 +662,7 @@ class ThemeController extends AdminBaseController
         return $newRules;
     }
 
-    /**
-     * 模板文件设置数据源
-     * @adminMenu(
-     *     'name'   => '模板文件设置数据源',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> true,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '模板文件设置数据源',
-     *     'param'  => ''
-     * )
-     */
+    
     public function dataSource()
     {
         $dataSource = $this->request->param('data_source');
@@ -932,19 +772,7 @@ class ThemeController extends AdminBaseController
 
     }
 
-    /**
-     * 模板设计
-     * @adminMenu(
-     *     'name'   => '模板设计',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> true,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '模板设计',
-     *     'param'  => ''
-     * )
-     */
+    
     public function design()
     {
         $theme = $this->request->param('theme');

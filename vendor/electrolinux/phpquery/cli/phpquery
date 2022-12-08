@@ -20,14 +20,14 @@ require_once('phpQuery.php');
 //var_dump($argv);
 if (isset($argv[1]) && parse_url($argv[1], PHP_URL_HOST)) {
 	if (@include_once('Zend/Http/Client.php')) {
-		// use Ajax if possible
+		
 		phpQuery::ajaxAllowURL($argv[1]);
-		// TODO support contentType passing (from response headers)
+		
 		phpQuery::get($argv[1],
 			new Callback('phpQueryCli', new CallbackParam, array_slice($argv, 2))
 		);
 	} else {
-		// use file wrapper when no Ajax
+		
 		phpQueryCli(file_get_contents($argv[1]), array_slice($argv, 2));
 	}
 } else if (feof(STDIN) === false) {
@@ -47,7 +47,7 @@ function phpQueryCli($markup, $callQueue) {
 			if ($method) {
 				$pq = call_user_func_array(array($pq, $method), $params);
 			}
-			$method = substr($param, 2);	// delete --
+			$method = substr($param, 2);	
 			$params = array();
 		} else {
 			$param = str_replace('\n', "\n", $param);

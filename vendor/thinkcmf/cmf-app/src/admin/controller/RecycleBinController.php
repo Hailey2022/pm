@@ -1,13 +1,13 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2013-present http://www.thinkcmf.com All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: 小夏 < 449134904@qq.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 namespace app\admin\controller;
 
 use app\admin\model\RecycleBinModel;
@@ -19,19 +19,7 @@ use think\exception\PDOException;
 
 class RecycleBinController extends AdminBaseController
 {
-    /**
-     * 回收站
-     * @adminMenu(
-     *     'name'   => '回收站',
-     *     'parent' => '',
-     *     'display'=> false,
-     *     'hasView'=> true,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '回收站',
-     *     'param'  => ''
-     * )
-     */
+    
     public function index()
     {
         $content = hook_one('admin_recycle_bin_index_view');
@@ -42,26 +30,14 @@ class RecycleBinController extends AdminBaseController
 
         $recycleBinModel = new RecycleBinModel();
         $list            = $recycleBinModel->order('create_time desc')->paginate(10);
-        // 获取分页显示
+        
         $page = $list->render();
         $this->assign('page', $page);
         $this->assign('list', $list);
         return $this->fetch();
     }
 
-    /**
-     * 回收站还原
-     * @adminMenu(
-     *     'name'   => '回收站还原',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> false,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '回收站还原',
-     *     'param'  => ''
-     * )
-     */
+    
     public function restore()
     {
         if ($this->request->isPost()) {
@@ -74,19 +50,7 @@ class RecycleBinController extends AdminBaseController
         }
     }
 
-    /**
-     * 回收站彻底删除
-     * @adminMenu(
-     *     'name'   => '回收站彻底删除',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> false,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '回收站彻底删除',
-     *     'param'  => ''
-     * )
-     */
+    
     public function delete()
     {
         if ($this->request->isPost()) {
@@ -99,19 +63,7 @@ class RecycleBinController extends AdminBaseController
         }
     }
 
-    /**
-     * 清空回收站
-     * @adminMenu(
-     *     'name'   => '清空回收站',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> false,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '一键清空回收站',
-     *     'param'  => ''
-     * )
-     */
+    
     public function clear()
     {
         if ($this->request->isPost()) {
@@ -120,11 +72,7 @@ class RecycleBinController extends AdminBaseController
         }
     }
 
-    /**
-     * 统一处理删除、还原
-     * @param bool  $isDelete 是否是删除操作
-     * @param array $ids      处理的资源id集
-     */
+    
     private function operate($ids, $isDelete = true)
     {
         if (!empty($ids) && !is_array($ids)) {
@@ -139,12 +87,12 @@ class RecycleBinController extends AdminBaseController
                 foreach ($records as $record) {
                     $desIds[] = $record['id'];
                     if ($isDelete) {
-                        // 删除资源
+                        
                         if ($record['table_name'] === 'portal_post#page') {
-                            // 页面没有单独的表，需要单独处理
+                            
                             Db::name('portal_post')->delete($record['object_id']);
 
-                            // 消除路由
+                            
                             $routeModel = new RouteModel();
                             $routeModel->setRoute('', 'portal/Page/index', ['id' => $record['object_id']], 2, 5000);
                             $routeModel->getRoutes(true);
@@ -152,13 +100,13 @@ class RecycleBinController extends AdminBaseController
                             Db::name($record['table_name'])->delete($record['object_id']);
                         }
 
-                        // 如果是文章表，删除相关数据
+                        
                         if ($record['table_name'] === 'portal_post') {
                             Db::name('portal_category_post')->where('post_id', '=', $record['object_id'])->delete();
                             Db::name('portal_tag_post')->where('post_id', '=', $record['object_id'])->delete();
                         }
                     } else {
-                        // 还原资源
+                        
                         $tableNameArr = explode('#', $record['table_name']);
                         $tableName    = $tableNameArr[0];
 
@@ -171,7 +119,7 @@ class RecycleBinController extends AdminBaseController
                         }
                     }
                 }
-                // 删除回收站数据
+                
                 RecycleBinModel::destroy($desIds);
                 Db::commit();
             } catch (PDOException $e) {

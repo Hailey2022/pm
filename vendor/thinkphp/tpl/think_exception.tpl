@@ -79,7 +79,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>系统发生错误</title>
+    <title>系统错误</title>
     <meta name="robots" content="noindex,nofollow" />
     <style>
         /* Base */
@@ -310,7 +310,7 @@
                 <?php foreach ((array) $trace as $value) { ?>
                 <li>
                 <?php 
-                    // Show Function
+                    
                     if($value['function']){
                         echo sprintf(
                             'at %s%s%s(%s)', 
@@ -321,7 +321,7 @@
                         );
                     }
 
-                    // Show line
+                    
                     if (isset($value['file']) && isset($value['line'])) {
                         echo sprintf(' in %s', parse_file($value['file'], $value['line']));
                     }
@@ -408,12 +408,6 @@
         <?php } ?>
     </div>
     <?php } ?>
-
-    <div class="copyright">
-        <a title="官方网站" href="http://www.thinkphp.cn">ThinkPHP</a> 
-        <span>V<?php echo \think\facade\App::version(); ?></span> 
-        <span>{ 十年磨一剑-为API开发设计的高性能框架 }</span>
-    </div>
     <?php if(\think\facade\App::isDebug()) { ?>
     <script>
         var LINE = <?php echo $line; ?>;
@@ -475,7 +469,7 @@
             var ol    = $('ol', $('.prettyprint')[0]);
             var li    = $('li', ol[0]);   
 
-            // 短路径和长路径变换
+            
             for(var i = 0; i < files.length; i++){
                 files[i].ondblclick = function(){
                     var title = this.title;
@@ -485,16 +479,16 @@
                 }
             }
 
-            // 设置出错行
+            
             var err_line = $('.line-' + LINE, ol[0])[0];
             err_line.className = err_line.className + ' line-error';
 
             $.getScript('//cdn.bootcss.com/prettify/r298/prettify.min.js', function(){
                 prettyPrint();
 
-                // 解决Firefox浏览器一个很诡异的问题
-                // 当代码高亮后，ol的行号莫名其妙的错位
-                // 但是只要刷新li里面的html重新渲染就没有问题了
+                
+                
+                
                 if(window.navigator.userAgent.indexOf('Firefox') >= 0){
                     ol[0].innerHTML = ol[0].innerHTML;
                 }

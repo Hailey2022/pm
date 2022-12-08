@@ -1,13 +1,13 @@
 <?php
-// +---------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
-// +---------------------------------------------------------------------
-// | Copyright (c) 2013-present http://www.thinkcmf.com All rights reserved.
-// +---------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +---------------------------------------------------------------------
-// | Author: Dean <zxxjjforever@163.com>
-// +---------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 namespace cmf\behavior;
 
 use cmf\model\HookModel;
@@ -20,7 +20,7 @@ class InitAppHookBehavior
 
     public static $appLoaded = [];
 
-    // 行为扩展的执行入口必须是run
+    
     public function run($param)
     {
         $app = request()->module();
@@ -30,7 +30,7 @@ class InitAppHookBehavior
 
         self::$appLoaded[$app] = true;
 
-        // 加载应用第三方库
+        
         $appAutoLoadFile = APP_PATH . $app . '/vendor/autoload.php';
         if (file_exists($appAutoLoadFile)) {
             require_once $appAutoLoadFile;
@@ -40,7 +40,7 @@ class InitAppHookBehavior
             return;
         }
 
-        // 加载应用钩子
+        
         $appHookPluginsCacheKey = "init_hook_plugins_app_{$app}_hook_plugins";
         $appHookPlugins         = cache($appHookPluginsCacheKey);
 

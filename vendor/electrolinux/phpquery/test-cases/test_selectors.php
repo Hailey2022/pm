@@ -107,7 +107,7 @@ $tests = array(
 			'li',
 		)
 	),
-	// CSS3 pseudoclasses
+	
 	array(
 		'li:only-child',
 		array(

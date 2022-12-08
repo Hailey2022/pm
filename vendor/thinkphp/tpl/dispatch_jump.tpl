@@ -19,17 +19,17 @@
     <div class="system-message">
         <?php switch ($code) {?>
             <?php case 1:?>
-            <h1>:)</h1>
+            <h1></h1>
             <p class="success"><?php echo(strip_tags($msg));?></p>
             <?php break;?>
             <?php case 0:?>
-            <h1>:(</h1>
+            <h1>错误</h1>
             <p class="error"><?php echo(strip_tags($msg));?></p>
             <?php break;?>
         <?php } ?>
         <p class="detail"></p>
         <p class="jump">
-            页面自动 <a id="href" href="<?php echo($url);?>">跳转</a> 等待时间： <b id="wait"><?php echo($wait);?></b>
+            页面自动 <a id="href" href="<?php echo($url);?>">跳转</a> 等待时间： <b id="wait"><?php echo($wait - 1);?></b>
         </p>
     </div>
     <script type="text/javascript">

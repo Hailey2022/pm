@@ -1,22 +1,19 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkPHP [ WE CAN DO IT JUST THINK ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2006~2018 http://thinkphp.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: liu21st <liu21st@gmail.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 
 namespace think\cache\driver;
 
 use think\cache\Driver;
 
-/**
- * Sqlite缓存驱动
- * @author    liu21st <liu21st@gmail.com>
- */
+
 class Sqlite extends Driver
 {
     protected $options = [
@@ -28,12 +25,7 @@ class Sqlite extends Driver
         'serialize'  => true,
     ];
 
-    /**
-     * 架构函数
-     * @access public
-     * @param  array $options 缓存参数
-     * @throws \BadFunctionCallException
-     */
+    
     public function __construct($options = [])
     {
         if (!extension_loaded('sqlite')) {
@@ -49,23 +41,13 @@ class Sqlite extends Driver
         $this->handler = $func($this->options['db']);
     }
 
-    /**
-     * 获取实际的缓存标识
-     * @access public
-     * @param  string $name 缓存名
-     * @return string
-     */
+    
     protected function getCacheKey($name)
     {
         return $this->options['prefix'] . sqlite_escape_string($name);
     }
 
-    /**
-     * 判断缓存
-     * @access public
-     * @param  string $name 缓存变量名
-     * @return bool
-     */
+    
     public function has($name)
     {
         $name = $this->getCacheKey($name);
@@ -76,13 +58,7 @@ class Sqlite extends Driver
         return sqlite_num_rows($result);
     }
 
-    /**
-     * 读取缓存
-     * @access public
-     * @param  string $name 缓存变量名
-     * @param  mixed  $default 默认值
-     * @return mixed
-     */
+    
     public function get($name, $default = false)
     {
         $this->readTimes++;
@@ -106,14 +82,7 @@ class Sqlite extends Driver
         return $default;
     }
 
-    /**
-     * 写入缓存
-     * @access public
-     * @param  string            $name 缓存变量名
-     * @param  mixed             $value  存储数据
-     * @param  integer|\DateTime $expire  有效时间（秒）
-     * @return boolean
-     */
+    
     public function set($name, $value, $expire = null)
     {
         $this->writeTimes++;
@@ -153,13 +122,7 @@ class Sqlite extends Driver
         return false;
     }
 
-    /**
-     * 自增缓存（针对数值缓存）
-     * @access public
-     * @param  string    $name 缓存变量名
-     * @param  int       $step 步长
-     * @return false|int
-     */
+    
     public function inc($name, $step = 1)
     {
         if ($this->has($name)) {
@@ -171,13 +134,7 @@ class Sqlite extends Driver
         return $this->set($name, $value, 0) ? $value : false;
     }
 
-    /**
-     * 自减缓存（针对数值缓存）
-     * @access public
-     * @param  string    $name 缓存变量名
-     * @param  int       $step 步长
-     * @return false|int
-     */
+    
     public function dec($name, $step = 1)
     {
         if ($this->has($name)) {
@@ -189,12 +146,7 @@ class Sqlite extends Driver
         return $this->set($name, $value, 0) ? $value : false;
     }
 
-    /**
-     * 删除缓存
-     * @access public
-     * @param  string $name 缓存变量名
-     * @return boolean
-     */
+    
     public function rm($name)
     {
         $this->writeTimes++;
@@ -207,12 +159,7 @@ class Sqlite extends Driver
         return true;
     }
 
-    /**
-     * 清除缓存
-     * @access public
-     * @param  string $tag 标签名
-     * @return boolean
-     */
+    
     public function clear($tag = null)
     {
         if ($tag) {

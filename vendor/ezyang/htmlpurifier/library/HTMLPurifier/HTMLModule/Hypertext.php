@@ -1,19 +1,13 @@
 <?php
 
-/**
- * XHTML 1.1 Hypertext Module, defines hypertext links. Core Module.
- */
+
 class HTMLPurifier_HTMLModule_Hypertext extends HTMLPurifier_HTMLModule
 {
 
-    /**
-     * @type string
-     */
+    
     public $name = 'Hypertext';
 
-    /**
-     * @param HTMLPurifier_Config $config
-     */
+    
     public function setup($config)
     {
         $a = $this->addElement(
@@ -22,14 +16,14 @@ class HTMLPurifier_HTMLModule_Hypertext extends HTMLPurifier_HTMLModule
             'Inline',
             'Common',
             array(
-                // 'accesskey' => 'Character',
-                // 'charset' => 'Charset',
+                
+                
                 'href' => 'URI',
-                // 'hreflang' => 'LanguageCode',
+                
                 'rel' => new HTMLPurifier_AttrDef_HTML_LinkTypes('rel'),
                 'rev' => new HTMLPurifier_AttrDef_HTML_LinkTypes('rev'),
-                // 'tabindex' => 'Number',
-                // 'type' => 'ContentType',
+                
+                
             )
         );
         $a->formatting = true;
@@ -37,4 +31,4 @@ class HTMLPurifier_HTMLModule_Hypertext extends HTMLPurifier_HTMLModule
     }
 }
 
-// vim: et sw=4 sts=4
+

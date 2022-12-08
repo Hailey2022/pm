@@ -51,16 +51,9 @@ print $result->dump();
 print "\n";
 
 
-// TODO !
+
 $testName = 'WrapAllTest';
-/*
-$doc = phpQuery::newDocumentHTML('<div id="myDiv"></div>');
-$doc['#myDiv']->append('hors paragraphe<p>Test</p>hors paragraphe')
-	->contents()
-		->not('[nodeType=1]')
-			->wrap('<p/>');
-var_dump((string)$doc);
-*/
+
 //$testResult = 3;
 //phpQuery::newDocumentFile('test.html')
 //	->find('li:first')

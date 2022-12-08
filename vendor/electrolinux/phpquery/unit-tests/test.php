@@ -5,22 +5,18 @@ require_once '../phpQuery/phpQuery.php';
 
 class phpQueryBasicTest extends PHPUnit_Framework_TestCase {
     function provider() {
-        // TODO change filename
+        
         return array( array(
                 phpQuery::newDocumentFile('test.html')
         ));
     }
 
-    /**
-     * @param phpQueryObject $pq
-     * @dataProvider provider
-     * @return void
-     */
+    
     function testFilterWithPseudoclass( $pq ) {
-//        xdebug_break();
-//    function testFilterWithPseudoclass( $pq ) {
-//        print_r(`ls`);
-//        $pq = phpQuery::newDocumentFile('test.html');
+
+
+
+
         $pq = $pq->find('p')
             ->filter('.body:gt(1)');
         $result = array(
@@ -31,11 +27,7 @@ class phpQueryBasicTest extends PHPUnit_Framework_TestCase {
     }
 
 
-    /**
-     * @param phpQueryObject $pq
-     * @dataProvider provider
-     * @return void
-     */
+    
     function testSlice( $pq ) {
         $testResult = array(
             'li#testID',
@@ -46,13 +38,9 @@ class phpQueryBasicTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue( $pq->whois() == $testResult );
     }
 
-    /**
-     * @param phpQueryObject $pq
-     * @dataProvider provider
-     * @return void
-     */
+    
     function testSlice2( $pq ) {
-        // SLICE2
+        
         $testResult = array(
             'li#testID',
             'li',
@@ -67,11 +55,9 @@ class phpQueryBasicTest extends PHPUnit_Framework_TestCase {
     }
 
 
-    /**
-     * @return void
-     */
+    
     function testMultiInsert() {
-        // Multi-insert
+        
         $pq = phpQuery::newDocument('<li><span class="field1"></span><span class="field1"></span></li>')
             ->find('.field1')
                 ->php('longlongtest');
@@ -82,11 +68,7 @@ class phpQueryBasicTest extends PHPUnit_Framework_TestCase {
 
     }
 
-    /**
-     * @param phpQueryObject $pq
-     * @dataProvider provider
-     * @return void
-     */
+    
     function testIndex( $pq ) {
         $testResult = 1;
         $pq = $pq->find('p')
@@ -97,11 +79,7 @@ class phpQueryBasicTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue( $pq == $testResult );
     }
 
-    /**
-     * @param phpQueryObject $pq
-     * @dataProvider provider
-     * @return void
-     */
+    
     function testClone( $pq ) {
         $testResult = 3;
         $document = null;
@@ -120,11 +98,7 @@ class phpQueryBasicTest extends PHPUnit_Framework_TestCase {
     }
 
 
-    /**
-     * @param phpQueryObject $pq
-     * @dataProvider provider
-     * @return void
-     */
+    
     function testNextSibling( $pq ) {
         $testResult = 3;
         $document = null;
@@ -137,11 +111,7 @@ class phpQueryBasicTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue( $result );
     }
 
-    /**
-     * @param phpQueryObject $pq
-     * @dataProvider provider
-     * @return void
-     */
+    
     function testSimpleDataInsertion( $pq ) {
         $testName = 'Simple data insertion';
         $testResult = <<<EOF
@@ -205,10 +175,10 @@ EOF;
     }
 
 
-//    function __construct() {
-//        xdebug_break();
-//        parent::__construct();
-//    }
+
+
+
+
 }
 
 $test = new phpQueryBasicTest();

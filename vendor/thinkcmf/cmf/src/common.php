@@ -1,24 +1,10 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2013-present http://www.thinkcmf.com All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +---------------------------------------------------------------------
-// | Author: Dean <zxxjjforever@163.com>
-// +----------------------------------------------------------------------
 use think\Db;
 use cmf\model\OptionModel;
 use think\facade\Env;
-use think\facade\Url;
 use dir\Dir;
-use think\facade\Route;
-use think\Loader;
 use cmf\lib\Storage;
 use think\facade\Hook;
-
-// 应用公共文件
 
 if (PHP_SAPI == 'cli') {
     $apps = cmf_scan_dir(APP_PATH . '*', GLOB_ONLYDIR);
@@ -28,7 +14,7 @@ if (PHP_SAPI == 'cli') {
 
         if (file_exists($commandFile)) {
             $commands = include $commandFile;
-            // 注册命令行指令
+            
             \think\Console::addDefaultCommands($commands);
         }
     }
@@ -40,7 +26,7 @@ if (PHP_SAPI == 'cli') {
 
         if (file_exists($commandFile)) {
             $commands = include $commandFile;
-            // 注册命令行指令
+            
             \think\Console::addDefaultCommands($commands);
         }
     }
@@ -87,7 +73,7 @@ function cmf_get_current_user()
 {
     $sessionUser = session('user');
     if (!empty($sessionUser)) {
-        unset($sessionUser['user_pass']); // 销毁敏感数据
+        unset($sessionUser['user_pass']); 
         return $sessionUser;
     } else {
         return false;
@@ -238,7 +224,7 @@ function cmf_get_theme_path($theme = null)
 {
     $themePath = config('template.cmf_theme_path');
     if ($theme === null) {
-        // 获取当前主题名称
+        
         $theme = cmf_get_current_theme();
     }
 
@@ -333,7 +319,7 @@ function cmf_random_string($len = 6)
         "3", "4", "5", "6", "7", "8", "9"
     ];
     $charsLen = count($chars) - 1;
-    shuffle($chars);    // 将数组打乱
+    shuffle($chars);    
     $output = "";
     for ($i = 0; $i < $len; $i++) {
         $output .= $chars[mt_rand(0, $charsLen)];
@@ -346,7 +332,7 @@ function cmf_random_string($len = 6)
  */
 function cmf_clear_cache()
 {
-    // 清除 opcache缓存
+    
     if (function_exists("opcache_reset")) {
         opcache_reset();
     }
@@ -363,19 +349,19 @@ function cmf_clear_cache()
             $dir = $runtimePath . $dir;
             if (is_dir($dir)) {
                 array_push($dirs, $dir);
-//                $tmpRootDirs = cmf_scan_dir($dir . "/*");
-//                foreach ($tmpRootDirs as $tDir) {
-//                    if ($tDir != "." && $tDir != "..") {
-//                        $tDir = $dir . '/' . $tDir;
-//                        if (is_dir($tDir)) {
-//                            array_push($dirs, $tDir);
-//                        } else {
-////                            @unlink($tDir);
-//                        }
-//                    }
-//                }
+
+
+
+
+
+
+
+//
+
+
+
             } else {
-//                @unlink($dir);
+
             }
         }
     }
@@ -590,24 +576,24 @@ function cmf_get_upload_setting()
         $uploadSetting = [
             'file_types' => [
                 'image' => [
-                    'upload_max_filesize' => '10240',//单位KB
+                    'upload_max_filesize' => '102400000',//单位KB
                     'extensions'          => 'jpg,jpeg,png,gif,bmp4'
                 ],
                 'video' => [
-                    'upload_max_filesize' => '10240',
+                    'upload_max_filesize' => '102400000',
                     'extensions'          => 'mp4,avi,wmv,rm,rmvb,mkv'
                 ],
                 'audio' => [
-                    'upload_max_filesize' => '10240',
+                    'upload_max_filesize' => '102400000',
                     'extensions'          => 'mp3,wma,wav'
                 ],
                 'file'  => [
-                    'upload_max_filesize' => '10240',
-                    'extensions'          => 'txt,pdf,doc,docx,xls,xlsx,ppt,pptx,zip,rar'
+                    'upload_max_filesize' => '102400000',
+                    'extensions'          => 'txt,pdf,doc,docx,xls,xlsx,ppt,pptx,zip,rar,iso,jpg,jpeg,png,gif,bmp4,mp4,avi,wmv,rm,rmvb,mkv,mp3,wma,wav'
                 ]
             ],
             'chunk_size' => 512,//单位KB
-            'max_files'  => 20 //最大同时上传文件数
+            'max_files'  => 100 //最大同时上传文件数
         ];
     }
 
@@ -691,39 +677,39 @@ function cmf_send_email($address, $subject, $message)
 {
     $smtpSetting = cmf_get_option('smtp_setting');
     $mail        = new \PHPMailer\PHPMailer\PHPMailer();
-    // 设置PHPMailer使用SMTP服务器发送Email
+    
     $mail->IsSMTP();
     $mail->IsHTML(true);
     //$mail->SMTPDebug = 3;
-    // 设置邮件的字符编码，若不指定，则为'UTF-8'
+    
     $mail->CharSet = 'UTF-8';
-    // 添加收件人地址，可以多次使用来添加多个收件人
+    
     $mail->AddAddress($address);
-    // 设置邮件正文
+    
     $mail->Body = $message;
-    // 设置邮件头的From字段。
+    
     $mail->From = $smtpSetting['from'];
-    // 设置发件人名字
+    
     $mail->FromName = $smtpSetting['from_name'];
-    // 设置邮件标题
+    
     $mail->Subject = $subject;
-    // 设置SMTP服务器。
+    
     $mail->Host = $smtpSetting['host'];
     //by Rainfer
-    // 设置SMTPSecure。
+    
     $Secure           = $smtpSetting['smtp_secure'];
     $mail->SMTPSecure = empty($Secure) ? '' : $Secure;
-    // 设置SMTP服务器端口。
+    
     $port       = $smtpSetting['port'];
     $mail->Port = empty($port) ? "25" : $port;
-    // 设置为"需要验证"
+    
     $mail->SMTPAuth    = true;
     $mail->SMTPAutoTLS = false;
     $mail->Timeout     = 10;
-    // 设置用户名和密码。
+    
     $mail->Username = $smtpSetting['username'];
     $mail->Password = $smtpSetting['password'];
-    // 发送邮件。
+    
     if (!$mail->Send()) {
         $mailError = $mail->ErrorInfo;
         return ["error" => 1, "message" => $mailError];
@@ -745,14 +731,14 @@ function cmf_get_asset_url($file, $style = '')
     } else if (strpos($file, "/") === 0) {
         return $file;
     } else {
-//        $storage = cmf_get_option('storage');
-//        if (empty($storage['type'])) {
-//            $storage['type'] = 'Local';
-//        }
-//        if ($storage['type'] != 'Local') {
-//            $watermark = cmf_get_plugin_config($storage['type']);
-//            $style     = empty($style) ? $watermark['styles_watermark'] : $style;
-//        }
+
+
+
+
+
+
+
+
         $storage = Storage::instance();
         return $storage->getUrl($file, $style);
     }
@@ -775,14 +761,14 @@ function cmf_get_image_url($file, $style = 'watermark')
     } else if (strpos($file, "/") === 0) {
         return cmf_get_domain() . $file;
     } else {
-//        $storage = cmf_get_option('storage');
-//        if (empty($storage['type'])) {
-//            $storage['type'] = 'Local';
-//        }
-//        if ($storage['type'] != 'Local') {
-//            $watermark = cmf_get_plugin_config($storage['type']);
-//            $style     = empty($style) ? $watermark['styles_watermark'] : $style;
-//        }
+
+
+
+
+
+
+
+
         $storage = Storage::instance();
         return $storage->getImageUrl($file, $style);
     }
@@ -805,14 +791,14 @@ function cmf_get_image_preview_url($file, $style = 'watermark')
     } else if (strpos($file, "/") === 0) {
         return $file;
     } else {
-//        $storage = cmf_get_option('storage');
-//        if (empty($storage['type'])) {
-//            $storage['type'] = 'Local';
-//        }
-//        if ($storage['type'] != 'Local') {
-//            $watermark = cmf_get_plugin_config($storage['type']);
-//            $style     = empty($style) ? $watermark['styles_watermark'] : $style;
-//        }
+
+
+
+
+
+
+
+
         $storage = Storage::instance();
         return $storage->getPreviewUrl($file, $style);
     }
@@ -1186,13 +1172,13 @@ function cmf_plugin_url($url, $vars = [], $domain = false)
     $controller       = $case_insensitive ? cmf_parse_name($url['host']) : $url['host'];
     $action           = trim($case_insensitive ? strtolower($url['path']) : $url['path'], '/');
 
-    /* 解析URL带的参数 */
+    
     if (isset($url['query'])) {
         parse_str($url['query'], $query);
         $vars = array_merge($query, $vars);
     }
 
-    /* 基础参数 */
+    
     $params = [
         '_plugin'     => $plugin,
         '_controller' => $controller,
@@ -1250,11 +1236,11 @@ function cmf_alpha_id($in, $to_num = false, $pad_up = 4, $passKey = null)
 {
     $index = "aBcDeFgHiJkLmNoPqRsTuVwXyZAbCdEfGhIjKlMnOpQrStUvWxYz0123456789";
     if ($passKey !== null) {
-        // Although this function's purpose is to just make the
-        // ID short - and not so much secure,
-        // with this patch by Simon Franz (http://blog.snaky.org/)
-        // you can optionally supply a password to make it harder
-        // to calculate the corresponding numeric ID
+        
+        
+        
+        
+        
 
         for ($n = 0; $n < strlen($index); $n++) $i[] = substr($index, $n, 1);
 
@@ -1270,7 +1256,7 @@ function cmf_alpha_id($in, $to_num = false, $pad_up = 4, $passKey = null)
     $base = strlen($index);
 
     if ($to_num) {
-        // Digital number  <<--  alphabet letter code
+        
         $in  = strrev($in);
         $out = 0;
         $len = strlen($in) - 1;
@@ -1286,7 +1272,7 @@ function cmf_alpha_id($in, $to_num = false, $pad_up = 4, $passKey = null)
         $out = sprintf('%F', $out);
         $out = substr($out, 0, strpos($out, '.'));
     } else {
-        // Digital number  -->>  alphabet letter code
+        
         if (is_numeric($pad_up)) {
             $pad_up--;
             if ($pad_up > 0) $in += pow($base, $pad_up);
@@ -1299,7 +1285,7 @@ function cmf_alpha_id($in, $to_num = false, $pad_up = 4, $passKey = null)
             $out = $out . substr($index, $a, 1);
             $in  = $in - ($a * $bcp);
         }
-        $out = strrev($out); // reverse
+        $out = strrev($out); 
     }
 
     return $out;
@@ -1698,9 +1684,9 @@ function get_client_ip($type = 0, $adv = true)
  */
 function cmf_url_encode($url, $params)
 {
-    // 解析参数
+    
     if (is_string($params)) {
-        // aaa=1&bbb=2 转换成数组
+        
         parse_str($params, $params);
     }
 
@@ -1731,30 +1717,30 @@ function cmf_url($url = '', $vars = '', $suffix = true, $domain = false)
         $info = parse_url($url);
         $url  = !empty($info['path']) ? $info['path'] : '';
         if (isset($info['fragment'])) {
-            // 解析锚点
+            
             $anchor = $info['fragment'];
             if (false !== strpos($anchor, '?')) {
-                // 解析参数
+                
                 list($anchor, $info['query']) = explode('?', $anchor, 2);
             }
             if (false !== strpos($anchor, '@')) {
-                // 解析域名
+                
                 list($anchor, $domain) = explode('@', $anchor, 2);
             }
         } elseif (strpos($url, '@') && false === strpos($url, '\\')) {
-            // 解析域名
+            
             list($url, $domain) = explode('@', $url, 2);
         }
     }
 
-    // 解析参数
+    
     if (is_string($vars)) {
-        // aaa=1&bbb=2 转换成数组
+        
         parse_str($vars, $vars);
     }
 
     if (isset($info['query'])) {
-        // 解析地址里面参数 合并到vars
+        
         parse_str($info['query'], $params);
         $vars = array_merge($params, $vars);
     }
@@ -1777,9 +1763,9 @@ function cmf_url($url = '', $vars = '', $suffix = true, $domain = false)
         $url = $url . '#' . $anchor;
     }
 
-//    if (!empty($domain)) {
-//        $url = $url . '@' . $domain;
-//    }
+
+
+
 
     return url($url, $vars, $suffix, $domain);
 }
@@ -1894,10 +1880,10 @@ function cmf_curl_get($url)
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_TIMEOUT, 5);
     $SSL = substr($url, 0, 8) == "https://" ? true : false;
-//    if ($SSL) {
-//        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 信任任何证书
-//        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2); // 检查证书中是否设置域名
-//    }
+
+
+
+
     $content = curl_exec($ch);
     curl_close($ch);
     return $content;
@@ -1939,8 +1925,8 @@ function cmf_user_action($action)
                 case 1:
                     $firstDayStartTime = strtotime(date('Y-m-d', $findUserScoreLog['create_time']));
                     $endDayEndTime     = strtotime(date('Y-m-d', strtotime("+{$cycleTime} day", $firstDayStartTime)));
-//                    $todayStartTime        = strtotime(date('Y-m-d'));
-//                    $todayEndTime          = strtotime(date('Y-m-d', strtotime('+1 day')));
+
+
                     $findUserScoreLogCount = Db::name('user_score_log')
                         ->where('user_id', $userId)
                         ->where('create_time', '>', $firstDayStartTime)

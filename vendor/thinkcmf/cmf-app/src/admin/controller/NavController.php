@@ -1,37 +1,22 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2013-present http://www.thinkcmf.com All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: kane <chengjin005@163.com> 小夏 < 449134904@qq.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 namespace app\admin\controller;
 
 use cmf\controller\AdminBaseController;
 use app\admin\model\NavModel;
 
-/**
- * Class NavController 导航类别管理控制器
- * @package app\admin\controller
- */
+
 class NavController extends AdminBaseController
 {
-    /**
-     * 导航管理
-     * @adminMenu(
-     *     'name'   => '导航管理',
-     *     'parent' => 'admin/Setting/default',
-     *     'display'=> true,
-     *     'hasView'=> true,
-     *     'order'  => 30,
-     *     'icon'   => '',
-     *     'remark' => '导航管理',
-     *     'param'  => ''
-     * )
-     */
+    
     public function index()
     {
         $content = hook_one('admin_nav_index_view');
@@ -49,37 +34,13 @@ class NavController extends AdminBaseController
 
     }
 
-    /**
-     * 添加导航
-     * @adminMenu(
-     *     'name'   => '添加导航',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> true,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '添加导航',
-     *     'param'  => ''
-     * )
-     */
+    
     public function add()
     {
         return $this->fetch();
     }
 
-    /**
-     * 添加导航提交保存
-     * @adminMenu(
-     *     'name'   => '添加导航提交保存',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> false,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '添加导航提交保存',
-     *     'param'  => ''
-     * )
-     */
+    
     public function addPost()
     {
         if ($this->request->isPost()) {
@@ -98,19 +59,7 @@ class NavController extends AdminBaseController
 
     }
 
-    /**
-     * 编辑导航
-     * @adminMenu(
-     *     'name'   => '编辑导航',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> true,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '编辑导航',
-     *     'param'  => ''
-     * )
-     */
+    
     public function edit()
     {
         $navModel = new NavModel();
@@ -124,19 +73,7 @@ class NavController extends AdminBaseController
     }
 
 
-    /**
-     * 编辑导航提交保存
-     * @adminMenu(
-     *     'name'   => '编辑导航提交保存',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> false,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '编辑导航提交保存',
-     *     'param'  => ''
-     * )
-     */
+    
     public function editPost()
     {
         if ($this->request->isPost()) {
@@ -154,19 +91,7 @@ class NavController extends AdminBaseController
         }
     }
 
-    /**
-     * 删除导航
-     * @adminMenu(
-     *     'name'   => '删除导航',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> false,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '删除导航',
-     *     'param'  => ''
-     * )
-     */
+    
     public function delete()
     {
         if ($this->request->isPost()) {

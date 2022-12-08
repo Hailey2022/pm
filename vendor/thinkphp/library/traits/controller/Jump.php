@@ -1,16 +1,6 @@
 <?php
 
-/**
- * 用法：
- * class index
- * {
- *     use \traits\controller\Jump;
- *     public function index(){
- *         $this->error();
- *         $this->redirect();
- *     }
- * }
- */
+
 namespace traits\controller;
 
 use think\Container;
@@ -20,22 +10,10 @@ use think\response\Redirect;
 
 trait Jump
 {
-    /**
-     * 应用实例
-     * @var \think\App
-     */
+    
     protected $app;
 
-    /**
-     * 操作成功跳转的快捷方法
-     * @access protected
-     * @param  mixed     $msg 提示信息
-     * @param  string    $url 跳转的URL地址
-     * @param  mixed     $data 返回的数据
-     * @param  integer   $wait 跳转等待时间
-     * @param  array     $header 发送的Header信息
-     * @return void
-     */
+    
     protected function success($msg = '', $url = null, $data = '', $wait = 3, array $header = [])
     {
         if (is_null($url) && isset($_SERVER["HTTP_REFERER"])) {
@@ -53,7 +31,7 @@ trait Jump
         ];
 
         $type = $this->getResponseType();
-        // 把跳转模板的渲染下沉，这样在 response_send 行为里通过getData()获得的数据是一致性的格式
+        
         if ('html' == strtolower($type)) {
             $type = 'jump';
         }
@@ -63,16 +41,7 @@ trait Jump
         throw new HttpResponseException($response);
     }
 
-    /**
-     * 操作错误跳转的快捷方法
-     * @access protected
-     * @param  mixed     $msg 提示信息
-     * @param  string    $url 跳转的URL地址
-     * @param  mixed     $data 返回的数据
-     * @param  integer   $wait 跳转等待时间
-     * @param  array     $header 发送的Header信息
-     * @return void
-     */
+    
     protected function error($msg = '', $url = null, $data = '', $wait = 3, array $header = [])
     {
         $type = $this->getResponseType();
@@ -99,16 +68,7 @@ trait Jump
         throw new HttpResponseException($response);
     }
 
-    /**
-     * 返回封装后的API数据到客户端
-     * @access protected
-     * @param  mixed     $data 要返回的数据
-     * @param  integer   $code 返回的code
-     * @param  mixed     $msg 提示信息
-     * @param  string    $type 返回数据格式
-     * @param  array     $header 发送的Header信息
-     * @return void
-     */
+    
     protected function result($data, $code = 0, $msg = '', $type = '', array $header = [])
     {
         $result = [
@@ -124,15 +84,7 @@ trait Jump
         throw new HttpResponseException($response);
     }
 
-    /**
-     * URL重定向
-     * @access protected
-     * @param  string         $url 跳转的URL表达式
-     * @param  array|integer  $params 其它URL参数
-     * @param  integer        $code http code
-     * @param  array          $with 隐式传参
-     * @return void
-     */
+    
     protected function redirect($url, $params = [], $code = 302, $with = [])
     {
         $response = new Redirect($url);
@@ -147,11 +99,7 @@ trait Jump
         throw new HttpResponseException($response);
     }
 
-    /**
-     * 获取当前的response 输出类型
-     * @access protected
-     * @return string
-     */
+    
     protected function getResponseType()
     {
         if (!$this->app) {

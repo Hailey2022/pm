@@ -1,13 +1,13 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkPHP [ WE CAN DO IT JUST THINK IT ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2006-2015 http://thinkphp.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: yunwuxin <448901948@qq.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 
 namespace think\image\gif;
 
@@ -27,17 +27,12 @@ class Decoder
     public $GIF_colorC;
     public $GIF_colorF;
 
-    /*
-    :::::::::::::::::::::::::::::::::::::::::::::::::::
-    ::
-    ::    GIFDecoder ( $GIF_pointer )
-    ::
-     */
+    
     public function __construct($GIF_pointer)
     {
         $this->GIF_stream = $GIF_pointer;
-        $this->getByte(6); // GIF89a
-        $this->getByte(7); // Logical Screen Descriptor
+        $this->getByte(6); 
+        $this->getByte(7); 
         $this->GIF_screen = $this->GIF_buffer;
         $this->GIF_colorF = $this->GIF_buffer[4] & 0x80 ? 1 : 0;
         $this->GIF_sorted = $this->GIF_buffer[4] & 0x08 ? 1 : 0;
@@ -67,12 +62,7 @@ class Decoder
         }
     }
 
-    /*
-    :::::::::::::::::::::::::::::::::::::::::::::::::::
-    ::
-    ::    GIFReadExtension ( )
-    ::
-     */
+    
     public function readExtensions()
     {
         $this->getByte(1);
@@ -82,25 +72,14 @@ class Decoder
                 break;
             }
             $this->getByte($u);
-            /*
-             * 07.05.2007.
-             * Implemented a new line for a new function
-             * to determine the originaly delays between
-             * frames.
-             *
-             */
+            
             if (4 == $u) {
                 $this->GIF_delays[] = ($this->GIF_buffer[1] | $this->GIF_buffer[2] << 8);
             }
         }
     }
 
-    /*
-    :::::::::::::::::::::::::::::::::::::::::::::::::::
-    ::
-    ::    GIFReadExtension ( )
-    ::
-     */
+    
     public function readDescriptor()
     {
         $this->getByte(9);
@@ -143,18 +122,11 @@ class Decoder
             $this->putByte($this->GIF_buffer);
         }
         $this->GIF_string .= chr(0x3B);
-        /*
-        Add frames into $GIF_stream array...
-         */
+        
         $this->GIF_arrays[] = $this->GIF_string;
     }
 
-    /*
-    :::::::::::::::::::::::::::::::::::::::::::::::::::
-    ::
-    ::    GIFGetByte ( $len )
-    ::
-    */
+    
     public function getByte($len)
     {
         $this->GIF_buffer = [];
@@ -167,12 +139,7 @@ class Decoder
         return 1;
     }
 
-    /*
-    :::::::::::::::::::::::::::::::::::::::::::::::::::
-    ::
-    ::    GIFPutByte ( $bytes )
-    ::
-     */
+    
     public function putByte($bytes)
     {
         for ($i = 0; $i < count($bytes); $i++) {
@@ -180,26 +147,13 @@ class Decoder
         }
     }
 
-    /*
-    :::::::::::::::::::::::::::::::::::::::::::::::::::
-    ::
-    ::    PUBLIC FUNCTIONS
-    ::
-    ::
-    ::    GIFGetFrames ( )
-    ::
-     */
+    
     public function getFrames()
     {
         return ($this->GIF_arrays);
     }
 
-    /*
-    :::::::::::::::::::::::::::::::::::::::::::::::::::
-    ::
-    ::    GIFGetDelays ( )
-    ::
-     */
+    
     public function getDelays()
     {
         return ($this->GIF_delays);

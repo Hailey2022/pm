@@ -1,27 +1,25 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkPHP [ WE CAN DO IT JUST THINK ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2006~2018 http://thinkphp.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: liu21st <liu21st@gmail.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 
 namespace think\db\connector;
 
 use PDO;
 use think\db\Connection;
 
-/**
- * Pgsql数据库驱动
- */
+
 class Pgsql extends Connection
 {
     protected $builder = '\\think\\db\\builder\\Pgsql';
 
-    // PDO连接参数
+    
     protected $params = [
         PDO::ATTR_CASE              => PDO::CASE_NATURAL,
         PDO::ATTR_ERRMODE           => PDO::ERRMODE_EXCEPTION,
@@ -29,12 +27,7 @@ class Pgsql extends Connection
         PDO::ATTR_STRINGIFY_FETCHES => false,
     ];
 
-    /**
-     * 解析pdo连接的dsn信息
-     * @access protected
-     * @param  array $config 连接信息
-     * @return string
-     */
+    
     protected function parseDsn($config)
     {
         $dsn = 'pgsql:dbname=' . $config['database'] . ';host=' . $config['hostname'];
@@ -46,12 +39,7 @@ class Pgsql extends Connection
         return $dsn;
     }
 
-    /**
-     * 取得数据表的字段信息
-     * @access public
-     * @param  string $tableName
-     * @return array
-     */
+    
     public function getFields($tableName)
     {
         list($tableName) = explode(' ', $tableName);
@@ -78,12 +66,7 @@ class Pgsql extends Connection
         return $this->fieldCase($info);
     }
 
-    /**
-     * 取得数据库的表信息
-     * @access public
-     * @param  string $dbName
-     * @return array
-     */
+    
     public function getTables($dbName = '')
     {
         $sql    = "select tablename as Tables_in_test from pg_tables where  schemaname ='public'";
@@ -98,12 +81,7 @@ class Pgsql extends Connection
         return $info;
     }
 
-    /**
-     * SQL性能分析
-     * @access protected
-     * @param  string $sql
-     * @return array
-     */
+    
     protected function getExplain($sql)
     {
         return [];

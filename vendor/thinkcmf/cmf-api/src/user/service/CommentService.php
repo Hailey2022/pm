@@ -1,13 +1,13 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2013-present http://www.thinkcmf.com All rights reserved.
-// +----------------------------------------------------------------------
-// | Author: 小夏 < 449134904@qq.com>
-// | Date: 2019/01/11
-// | Time:下午 04:32
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 namespace api\user\service;
 
 
@@ -16,14 +16,7 @@ use think\db\Query;
 
 class CommentService
 {
-    /**
-     * 获取用户评论列表
-     * @param $filter
-     * @return array|bool|\PDOStatement|string|\think\Collection
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
-     */
+    
     public function userComments($filter)
     {
         $page    = empty($filter['page']) ? '1' : $filter['page'];

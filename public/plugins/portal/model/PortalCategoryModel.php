@@ -1,13 +1,13 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2013-2019 http://www.thinkcmf.com All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: 老猫 <thinkcmf@126.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 namespace plugins\portal\model;
 
 use app\admin\model\RouteModel;
@@ -23,15 +23,7 @@ class PortalCategoryModel extends Model
         'more' => 'array',
     ];
 
-    /**
-     * 生成分类 select树形结构
-     * @param int $selectId 需要选中的分类 id
-     * @param int $currentCid 需要隐藏的分类 id
-     * @return string
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
-     */
+    
     public function adminCategoryTree($selectId = 0, $currentCid = 0)
     {
         $categories = $this->order("list_order ASC")
@@ -61,21 +53,12 @@ class PortalCategoryModel extends Model
         return $treeStr;
     }
 
-    /**
-     * 分类树形结构
-     * @param int $currentIds
-     * @param string $tpl
-     * @param int $roleId
-     * @return string
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
-     */
+    
     public function adminAuthorizeCategoryTableTree($currentIds = 0, $tpl = '', $roleId = 0)
     {
-//        if (!empty($currentCid)) {
-//            $where['id'] = ['neq', $currentCid];
-//        }
+
+
+
         $categories = $this->order("list_order ASC")->where('delete_time', 0)->select()->toArray();
 
         $tree       = new Tree();
@@ -120,11 +103,7 @@ class PortalCategoryModel extends Model
         return $treeStr;
     }
 
-    /**
-     * 添加文章分类
-     * @param $data
-     * @return bool
-     */
+    
     public function addCategory($data)
     {
         $result = true;
@@ -215,13 +194,7 @@ class PortalCategoryModel extends Model
         return $result;
     }
 
-    /**
-     * 获取菜单深度
-     * @param       $id
-     * @param array $array
-     * @param int $i
-     * @return int
-     */
+    
     protected function _getLevel($id, $array = [], $i = 0)
     {
         if ($array[$id]['parent_id'] == 0 || empty($array[$array[$id]['parent_id']]) || $array[$id]['parent_id'] == $id) {

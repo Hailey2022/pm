@@ -1,13 +1,13 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkPHP [ WE CAN DO IT JUST THINK IT ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2006-2016 http://thinkphp.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: yunwuxin <448901948@qq.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 
 namespace think\console\output\driver;
 
@@ -17,15 +17,15 @@ use think\console\output\Formatter;
 class Console
 {
 
-    /** @var  Resource */
+    
     private $stdout;
 
-    /** @var  Formatter */
+    
     private $formatter;
 
     private $terminalDimensions;
 
-    /** @var  Output */
+    
     private $output;
 
     public function __construct(Output $output)
@@ -110,7 +110,7 @@ class Console
             if (Output::VERBOSITY_VERBOSE <= $this->output->getVerbosity()) {
                 $this->write('<comment>Exception trace:</comment>', true, Output::OUTPUT_NORMAL, $stderr);
 
-                // exception related properties
+                
                 $trace = $e->getTrace();
                 array_unshift($trace, [
                     'function' => '',
@@ -136,10 +136,7 @@ class Console
 
     }
 
-    /**
-     * 获取终端宽度
-     * @return int|null
-     */
+    
     protected function getTerminalWidth()
     {
         $dimensions = $this->getTerminalDimensions();
@@ -147,10 +144,7 @@ class Console
         return $dimensions[0];
     }
 
-    /**
-     * 获取终端高度
-     * @return int|null
-     */
+    
     protected function getTerminalHeight()
     {
         $dimensions = $this->getTerminalDimensions();
@@ -158,10 +152,7 @@ class Console
         return $dimensions[1];
     }
 
-    /**
-     * 获取当前终端的尺寸
-     * @return array
-     */
+    
     public function getTerminalDimensions()
     {
         if ($this->terminalDimensions) {
@@ -189,10 +180,7 @@ class Console
         return [null, null];
     }
 
-    /**
-     * 获取stty列数
-     * @return string
-     */
+    
     private function getSttyColumns()
     {
         if (!function_exists('proc_open')) {
@@ -212,10 +200,7 @@ class Console
         return;
     }
 
-    /**
-     * 获取终端模式
-     * @return string <width>x<height> 或 null
-     */
+    
     private function getMode()
     {
         if (!function_exists('proc_open')) {
@@ -290,29 +275,19 @@ class Console
         return false !== stripos(implode(';', $checks), 'OS400');
     }
 
-    /**
-     * 当前环境是否支持写入控制台输出到stdout.
-     *
-     * @return bool
-     */
+    
     protected function hasStdoutSupport()
     {
         return false === $this->isRunningOS400();
     }
 
-    /**
-     * 当前环境是否支持写入控制台输出到stderr.
-     *
-     * @return bool
-     */
+    
     protected function hasStderrSupport()
     {
         return false === $this->isRunningOS400();
     }
 
-    /**
-     * @return resource
-     */
+    
     private function openOutputStream()
     {
         if (!$this->hasStdoutSupport()) {
@@ -321,20 +296,13 @@ class Console
         return @fopen('php://stdout', 'w') ?: fopen('php://output', 'w');
     }
 
-    /**
-     * @return resource
-     */
+    
     private function openErrorStream()
     {
         return fopen($this->hasStderrSupport() ? 'php://stderr' : 'php://output', 'w');
     }
 
-    /**
-     * 将消息写入到输出。
-     * @param string $message 消息
-     * @param bool   $newline 是否另起一行
-     * @param null   $stream
-     */
+    
     protected function doWrite($message, $newline, $stream = null)
     {
         if (null === $stream) {
@@ -347,11 +315,7 @@ class Console
         fflush($stream);
     }
 
-    /**
-     * 是否支持着色
-     * @param $stream
-     * @return bool
-     */
+    
     protected function hasColorSupport($stream)
     {
         if (DIRECTORY_SEPARATOR === '\\') {

@@ -8,19 +8,13 @@ class HTMLPurifier_URIDefinition extends HTMLPurifier_Definition
     protected $postFilters = array();
     protected $registeredFilters = array();
 
-    /**
-     * HTMLPurifier_URI object of the base specified at %URI.Base
-     */
+    
     public $base;
 
-    /**
-     * String host to consider "home" base, derived off of $base
-     */
+    
     public $host;
 
-    /**
-     * Name of default scheme based on %URI.DefaultScheme and %URI.Base
-     */
+    
     public $defaultScheme;
 
     public function __construct()
@@ -42,7 +36,7 @@ class HTMLPurifier_URIDefinition extends HTMLPurifier_Definition
     public function addFilter($filter, $config)
     {
         $r = $filter->prepare($config);
-        if ($r === false) return; // null is ok, for backwards compat
+        if ($r === false) return; 
         if ($filter->post) {
             $this->postFilters[$filter->name] = $filter;
         } else {
@@ -109,4 +103,4 @@ class HTMLPurifier_URIDefinition extends HTMLPurifier_Definition
 
 }
 
-// vim: et sw=4 sts=4
+

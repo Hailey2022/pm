@@ -1,25 +1,10 @@
 <?php
 
-/**
- * Validates the HTML attribute style, otherwise known as CSS.
- * @note We don't implement the whole CSS specification, so it might be
- *       difficult to reuse this component in the context of validating
- *       actual stylesheet declarations.
- * @note If we were really serious about validating the CSS, we would
- *       tokenize the styles and then parse the tokens. Obviously, we
- *       are not doing that. Doing that could seriously harm performance,
- *       but would make these components a lot more viable for a CSS
- *       filtering solution.
- */
+
 class HTMLPurifier_AttrDef_CSS extends HTMLPurifier_AttrDef
 {
 
-    /**
-     * @param string $css
-     * @param HTMLPurifier_Config $config
-     * @param HTMLPurifier_Context $context
-     * @return bool|string
-     */
+    
     public function validate($css, $config, $context)
     {
         $css = $this->parseCDATA($css);
@@ -28,10 +13,10 @@ class HTMLPurifier_AttrDef_CSS extends HTMLPurifier_AttrDef
         $allow_duplicates = $config->get("CSS.AllowDuplicates");
 
 
-        // According to the CSS2.1 spec, the places where a
-        // non-delimiting semicolon can appear are in strings
-        // escape sequences.   So here is some dumb hack to
-        // handle quotes.
+        
+        
+        
+        
         $len = strlen($css);
         $accum = "";
         $declarations = array();
@@ -62,9 +47,7 @@ class HTMLPurifier_AttrDef_CSS extends HTMLPurifier_AttrDef
         $propvalues = array();
         $new_declarations = '';
 
-        /**
-         * Name of the current CSS property being validated.
-         */
+        
         $property = false;
         $context->register('CurrentCSSProperty', $property);
 
@@ -96,9 +79,9 @@ class HTMLPurifier_AttrDef_CSS extends HTMLPurifier_AttrDef
             if (!$ok) {
                 continue;
             }
-            // inefficient call, since the validator will do this again
+            
             if (strtolower(trim($value)) !== 'inherit') {
-                // inherit works for everything (but only on the base property)
+                
                 $result = $definition->info[$property]->validate(
                     $value,
                     $config,
@@ -119,9 +102,9 @@ class HTMLPurifier_AttrDef_CSS extends HTMLPurifier_AttrDef
 
         $context->destroy('CurrentCSSProperty');
 
-        // procedure does not write the new CSS simultaneously, so it's
-        // slightly inefficient, but it's the only way of getting rid of
-        // duplicates. Perhaps config to optimize it, but not now.
+        
+        
+        
 
         foreach ($propvalues as $prop => $value) {
             $new_declarations .= "$prop:$value;";
@@ -133,4 +116,4 @@ class HTMLPurifier_AttrDef_CSS extends HTMLPurifier_AttrDef
 
 }
 
-// vim: et sw=4 sts=4
+

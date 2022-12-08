@@ -1,15 +1,6 @@
 <?php
 
-/**
- * This file is part of the php-annotation framework.
- *
- * (c) Rasmus Schultz <rasmus@mindplay.dk>
- *
- * This software is licensed under the GNU LGPL license
- * for more information, please see:
- *
- * <https://github.com/mindplay-dk/php-annotations>
- */
+
 
 namespace mindplay\annotations;
 
@@ -17,9 +8,7 @@ if (!defined('T_TRAIT')) {
     define(__NAMESPACE__ . '\\T_TRAIT', -2);
 }
 
-/**
- * This class implements a parser for source code annotations
- */
+
 class AnnotationParser
 {
     const CHAR = -1;
@@ -41,28 +30,18 @@ class AnnotationParser
     const COPY_LINE = 9;
     const COPY_ARRAY = 10;
 
-    /**
-     * @var boolean $debug Set to TRUE to enable HTML output for debugging
-     */
+    
     public $debug = false;
 
-    /**
-     * @var boolean Enable PHP autoloader when searching for annotation classes (defaults to true)
-     */
+    
     public $autoload = true;
 
-    /**
-     * @var AnnotationManager Internal reference to the AnnotationManager associated with this parser.
-     */
+    
     protected $manager;
     
     protected $isNamespaceCallable;
 
-    /**
-     * Creates a new instance of the annotation parser.
-     *
-     * @param AnnotationManager $manager The annotation manager associated with this parser.
-     */
+    
     public function __construct(AnnotationManager $manager)
     {
         $this->manager = $manager;
@@ -77,13 +56,7 @@ class AnnotationParser
         }
     }
 
-    /**
-     * @param string $source The PHP source code to be parsed
-     * @param string $path The path of the source file being parsed (for error-reporting only)
-     *
-     * @return string PHP source code to construct the annotations of the given PHP source code
-     * @throws AnnotationException if orphaned annotations are found at the end of the file
-     */
+    
     public function parse($source, $path)
     {
         $index = array();
@@ -241,7 +214,7 @@ class AnnotationParser
                     if ($type === T_STRING) {
                         $use_as .= $str;
                     } elseif ($type === self::CHAR && $str === ';') {
-                        // Ignore use... as statements that only change method visibility.
+                        
                         if ($use_as !== '') {
                             $traitMethodOverrides[$class][$use_as] = $use;
                         }
@@ -328,25 +301,13 @@ class AnnotationParser
         return $code;
     }
 
-    /**
-     * @param string $path The full path of a PHP source code file
-     *
-     * @return string PHP source code to construct the annotations of the given PHP source code
-     * @see AttributeParser::parse()
-     */
+    
     public function parseFile($path)
     {
         return $this->parse(\file_get_contents($path), $path);
     }
 
-    /**
-     * Scan a PHP source code comment for annotation data
-     *
-     * @param string $str PHP comment containing annotations
-     * @return array PHP source code snippets with annotation initialization arrays
-     *
-     * @throws AnnotationException for various run-time errors
-     */
+    
     protected function findAnnotations($str)
     {
         $str = \trim(\preg_replace('/^[\/\*\# \t]+/m', '', $str)) . "\n";
@@ -453,7 +414,7 @@ class AnnotationParser
                     throw new AnnotationException("Annotation type '{$type}' does not support PHP-DOC style syntax (because it does not implement the " . __NAMESPACE__ . "\\IAnnotationParser interface)");
                 }
 
-                /** @var IAnnotationParser $type */
+                
                 $properties = $type::parseAnnotation($value);
 
                 if (!\is_array($properties)) {

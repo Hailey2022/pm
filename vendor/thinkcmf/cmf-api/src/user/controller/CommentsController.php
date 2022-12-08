@@ -1,13 +1,13 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2013-present http://www.thinkcmf.com All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: wuwu <15093565100@163.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 namespace api\user\controller;
 
 use api\user\model\CommentModel;
@@ -18,12 +18,7 @@ use cmf\controller\RestBaseController;
 class CommentsController extends RestBaseController
 {
 
-    /**
-     * 获取用户评论
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
-     */
+    
     public function getUserComments()
     {
         $param            = $this->request->param();
@@ -43,12 +38,7 @@ class CommentsController extends RestBaseController
 
     }
 
-    /**
-     * 获取评论
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
-     */
+    
     public function getComments()
     {
         $param = $this->request->param();
@@ -77,9 +67,7 @@ class CommentsController extends RestBaseController
         }
     }
 
-    /**
-     * 删除评论
-     */
+    
     public function delComments()
     {
         $input = $this->request->param();
@@ -98,12 +86,7 @@ class CommentsController extends RestBaseController
         }
     }
 
-    /**
-     * 添加评论
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
-     */
+    
     public function setComments()
     {
         $data = $this->_setComments();
@@ -115,13 +98,7 @@ class CommentsController extends RestBaseController
         }
     }
 
-    /**
-     * 评论数据组织
-     * @return mixed
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
-     */
+    
     protected function _setComments()
     {
         $input = $this->request->param();
@@ -154,7 +131,7 @@ class CommentsController extends RestBaseController
                 'content'   => 'require',
             ]);
         if (true !== $result) {
-            // 验证失败 输出错误信息
+            
             $this->error($result);
         }
 

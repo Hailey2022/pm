@@ -1,13 +1,13 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkPHP [ WE CAN DO IT JUST THINK IT ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2006-2016 http://thinkphp.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: yangweijie <yangweijiester@gmail.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 
 namespace think\debug;
 
@@ -15,16 +15,14 @@ use think\Container;
 use think\Db;
 use think\Response;
 
-/**
- * 浏览器调试输出
- */
+
 class Console
 {
     protected $config = [
         'tabs' => ['base' => '基本', 'file' => '文件', 'info' => '流程', 'notice|error' => '错误', 'sql' => 'SQL', 'debug|log' => '调试'],
     ];
 
-    // 实例化并传入参数
+    
     public function __construct($config = [])
     {
         if (is_array($config)) {
@@ -32,13 +30,7 @@ class Console
         }
     }
 
-    /**
-     * 调试输出接口
-     * @access public
-     * @param  Response  $response Response对象
-     * @param  array     $log 日志信息
-     * @return bool
-     */
+    
     public function output(Response $response, array $log = [])
     {
         $request     = Container::get('request');
@@ -49,7 +41,7 @@ class Console
         } elseif (!empty($contentType) && strpos($contentType, 'html') === false) {
             return false;
         }
-        // 获取基本信息
+        
         $runtime = number_format(microtime(true) - Container::get('app')->getBeginTime(), 10);
         $reqs    = $runtime > 0 ? number_format(1 / $runtime, 2) : '∞';
         $mem     = number_format((memory_get_usage() - Container::get('app')->getBeginMem()) / 1024, 2);
@@ -60,7 +52,7 @@ class Console
             $uri = 'cmd:' . implode(' ', $_SERVER['argv']);
         }
 
-        // 页面Trace信息
+        
         $base = [
             '请求信息' => date('Y-m-d H:i:s', $_SERVER['REQUEST_TIME']) . ' ' . $uri,
             '运行时间' => number_format($runtime, 6) . 's [ 吞吐率：' . $reqs . 'req/s ] 内存消耗：' . $mem . 'kb 文件加载：' . count(get_included_files()),
@@ -74,20 +66,20 @@ class Console
 
         $info = Container::get('debug')->getFile(true);
 
-        // 页面Trace信息
+        
         $trace = [];
         foreach ($this->config['tabs'] as $name => $title) {
             $name = strtolower($name);
             switch ($name) {
-                case 'base': // 基本信息
+                case 'base': 
                     $trace[$title] = $base;
                     break;
-                case 'file': // 文件信息
+                case 'file': 
                     $trace[$title] = $info;
                     break;
-                default: // 调试信息
+                default: 
                     if (strpos($name, '|')) {
-                        // 多组信息
+                        
                         $names  = explode('|', $name);
                         $result = [];
                         foreach ($names as $name) {

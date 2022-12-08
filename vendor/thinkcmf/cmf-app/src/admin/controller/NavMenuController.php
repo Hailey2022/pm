@@ -1,38 +1,23 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2013-present http://www.thinkcmf.com All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: kane <chengjin005@163.com> 小夏 < 449134904@qq.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 namespace app\admin\controller;
 
 use app\admin\model\NavMenuModel;
 use cmf\controller\AdminBaseController;
 use tree\Tree;
 
-/**
- * Class NavMenuController 前台菜单管理控制器
- * @package app\admin\controller
- */
+
 class NavMenuController extends AdminBaseController
 {
-    /**
-     * 导航菜单
-     * @adminMenu(
-     *     'name'   => '导航菜单',
-     *     'parent' => 'admin/Nav/index',
-     *     'display'=> false,
-     *     'hasView'=> true,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '导航菜单',
-     *     'param'  => ''
-     * )
-     */
+    
     public function index()
     {
         $intNavId     = $this->request->param("nav_id", 0, 'intval');
@@ -75,19 +60,7 @@ class NavMenuController extends AdminBaseController
         return $this->fetch();
     }
 
-    /**
-     * 添加导航菜单
-     * @adminMenu(
-     *     'name'   => '添加导航菜单',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'order'  => 10000,
-     *     'hasView'=> true,
-     *     'icon'   => '',
-     *     'remark' => '添加导航菜单',
-     *     'param'  => ''
-     * )
-     */
+    
     public function add()
     {
         $navMenuModel = new NavMenuModel();
@@ -122,19 +95,7 @@ class NavMenuController extends AdminBaseController
         return $this->fetch();
     }
 
-    /**
-     * 添加导航菜单提交保存
-     * @adminMenu(
-     *     'name'   => '添加导航菜单提交保存',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> false,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '添加导航菜单提交保存',
-     *     'param'  => ''
-     * )
-     */
+    
     public function addPost()
     {
         if ($this->request->isPost()) {
@@ -156,19 +117,7 @@ class NavMenuController extends AdminBaseController
         }
     }
 
-    /**
-     * 编辑导航菜单
-     * @adminMenu(
-     *     'name'   => '编辑导航菜单',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> true,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '编辑导航菜单',
-     *     'param'  => ''
-     * )
-     */
+    
     public function edit()
     {
         $navMenuModel = new NavMenuModel();
@@ -220,19 +169,7 @@ class NavMenuController extends AdminBaseController
         return $this->fetch();
     }
 
-    /**
-     * 编辑导航菜单提交保存
-     * @adminMenu(
-     *     'name'   => '编辑导航菜单提交保存',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> false,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '编辑导航菜单提交保存',
-     *     'param'  => ''
-     * )
-     */
+    
     public function editPost()
     {
         if ($this->request->isPost()) {
@@ -255,19 +192,7 @@ class NavMenuController extends AdminBaseController
         }
     }
 
-    /**
-     * 删除导航菜单
-     * @adminMenu(
-     *     'name'   => '删除导航菜单',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> false,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '删除导航菜单',
-     *     'param'  => ''
-     * )
-     */
+    
     public function delete()
     {
         if ($this->request->isPost()) {
@@ -290,19 +215,7 @@ class NavMenuController extends AdminBaseController
         }
     }
 
-    /**
-     * 导航菜单排序
-     * @adminMenu(
-     *     'name'   => '导航菜单排序',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> false,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '导航菜单排序',
-     *     'param'  => ''
-     * )
-     */
+    
     public function listOrder()
     {
         $navMenuModel = new NavMenuModel();

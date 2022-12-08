@@ -1,59 +1,37 @@
 <?php
 
-/**
- * Error collection class that enables HTML Purifier to report HTML
- * problems back to the user
- */
+
 class HTMLPurifier_ErrorCollector
 {
 
-    /**
-     * Identifiers for the returned error array. These are purposely numeric
-     * so list() can be used.
-     */
+    
     const LINENO   = 0;
     const SEVERITY = 1;
     const MESSAGE  = 2;
     const CHILDREN = 3;
 
-    /**
-     * @type array
-     */
+    
     protected $errors;
 
-    /**
-     * @type array
-     */
+    
     protected $_current;
 
-    /**
-     * @type array
-     */
+    
     protected $_stacks = array(array());
 
-    /**
-     * @type HTMLPurifier_Language
-     */
+    
     protected $locale;
 
-    /**
-     * @type HTMLPurifier_Generator
-     */
+    
     protected $generator;
 
-    /**
-     * @type HTMLPurifier_Context
-     */
+    
     protected $context;
 
-    /**
-     * @type array
-     */
+    
     protected $lines = array();
 
-    /**
-     * @param HTMLPurifier_Context $context
-     */
+    
     public function __construct($context)
     {
         $this->locale    =& $context->get('Locale');
@@ -62,11 +40,7 @@ class HTMLPurifier_ErrorCollector
         $this->errors    =& $this->_stacks[0];
     }
 
-    /**
-     * Sends an error message to the collector for later use
-     * @param int $severity Error severity, PHP error style (don't use E_USER_)
-     * @param string $msg Error message text
-     */
+    
     public function send($severity, $msg)
     {
         $args = array();
@@ -81,7 +55,7 @@ class HTMLPurifier_ErrorCollector
         $col   = $token ? $token->col  : $this->context->get('CurrentCol', true);
         $attr  = $this->context->get('CurrentAttr', true);
 
-        // perform special substitutions, also add custom parameters
+        
         $subst = array();
         if (!is_null($token)) {
             $args['CurrentToken'] = $token;
@@ -103,7 +77,7 @@ class HTMLPurifier_ErrorCollector
             $msg = strtr($msg, $subst);
         }
 
-        // (numerically indexed)
+        
         $error = array(
             self::LINENO   => $line,
             self::SEVERITY => $severity,
@@ -112,10 +86,10 @@ class HTMLPurifier_ErrorCollector
         );
         $this->_current[] = $error;
 
-        // NEW CODE BELOW ...
-        // Top-level errors are either:
-        //  TOKEN type, if $value is set appropriately, or
-        //  "syntax" type, if $value is null
+        
+        
+        
+        
         $new_struct = new HTMLPurifier_ErrorStruct();
         $new_struct->type = HTMLPurifier_ErrorStruct::TOKEN;
         if ($token) {
@@ -127,7 +101,7 @@ class HTMLPurifier_ErrorCollector
             } else {
                 $struct = $this->lines[$line][$col] = $new_struct;
             }
-            // These ksorts may present a performance problem
+            
             ksort($this->lines[$line], SORT_NUMERIC);
         } else {
             if (isset($this->lines[-1])) {
@@ -138,7 +112,7 @@ class HTMLPurifier_ErrorCollector
         }
         ksort($this->lines, SORT_NUMERIC);
 
-        // Now, check if we need to operate on a lower structure
+        
         if (!empty($attr)) {
             $struct = $struct->getChild(HTMLPurifier_ErrorStruct::ATTR, $attr);
             if (!$struct->value) {
@@ -148,29 +122,22 @@ class HTMLPurifier_ErrorCollector
         if (!empty($cssprop)) {
             $struct = $struct->getChild(HTMLPurifier_ErrorStruct::CSSPROP, $cssprop);
             if (!$struct->value) {
-                // if we tokenize CSS this might be a little more difficult to do
+                
                 $struct->value = array($cssprop, 'PUT VALUE HERE');
             }
         }
 
-        // Ok, structs are all setup, now time to register the error
+        
         $struct->addError($severity, $msg);
     }
 
-    /**
-     * Retrieves raw error data for custom formatter to use
-     */
+    
     public function getRaw()
     {
         return $this->errors;
     }
 
-    /**
-     * Default HTML formatting implementation for error messages
-     * @param HTMLPurifier_Config $config Configuration, vital for HTML output nature
-     * @param array $errors Errors array to display; used for recursion.
-     * @return string
-     */
+    
     public function getHTMLFormatted($config, $errors = null)
     {
         $ret = array();
@@ -180,9 +147,9 @@ class HTMLPurifier_ErrorCollector
             $errors = $this->errors;
         }
 
-        // 'At line' message needs to be removed
+        
 
-        // generation code for new structure goes here. It needs to be recursive.
+        
         foreach ($this->lines as $line => $col_array) {
             if ($line == -1) {
                 continue;
@@ -213,7 +180,7 @@ class HTMLPurifier_ErrorCollector
                 list($severity, $msg) = $error;
                 $string = '';
                 $string .= '<div>';
-                // W3C uses an icon to indicate the severity of the error.
+                
                 $error = $this->locale->getErrorName($severity);
                 $string .= "<span class=\"error e$severity\"><strong>$error</strong></span> ";
                 if (!is_null($line) && !is_null($col)) {
@@ -223,8 +190,8 @@ class HTMLPurifier_ErrorCollector
                 }
                 $string .= '<strong class="description">' . $this->generator->escape($msg) . '</strong> ';
                 $string .= '</div>';
-                // Here, have a marker for the character on the column appropriate.
-                // Be sure to clip extremely long lines.
+                
+                
                 //$string .= '<pre>';
                 //$string .= '';
                 //$string .= '</pre>';
@@ -241,4 +208,4 @@ class HTMLPurifier_ErrorCollector
     }
 }
 
-// vim: et sw=4 sts=4
+

@@ -26,14 +26,14 @@
 <div class="wrap " style="padding:5px;">
     <ul class="nav nav-tabs">
         <li class="{$tab=='local'?'active':''}"><a href="#wrapper" data-toggle="tab">上传文件</a></li>
-        <li class="{$tab=='url'?'active':''}"><a href="#B" data-toggle="tab">网络文件</a></li>
+        <!-- <li class="{$tab=='url'?'active':''}"><a href="#B" data-toggle="tab">网络文件</a></li>
         <notempty name="has_cloud_storage">
             <php>
                 $url_params=input('param.');
                 $url_params['tab']='cloud';
             </php>
             <li><a href="{:url('user/Asset/webuploader',$url_params)}">上传到云存储</a></li>
-        </notempty>
+        </notempty> -->
         <!--<li class=""><a href="#explorer" data-toggle="tab">文件管理</a></li>-->
     </ul>
     <div class="tabbable">
@@ -46,7 +46,13 @@
                         <div class="queueList">
                             <div id="dndArea" class="placeholder">
                                 <div id="filePicker"></div>
-                                <p>或将文件拖到这里，单次最多可选{$max_files}个文件</p>
+                                <p style="color: #ff0000;">
+                                    <switch name="filetype">
+                                        <case value="image">只允许上传.png .jpg .jpeg</case>
+                                        <case value="file">允许上传pdf word等，如果你想上传的东西不能上传，请联系开发者</case>
+                                        <default /> 出错了
+                                    </switch>
+                                </p>
                             </div>
                         </div>
                         <div class="statusBar" style="display:none;">
@@ -130,34 +136,34 @@
 
 
     (function ($) {
-        // 当domReady的时候开始初始化
+        
         $(function () {
             var $wrap             = $('#uploader'),
-                // 图片容器
+                
                 $queue            = $('<ul class="filelist"></ul>').appendTo($wrap.find('.queueList')),
-                // 状态栏，包括进度和控制按钮
+                
                 $statusBar        = $wrap.find('.statusBar'),
-                // 文件总体选择信息。
+                
                 $info             = $statusBar.find('.info'),
-                // 上传按钮
+                
                 $upload           = $wrap.find('.uploadBtn').hide(),
-                // 没选择文件之前的内容。
+                
                 $placeHolder      = $wrap.find('.placeholder'),
                 $progress         = $statusBar.find('.progress').hide(),
-                // 添加的文件数量
+                
                 fileCount         = 0,
-                // 添加的文件总大小
+                
                 fileSize          = 0,
-                // 优化retina, 在retina下这个值是2
+                
                 ratio             = window.devicePixelRatio || 1,
-                // 缩略图大小
+                
                 thumbnailWidth    = 110 * ratio,
                 thumbnailHeight   = 110 * ratio,
-                // 可能有pedding, ready, uploading, confirm, done.
+                
                 state             = 'pedding',
-                // 所有文件的进度信息，key为file id
+                
                 percentages       = {},
-                // 判断浏览器是否支持图片的base64
+                
                 isSupportBase64   = (function () {
                     var data    = new Image();
                     var support = true;
@@ -169,7 +175,7 @@
                     data.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
                     return support;
                 })(),
-                // 检测是否已经安装flash，检测flash的版本
+                
                 flashVersion      = (function () {
                     var version;
                     try {
@@ -197,12 +203,12 @@
                     return r;
                 })(),
 
-                // WebUploader实例
+                
                 uploader;
 
             if (!WebUploader.Uploader.support('flash') && WebUploader.browser.ie) {
 
-                // flash 安装了但是版本过低。
+                
                 if (flashVersion) {
                     (function (container) {
                         window['expressinstallcallback'] = function (state) {
@@ -223,7 +229,7 @@
                         };
 
                         var swf  = './expressInstall.swf';
-                        // insert flash object
+                        
                         var html = '<object type="application/' +
                             'x-shockwave-flash" data="' + swf + '" ';
 
@@ -241,7 +247,7 @@
 
                     })($wrap);
 
-                    // 压根就没有安转。
+                    
                 } else {
                     $wrap.html('<a href="http://www.adobe.com/go/getflashplayer" target="_blank" border="0"><img alt="get flash player" src="http://www.adobe.com/macromedia/style_guide/images/160x41_Get_Flash_Player.jpg" /></a>');
                 }
@@ -252,7 +258,7 @@
                 return;
             }
 
-            // 实例化
+            
             uploader = WebUploader.create({
                 pick: {
                     id: '#filePicker',
@@ -272,27 +278,27 @@
                 swf: GV.WEB_ROOT + GV.JS_ROOT + 'webuploader/Uploader.swf',
                 chunked: true,//开启分片
                 auto: true,
-                chunkSize: {$chunk_size} * 1024,// 单位B
+                chunkSize: {$chunk_size} * 1024,
                 compress: false,
                 server: "{:url('user/asset/webuploader')}?_ajax=1",
-                // 禁掉全局的拖拽功能。这样不会出现图片拖进页面的时候，把图片打开。
+                
                 disableGlobalDnd: true,
                 fileNumLimit: maxFiles,
                 runtimeOrder: 'html5,flash',
-                //fileSizeLimit: 200 * 1024 * 1024,    // 200 M
-                fileSingleSizeLimit: {$upload_max_filesize}     // 单位B
+                //fileSizeLimit: 200 * 1024 * 1024,    
+                fileSingleSizeLimit: {$upload_max_filesize}     
             });
 
-            // 拖拽时不接受 js, txt 文件。
+            
             uploader.on('dndAccept', function (items) {
                 var denied    = false,
                     len       = items.length,
                     i         = 0,
-                    // 修改js类型
+                    
                     unAllowed = 'text/plain;application/javascript ';
 
                 for (; i < len; i++) {
-                    // 如果在列表里面
+                    
                     if (~unAllowed.indexOf(items[i].type)) {
                         denied = true;
                         break;
@@ -302,17 +308,17 @@
                 return !denied;
             });
 
-            // uploader.on('filesQueued', function() {
-            //     uploader.sort(function( a, b ) {
-            //         if ( a.name < b.name )
-            //           return -1;
-            //         if ( a.name > b.name )
-            //           return 1;
-            //         return 0;
-            //     });
-            // });
+            
+            
+            
+            
+            
+            
+            
+            
+            
             if (maxFiles > 1) {
-                // 添加“添加文件”的按钮，
+                
                 uploader.addButton({
                     id: '#filePicker2',
                     label: '继续添加'
@@ -322,7 +328,7 @@
                 window.uploader = uploader;
             });
 
-            // 当有文件添加进来时执行，负责view的创建
+            
             function addFile(file) {
                 var $li       = $('<li id="' + file.id + '">' +
                     '<p class="title">' + file.name + '</p>' +
@@ -359,7 +365,7 @@
                 if (file.getStatus() === 'invalid') {
                     showError(file.statusText);
                 } else {
-                    // @todo lazyload
+                    
                     $wrap.text('预览中');
                     uploader.makeThumb(file, function (error, src) {
                         var img;
@@ -400,7 +406,7 @@
                         $btns.remove();
                     }
 
-                    // 成功
+                    
                     if (cur === 'error' || cur === 'invalid') {
                         showError(file.statusText);
                         percentages[file.id][1] = 1;
@@ -454,22 +460,22 @@
                         });
                     } else {
                         $wrap.css('filter', 'progid:DXImageTransform.Microsoft.BasicImage(rotation=' + (~~((file.rotation / 90) % 4 + 4) % 4) + ')');
-                        // use jquery animate to rotation
-                        // $({
-                        //     rotation: rotation
-                        // }).animate({
-                        //     rotation: file.rotation
-                        // }, {
-                        //     easing: 'linear',
-                        //     step: function( now ) {
-                        //         now = now * Math.PI / 180;
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
 
-                        //         var cos = Math.cos( now ),
-                        //             sin = Math.sin( now );
+                        
+                        
 
-                        //         $wrap.css( 'filter', "progid:DXImageTransform.Microsoft.Matrix(M11=" + cos + ",M12=" + (-sin) + ",M21=" + sin + ",M22=" + cos + ",SizingMethod='auto expand')");
-                        //     }
-                        // });
+                        
+                        
+                        
                     }
 
 
@@ -478,7 +484,7 @@
                 $li.appendTo($queue);
             }
 
-            // 负责view的销毁
+            
             function removeFile(file) {
                 var $li = $('#' + file.id);
 
@@ -593,7 +599,7 @@
                         if (stats.successNum) {
                             //alert( '上传成功' );
                         } else {
-                            // 没有成功的图片，重设
+                            
                             state = 'done';
                             location.reload();
                         }
@@ -643,8 +649,8 @@
                 var stats;
                 switch (type) {
                     case 'uploadSuccess':
-//                        console.log(file);
-//                        console.log(msg);
+
+
                         if (msg._raw != '') {
                             var $file = jQuery("#" + file.id);
                             $file.data("filepath", msg.data.filepath);

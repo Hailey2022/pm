@@ -8,13 +8,7 @@ use mindplay\test\lib\xTestRunner;
 class WebResultPrinter extends ResultPrinter
 {
 
-    /**
-     * Prints the header before the test output.
-     *
-     * @param xTestRunner $testRunner Test runner.
-     * @param string      $pattern    Test filename pattern.
-     * @return void
-     */
+    
     public function suiteHeader(xTestRunner $testRunner, $pattern)
     {
         echo '<html>
@@ -32,23 +26,13 @@ class WebResultPrinter extends ResultPrinter
         echo '<h4>Test Suite: ' . $pattern . '</h4>';
     }
 
-    /**
-     * Prints the footer after the test output.
-     *
-     * @param xTestRunner $testRunner Test runner.
-     * @return void
-     */
+    
     public function suiteFooter(xTestRunner $testRunner)
     {
         echo '</body></html>';
     }
 
-    /**
-     * Creates code coverage report.
-     *
-     * @param \PHP_CodeCoverage $coverage Code coverage collector.
-     * @return void
-     */
+    
     public function createCodeCoverageReport(\PHP_CodeCoverage $coverage = null)
     {
         if (!isset($coverage)) {
@@ -63,12 +47,7 @@ class WebResultPrinter extends ResultPrinter
         echo '<a href="runtime/coverage" target="_blank">Code coverage report</a>';
     }
 
-    /**
-     * Prints test header.
-     *
-     * @param xTest $test Test.
-     * @return void
-     */
+    
     public function testHeader(xTest $test)
     {
         $class = get_class($test);
@@ -77,14 +56,7 @@ class WebResultPrinter extends ResultPrinter
         echo '<table id="' . $class . '-results"><tr><th>Test</th><th>Result</th></tr>';
     }
 
-    /**
-     * Test case result.
-     *
-     * @param \ReflectionMethod $testCaseMethod Test case method.
-     * @param string            $resultColor    Result color.
-     * @param string            $resultMessage  Result message.
-     * @return void
-     */
+    
     public function testCaseResult(\ReflectionMethod $testCaseMethod, $resultColor, $resultMessage)
     {
         echo '<tr style="color:white; background:' . $resultColor . '"><td>(' . $testCaseMethod->getStartLine() . ') ';
@@ -92,14 +64,7 @@ class WebResultPrinter extends ResultPrinter
         echo '</td><td><pre>' . htmlspecialchars($resultMessage) . '</pre></td></tr>';
     }
 
-    /**
-     * Prints test footer.
-     *
-     * @param xTest   $test   Test.
-     * @param integer $total  Total test case count.
-     * @param integer $passed Passed test case count.
-     * @return void
-     */
+    
     public function testFooter(xTest $test, $total, $passed)
     {
         echo '<tr style="background-color:gray; color:white"><tr><th>' . $total . ' Tests</th><th>';

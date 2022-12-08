@@ -1,18 +1,10 @@
 <?php
 
-/**
- * Validates the HTML attribute lang, effectively a language code.
- * @note Built according to RFC 3066, which obsoleted RFC 1766
- */
+
 class HTMLPurifier_AttrDef_Lang extends HTMLPurifier_AttrDef
 {
 
-    /**
-     * @param string $string
-     * @param HTMLPurifier_Config $config
-     * @param HTMLPurifier_Context $context
-     * @return bool|string
-     */
+    
     public function validate($string, $config, $context)
     {
         $string = trim($string);
@@ -23,11 +15,11 @@ class HTMLPurifier_AttrDef_Lang extends HTMLPurifier_AttrDef
         $subtags = explode('-', $string);
         $num_subtags = count($subtags);
 
-        if ($num_subtags == 0) { // sanity check
+        if ($num_subtags == 0) { 
             return false;
         }
 
-        // process primary subtag : $subtags[0]
+        
         $length = strlen($subtags[0]);
         switch ($length) {
             case 0:
@@ -54,7 +46,7 @@ class HTMLPurifier_AttrDef_Lang extends HTMLPurifier_AttrDef
             return $new_string;
         }
 
-        // process second subtag : $subtags[1]
+        
         $length = strlen($subtags[1]);
         if ($length == 0 || ($length == 1 && $subtags[1] != 'x') || $length > 8 || !ctype_alnum($subtags[1])) {
             return $new_string;
@@ -68,7 +60,7 @@ class HTMLPurifier_AttrDef_Lang extends HTMLPurifier_AttrDef
             return $new_string;
         }
 
-        // process all other subtags, index 2 and up
+        
         for ($i = 2; $i < $num_subtags; $i++) {
             $length = strlen($subtags[$i]);
             if ($length == 0 || $length > 8 || !ctype_alnum($subtags[$i])) {
@@ -83,4 +75,4 @@ class HTMLPurifier_AttrDef_Lang extends HTMLPurifier_AttrDef
     }
 }
 
-// vim: et sw=4 sts=4
+

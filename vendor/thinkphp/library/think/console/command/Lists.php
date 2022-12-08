@@ -1,13 +1,13 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkPHP [ WE CAN DO IT JUST THINK ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2006~2015 http://thinkphp.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: yunwuxin <448901948@qq.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 
 namespace think\console\command;
 
@@ -20,9 +20,7 @@ use think\console\Output;
 
 class Lists extends Command
 {
-    /**
-     * {@inheritdoc}
-     */
+    
     protected function configure()
     {
         $this->setName('list')->setDefinition($this->createDefinition())->setDescription('Lists commands')->setHelp(<<<EOF
@@ -41,17 +39,13 @@ EOF
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    
     public function getNativeDefinition()
     {
         return $this->createDefinition();
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    
     protected function execute(Input $input, Output $output)
     {
         $output->describe($this->getConsole(), [
@@ -60,9 +54,7 @@ EOF
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    
     private function createDefinition()
     {
         return new InputDefinition([

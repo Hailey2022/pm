@@ -1,19 +1,10 @@
 <?php
 
-/**
- * Validates the value for the CSS property text-decoration
- * @note This class could be generalized into a version that acts sort of
- *       like Enum except you can compound the allowed values.
- */
+
 class HTMLPurifier_AttrDef_CSS_TextDecoration extends HTMLPurifier_AttrDef
 {
 
-    /**
-     * @param string $string
-     * @param HTMLPurifier_Config $config
-     * @param HTMLPurifier_Context $context
-     * @return bool|string
-     */
+    
     public function validate($string, $config, $context)
     {
         static $allowed_values = array(
@@ -43,4 +34,4 @@ class HTMLPurifier_AttrDef_CSS_TextDecoration extends HTMLPurifier_AttrDef
     }
 }
 
-// vim: et sw=4 sts=4
+

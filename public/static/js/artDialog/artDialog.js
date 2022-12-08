@@ -347,7 +347,7 @@ $.uuid = 0;
 $.cache = {};
 $.expando = '@cache' + + new Date;
 
-// 标记元素唯一身份
+
 function uuid (elem) {
 	var expando = $.expando,
 		id = elem === window ? 0 : elem[expando];
@@ -448,7 +448,7 @@ $.event = {
 			preventDefault: function () {event.returnValue = false},
 			stopPropagation: function () {event.cancelBubble = true}
 		};
-		// IE6/7/8 在原生window.event对象写入数据会导致内存无法回收，应当采用拷贝
+		
 		for (var i in event) event2[i] = event[i];
 		return event2;
 	}
@@ -473,7 +473,7 @@ $.cleanData = function (elems) {
     }
 };
 
-// DOM就绪事件
+
 $.isReady = false;
 $.ready = function () {
     if (!$.isReady) {
@@ -538,7 +538,7 @@ if (document.addEventListener) {
     }
     $.ready();
 }
-// 获取css
+
 $.css = 'defaultView' in document && 'getComputedStyle' in document.defaultView ?
 	function (elem, name) {
 		return document.defaultView.getComputedStyle(elem, false)[name];
@@ -548,7 +548,7 @@ $.css = 'defaultView' in document && 'getComputedStyle' in document.defaultView 
 		return ret || '';
 };
 
-// 跨浏览器处理opacity
+
 $.opacity = {
 	get: function (elem) {
 		return isOpacity ?
@@ -808,10 +808,10 @@ return $}(window));
 
 
 //------------------------------------------------
-// 对话框模块
+
 //------------------------------------------------
 (function ($, window, undefined) {
-    $.noop = $.noop || function () {}; // jQuery 1.3.2
+    $.noop = $.noop || function () {}; 
 var _box, _thisScript, _skin, _path,
 	_count = 0,
 	_$window = $(window),
@@ -833,26 +833,26 @@ var artDialog = function (config, ok, cancel) {
 		defaults = artDialog.defaults,
 		elem = config.follow = this.nodeType === 1 && this || config.follow;
 		
-	// 合并默认配置
+	
 	for (var i in defaults) {
 		if (config[i] === undefined) config[i] = defaults[i];
 
 }
-    // 兼容v4.1.0之前的参数，未来版本将删除此
+    
 	$.each({ok:"yesFn",cancel:"noFn",close:"closeFn",init:"initFn",okVal:"yesText",cancelVal:"noText"},
 	function(i,o){config[i]=config[i]!==undefined?config[i]:config[o]});
 	
-	// 返回跟随模式或重复定义的ID
+	
 	if (typeof elem === 'string') elem = $(elem)[0];
 	config.id = elem && elem[_expando + 'follow'] || config.id || _expando + _count;
 	api = artDialog.list[config.id];
 	if (elem && api) return api.follow(elem).zIndex().focus();
 	if (api) return api.zIndex().focus();
 	
-	// 目前主流移动设备对fixed支持不好
+	
 	if (_isMobile) config.fixed = false;
 	
-	// 按钮队列
+	
 	if (!$.isArray(config.button)) {
 		config.button = config.button ? [config.button] : [];
     }
@@ -868,7 +868,7 @@ var artDialog = function (config, ok, cancel) {
 		callback: config.cancel
 	});
 	
-	// zIndex全局配置
+	
 	artDialog.defaults.zIndex = config.zIndex;
 	
 	_count ++;
@@ -949,7 +949,7 @@ artDialog.fn = artDialog.prototype = {
 			$content.html(msg);
 		} else if (msg && msg.nodeType === 1) {
 		
-			// 让传入的元素在对话框关闭后可以返回到原来的地方
+			
 			display = msg.style.display;
 			prev = msg.previousSibling;
 			next = msg.nextSibling;
@@ -971,7 +971,7 @@ artDialog.fn = artDialog.prototype = {
 			msg.style.display = 'block';
 
 }
-        // 新增内容后调整位置
+        
 		if (!arguments[1]) {
 			if (that.config.follow) {
 				that.follow(that.config.follow);
@@ -1090,7 +1090,7 @@ artDialog.fn = artDialog.prototype = {
 			if (typeof width === 'number') {
 				wrapStyle.width = 'auto';
 				style.width = Math.max(that.config.minWidth, width) + 'px';
-				wrapStyle.width = wrap[0].offsetWidth + 'px'; // 防止未定义宽度的表格遇到浏览器右边边界伸缩
+				wrapStyle.width = wrap[0].offsetWidth + 'px'; 
 			} else if (typeof width === 'string') {
 				style.width = width;
 				width === 'auto' && wrap.css('width', 'auto');
@@ -1124,7 +1124,7 @@ artDialog.fn = artDialog.prototype = {
 			$elem = $(elem);
 			elem = $elem[0];
         }
-        // 隐藏元素不可用
+        
 		if (!elem || !elem.offsetWidth && !elem.offsetHeight) {
 			return that.position(that._left, that._top);
         }
@@ -1204,9 +1204,9 @@ artDialog.fn = artDialog.prototype = {
 				that._focus = $(button).addClass(strongButton);
 				that.focus();
             }
-            // Internet Explorer 的默认类型是 "button"，
-			// 而其他浏览器中（包括 W3C 规范）的默认值是 "submit"
-			// @see http://www.w3school.com.cn/tags/att_button_type.asp
+            
+			
+			
 			button.setAttribute('type', 'button');
 			
 			button[_expando + 'callback'] = name;
@@ -1256,7 +1256,7 @@ artDialog.fn = artDialog.prototype = {
         }
         that.unlock();
 		
-		// 置空内容
+		
 		that._elemBack && that._elemBack();
 		wrap[0].className = wrap[0].style.cssText = '';
 		DOM.title.html('');
@@ -1269,11 +1269,11 @@ artDialog.fn = artDialog.prototype = {
 		that._removeEvent();
 		that.hide(true)._setAbsolute();
 		
-		// 清空除this.DOM之外临时对象，恢复到初始状态，以便使用单例模式
+		
 		for (var i in that) {
 			if (that.hasOwnProperty(i) && i !== 'DOM') delete that[i];
         }
-        // 移除HTMLElement或重用
+        
 		_box ? wrap.remove() : _box = that;
 		
 		return that;
@@ -1306,7 +1306,7 @@ artDialog.fn = artDialog.prototype = {
 				elem && elem.focus();
 			}
         } catch (e) {
-        } // IE对不可见元素设置焦点会报错
+        } 
         return this;
 	},
 	
@@ -1318,11 +1318,11 @@ artDialog.fn = artDialog.prototype = {
 			top = artDialog.focus,
 			index = artDialog.defaults.zIndex ++;
 		
-		// 设置叠加高度
+		
 		wrap.css('zIndex', index);
 		that._lockMask && that._lockMask.css('zIndex', index - 1);
 		
-		// 设置最高层的样式
+		
 		top && top.DOM.wrap.removeClass('aui_state_focus');
 		artDialog.focus = that;
 		wrap.addClass('aui_state_focus');
@@ -1359,7 +1359,7 @@ artDialog.fn = artDialog.prototype = {
 		lockMask[0].style.cssText = 'height:100%;background:' + config.background
 			+ ';filter:alpha(opacity=0);opacity:0';
 		
-		// 让IE6锁屏遮罩能够盖住下拉控件
+		
 		if (_isIE6) lockMask.html(
 			'<iframe src="about:blank" style="width:100%;height:100%;position:absolute;' +
 			'top:0;left:0;z-index:-1;filter:alpha(opacity=0)"></iframe>');
@@ -1405,7 +1405,7 @@ artDialog.fn = artDialog.prototype = {
 		
 		lockMask.stop().unbind();
 		that.DOM.wrap.removeClass('aui_state_lock');
-		if (!that.config.duration) {// 取消动画，快速关闭
+		if (!that.config.duration) {
 			un();
 		} else {
 			lockMask.animate({opacity: 0}, that.config.duration, un);
@@ -1414,7 +1414,7 @@ artDialog.fn = artDialog.prototype = {
 		return that;
 	},
 	
-	// 获取元素
+	
 	_getDOM: function () {	
 		var wrap = document.createElement('div'),
 			body = document.body;
@@ -1434,8 +1434,8 @@ artDialog.fn = artDialog.prototype = {
         return DOM;
 	},
 	
-	// px与%单位转换成数值 (百分比单位按照最大值换算)
-	// 其他的单位返回原值
+	
+	
 	_toNumber: function (thisValue, maxValue) {
 		if (!thisValue && thisValue !== 0 || typeof thisValue === 'number') {
 			return thisValue;
@@ -1449,7 +1449,7 @@ artDialog.fn = artDialog.prototype = {
         return thisValue;
 	},
 	
-	// 让IE6 CSS支持PNG背景
+	
 	_ie6PngFix: _isIE6 ? function () {
 		var i = 0, elem, png, pngPath, runtimeStyle,
 			path = artDialog.defaults.path + '/skins/',
@@ -1468,7 +1468,7 @@ artDialog.fn = artDialog.prototype = {
         }
     } : $.noop,
 	
-	// 强制覆盖IE6下拉控件
+	
 	_ie6SelectFix: _isIE6 ? function () {
 		var $wrap = this.DOM.wrap,
 			wrap = $wrap[0],
@@ -1491,8 +1491,8 @@ artDialog.fn = artDialog.prototype = {
         }
     } : $.noop,
 	
-	// 解析HTML片段中自定义类型脚本，其this指向artDialog内部
-	// <script type="text/dialog">/* [code] */</script>
+	
+	
 	_runScript: function (elem) {
 		var fun, i = 0, n = 0,
 			tags = elem.getElementsByTagName('script'),
@@ -1512,20 +1512,20 @@ artDialog.fn = artDialog.prototype = {
         }
     },
 	
-	// 自动切换定位类型
+	
 	_autoPositionType: function () {
 		this[this.config.fixed ? '_setFixed' : '_setAbsolute']();/////////////
 	},
 	
 	
-	// 设置静止定位
-	// IE6 Fixed @see: http://www.planeart.cn/?p=877
+	
+	
 	_setFixed: (function () {
 		_isIE6 && $(function () {
 			var bg = 'backgroundAttachment';
 			if (_$html.css(bg) !== 'fixed' && $('body').css(bg) !== 'fixed') {
 				_$html.css({
-					zoom: 1,// 避免偶尔出现body背景图片异常的情况
+					zoom: 1,
 					backgroundImage: 'url(about:blank)',
 					backgroundAttachment: 'fixed'
 				});
@@ -1554,7 +1554,7 @@ artDialog.fn = artDialog.prototype = {
         };
 	}()),
 	
-	// 设置绝对定位
+	
 	_setAbsolute: function () {
 		var style = this.DOM.wrap[0].style;
 			
@@ -1565,7 +1565,7 @@ artDialog.fn = artDialog.prototype = {
         style.position = 'absolute';
 	},
 	
-	// 按钮回调函数触发
+	
 	_click: function (name) {
 		var that = this,
 			fn = that._listeners[name] && that._listeners[name].callback;
@@ -1573,7 +1573,7 @@ artDialog.fn = artDialog.prototype = {
 			that.close() : that;
 	},
 	
-	// 重置位置与尺寸
+	
 	_reset: function (test) {
 		var newSize,
 			that = this,
@@ -1585,7 +1585,7 @@ artDialog.fn = artDialog.prototype = {
 			top = that._top;
 		
 		if (test) {
-			// IE6~7 window.onresize bug
+			
 			newSize = that._winSize =  _$window.width() * _$window.height();
 			if (oldSize === newSize) return;
         }
@@ -1598,7 +1598,7 @@ artDialog.fn = artDialog.prototype = {
         }
     },
 	
-	// 事件代理
+	
 	_addEvent: function () {
 		var resizeTimer,
 			that = this,
@@ -1606,7 +1606,7 @@ artDialog.fn = artDialog.prototype = {
 			isIE = 'CollectGarbage' in window,
 			DOM = that.DOM;
 		
-		// 窗口调节事件
+		
 		that._winResize = function () {
 			resizeTimer && clearTimeout(resizeTimer);
 			resizeTimer = setTimeout(function () {
@@ -1615,12 +1615,12 @@ artDialog.fn = artDialog.prototype = {
 		};
 		_$window.bind('resize', that._winResize);
 		
-		// 监听点击
+		
 		DOM.wrap
 		.bind('click', function (event) {
 			var target = event.target, callbackID;
 			
-			if (target.disabled) return false; // IE BUG
+			if (target.disabled) return false; 
 			
 			if (target === DOM.close[0]) {
 				that._click(config.cancelVal);
@@ -1636,7 +1636,7 @@ artDialog.fn = artDialog.prototype = {
 		});
 	},
 	
-	// 卸载事件代理
+	
 	_removeEvent: function () {
 		var that = this,
 			DOM = that.DOM;
@@ -1674,7 +1674,7 @@ artDialog.list = {};
 
 
 
-// 全局快捷键
+
 _$document.bind('keydown', function (event) {
 	var target = event.target,
 		nodeName = target.nodeName,
@@ -1689,10 +1689,10 @@ _$document.bind('keydown', function (event) {
 
 
 
-// 获取artDialog路径
+
 _path = window['_artDialog_path'] || (function (script, i, me) {
 	for (i in script) {
-		// 如果通过第三方脚本加载器加载本文件，请保证文件名含有"artDialog"字符
+		
 		if (script[i].src && script[i].src.indexOf('artDialog') !== -1) me = script[i];
     }
     _thisScript = me || script[script.length - 1];
@@ -1702,7 +1702,7 @@ _path = window['_artDialog_path'] || (function (script, i, me) {
 
 
 
-// 无阻塞载入CSS (如"artDialog.js?skin=aero")
+
 _skin = _thisScript.src.split('skin=')[1];
 if (_skin) {
 	var link = document.createElement('link');
@@ -1710,7 +1710,7 @@ if (_skin) {
 	link.href = _path + '/skins/' + _skin + '.css?' + artDialog.fn.version;
 	_thisScript.parentNode.insertBefore(link, _thisScript);
 }
-// 触发浏览器预先缓存背景图片
+
 _$window.bind('load', function () {
 	setTimeout(function () {
 		if (_count) return;
@@ -1720,13 +1720,13 @@ _$window.bind('load', function () {
 
 
 
-// 开启IE6 CSS背景图片缓存
+
 try {
 	document.execCommand('BackgroundImageCache', false, true);
 } catch (e) {
 }
-// 使用uglifyjs压缩能够预先处理"+"号合并字符串
-// uglifyjs: http://marijnhaverbeke.nl/uglifyjs
+
+
 artDialog._templates =
 '<div class="aui_outer">'
 +	'<table class="aui_border">'
@@ -1786,39 +1786,39 @@ artDialog._templates =
  * 默认配置
  */
 artDialog.defaults = {
-								// 消息内容
+								
 	content: '<div class="aui_loading"><span>loading..</span></div>',
-	title: '\u6d88\u606f',		// 标题. 默认'消息'
-	button: null,				// 自定义按钮
-	ok: null,					// 确定按钮回调函数
-	cancel: null,				// 取消按钮回调函数
-	init: null,					// 对话框初始化后执行的函数
-	close: null,				// 对话框关闭前执行的函数
-	okVal: '\u786E\u5B9A',		// 确定按钮文本. 默认'确定'
-	cancelVal: '\u53D6\u6D88',	// 取消按钮文本. 默认'取消'
-	width: 'auto',				// 内容宽度
-	height: 'auto',				// 内容高度
-	minWidth: 96,				// 最小宽度限制
-	minHeight: 32,				// 最小高度限制
-	padding: '20px 25px',		// 内容与边界填充距离
-	skin: '',					// 皮肤名(预留接口,尚未实现)
-	icon: null,					// 消息图标名称
-	time: null,					// 自动关闭时间
-	esc: true,					// 是否支持Esc键关闭
-	focus: true,				// 是否支持对话框按钮自动聚焦
-	show: true,					// 初始化后是否显示对话框
-	follow: null,				// 跟随某元素(即让对话框在元素附近弹出)
-	path: _path,				// artDialog路径
-	lock: false,				// 是否锁屏
-	background: '#000',			// 遮罩颜色
-	opacity: .7,				// 遮罩透明度
-	duration: 300,				// 遮罩透明度渐变动画速度
-	fixed: false,				// 是否静止定位
-	left: '50%',				// X轴坐标
-	top: '38.2%',				// Y轴坐标
-	zIndex: 1987,				// 对话框叠加高度值(重要：此值不能超过浏览器最大限制)
-	resize: true,				// 是否允许用户调节尺寸
-	drag: true					// 是否允许用户拖动位置
+	title: '\u6d88\u606f',		
+	button: null,				
+	ok: null,					
+	cancel: null,				
+	init: null,					
+	close: null,				
+	okVal: '\u786E\u5B9A',		
+	cancelVal: '\u53D6\u6D88',	
+	width: 'auto',				
+	height: 'auto',				
+	minWidth: 96,				
+	minHeight: 32,				
+	padding: '20px 25px',		
+	skin: '',					
+	icon: null,					
+	time: null,					
+	esc: true,					
+	focus: true,				
+	show: true,					
+	follow: null,				
+	path: _path,				
+	lock: false,				
+	background: '#000',			
+	opacity: .7,				
+	duration: 300,				
+	fixed: false,				
+	left: '50%',				
+	top: '38.2%',				
+	zIndex: 1987,				
+	resize: true,				
+	drag: true					
 	
 };
 
@@ -1831,7 +1831,7 @@ window.artDialog = $.dialog = $.artDialog = artDialog;
 
 
 //------------------------------------------------
-// 对话框模块-拖拽支持（可选外置模块）
+
 //------------------------------------------------
 (function ($) {
     var _dragEvent, _use,
@@ -1842,7 +1842,7 @@ window.artDialog = $.dialog = $.artDialog = artDialog;
 	_isLosecapture = 'onlosecapture' in _elem,
 	_isSetCapture = 'setCapture' in _elem;
 
-// 拖拽事件
+
 artDialog.dragEvent = function () {
 	var that = this,
 		proxy = function (name) {
@@ -1859,7 +1859,7 @@ artDialog.dragEvent = function () {
 
 artDialog.dragEvent.prototype = {
 
-	// 开始拖拽
+	
 	onstart: $.noop,
 	start: function (event) {
 		_$document
@@ -1873,7 +1873,7 @@ artDialog.dragEvent.prototype = {
 		return false;
 	},
 	
-	// 正在拖拽
+	
 	onmove: $.noop,
 	move: function (event) {		
 		this._mClientX = event.clientX;
@@ -1886,7 +1886,7 @@ artDialog.dragEvent.prototype = {
 		return false;
 	},
 	
-	// 结束拖拽
+	
 	onend: $.noop,
 	end: function (event) {
 		_$document
@@ -1908,7 +1908,7 @@ _use = function (event) {
 		title = DOM.title,
 		main = DOM.main;
 
-	// 清除文本选择
+	
 	var clsSelect = 'getSelection' in window ? function () {
 		window.getSelection().removeAllRanges();
 	} : function () {
@@ -1918,7 +1918,7 @@ _use = function (event) {
         }
     };
 	
-	// 对话框准备拖动
+	
 	_dragEvent.onstart = function (x, y) {
 		if (isResize) {
 			startWidth = main[0].offsetWidth;
@@ -1937,7 +1937,7 @@ _use = function (event) {
 		api.focus();
 	};
 	
-	// 对话框拖动进行中
+	
 	_dragEvent.onmove = function (x, y) {
 		if (isResize) {
 			var wrapStyle = wrap[0].style,
@@ -1963,7 +1963,7 @@ _use = function (event) {
 		api._ie6SelectFix();
 	};
 	
-	// 对话框拖动结束
+	
 	_dragEvent.onend = function (x, y) {
 		_$document.unbind('dblclick', _dragEvent.end);
 		!_isIE6 && _isLosecapture ?
@@ -1988,7 +1988,7 @@ _use = function (event) {
 			dl = fixed ? 0 : _$document.scrollLeft(),
 			dt = fixed ? 0 : _$document.scrollTop(),
 			
-		// 坐标最大值限制
+		
 		maxX = ww - ow + dl;
 		maxY = wh - oh + dt;
 		
@@ -2003,7 +2003,7 @@ _use = function (event) {
 	_dragEvent.start(event);
 };
 
-// 代理 mousedown 事件触发对话框拖动
+
 _$document.bind('mousedown', function (event) {
 	var api = artDialog.focus;
 	if (!api) return;
@@ -2016,7 +2016,7 @@ _$document.bind('mousedown', function (event) {
 	|| config.resize !== false && target === DOM.se[0]) {
 		_dragEvent = _dragEvent || new artDialog.dragEvent();
 		_use(event);
-		return false;// 防止firefox与chrome滚屏
+		return false;
     }
 });
 

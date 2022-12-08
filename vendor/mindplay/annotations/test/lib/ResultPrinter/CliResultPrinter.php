@@ -9,30 +9,16 @@ use mindplay\test\lib\xTestRunner;
 class CliResultPrinter extends ResultPrinter
 {
 
-    /**
-     * Colors.
-     *
-     * @var Colors
-     */
+    
     protected $colors;
 
-    /**
-     * Creates CLI result printer instance.
-     *
-     * @param Colors $colors Colors.
-     */
+    
     public function __construct(Colors $colors)
     {
         $this->colors = $colors;
     }
 
-    /**
-     * Prints the header before the test output.
-     *
-     * @param xTestRunner $testRunner Test runner.
-     * @param string      $pattern    Test filename pattern.
-     * @return void
-     */
+    
     public function suiteHeader(xTestRunner $testRunner, $pattern)
     {
         echo 'Unit Tests' . PHP_EOL;
@@ -40,12 +26,7 @@ class CliResultPrinter extends ResultPrinter
         echo 'Test Suite: ' . $pattern . PHP_EOL;
     }
 
-    /**
-     * Creates code coverage report.
-     *
-     * @param \PHP_CodeCoverage $coverage Code coverage collector.
-     * @return void
-     */
+    
     public function createCodeCoverageReport(\PHP_CodeCoverage $coverage = null)
     {
         if (!isset($coverage)) {
@@ -60,12 +41,7 @@ class CliResultPrinter extends ResultPrinter
         echo 'done' . PHP_EOL;
     }
 
-    /**
-     * Prints test header.
-     *
-     * @param xTest $test Test.
-     * @return void
-     */
+    
     public function testHeader(xTest $test)
     {
         $class = get_class($test);
@@ -75,14 +51,7 @@ class CliResultPrinter extends ResultPrinter
         echo 'Results:' . PHP_EOL;
     }
 
-    /**
-     * Test case result.
-     *
-     * @param \ReflectionMethod $testCaseMethod Test case method.
-     * @param string            $resultColor    Result color.
-     * @param string            $resultMessage  Result message.
-     * @return void
-     */
+    
     public function testCaseResult(\ReflectionMethod $testCaseMethod, $resultColor, $resultMessage)
     {
         echo '(' . $testCaseMethod->getStartLine() . ') ' . $this->getTestCaseName($testCaseMethod, true);
@@ -90,14 +59,7 @@ class CliResultPrinter extends ResultPrinter
         echo PHP_EOL;
     }
 
-    /**
-     * Prints test footer.
-     *
-     * @param xTest   $test   Test.
-     * @param integer $total  Total test case count.
-     * @param integer $passed Passed test case count.
-     * @return void
-     */
+    
     public function testFooter(xTest $test, $total, $passed)
     {
         echo $total . ' Tests. ';

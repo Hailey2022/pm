@@ -1,13 +1,13 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkPHP [ WE CAN DO IT JUST THINK ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2006~2015 http://thinkphp.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: yunwuxin <448901948@qq.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 
 namespace think\console\output;
 
@@ -22,14 +22,10 @@ use think\console\output\descriptor\Console as ConsoleDescription;
 class Descriptor
 {
 
-    /**
-     * @var Output
-     */
+    
     protected $output;
 
-    /**
-     * {@inheritdoc}
-     */
+    
     public function describe(Output $output, $object, array $options = [])
     {
         $this->output = $output;
@@ -55,22 +51,13 @@ class Descriptor
         }
     }
 
-    /**
-     * 输出内容
-     * @param string $content
-     * @param bool   $decorated
-     */
+    
     protected function write($content, $decorated = false)
     {
         $this->output->write($content, false, $decorated ? Output::OUTPUT_NORMAL : Output::OUTPUT_RAW);
     }
 
-    /**
-     * 描述参数
-     * @param InputArgument $argument
-     * @param array         $options
-     * @return string|mixed
-     */
+    
     protected function describeInputArgument(InputArgument $argument, array $options = [])
     {
         if (null !== $argument->getDefault()
@@ -85,16 +72,11 @@ class Descriptor
         $totalWidth   = isset($options['total_width']) ? $options['total_width'] : strlen($argument->getName());
         $spacingWidth = $totalWidth - strlen($argument->getName()) + 2;
 
-        $this->writeText(sprintf("  <info>%s</info>%s%s%s", $argument->getName(), str_repeat(' ', $spacingWidth), // + 17 = 2 spaces + <info> + </info> + 2 spaces
+        $this->writeText(sprintf("  <info>%s</info>%s%s%s", $argument->getName(), str_repeat(' ', $spacingWidth), 
             preg_replace('/\s*\R\s*/', PHP_EOL . str_repeat(' ', $totalWidth + 17), $argument->getDescription()), $default), $options);
     }
 
-    /**
-     * 描述选项
-     * @param InputOption $option
-     * @param array       $options
-     * @return string|mixed
-     */
+    
     protected function describeInputOption(InputOption $option, array $options = [])
     {
         if ($option->acceptValue() && null !== $option->getDefault()
@@ -120,16 +102,11 @@ class Descriptor
 
         $spacingWidth = $totalWidth - strlen($synopsis) + 2;
 
-        $this->writeText(sprintf("  <info>%s</info>%s%s%s%s", $synopsis, str_repeat(' ', $spacingWidth), // + 17 = 2 spaces + <info> + </info> + 2 spaces
+        $this->writeText(sprintf("  <info>%s</info>%s%s%s%s", $synopsis, str_repeat(' ', $spacingWidth), 
             preg_replace('/\s*\R\s*/', "\n" . str_repeat(' ', $totalWidth + 17), $option->getDescription()), $default, $option->isArray() ? '<comment> (multiple values allowed)</comment>' : ''), $options);
     }
 
-    /**
-     * 描述输入
-     * @param InputDefinition $definition
-     * @param array           $options
-     * @return string|mixed
-     */
+    
     protected function describeInputDefinition(InputDefinition $definition, array $options = [])
     {
         $totalWidth = $this->calculateTotalWidthForOptions($definition->getOptions());
@@ -169,12 +146,7 @@ class Descriptor
         }
     }
 
-    /**
-     * 描述指令
-     * @param Command $command
-     * @param array   $options
-     * @return string|mixed
-     */
+    
     protected function describeCommand(Command $command, array $options = [])
     {
         $command->getSynopsis(true);
@@ -204,12 +176,7 @@ class Descriptor
         }
     }
 
-    /**
-     * 描述控制台
-     * @param Console $console
-     * @param array   $options
-     * @return string|mixed
-     */
+    
     protected function describeConsole(Console $console, array $options = [])
     {
         $describedNamespace = isset($options['namespace']) ? $options['namespace'] : null;
@@ -243,7 +210,7 @@ class Descriptor
                 $this->writeText('<comment>Available commands:</comment>', $options);
             }
 
-            // add commands by namespace
+            
             foreach ($description->getNamespaces() as $namespace) {
                 if (!$describedNamespace && ConsoleDescription::GLOBAL_NAMESPACE !== $namespace['id']) {
                     $this->writeText("\n");
@@ -262,29 +229,20 @@ class Descriptor
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    
     private function writeText($content, array $options = [])
     {
         $this->write(isset($options['raw_text'])
             && $options['raw_text'] ? strip_tags($content) : $content, isset($options['raw_output']) ? !$options['raw_output'] : true);
     }
 
-    /**
-     * 格式化
-     * @param mixed $default
-     * @return string
-     */
+    
     private function formatDefaultValue($default)
     {
         return json_encode($default, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
     }
 
-    /**
-     * @param Command[] $commands
-     * @return int
-     */
+    
     private function getColumnWidth(array $commands)
     {
         $width = 0;
@@ -295,19 +253,16 @@ class Descriptor
         return $width + 2;
     }
 
-    /**
-     * @param InputOption[] $options
-     * @return int
-     */
+    
     private function calculateTotalWidthForOptions($options)
     {
         $totalWidth = 0;
         foreach ($options as $option) {
-            $nameLength = 4 + strlen($option->getName()) + 2; // - + shortcut + , + whitespace + name + --
+            $nameLength = 4 + strlen($option->getName()) + 2; 
 
             if ($option->acceptValue()) {
-                $valueLength = 1 + strlen($option->getName()); // = + value
-                $valueLength += $option->isValueOptional() ? 2 : 0; // [ + ]
+                $valueLength = 1 + strlen($option->getName()); 
+                $valueLength += $option->isValueOptional() ? 2 : 0; 
 
                 $nameLength += $valueLength;
             }

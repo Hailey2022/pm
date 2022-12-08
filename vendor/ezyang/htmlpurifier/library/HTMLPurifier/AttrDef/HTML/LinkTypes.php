@@ -1,23 +1,13 @@
 <?php
 
-/**
- * Validates a rel/rev link attribute against a directive of allowed values
- * @note We cannot use Enum because link types allow multiple
- *       values.
- * @note Assumes link types are ASCII text
- */
+
 class HTMLPurifier_AttrDef_HTML_LinkTypes extends HTMLPurifier_AttrDef
 {
 
-    /**
-     * Name config attribute to pull.
-     * @type string
-     */
+    
     protected $name;
 
-    /**
-     * @param string $name
-     */
+    
     public function __construct($name)
     {
         $configLookup = array(
@@ -35,12 +25,7 @@ class HTMLPurifier_AttrDef_HTML_LinkTypes extends HTMLPurifier_AttrDef
         $this->name = $configLookup[$name];
     }
 
-    /**
-     * @param string $string
-     * @param HTMLPurifier_Config $config
-     * @param HTMLPurifier_Context $context
-     * @return bool|string
-     */
+    
     public function validate($string, $config, $context)
     {
         $allowed = $config->get('Attr.' . $this->name);
@@ -51,7 +36,7 @@ class HTMLPurifier_AttrDef_HTML_LinkTypes extends HTMLPurifier_AttrDef
         $string = $this->parseCDATA($string);
         $parts = explode(' ', $string);
 
-        // lookup to prevent duplicates
+        
         $ret_lookup = array();
         foreach ($parts as $part) {
             $part = strtolower(trim($part));
@@ -69,4 +54,4 @@ class HTMLPurifier_AttrDef_HTML_LinkTypes extends HTMLPurifier_AttrDef
     }
 }
 
-// vim: et sw=4 sts=4
+

@@ -1,17 +1,17 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkPHP [ WE CAN DO IT JUST THINK ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2006~2018 http://thinkphp.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: liu21st <liu21st@gmail.com>
-// +----------------------------------------------------------------------
 
-// 核心中文语言包
+
+
+
+
+
+
+
+
+
+
 return [
-    // 系统错误提示
+    
     'Undefined variable'                                        => '未定义变量',
     'Undefined index'                                           => '未定义数组索引',
     'Undefined offset'                                          => '未定义数组下标',
@@ -20,7 +20,7 @@ return [
     'Fatal error'                                               => '致命错误',
     'syntax error'                                              => '语法错误',
 
-    // 框架核心错误提示
+    
     'dispatch type not support'                                 => '不支持的调度类型',
     'method param miss'                                         => '方法参数错误',
     'method not exists'                                         => '方法不存在',
@@ -74,7 +74,7 @@ return [
     'route behavior will not support'                           => '路由行为废弃（使用中间件替代）',
     'closure not support cache(true)'                           => '使用闭包查询不支持cache(true)，请指定缓存Key',
 
-    // 上传错误信息
+    
     'unknown upload error'                                      => '未知上传错误！',
     'file write error'                                          => '文件写入失败！',
     'upload temp dir not found'                                 => '找不到临时文件夹！',
@@ -92,7 +92,7 @@ return [
 
     'The middleware must return Response instance'              => '中间件方法必须返回Response对象实例',
     'The queue was exhausted, with no response returned'        => '中间件队列为空',
-    // Validate Error Message
+    
     ':attribute require'                                        => ':attribute不能为空',
     ':attribute must'                                           => ':attribute必须',
     ':attribute must be numeric'                                => ':attribute必须是数字',

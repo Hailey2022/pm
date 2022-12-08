@@ -1,7 +1,7 @@
 <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 <?php
 require_once('../phpQuery/phpQuery.php');
-// phpQuery::$debug = true;
+
 
 $testName = 'Text node append';
 $result = phpQuery::newDocumentFile('test.html')

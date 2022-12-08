@@ -1,14 +1,10 @@
 <?php
 
-/**
- * Validates Color as defined by CSS.
- */
+
 class HTMLPurifier_AttrDef_CSS_Color extends HTMLPurifier_AttrDef
 {
 
-    /**
-     * @type HTMLPurifier_AttrDef_CSS_AlphaValue
-     */
+    
     protected $alpha;
 
     public function __construct()
@@ -16,12 +12,7 @@ class HTMLPurifier_AttrDef_CSS_Color extends HTMLPurifier_AttrDef
         $this->alpha = new HTMLPurifier_AttrDef_CSS_AlphaValue();
     }
 
-    /**
-     * @param string $color
-     * @param HTMLPurifier_Config $config
-     * @param HTMLPurifier_Context $context
-     * @return bool|string
-     */
+    
     public function validate($color, $config, $context)
     {
         static $colors = null;
@@ -45,7 +36,7 @@ class HTMLPurifier_AttrDef_CSS_Color extends HTMLPurifier_AttrDef
                 return false;
             }
 
-            // get used function : rgb, rgba, hsl or hsla
+            
             $function = $matches[1];
 
             $parameters_size = 3;
@@ -55,10 +46,7 @@ class HTMLPurifier_AttrDef_CSS_Color extends HTMLPurifier_AttrDef
                 $alpha_channel = true;
             }
 
-            /*
-             * Allowed types for values :
-             * parameter_position => [type => max_value]
-             */
+            
             $allowed_types = array(
                 1 => array('percentage' => 100, 'integer' => 255),
                 2 => array('percentage' => 100, 'integer' => 255),
@@ -94,7 +82,7 @@ class HTMLPurifier_AttrDef_CSS_Color extends HTMLPurifier_AttrDef
                     return false;
                 }
 
-                // different check for alpha channel
+                
                 if ($alpha_channel === true && $i === count($parts)) {
                     $result = $this->alpha->validate($part, $config, $context);
 
@@ -127,7 +115,7 @@ class HTMLPurifier_AttrDef_CSS_Color extends HTMLPurifier_AttrDef
                 $max_value = $allowed_types[$i][$current_type];
 
                 if ($current_type == 'integer') {
-                    // Return value between range 0 -> $max_value
+                    
                     $new_parts[] = (int)max(min($part, $max_value), 0);
                 } elseif ($current_type == 'percentage') {
                     $new_parts[] = (float)max(min(rtrim($part, '%'), $max_value), 0) . '%';
@@ -138,7 +126,7 @@ class HTMLPurifier_AttrDef_CSS_Color extends HTMLPurifier_AttrDef
 
             $color = $function . '(' . $new_values . ')';
         } else {
-            // hexadecimal handling
+            
             if ($color[0] === '#') {
                 $hex = substr($color, 1);
             } else {
@@ -158,4 +146,4 @@ class HTMLPurifier_AttrDef_CSS_Color extends HTMLPurifier_AttrDef
 
 }
 
-// vim: et sw=4 sts=4
+

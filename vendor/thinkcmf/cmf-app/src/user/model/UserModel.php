@@ -1,23 +1,20 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2013-present http://www.thinkcmf.com All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: Powerless < wzxaini9@gmail.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 namespace app\user\model;
 
 use think\Model;
 
 class UserModel extends Model
 {
-    /**
-     * 模型名称
-     * @var string
-     */
+    
     protected $name = 'user';
 
     protected $type = [
@@ -187,12 +184,7 @@ class UserModel extends Model
         return 1;
     }
 
-    /**
-     * 通过邮箱重置密码
-     * @param $email
-     * @param $password
-     * @return int
-     */
+    
     public function emailPasswordReset($email, $password)
     {
         $result = $this->where('user_email', $email)->find();
@@ -206,12 +198,7 @@ class UserModel extends Model
         return 1;
     }
 
-    /**
-     * 通过手机重置密码
-     * @param $mobile
-     * @param $password
-     * @return int
-     */
+    
     public function mobilePasswordReset($mobile, $password)
     {
         $result = UserModel::where('mobile', $mobile)->find();
@@ -243,11 +230,7 @@ class UserModel extends Model
         return 0;
     }
 
-    /**
-     * 用户密码修改
-     * @param $user
-     * @return int
-     */
+    
     public function editPassword($user)
     {
         $userId = cmf_get_current_user_id();
@@ -285,9 +268,7 @@ class UserModel extends Model
         return $data;
     }
 
-    /**
-     * 绑定用户手机号
-     */
+    
     public function bindingMobile($user)
     {
         $userId = cmf_get_current_user_id();
@@ -297,9 +278,7 @@ class UserModel extends Model
         return 0;
     }
 
-    /**
-     * 绑定用户邮箱
-     */
+    
     public function bindingEmail($user)
     {
         $userId = cmf_get_current_user_id();

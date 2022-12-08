@@ -331,36 +331,36 @@
         /* 初始化容器 */
         initUploader: function () {
             var _this = this,
-                $ = jQuery,    // just in case. Make sure it's not an other libaray.
+                $ = jQuery,    
                 $wrap = _this.$wrap,
-            // 图片容器
+            
                 $queue = $wrap.find('.filelist'),
-            // 状态栏，包括进度和控制按钮
+            
                 $statusBar = $wrap.find('.statusBar'),
-            // 文件总体选择信息。
+            
                 $info = $statusBar.find('.info'),
-            // 上传按钮
+            
                 $upload = $wrap.find('.uploadBtn'),
-            // 上传按钮
+            
                 $filePickerBtn = $wrap.find('.filePickerBtn'),
-            // 上传按钮
+            
                 $filePickerBlock = $wrap.find('.filePickerBlock'),
-            // 没选择文件之前的内容。
+            
                 $placeHolder = $wrap.find('.placeholder'),
-            // 总体进度条
+            
                 $progress = $statusBar.find('.progress').hide(),
-            // 添加的文件数量
+            
                 fileCount = 0,
-            // 添加的文件总大小
+            
                 fileSize = 0,
-            // 优化retina, 在retina下这个值是2
+            
                 ratio = window.devicePixelRatio || 1,
-            // 缩略图大小
+            
                 thumbnailWidth = 113 * ratio,
                 thumbnailHeight = 113 * ratio,
-            // 可能有pedding, ready, uploading, confirm, done.
+            
                 state = '',
-            // 所有文件的进度信息，key为file id
+            
                 percentages = {},
                 supportTransition = (function () {
                     var s = document.createElement('p').style,
@@ -372,7 +372,7 @@
                     s = null;
                     return r;
                 })(),
-            // WebUploader实例
+            
                 uploader,
                 actionUrl = editor.getActionUrl(editor.getOpt('videoActionName')),
                 fileMaxSize = editor.getOpt('videoMaxSize'),
@@ -399,8 +399,8 @@
                 fileSingleSizeLimit: fileMaxSize,
                 compress: false,
                 chunked: true,//开启分片
-                chunkSize: 512 * 1024,// 单位B
-                // 禁掉全局的拖拽功能。这样不会出现图片拖进页面的时候，把图片打开。
+                chunkSize: 512 * 1024,
+                
                 disableGlobalDnd: true
             });
             uploader.addButton({
@@ -413,7 +413,7 @@
 
             setState('pedding');
 
-            // 当有文件添加进来时执行，负责view的创建
+            
             function addFile(file) {
                 var $li = $('<li id="' + file.id + '">' +
                         '<p class="title">' + file.name + '</p>' +
@@ -491,7 +491,7 @@
                         $li.off('mouseenter mouseleave');
                         $btns.remove();
                     }
-                    // 成功
+                    
                     if (cur === 'error' || cur === 'invalid') {
                         showError(file.statusText);
                         percentages[ file.id ][ 1 ] = 1;
@@ -548,7 +548,7 @@
                 $li.insertBefore($filePickerBlock);
             }
 
-            // 负责view的销毁
+            
             function removeFile(file) {
                 var $li = $('#' + file.id);
                 delete percentages[ file.id ];

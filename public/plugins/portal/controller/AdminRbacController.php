@@ -1,13 +1,13 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2013-2019 http://www.thinkcmf.com All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: 小夏 < 449134904@qq.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 namespace plugins\portal\controller;
 
 use cmf\controller\PluginAdminBaseController;
@@ -18,20 +18,7 @@ use app\admin\model\AdminMenuModel;
 class AdminRbacController extends PluginAdminBaseController
 {
 
-    /**
-     * 设置角色权限
-     * @adminMenu(
-     *     'name'   => '设置角色权限',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> true,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '设置角色权限',
-     *     'param'  => ''
-     * )
-     * @return mixed
-     */
+    
     public function authorize()
     {
         $content = hook_one('admin_rbac_authorize_view');
@@ -64,24 +51,7 @@ class AdminRbacController extends PluginAdminBaseController
         return $this->fetch();
     }
 
-    /**
-     * 角色授权提交
-     * @adminMenu(
-     *     'name'   => '角色授权提交',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> false,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '角色授权提交',
-     *     'param'  => ''
-     * )
-     * @throws \think\Exception
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
-     * @throws \think\exception\PDOException
-     */
+    
     public function authorizePost()
     {
         if ($this->request->isPost()) {
@@ -155,18 +125,13 @@ class AdminRbacController extends PluginAdminBaseController
             } else {
                 //当没有数据时，清除当前角色授权
                 Db::name("auth_access")->where("role_id", $roleId)->where('type', 'portal_category')->delete();
-//                $this->error("没有接收到数据，执行清除授权成功！");
+
                 $this->success("授权成功！");
             }
         }
     }
 
-    /**
-     * 检查指定菜单是否有权限
-     * @param array $menu menu表中数组
-     * @param       $privData
-     * @return bool
-     */
+    
     private function _isChecked($menu, $privData)
     {
         $app    = $menu['app'];
@@ -185,13 +150,7 @@ class AdminRbacController extends PluginAdminBaseController
 
     }
 
-    /**
-     * 获取菜单深度
-     * @param       $id
-     * @param array $array
-     * @param int   $i
-     * @return int
-     */
+    
     protected function _getLevel($id, $array = [], $i = 0)
     {
         if ($array[$id]['parent_id'] == 0 || empty($array[$array[$id]['parent_id']]) || $array[$id]['parent_id'] == $id) {

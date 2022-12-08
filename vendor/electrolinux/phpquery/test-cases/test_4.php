@@ -2,7 +2,7 @@
 require_once('../phpQuery/phpQuery.php');
 phpQuery::$debug = true;
 
-// SLICE1
+
 $testResult = array(
 	'li#testID',
 );
@@ -19,7 +19,7 @@ else {
 }
 print "\n";
 
-// SLICE2
+
 $testResult = array(
 	'li#testID',
 	'li',
@@ -39,7 +39,7 @@ else {
 }
 print "\n";
 
-// Multi-insert
+
 $result = phpQuery::newDocument('<li><span class="field1"></span><span class="field1"></span></li>')
 	->find('.field1')
 		->php('longlongtest');
@@ -55,7 +55,7 @@ else {
 }
 print "\n";
 
-// INDEX
+
 $testResult = 1;
 $result = phpQuery::newDocumentFile('test.html')
 	->find('p')
@@ -67,7 +67,7 @@ else {
 }
 print "\n";
 
-// CLONE
+
 $testName = 'Clone';
 $testResult = 3;
 $document;
@@ -87,7 +87,7 @@ else {
 }
 print "\n";
 
-// SIBLINGS
+
 $testName = 'Next';
 $testResult = 3;
 $document;

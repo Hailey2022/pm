@@ -1,24 +1,22 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2013-present http://www.thinkcmf.com All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +---------------------------------------------------------------------
-// | Author: Dean <zxxjjforever@163.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 namespace cmf\lib\taglib;
 
 use think\template\TagLib;
 
 class Cmf extends TagLib
 {
-    /**
-     * 定义标签列表
-     */
+    
     protected $tags = [
-        // 标签定义： attr 属性列表 close 是否闭合（0 或者1 默认1） alias 标签别名 level 嵌套层次
+        
         'page'                => ['attr' => '', 'close' => 0],//非必须属性name
         'widget'              => ['attr' => 'name', 'close' => 1],
         'navigation'          => ['attr' => '', 'close' => 1],//非必须属性nav-id,root,id,class
@@ -34,9 +32,7 @@ class Cmf extends TagLib
         'hook'                => ['attr' => 'name,param,once', 'close' => 0]
     ];
 
-    /**
-     * 分页标签
-     */
+    
     public function tagPage($tag, $content)
     {
 
@@ -53,9 +49,7 @@ parse;
 
     }
 
-    /**
-     * 组件标签
-     */
+    
     public function tagWidget($tag, $content)
     {
 
@@ -89,13 +83,11 @@ parse;
 
     }
 
-    /**
-     * 导航标签
-     */
+    
     public function tagNavigation($tag, $content)
     {
 
-        // nav-id,id,root,class
+        
         $navId                   = isset($tag['nav-id']) ? $tag['nav-id'] : 0;
         $id                      = isset($tag['id']) ? $tag['id'] : '';
         $root                    = isset($tag['root']) ? $tag['root'] : 'ul';
@@ -111,7 +103,7 @@ parse;
 
         $parse = <<<parse
 <?php
-/*start*/
+
 if (!function_exists('{$parseNavigationFuncName}')) {
     function {$parseNavigationFuncName}(\$menus,\$level=1){
         \$_parse_navigation_func_name = '{$parseNavigationFuncName}';
@@ -123,7 +115,7 @@ if (!function_exists('{$parseNavigationFuncName}')) {
 <?php 
     }
 }
-/*end*/
+
 ?>
 
 <?php
@@ -142,9 +134,7 @@ parse;
         return $parse;
     }
 
-    /**
-     * 导航menu标签
-     */
+    
     public function tagNavigationMenu($tag, $content)
     {
         //root,class
@@ -171,9 +161,7 @@ parse;
     }
 
 
-    /**
-     * 导航folder标签
-     */
+    
     public function tagNavigationFolder($tag, $content)
     {
         //root,class,dropdown,dropdown-class
@@ -199,13 +187,11 @@ parse;
         return $parse;
     }
 
-    /**
-     * 子导航标签
-     */
+    
     public function tagSubNavigation($tag, $content)
     {
 
-        // parent,id,root,class
+        
         $parent                     = isset($tag['parent']) ? $tag['parent'] : 0;
         $id                         = isset($tag['id']) ? $tag['id'] : '';
         $root                       = isset($tag['root']) ? $tag['root'] : 'ul';
@@ -249,9 +235,7 @@ parse;
         return $parse;
     }
 
-    /**
-     * 子导航menu标签
-     */
+    
     public function tagSubNavigationMenu($tag, $content)
     {
         //root,class
@@ -277,9 +261,7 @@ parse;
         return $parse;
     }
 
-    /**
-     * 子导航folder标签
-     */
+    
     public function tagSubNavigationFolder($tag, $content)
     {
         //root,class,dropdown,dropdown-class
@@ -302,9 +284,7 @@ parse;
         return $parse;
     }
 
-    /**
-     * 友情链接标签
-     */
+    
     public function tagLinks($tag, $content)
     {
         $item  = empty($tag['item']) ? 'vo' : $tag['item'];//循环变量名
@@ -321,9 +301,7 @@ parse;
 
     }
 
-    /**
-     * 幻灯片标签
-     */
+    
     public function tagSlides($tag, $content)
     {
         $id    = empty($tag['id']) ? '0' : $tag['id'];
@@ -344,9 +322,7 @@ parse;
 
     }
 
-    /**
-     * 无幻灯片标签
-     */
+    
     public function tagNoSlides($tag, $content)
     {
         $id    = empty($tag['id']) ? '0' : $tag['id'];

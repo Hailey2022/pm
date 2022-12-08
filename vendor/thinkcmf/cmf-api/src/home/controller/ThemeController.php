@@ -1,11 +1,11 @@
 <?php
-// +----------------------------------------------------------------------
-// | Copyright (c) 2013-present http://www.thinkcmf.com All rights reserved.
-// +----------------------------------------------------------------------
-// | Author: Dean <zxxjjforever@163.com>
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
 namespace api\home\controller;
 
 use api\home\model\ThemeFileModel;
@@ -13,9 +13,7 @@ use cmf\controller\RestBaseController;
 
 class ThemeController extends RestBaseController
 {
-    /**
-     * 获取模板扩展属性
-     */
+    
     public function more()
     {
         $theme          = $this->request->param('theme');

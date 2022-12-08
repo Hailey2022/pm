@@ -1,28 +1,15 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2013-present http://www.thinkcmf.com All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: 老猫 <thinkcmf@126.com>
-// +----------------------------------------------------------------------
+
 namespace app\admin\model;
 
 use think\Model;
 
 class ThemeModel extends Model
 {
-    /**
-     * 模型名称
-     * @var string
-     */
+    
     protected $name = 'theme';
 
-    /**
-     * 获取插件列表
-     */
+    
     public function getList()
     {
 
@@ -61,14 +48,7 @@ class ThemeModel extends Model
         }
     }
 
-    /**
-     * 获取当前前台模板某操作下的模板文件
-     * @param $action string 控制器操作
-     * @return array|string|\think\Collection
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
-     */
+    
     public function getActionThemeFiles($action)
     {
         $theme = config('template.cmf_default_theme');
@@ -127,7 +107,7 @@ class ThemeModel extends Model
                     'is_public'   => $isPublic,
                     'list_order'  => $listOrder
                 ]);
-            } else { // 更新文件
+            } else { 
                 $moreInDb = $findFile['more'];
                 $more     = $this->updateThemeConfigMore($configMore, $moreInDb);
                 ThemeFileModel::where(['theme' => $theme, 'file' => $file])->update([
@@ -144,7 +124,7 @@ class ThemeModel extends Model
             }
         }
 
-        // 检查安装过的模板文件是否已经删除
+        
         $files = ThemeFileModel::where('theme', $theme)->select();
 
         foreach ($files as $themeFile) {

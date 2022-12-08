@@ -20,7 +20,7 @@ var _topDialog, _proxyDialog, _zIndex,
 
 $(function () {
 	!window.jQuery && document.compatMode === 'BackCompat'
-	// 不支持怪异模式，请用主流的XHTML1.0或者HTML5的DOCTYPE申明
+	
 	&& alert('artDialog Error: document.compatMode === "BackCompat"');
 });
 	
@@ -30,13 +30,13 @@ var _top = artDialog.top = function () {
 	var top = window,
 	test = function (name) {
 		try {
-			var doc = window[name].document;	// 跨域|无权限
-			doc.getElementsByTagName; 			// chrome 本地安全限制
+			var doc = window[name].document;	
+			doc.getElementsByTagName; 			
 		} catch (e) {
 			return false;
         }
         return window[name].artDialog
-		// 框架集无法显示第三方元素
+		
 		&& doc.getElementsByTagName('frameset').length === 0;
 	};
 	
@@ -47,13 +47,13 @@ var _top = artDialog.top = function () {
     }
     return top;
 }();
-artDialog.parent = _top; // 兼容v4.1之前版本，未来版本将删除此
+artDialog.parent = _top; 
 
 
 _topDialog = _top.artDialog;
 
 
-// 获取顶层页面对话框叠加值
+
 _zIndex = function () {
 	return _topDialog.defaults.zIndex;
 };
@@ -94,20 +94,20 @@ artDialog.removeData = function (name) {
 artDialog.through = _proxyDialog = function () {
 	var api = _topDialog.apply(this, arguments);
 		
-	// 缓存从当前 window（可能为iframe）调出所有跨框架对话框，
-	// 以便让当前 window 卸载前去关闭这些对话框。
-	// 因为iframe注销后也会从内存中删除其创建的对象，这样可以防止回调函数报错
+	
+	
+	
 	if (_top !== window) artDialog.list[api.config.id] = api;
 	return api;
 };
 
-// 框架页面卸载前关闭所有穿越的对话框
+
 _top !== window && $(window).bind('unload', function () {
 	var list = artDialog.list, config;
 	for (var i in list) {
 		if (list[i]) {
 			config = list[i].config;
-			if (config) config.duration = 0; // 取消动画
+			if (config) config.duration = 0; 
 			list[i].close();
 			//delete list[i];
         }
@@ -148,7 +148,7 @@ artDialog.open = function (url, options, cache) {
 			iwin = iframe.contentWindow;
 			$idoc = $(iwin.document);
 			ibody = iwin.document.body;
-		} catch (e) {// 跨域
+		} catch (e) {
 			iframe.style.cssText = loadCss;
 			
 			aConfig.follow
@@ -159,7 +159,7 @@ artDialog.open = function (url, options, cache) {
 			options.init = null;
 			return;
         }
-        // 获取iframe内部尺寸
+        
 		iWidth = aConfig.width === 'auto'
 		? $idoc.width() + (_isIE6 ? 0 : parseInt($(ibody).css('marginLeft')))
 		: aConfig.width;
@@ -168,13 +168,13 @@ artDialog.open = function (url, options, cache) {
 		? $idoc.height()
 		: aConfig.height;
 		
-		// 适应iframe尺寸
+		
 		setTimeout(function () {
 			iframe.style.cssText = loadCss;
-		}, 0);// setTimeout: 防止IE6~7对话框样式渲染异常
+		}, 0);
 		api.size(iWidth, iHeight);
 		
-		// 调整对话框位置
+		
 		aConfig.follow
 		? api.follow(aConfig.follow)
 		: api.position(aConfig.left, aConfig.top);
@@ -218,8 +218,8 @@ artDialog.open = function (url, options, cache) {
             }
             $content.removeClass('aui_state_full');
 			
-			// 重要！需要重置iframe地址，否则下次出现的对话框在IE6、7无法聚焦input
-			// IE删除iframe后，iframe仍然会留在内存中出现上述问题，置换src是最容易解决的方法
+			
+			
 			$iframe[0].src = 'about:blank';
 			$iframe.remove();
 			
@@ -231,7 +231,7 @@ artDialog.open = function (url, options, cache) {
         }
 	};
 	
-	// 回调函数第一个参数指向iframe内部window对象
+	
 	if (typeof options.ok === 'function') config.ok = function () {
 		return options.ok.call(api, iframe.contentWindow, top);
 	};
@@ -254,7 +254,7 @@ artDialog.open.api = artDialog.data(_winName + _open);
 
 /** 引用open方法触发来源页面window(在open打开的iframe内部私有方法) */
 artDialog.opener = artDialog.data(_winName + _opener) || window;
-artDialog.open.origin = artDialog.opener; // 兼容v4.1之前版本，未来版本将删除此
+artDialog.open.origin = artDialog.opener; 
 
 /** artDialog.open 打开的iframe页面里关闭对话框快捷方法 */
 artDialog.close = function () {
@@ -263,7 +263,7 @@ artDialog.close = function () {
 	return false;
 };
 
-// 点击iframe内容切换叠加高度
+
 _top != window && $(document).bind('mousedown', function () {
 	var api = artDialog.open.api;
 	api && api.zIndex();
@@ -409,9 +409,9 @@ artDialog.tips = function (content, time) {
 };
 
 
-// 增强artDialog拖拽体验
-// - 防止鼠标落入iframe导致不流畅
-// - 对超大对话框拖动优化
+
+
+
 $(function () {
 	var event = artDialog.dragEvent;
 	if (!event) return;

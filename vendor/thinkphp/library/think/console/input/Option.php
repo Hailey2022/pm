@@ -1,13 +1,13 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkPHP [ WE CAN DO IT JUST THINK ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2006~2015 http://thinkphp.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: yunwuxin <448901948@qq.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 
 namespace think\console\input;
 
@@ -25,15 +25,7 @@ class Option
     private $default;
     private $description;
 
-    /**
-     * 构造方法
-     * @param string       $name        选项名
-     * @param string|array $shortcut    短名称,多个用|隔开或者使用数组
-     * @param int          $mode        选项类型(可选类型为 self::VALUE_*)
-     * @param string       $description 描述
-     * @param mixed        $default     默认值 (类型为 self::VALUE_REQUIRED 或者 self::VALUE_NONE 的时候必须为null)
-     * @throws \InvalidArgumentException
-     */
+    
     public function __construct($name, $shortcut = null, $mode = null, $description = '', $default = null)
     {
         if (0 === strpos($name, '--')) {
@@ -79,65 +71,43 @@ class Option
         $this->setDefault($default);
     }
 
-    /**
-     * 获取短名称
-     * @return string
-     */
+    
     public function getShortcut()
     {
         return $this->shortcut;
     }
 
-    /**
-     * 获取选项名
-     * @return string
-     */
+    
     public function getName()
     {
         return $this->name;
     }
 
-    /**
-     * 是否可以设置值
-     * @return bool 类型不是 self::VALUE_NONE 的时候返回true,其他均返回false
-     */
+    
     public function acceptValue()
     {
         return $this->isValueRequired() || $this->isValueOptional();
     }
 
-    /**
-     * 是否必须
-     * @return bool 类型是 self::VALUE_REQUIRED 的时候返回true,其他均返回false
-     */
+    
     public function isValueRequired()
     {
         return self::VALUE_REQUIRED === (self::VALUE_REQUIRED & $this->mode);
     }
 
-    /**
-     * 是否可选
-     * @return bool 类型是 self::VALUE_OPTIONAL 的时候返回true,其他均返回false
-     */
+    
     public function isValueOptional()
     {
         return self::VALUE_OPTIONAL === (self::VALUE_OPTIONAL & $this->mode);
     }
 
-    /**
-     * 选项值是否接受数组
-     * @return bool 类型是 self::VALUE_IS_ARRAY 的时候返回true,其他均返回false
-     */
+    
     public function isArray()
     {
         return self::VALUE_IS_ARRAY === (self::VALUE_IS_ARRAY & $this->mode);
     }
 
-    /**
-     * 设置默认值
-     * @param mixed $default 默认值
-     * @throws \LogicException
-     */
+    
     public function setDefault($default = null)
     {
         if (self::VALUE_NONE === (self::VALUE_NONE & $this->mode) && null !== $default) {
@@ -155,29 +125,19 @@ class Option
         $this->default = $this->acceptValue() ? $default : false;
     }
 
-    /**
-     * 获取默认值
-     * @return mixed
-     */
+    
     public function getDefault()
     {
         return $this->default;
     }
 
-    /**
-     * 获取描述文字
-     * @return string
-     */
+    
     public function getDescription()
     {
         return $this->description;
     }
 
-    /**
-     * 检查所给选项是否是当前这个
-     * @param Option $option
-     * @return bool
-     */
+    
     public function equals(Option $option)
     {
         return $option->getName() === $this->getName()

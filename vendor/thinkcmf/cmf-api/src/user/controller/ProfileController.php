@@ -1,11 +1,11 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2013-present http://www.thinkcmf.com All rights reserved.
-// +----------------------------------------------------------------------
-// | Author: Dean <zxxjjforever@163.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
 namespace api\user\controller;
 
 use api\user\model\UserModel;
@@ -14,11 +14,7 @@ use think\Validate;
 
 class ProfileController extends RestUserBaseController
 {
-    /**
-     * 用户密码修改
-     * @throws \think\Exception
-     * @throws \think\exception\PDOException
-     */
+    
     public function changePassword()
     {
         $validate = new Validate([
@@ -52,14 +48,7 @@ class ProfileController extends RestUserBaseController
 
     }
 
-    /**
-     * 用户绑定邮箱
-     * @throws \think\Exception
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
-     * @throws \think\exception\PDOException
-     */
+    
     public function bindingEmail()
     {
         $validate = new Validate([
@@ -96,14 +85,7 @@ class ProfileController extends RestUserBaseController
         $this->success("绑定成功!");
     }
 
-    /**
-     * 用户绑定手机号
-     * @throws \think\Exception
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
-     * @throws \think\exception\PDOException
-     */
+    
     public function bindingMobile()
     {
         $validate = new Validate([
@@ -144,15 +126,7 @@ class ProfileController extends RestUserBaseController
         $this->success("绑定成功!");
     }
 
-    /**
-     * 用户基本信息获取及修改
-     * @param string $field 需要获取的字段名
-     * @throws \think\Exception
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
-     * @throws \think\exception\PDOException
-     */
+    
     public function userInfo($field = '')
     {
         //判断请求为GET，获取信息

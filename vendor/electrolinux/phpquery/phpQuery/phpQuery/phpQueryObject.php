@@ -97,7 +97,7 @@ class phpQueryObject
 		$this->xpath =& $this->documentWrapper->xpath;
 		$this->charset =& $this->documentWrapper->charset;
 		$this->documentFragment =& $this->documentWrapper->isDocumentFragment;
-		// TODO check $this->DOM->documentElement;
+		
 //		$this->root = $this->document->documentElement;
 		$this->root =& $this->documentWrapper->root;
 //		$this->toRoot();
@@ -111,7 +111,7 @@ class phpQueryObject
 	 */
 	public function __get($attr) {
 		switch($attr) {
-			// FIXME doesnt work at all ?
+			
 			case 'length':
 				return $this->size();
 			break;
@@ -254,7 +254,7 @@ class phpQueryObject
 				continue;
 			if ($input->is('[type=checkbox]') && !$input->is('[checked]'))
 				continue;
-			// jquery diff
+			
 			if ($submit && $input->is('[type=submit]')) {
 				if ($submit instanceof DOMELEMENT && ! $input->elements[0]->isSameNode($submit))
 					continue;
@@ -276,9 +276,9 @@ class phpQueryObject
 			return;
 		print('<pre>');
 		print_r($in);
-		// file debug
+		
 //		file_put_contents(dirname(__FILE__).'/phpQuery.log', print_r($in, true)."\n", FILE_APPEND);
-		// quite handy debug trace
+		
 //		if ( is_array($in))
 //			print_r(array_slice(debug_backtrace(), 3));
 		print("</pre>\n");
@@ -309,8 +309,8 @@ class phpQueryObject
 	 * @access private
 	 */
 	protected function parseSelector($query) {
-		// clean spaces
-		// TODO include this inside parsing ?
+		
+		
 		$query = trim(
 			preg_replace('@\s+@', ' ',
 				preg_replace('@\s*(>|\\+|~)\s*@', '\\1', $query)
@@ -327,18 +327,18 @@ class phpQueryObject
 		$classChars = array('.', '-');
 		$pseudoChars = array('-');
 		$tagChars = array('*', '|', '-');
-		// split multibyte string
-		// http://code.google.com/p/phpquery/issues/detail?id=76
+		
+		
 		$_query = array();
 		for ($i=0; $i<$strlen; $i++)
 			$_query[] = mb_substr($query, $i, 1);
 		$query = $_query;
-		// it works, but i dont like it...
+		
 		$i = 0;
 		while( $i < $strlen) {
 			$c = $query[$i];
 			$tmp = '';
-			// TAG
+			
 			if ($this->isChar($c) || in_array($c, $tagChars)) {
 				while(isset($query[$i])
 					&& ($this->isChar($query[$i]) || in_array($query[$i], $tagChars))) {
@@ -346,7 +346,7 @@ class phpQueryObject
 					$i++;
 				}
 				$return[] = $tmp;
-			// IDs
+			
 			} else if ( $c == '#') {
 				$i++;
 				while( isset($query[$i]) && ($this->isChar($query[$i]) || $query[$i] == '-')) {
@@ -354,33 +354,33 @@ class phpQueryObject
 					$i++;
 				}
 				$return[] = '#'.$tmp;
-			// SPECIAL CHARS
+			
 			} else if (in_array($c, $specialChars)) {
 				$return[] = $c;
 				$i++;
-			// MAPPED SPECIAL MULTICHARS
+			
 //			} else if ( $c.$query[$i+1] == '//') {
 //				$return[] = ' ';
 //				$i = $i+2;
-			// MAPPED SPECIAL CHARS
+			
 			} else if ( isset($specialCharsMapping[$c])) {
 				$return[] = $specialCharsMapping[$c];
 				$i++;
-			// COMMA
+			
 			} else if ( $c == ',') {
 				$queries[] = array();
 				$return =& $queries[ count($queries)-1 ];
 				$i++;
 				while( isset($query[$i]) && $query[$i] == ' ')
 					$i++;
-			// CLASSES
+			
 			} else if ($c == '.') {
 				while( isset($query[$i]) && ($this->isChar($query[$i]) || in_array($query[$i], $classChars))) {
 					$tmp .= $query[$i];
 					$i++;
 				}
 				$return[] = $tmp;
-			// ~ General Sibling Selector
+			
 			} else if ($c == '~') {
 				$spaceAllowed = true;
 				$tmp .= $query[$i++];
@@ -396,7 +396,7 @@ class phpQueryObject
 					$i++;
 				}
 				$return[] = $tmp;
-			// + Adjacent sibling selectors
+			
 			} else if ($c == '+') {
 				$spaceAllowed = true;
 				$tmp .= $query[$i++];
@@ -412,7 +412,7 @@ class phpQueryObject
 					$i++;
 				}
 				$return[] = $tmp;
-			// ATTRS
+			
 			} else if ($c == '[') {
 				$stack = 1;
 				$tmp .= $c;
@@ -428,7 +428,7 @@ class phpQueryObject
 				}
 				$return[] = $tmp;
 				$i++;
-			// PSEUDO CLASSES
+			
 			} else if ($c == ':') {
 				$stack = 1;
 				$tmp .= $query[$i++];
@@ -436,7 +436,7 @@ class phpQueryObject
 					$tmp .= $query[$i];
 					$i++;
 				}
-				// with arguments ?
+				
 				if ( isset($query[$i]) && $query[$i] == '(') {
 					$tmp .= $query[$i];
 					$stack = 1;
@@ -479,7 +479,7 @@ class phpQueryObject
 		$return = isset($index)
 			? (isset($this->elements[$index]) ? $this->elements[$index] : null)
 			: $this->elements;
-		// pass thou callbacks
+		
 		$args = func_get_args();
 		$args = array_slice($args, 1);
 		foreach($args as $callback) {
@@ -510,7 +510,7 @@ class phpQueryObject
 				$return[] = $this->eq($i)->text();
 			}
 		}
-		// pass thou callbacks
+		
 		$args = func_get_args();
 		$args = array_slice($args, 1);
 		foreach($args as $callback) {
@@ -536,7 +536,7 @@ class phpQueryObject
 			for($i = 0; $i < $this->size(); $i++) {
 				$return[] = $this->eq($i)->text();
 			}
-			// pass thou callbacks
+			
 			$args = func_get_args();
 			$args = array_slice($args, 1);
 		}
@@ -556,7 +556,7 @@ class phpQueryObject
 	 */
 	public function newInstance($newStack = null) {
 		$class = get_class($this);
-		// support inheritance by passing old object to overloaded constructor
+		
 		$new = $class != 'phpQuery'
 			? new $class($this, $this->getDocumentID())
 			: new phpQueryObject($this->getDocumentID());
@@ -583,7 +583,7 @@ class phpQueryObject
 	 * @access private
 	 */
 	protected function matchClasses($class, $node) {
-		// multi-class
+		
 		if ( mb_strpos($class, '.', 1)) {
 			$classes = explode('.', substr($class, 1));
 			$classesCount = count( $classes );
@@ -599,12 +599,12 @@ class phpQueryObject
 			);
 			if (! $diff )
 				return true;
-		// single-class
+		
 		} else {
 			return in_array(
-				// strip leading dot from class name
+				
 				substr($class, 1),
-				// get classes for element as array
+				
 				explode(' ', $node->getAttribute('class') )
 			);
 		}
@@ -619,11 +619,11 @@ class phpQueryObject
 		if (! $this->elements)
 			$this->debug('Stack empty, skipping...');
 //		var_dump($this->elements[0]->nodeType);
-		// element, document
+		
 		foreach($this->stack(array(1, 9, 13)) as $k => $stackNode) {
 			$detachAfter = false;
-			// to work on detached nodes we need temporary place them somewhere
-			// thats because context xpath queries sucks ;]
+			
+			
 			$testNode = $stackNode;
 			while ($testNode) {
 				if (! $testNode->parentNode && ! $this->isRoot($testNode)) {
@@ -635,16 +635,16 @@ class phpQueryObject
 					? $testNode->parentNode
 					: null;
 			}
-			// XXX tmp ?
+			
 			$xpath = $this->documentWrapper->isXHTML
 				? $this->getNodeXpath($stackNode, 'html')
 				: $this->getNodeXpath($stackNode);
-			// FIXME pseudoclasses-only query, support XML
+			
 			$query = $XQuery == '//' && $xpath == '/html[1]'
 				? '//*'
 				: $xpath.$XQuery;
 			$this->debug("XPATH: {$query}");
-			// run query, get elements
+			
 			$nodes = $this->xpath->query($query);
 			$this->debug("QUERY FETCHED");
 			if (! $nodes->length )
@@ -658,7 +658,7 @@ class phpQueryObject
 						: null;
 					$phpQueryDebug = phpQuery::$debug;
 					phpQuery::$debug = false;
-					// TODO ??? use phpQuery::callbackRun()
+					
 					if (call_user_func_array(array($this, $compare), array($selector, $node)))
 						$matched = true;
 					phpQuery::$debug = $phpQueryDebug;
@@ -686,11 +686,11 @@ class phpQueryObject
 	 */
 	public function find($selectors, $context = null, $noHistory = false) {
 		if (!$noHistory)
-			// backup last stack /for end()/
+			
 			$this->elementsBackup = $this->elements;
-		// allow to define context
-		// TODO combine code below with phpQuery::pq() context guessing code
-		//   as generic function
+		
+		
+		
 		if ($context) {
 			if (! is_array($context) && $context instanceof DOMELEMENT)
 				$this->elements = array($context);
@@ -705,21 +705,21 @@ class phpQueryObject
 		$queries = $this->parseSelector($selectors);
 		$this->debug(array('FIND', $selectors, $queries));
 		$XQuery = '';
-		// remember stack state because of multi-queries
+		
 		$oldStack = $this->elements;
-		// here we will be keeping found elements
+		
 		$stack = array();
 		foreach($queries as $selector) {
 			$this->elements = $oldStack;
 			$delimiterBefore = false;
 			foreach($selector as $s) {
-				// TAG
+				
 				$isTag = extension_loaded('mbstring') && phpQuery::$mbstringSupport
 					? mb_ereg_match('^[\w|\||-]+$', $s) || $s == '*'
 					: preg_match('@^[\w|\||-]+$@', $s) || $s == '*';
 				if ($isTag) {
 					if ($this->isXML()) {
-						// namespace support
+						
 						if (mb_strpos($s, '|') !== false) {
 							$ns = $tag = null;
 							list($ns, $tag) = explode('|', $s);
@@ -732,32 +732,32 @@ class phpQueryObject
 					} else {
 						$XQuery .= $s;
 					}
-				// ID
+				
 				} else if ($s[0] == '#') {
 					if ($delimiterBefore)
 						$XQuery .= '*';
 					$XQuery .= "[@id='".substr($s, 1)."']";
-				// ATTRIBUTES
+				
 				} else if ($s[0] == '[') {
 					if ($delimiterBefore)
 						$XQuery .= '*';
-					// strip side brackets
+					
 					$attr = trim($s, '][');
 					$execute = false;
-					// attr with specifed value
+					
 					if (mb_strpos($s, '=')) {
 						$value = null;
 						list($attr, $value) = explode('=', $attr);
 						$value = trim($value, "'\"");
 						if ($this->isRegexp($attr)) {
-							// cut regexp character
+							
 							$attr = substr($attr, 0, -1);
 							$execute = true;
 							$XQuery .= "[@{$attr}]";
 						} else {
 							$XQuery .= "[@{$attr}='{$value}']";
 						}
-					// attr without specified value
+					
 					} else {
 						$XQuery .= "[@{$attr}]";
 					}
@@ -767,10 +767,10 @@ class phpQueryObject
 						if (! $this->length())
 							break;
 					}
-				// CLASSES
+				
 				} else if ($s[0] == '.') {
-					// TODO use return $this->find("./self::*[contains(concat(\" \",@class,\" \"), \" $class \")]");
-					// thx wizDom ;)
+					
+					
 					if ($delimiterBefore)
 						$XQuery .= '*';
 					$XQuery .= '[@class]';
@@ -778,7 +778,7 @@ class phpQueryObject
 					$XQuery = '';
 					if (! $this->length() )
 						break;
-				// ~ General Sibling Selector
+				
 				} else if ($s[0] == '~') {
 					$this->runQuery($XQuery);
 					$XQuery = '';
@@ -788,16 +788,16 @@ class phpQueryObject
 						)->elements;
 					if (! $this->length() )
 						break;
-				// + Adjacent sibling selectors
+				
 				} else if ($s[0] == '+') {
-					// TODO /following-sibling::
+					
 					$this->runQuery($XQuery);
 					$XQuery = '';
 					$subSelector = substr($s, 1);
 					$subElements = $this->elements;
 					$this->elements = array();
 					foreach($subElements as $node) {
-						// search first DOMElement sibling
+						
 						$test = $node->nextSibling;
 						while($test && ! ($test instanceof DOMELEMENT))
 							$test = $test->nextSibling;
@@ -806,9 +806,9 @@ class phpQueryObject
 					}
 					if (! $this->length() )
 						break;
-				// PSEUDO CLASSES
+				
 				} else if ($s[0] == ':') {
-					// TODO optimization for :first :last
+					
 					if ($XQuery) {
 						$this->runQuery($XQuery);
 						$XQuery = '';
@@ -818,21 +818,21 @@ class phpQueryObject
 					$this->pseudoClasses($s);
 					if (! $this->length())
 						break;
-				// DIRECT DESCENDANDS
+				
 				} else if ($s == '>') {
 					$XQuery .= '/';
 					$delimiterBefore = 2;
-				// ALL DESCENDANDS
+				
 				} else if ($s == ' ') {
 					$XQuery .= '//';
 					$delimiterBefore = 2;
-				// ERRORS
+				
 				} else {
 					phpQuery::debug("Unrecognized token '$s'");
 				}
 				$delimiterBefore = $delimiterBefore === 2;
 			}
-			// run query if any
+			
 			if ($XQuery && $XQuery != '//') {
 				$this->runQuery($XQuery);
 				$XQuery = '';
@@ -849,7 +849,7 @@ class phpQueryObject
 	 * @access private
 	 */
 	protected function pseudoClasses($class) {
-		// TODO clean args parsing ?
+		
 		$class = ltrim($class, ':');
 		$haveArgs = mb_strpos($class, '(');
 		if ($haveArgs !== false) {
@@ -911,7 +911,7 @@ class phpQueryObject
 				$this->elements = $this->not($selector)->stack();
 				break;
 			case 'slice':
-				// TODO jQuery difference ?
+				
 				$args = explode(',',
 					str_replace(', ', ',', trim($args, "\"'"))
 				);
@@ -1036,10 +1036,10 @@ class phpQueryObject
 				$param = trim($args, "\"'");
 				if (! $param)
 					break;
-					// nth-child(n+b) to nth-child(1n+b)
+					
 				if ($param[0] == 'n')
 					$param = '1'.$param;
-				// :nth-child(index/even/odd/equation)
+				
 				if ($param == 'even' || $param == 'odd')
 					$mapped = $this->map(
 						create_function('$node, $param',
@@ -1053,7 +1053,7 @@ class phpQueryObject
 						new CallbackParam(), $param
 					);
 				else if (mb_strlen($param) > 1 && $param[1] == 'n')
-					// an+b
+					
 					$mapped = $this->map(
 						create_function('$node, $param',
 							'$prevs = pq($node)->prevAll()->size();
@@ -1077,7 +1077,7 @@ class phpQueryObject
 										? $node
 										: null;
 							else
-								// negative value
+								
 								return $index <= $b
 										? $node
 										: null;
@@ -1093,7 +1093,7 @@ class phpQueryObject
 						new CallbackParam(), $param
 					);
 				else
-					// index
+					
 					$mapped = $this->map(
 						create_function('$node, $index',
 							'$prevs = pq($node)->prevAll()->size();
@@ -1115,7 +1115,7 @@ class phpQueryObject
 	 * @access private
 	 */
 	protected function __pseudoClassParam($paramsString) {
-		// TODO;
+		
 	}
 	/**
 	 * Enter description here...
@@ -1187,15 +1187,15 @@ class phpQueryObject
 			$stack = array();
 			if (! $selector)
 				break;
-			// avoid first space or /
+			
 			if (in_array($selector[0], $notSimpleSelector))
 				$selector = array_slice($selector, 1);
-			// PER NODE selector chunks
+			
 			foreach($this->stack() as $node) {
 				$break = false;
 				foreach($selector as $s) {
 					if (!($node instanceof DOMELEMENT)) {
-						// all besides DOMElement
+						
 						if ( $s[0] == '[') {
 							$attr = trim($s, '[]');
 							if ( mb_strpos($attr, '=')) {
@@ -1206,18 +1206,18 @@ class phpQueryObject
 						} else
 							$break = true;
 					} else {
-						// DOMElement only
-						// ID
+						
+						
 						if ( $s[0] == '#') {
 							if ( $node->getAttribute('id') != substr($s, 1) )
 								$break = true;
-						// CLASSES
+						
 						} else if ( $s[0] == '.') {
 							if (! $this->matchClasses( $s, $node ) )
 								$break = true;
-						// ATTRS
+						
 						} else if ( $s[0] == '[') {
-							// strip side brackets
+							
 							$attr = trim($s, '[]');
 							if (mb_strpos($attr, '=')) {
 								list($attr, $val) = explode('=', $attr);
@@ -1229,10 +1229,10 @@ class phpQueryObject
 									$val = extension_loaded('mbstring') && phpQuery::$mbstringSupport
 										? quotemeta(trim($val, '"\''))
 										: preg_quote(trim($val, '"\''), '@');
-									// switch last character
+									
 									switch( substr($attr, -1)) {
-										// quotemeta used insted of preg_quote
-										// http://code.google.com/p/phpquery/issues/detail?id=76
+										
+										
 										case '^':
 											$pattern = '^'.$val;
 											break;
@@ -1243,7 +1243,7 @@ class phpQueryObject
 											$pattern = '.*'.$val.'$';
 											break;
 									}
-									// cut last character
+									
 									$attr = substr($attr, 0, -1);
 									$isMatch = extension_loaded('mbstring') && phpQuery::$mbstringSupport
 										? mb_ereg_match($pattern, $node->getAttribute($attr))
@@ -1254,20 +1254,20 @@ class phpQueryObject
 									$break = true;
 							} else if (! $node->hasAttribute($attr))
 								$break = true;
-						// PSEUDO CLASSES
+						
 						} else if ( $s[0] == ':') {
-							// skip
-						// TAG
+							
+						
 						} else if (trim($s)) {
 							if ($s != '*') {
-								// TODO namespaces
+								
 								if (isset($node->tagName)) {
 									if ($node->tagName != $s)
 										$break = true;
 								} else if ($s == 'html' && ! $this->isRoot($node))
 									$break = true;
 							}
-						// AVOID NON-SIMPLE SELECTORS
+						
 						} else if (in_array($s, $notSimpleSelector)) {
 							$break = true;
 							$this->debug(array('Skipping non simple selector', $selector));
@@ -1276,20 +1276,20 @@ class phpQueryObject
 					if ($break)
 						break;
 				}
-				// if element passed all chunks of selector - add it to new stack
+				
 				if (! $break )
 					$stack[] = $node;
 			}
 			$tmpStack = $this->elements;
 			$this->elements = $stack;
-			// PER ALL NODES selector chunks
+			
 			foreach($selector as $s)
-				// PSEUDO CLASSES
+				
 				if ($s[0] == ':')
 					$this->pseudoClasses($s);
 			foreach($this->elements as $node)
-				// XXX it should be merged without duplicates
-				// but jQuery doesnt do that
+				
+				
 				$finalStack[] = $node;
 			$this->elements = $tmpStack;
 		}
@@ -1332,7 +1332,7 @@ class phpQueryObject
 				preg_match('@^([^ ]+) (.*)$@', $url, $matches);
 			$url = $matches[1];
 			$selector = $matches[2];
-			// FIXME this sucks, pass as callback param
+			
 			$this->_loadSelector = $selector;
 		}
 		$ajax = array(
@@ -1367,7 +1367,7 @@ class phpQueryObject
 	 * @todo
 	 */
 	public function css() {
-		// TODO
+		
 		return $this;
 	}
 	/**
@@ -1375,7 +1375,7 @@ class phpQueryObject
 	 *
 	 */
 	public function show(){
-		// TODO
+		
 		return $this;
 	}
 	/**
@@ -1383,7 +1383,7 @@ class phpQueryObject
 	 *
 	 */
 	public function hide(){
-		// TODO
+		
 		return $this;
 	}
 	/**
@@ -1408,7 +1408,7 @@ class phpQueryObject
 	 * @TODO
 	 */
 	public function triggerHandler($type, $data = array()) {
-		// TODO;
+		
 	}
 	/**
 	 * Binds a handler to one or more events (like click) for each matched element.
@@ -1422,7 +1422,7 @@ class phpQueryObject
 	 * @TODO support more than event in $type (space-separated)
 	 */
 	public function bind($type, $data, $callback = null) {
-		// TODO check if $data is callable, not using is_callable
+		
 		if (! isset($callback)) {
 			$callback = $data;
 			$data = null;
@@ -1590,7 +1590,7 @@ class phpQueryObject
 	public function contents() {
 		$stack = array();
 		foreach($this->stack(1) as $el) {
-			// FIXME (fixed) http://code.google.com/p/phpquery/issues/detail?id=56
+			
 //			if (! isset($el->childNodes))
 //				continue;
 			foreach($el->childNodes as $node) {
@@ -1611,7 +1611,7 @@ class phpQueryObject
 			if (! $node->parentNode )
 				continue;
 			$childNodes = array();
-			// any modification in DOM tree breaks childNodes iteration, so cache them first
+			
 			foreach($node->childNodes as $chNode )
 				$childNodes[] = $chNode;
 			foreach($childNodes as $chNode )
@@ -1749,7 +1749,7 @@ class phpQueryObject
 			if (isset($node->tagName))
 				$this->debug("Removing '{$node->tagName}'");
 			$node->parentNode->removeChild($node);
-			// Mutation event
+			
 			$event = new DOMEvent(array(
 				'target' => $node,
 				'type' => 'DOMNodeRemoved'
@@ -1807,11 +1807,11 @@ class phpQueryObject
 	 */
 	public function html($html = null, $callback1 = null, $callback2 = null, $callback3 = null) {
 		if (isset($html)) {
-			// INSERT
+			
 			$nodes = $this->documentWrapper->import($html);
 			$this->empty();
 			foreach($this->stack(1) as $alreadyAdded => $node) {
-				// for now, limit events for textarea
+				
 				if (($this->isXHTML() || $this->isHTML()) && $node->tagName == 'textarea')
 					$oldHtml = pq($node, $this->getDocumentID())->markup();
 				foreach($nodes as $newNode) {
@@ -1820,13 +1820,13 @@ class phpQueryObject
 						: $newNode
 					);
 				}
-				// for now, limit events for textarea
+				
 				if (($this->isXHTML() || $this->isHTML()) && $node->tagName == 'textarea')
 					$this->markupEvents($html, $oldHtml, $node);
 			}
 			return $this;
 		} else {
-			// FETCH
+			
 			$return = $this->documentWrapper->markup($this->elements, true);
 			$args = func_get_args();
 			foreach(array_slice($args, 1) as $callback) {
@@ -1850,7 +1850,7 @@ class phpQueryObject
 	 */
 	public function htmlOuter($callback1 = null, $callback2 = null, $callback3 = null) {
 		$markup = $this->documentWrapper->markup($this->elements);
-		// pass thou callbacks
+		
 		$args = func_get_args();
 		foreach($args as $callback) {
 			$markup = phpQuery::callbackRun($callback, array($markup));
@@ -2047,76 +2047,76 @@ class phpQueryObject
 			case 'string':
 				$insertFrom = $insertTo = array();
 				if ($to) {
-					// INSERT TO
+					
 					$insertFrom = $this->elements;
 					if (phpQuery::isMarkup($target)) {
-						// $target is new markup, import it
+						
 						$insertTo = $this->documentWrapper->import($target);
-					// insert into selected element
+					
 					} else {
-						// $tagret is a selector
+						
 						$thisStack = $this->elements;
 						$this->toRoot();
 						$insertTo = $this->find($target)->elements;
 						$this->elements = $thisStack;
 					}
 				} else {
-					// INSERT FROM
+					
 					$insertTo = $this->elements;
 					$insertFrom = $this->documentWrapper->import($target);
 				}
 				break;
 			case 'object':
 				$insertFrom = $insertTo = array();
-				// phpQuery
+				
 				if ($target instanceof self) {
 					if ($to) {
 						$insertTo = $target->elements;
 						if ($this->documentFragment && $this->stackIsRoot())
-							// get all body children
+							
 //							$loop = $this->find('body > *')->elements;
-							// TODO test it, test it hard...
+							
 //							$loop = $this->newInstance($this->root)->find('> *')->elements;
 							$loop = $this->root->childNodes;
 						else
 							$loop = $this->elements;
-						// import nodes if needed
+						
 						$insertFrom = $this->getDocumentID() == $target->getDocumentID()
 							? $loop
 							: $target->documentWrapper->import($loop);
 					} else {
 						$insertTo = $this->elements;
 						if ( $target->documentFragment && $target->stackIsRoot() )
-							// get all body children
+							
 //							$loop = $target->find('body > *')->elements;
 							$loop = $target->root->childNodes;
 						else
 							$loop = $target->elements;
-						// import nodes if needed
+						
 						$insertFrom = $this->getDocumentID() == $target->getDocumentID()
 							? $loop
 							: $this->documentWrapper->import($loop);
 					}
-				// DOMNODE
+				
 				} elseif ($target instanceof DOMNODE) {
-					// import node if needed
+					
 //					if ( $target->ownerDocument != $this->DOM )
 //						$target = $this->DOM->importNode($target, true);
 					if ( $to) {
 						$insertTo = array($target);
 						if ($this->documentFragment && $this->stackIsRoot())
-							// get all body children
+							
 							$loop = $this->root->childNodes;
 //							$loop = $this->find('body > *')->elements;
 						else
 							$loop = $this->elements;
 						foreach($loop as $fromNode)
-							// import nodes if needed
+							
 							$insertFrom[] = ! $fromNode->ownerDocument->isSameNode($target->ownerDocument)
 								? $target->ownerDocument->importNode($fromNode, true)
 								: $fromNode;
 					} else {
-						// import node if needed
+						
 						if (! $target->ownerDocument->isSameNode($this->document))
 							$target = $this->document->importNode($target, true);
 						$insertTo = $this->elements;
@@ -2127,7 +2127,7 @@ class phpQueryObject
 		}
 		phpQuery::debug("From ".count($insertFrom)."; To ".count($insertTo)." nodes");
 		foreach($insertTo as $insertNumber => $toNode) {
-			// we need static relative elements in some cases
+			
 			switch( $type) {
 				case 'prependTo':
 				case 'prepend':
@@ -2139,7 +2139,7 @@ class phpQueryObject
 					break;
 			}
 			foreach($insertFrom as $fromNode) {
-				// clone if inserted already before
+				
 				$insert = $insertNumber
 					? $fromNode->cloneNode(true)
 					: $fromNode;
@@ -2181,7 +2181,7 @@ class phpQueryObject
 							);
 						break;
 				}
-				// Mutation event
+				
 				$event = new DOMEvent(array(
 					'target' => $insert,
 					'type' => 'DOMNodeInserted'
@@ -2320,7 +2320,7 @@ class phpQueryObject
 				array($realClass, $method),
 				$args
 			);
-			// XXX deprecate ?
+			
 			return is_null($return)
 				? $this
 				: $return;
@@ -2456,7 +2456,7 @@ class phpQueryObject
 			$orgStack = $this->stack();
 			$matched = $this->filter($selector, true)->stack();
 //			$matched = array();
-//			// simulate OR in filter() instead of AND 5y
+//			
 //			foreach($this->parseSelector($selector) as $s) {
 //				$matched = array_merge($matched,
 //					$this->filter(array($s))->stack()
@@ -2567,13 +2567,13 @@ class phpQueryObject
 		}
 		return $return;
 	}
-	// TODO phpdoc; $oldAttr is result of hasAttribute, before any changes
+	
 	protected function attrEvents($attr, $oldAttr, $oldValue, $node) {
-		// skip events for XML documents
+		
 		if (! $this->isXHTML() && ! $this->isHTML())
 			return;
 		$event = null;
-		// identify
+		
 		$isInputValue = $node->tagName == 'input'
 			&& (
 				in_array($node->getAttribute('type'),
@@ -2591,9 +2591,9 @@ class phpQueryObject
 				'type' => 'change'
 			));
 		} else if (($isRadio || $isCheckbox) && $attr == 'checked' && (
-				// check
+				
 				(! $oldAttr && $node->hasAttribute($attr))
-				// un-check
+				
 				|| (! $node->hasAttribute($attr) && $oldAttr)
 			)) {
 			$event = new DOMEvent(array(
@@ -2601,9 +2601,9 @@ class phpQueryObject
 				'type' => 'change'
 			));
 		} else if ($isOption && $node->parentNode && $attr == 'selected' && (
-				// select
+				
 				(! $oldAttr && $node->hasAttribute($attr))
-				// un-select
+				
 				|| (! $node->hasAttribute($attr) && $oldAttr)
 			)) {
 			$event = new DOMEvent(array(
@@ -2626,13 +2626,13 @@ class phpQueryObject
 				foreach($loop as $a) {
 					$oldValue = $node->getAttribute($a);
 					$oldAttr = $node->hasAttribute($a);
-					// TODO raises an error when charset other than UTF-8
-					// while document's charset is also not UTF-8
+					
+					
 					@$node->setAttribute($a, $value);
 					$this->attrEvents($a, $oldAttr, $oldValue, $node);
 				}
 			} else if ($attr == '*') {
-				// jQuery difference
+				
 				$return = array();
 				foreach($node->attributes as $n => $v)
 					$return[$n] = $v->value;
@@ -2679,8 +2679,8 @@ class phpQueryObject
 	public function attrPHP($attr, $code) {
 		if (! is_null($code)) {
 			$value = '<'.'?php '.$code.' ?'.'>';
-			// TODO tempolary solution
-			// http://code.google.com/p/phpquery/issues/detail?id=17
+			
+			
 //			if (function_exists('mb_detect_encoding') && mb_detect_encoding($value) == 'ASCII')
 //				$value	= mb_convert_encoding($value, 'UTF-8', 'HTML-ENTITIES');
 		}
@@ -2691,7 +2691,7 @@ class phpQueryObject
 //				$attrNode->value = $value;
 //				$node->appendChild($attrNode);
 			} else if ( $attr == '*') {
-				// jQuery diff
+				
 				$return = array();
 				foreach($node->attributes as $n => $v)
 					$return[$n] = $v->value;
@@ -2759,8 +2759,8 @@ class phpQueryObject
 					foreach($node['option']->stack(1) as $option) {
 						$option = pq($option, $this->getDocumentID());
 						$selected = false;
-						// XXX: workaround for string comparsion, see issue #96
-						// http://code.google.com/p/phpquery/issues/detail?id=96
+						
+						
 						$selected = is_null($option->attr('value'))
 							? in_array($option->markup(), $_val)
 							: in_array($option->attr('value'), $_val);
@@ -2891,7 +2891,7 @@ class phpQueryObject
 	 */
 	public function _empty() {
 		foreach($this->stack(1) as $node) {
-			// thx to 'dave at dgx dot cz'
+			
 			$node->nodeValue = '';
 		}
 		return $this;
@@ -2955,8 +2955,8 @@ class phpQueryObject
 	 */
 	public function data($key, $value = null) {
 		if (! isset($value)) {
-			// TODO? implement specific jQuery behavior od returning parent values
-			// is child which we look up doesn't exist
+			
+			
 			return phpQuery::data($this->get(0), $key, $value, $this->getDocumentID());
 		} else {
 			foreach($this as $node)
@@ -2974,9 +2974,9 @@ class phpQueryObject
 			phpQuery::removeData($node, $key, $this->getDocumentID());
 		return $this;
 	}
-	// INTERFACE IMPLEMENTATIONS
+	
 
-	// ITERATOR INTERFACE
+	
 	/**
    * @access private
 	 */
@@ -2987,9 +2987,9 @@ class phpQueryObject
 		$this->elementsInterator = $this->elements;
 		$this->valid = isset( $this->elements[0] )
 			? 1 : 0;
-// 		$this->elements = $this->valid
-// 			? array($this->elements[0])
-// 			: array();
+
+
+
 		$this->current = 0;
 	}
 	/**
@@ -3035,8 +3035,8 @@ class phpQueryObject
 	public function valid(){
 		return $this->valid;
 	}
-	// ITERATOR INTERFACE END
-	// ARRAYACCESS INTERFACE
+	
+	
 	/**
    * @access private
 	 */
@@ -3060,10 +3060,10 @@ class phpQueryObject
    * @access private
 	 */
 	public function offsetUnset($offset) {
-		// empty
+		
 		throw new Exception("Can't do unset, use array interface only for calling queries and replacing HTML.");
 	}
-	// ARRAYACCESS INTERFACE END
+	
 	/**
 	 * Returns node's XPath.
 	 *
@@ -3106,7 +3106,7 @@ class phpQueryObject
 			? $return[0]
 			: $return;
 	}
-	// HELPERS
+	
 	public function whois($oneNode = null) {
 		$return = array();
 		$loop = $oneNode

@@ -1,13 +1,13 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2013-present http://www.thinkcmf.com All rights reserved.
-// +----------------------------------------------------------------------
-// | Author: 小夏 < 449134904@qq.com>
-// | Date: 2019/01/11
-// | Time:下午 03:24
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 
 namespace api\user\controller;
 
@@ -19,12 +19,7 @@ use think\Validate;
 class FavoritesController extends RestBaseController
 {
 
-    /**
-     * 我的显示收藏列表
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
-     */
+    
     public function getFavorites()
     {
         $userId = $this->getUserId();
@@ -46,15 +41,13 @@ class FavoritesController extends RestBaseController
         $this->success('请求成功', $response);
     }
 
-    /**
-     * 添加收藏
-     */
+    
     public function setFavorites()
     {
         $data   = $this->request->param();
         $result = $this->validate($data, 'UserFavorite');
         if (true !== $result) {
-            // 验证失败 输出错误信息
+            
             $this->error($result);
         }
 
@@ -76,10 +69,7 @@ class FavoritesController extends RestBaseController
 
     }
 
-    /**
-     * 取消收藏
-     * @throws \Exception
-     */
+    
     public function unsetFavorites()
     {
         $id     = $this->request->param('id', 0, 'intval');
@@ -98,12 +88,7 @@ class FavoritesController extends RestBaseController
 
     }
 
-    /**
-     * 判断是否已经收藏
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
-     */
+    
     public function hasFavorite()
     {
         $input = $this->request->param();

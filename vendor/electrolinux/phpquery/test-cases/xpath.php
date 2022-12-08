@@ -1,5 +1,5 @@
 <?php
-// here you can directly run xpath queries to debug your tests
+
 $Query = "//*[local-name()='p']";
 
 $DOM = new DOMDocument();

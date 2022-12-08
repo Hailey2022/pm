@@ -3,19 +3,13 @@
 class HTMLPurifier_HTMLModule_Tidy_Proprietary extends HTMLPurifier_HTMLModule_Tidy
 {
 
-    /**
-     * @type string
-     */
+    
     public $name = 'Tidy_Proprietary';
 
-    /**
-     * @type string
-     */
+    
     public $defaultLevel = 'light';
 
-    /**
-     * @return array
-     */
+    
     public function makeFixes()
     {
         $r = array();
@@ -31,4 +25,4 @@ class HTMLPurifier_HTMLModule_Tidy_Proprietary extends HTMLPurifier_HTMLModule_T
     }
 }
 
-// vim: et sw=4 sts=4
+

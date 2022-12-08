@@ -1,23 +1,20 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkPHP [ WE CAN DO IT JUST THINK ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2006~2018 http://thinkphp.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: liu21st <liu21st@gmail.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 
 namespace think\cache\driver;
 
 use think\cache\Driver;
 use think\Container;
 
-/**
- * 文件类型缓存类
- * @author    liu21st <liu21st@gmail.com>
- */
+
 class File extends Driver
 {
     protected $options = [
@@ -32,10 +29,7 @@ class File extends Driver
 
     protected $expire;
 
-    /**
-     * 架构函数
-     * @param array $options
-     */
+    
     public function __construct($options = [])
     {
         if (!empty($options)) {
@@ -51,14 +45,10 @@ class File extends Driver
         $this->init();
     }
 
-    /**
-     * 初始化检查
-     * @access private
-     * @return boolean
-     */
+    
     private function init()
     {
-        // 创建项目缓存目录
+        
         try {
             if (!is_dir($this->options['path']) && mkdir($this->options['path'], 0755, true)) {
                 return true;
@@ -69,19 +59,13 @@ class File extends Driver
         return false;
     }
 
-    /**
-     * 取得变量的存储文件名
-     * @access protected
-     * @param  string $name 缓存变量名
-     * @param  bool   $auto 是否自动创建目录
-     * @return string
-     */
+    
     protected function getCacheKey($name, $auto = false)
     {
         $name = hash($this->options['hash_type'], $name);
 
         if ($this->options['cache_subdir']) {
-            // 使用子目录
+            
             $name = substr($name, 0, 2) . DIRECTORY_SEPARATOR . substr($name, 2);
         }
 
@@ -102,24 +86,13 @@ class File extends Driver
         return $filename;
     }
 
-    /**
-     * 判断缓存是否存在
-     * @access public
-     * @param  string $name 缓存变量名
-     * @return bool
-     */
+    
     public function has($name)
     {
         return false !== $this->get($name) ? true : false;
     }
 
-    /**
-     * 读取缓存
-     * @access public
-     * @param  string $name 缓存变量名
-     * @param  mixed  $default 默认值
-     * @return mixed
-     */
+    
     public function get($name, $default = false)
     {
         $this->readTimes++;
@@ -154,14 +127,7 @@ class File extends Driver
         }
     }
 
-    /**
-     * 写入缓存
-     * @access public
-     * @param  string        $name 缓存变量名
-     * @param  mixed         $value  存储数据
-     * @param  int|\DateTime $expire  有效时间 0为永久
-     * @return boolean
-     */
+    
     public function set($name, $value, $expire = null)
     {
         $this->writeTimes++;
@@ -196,13 +162,7 @@ class File extends Driver
         }
     }
 
-    /**
-     * 自增缓存（针对数值缓存）
-     * @access public
-     * @param  string    $name 缓存变量名
-     * @param  int       $step 步长
-     * @return false|int
-     */
+    
     public function inc($name, $step = 1)
     {
         if ($this->has($name)) {
@@ -216,13 +176,7 @@ class File extends Driver
         return $this->set($name, $value, $expire) ? $value : false;
     }
 
-    /**
-     * 自减缓存（针对数值缓存）
-     * @access public
-     * @param  string    $name 缓存变量名
-     * @param  int       $step 步长
-     * @return false|int
-     */
+    
     public function dec($name, $step = 1)
     {
         if ($this->has($name)) {
@@ -236,12 +190,7 @@ class File extends Driver
         return $this->set($name, $value, $expire) ? $value : false;
     }
 
-    /**
-     * 删除缓存
-     * @access public
-     * @param  string $name 缓存变量名
-     * @return boolean
-     */
+    
     public function rm($name)
     {
         $this->writeTimes++;
@@ -252,16 +201,11 @@ class File extends Driver
         }
     }
 
-    /**
-     * 清除缓存
-     * @access public
-     * @param  string $tag 标签名
-     * @return boolean
-     */
+    
     public function clear($tag = null)
     {
         if ($tag) {
-            // 指定标签清除
+            
             $keys = $this->getTagItem($tag);
             foreach ($keys as $key) {
                 $this->unlink($key);
@@ -291,14 +235,7 @@ class File extends Driver
         return true;
     }
 
-    /**
-     * 判断文件是否存在后，删除
-     * @access private
-     * @param  string $path
-     * @return bool
-     * @author byron sampson <xiaobo.sun@qq.com>
-     * @return boolean
-     */
+    
     private function unlink($path)
     {
         return is_file($path) && unlink($path);

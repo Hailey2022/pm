@@ -1,13 +1,5 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2013-present http://www.thinkcmf.com All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: 老猫 <thinkcmf@126.com>
-// +----------------------------------------------------------------------
+
 
 namespace app\admin\logic;
 
@@ -20,9 +12,7 @@ use think\facade\Cache;
 
 class PluginLogic
 {
-    /**
-     * 安装应用
-     */
+    
     public static function install($pluginName)
     {
         $class = cmf_get_plugin_class($pluginName);
@@ -78,7 +68,7 @@ class PluginLogic
         self::getActions($pluginName);
 
         Cache::clear('init_hook_plugins');
-        Cache::clear('admin_menus');// 删除后台菜单缓存
+        Cache::clear('admin_menus');
 
         return true;
     }
@@ -153,7 +143,7 @@ class PluginLogic
         self::getActions($pluginName);
 
         Cache::clear('init_hook_plugins');
-        Cache::clear('admin_menus');// 删除后台菜单缓存
+        Cache::clear('admin_menus');
 
         return true;
     }
@@ -266,7 +256,7 @@ class PluginLogic
 
                             $menuName = $name;
 
-//                            array_push($newMenus, $app . "/$controllerName/$action 已导入");
+
 
                         } else {
 
@@ -287,7 +277,7 @@ class PluginLogic
                                 ]);
                                 $menuName = $name;
                             } else {
-                                // 只关注菜单层级关系,是否有视图
+                                
                                 AdminMenuModel::where([
                                     'app'        => $app,
                                     'controller' => $controllerName,
@@ -299,7 +289,7 @@ class PluginLogic
                                 $menuName = $findAdminMenu['name'];
                             }
 
-//                            array_push($newMenus, $app."/$controllerName/$action 层级关系已更新");
+
                         }
 
                         $authRuleName      = "plugin/{$pluginName}/{$controllerName}/{$action}";
@@ -443,7 +433,7 @@ class PluginLogic
                                         ]);
                                         $menuName = $name;
                                     } else {
-                                        // 只关注是否有视图
+                                        
                                         AdminMenuModel::where([
                                             'app'        => $app,
                                             'controller' => $controllerName,
@@ -456,7 +446,7 @@ class PluginLogic
                                     }
 
 
-//                                    array_push($newMenus, "$app/$controllerName/$action 已更新");
+
                                 }
 
                                 $authRuleName      = "plugin/{$pluginName}/{$controllerName}/{$action}";

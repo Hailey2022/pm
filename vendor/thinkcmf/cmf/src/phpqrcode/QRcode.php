@@ -1,77 +1,18 @@
 <?php
 
 namespace cmf\phpqrcode;
-/*
- * PHP QR Code encoder
- *
- * This file contains MERGED version of PHP QR Code library.
- * It was auto-generated from full version for your convenience.
- *
- * This merged version was configured to not require any external files,
- * with disabled cache, error logging and weaker but faster mask matching.
- * If you need tune it up please use non-merged version.
- *
- * For full version, documentation, examples of use please visit:
- *
- *    http://phpqrcode.sourceforge.net/
- *    https://sourceforge.net/projects/phpqrcode/
- *    https://github.com/t0k4rt/phpqrcode
- *
- * PHP QR Code is distributed under LGPL 3
- * Copyright (C) 2010 Dominik Dzienia <deltalab at poczta dot fm>
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 3 of the License, or any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
- */
 
 
-/*
- * Version: 1.1.4
- * Build: 2010100721
- */
+
+
 
 
 //---- qrconst.php -----------------------------
 
 
-/*
- * PHP QR Code encoder
- *
- * Common constants
- *
- * Based on libqrencode C library distributed under LGPL 2.1
- * Copyright (C) 2006, 2007, 2008, 2009 Kentaro Fukuchi <fukuchi@megaui.net>
- *
- * PHP QR Code is distributed under LGPL 3
- * Copyright (C) 2010 Dominik Dzienia <deltalab at poczta dot fm>
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 3 of the License, or any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
- */
 
-// Encoding modes
+
+
 
 define('QR_MODE_NUL', -1);
 define('QR_MODE_NUM', 0);
@@ -80,14 +21,14 @@ define('QR_MODE_8', 2);
 define('QR_MODE_KANJI', 3);
 define('QR_MODE_STRUCTURE', 4);
 
-// Levels of error correction.
+
 
 define('QR_ECLEVEL_L', 0);
 define('QR_ECLEVEL_M', 1);
 define('QR_ECLEVEL_Q', 2);
 define('QR_ECLEVEL_H', 3);
 
-// Supported output formats
+
 
 define('QR_FORMAT_TEXT', 0);
 define('QR_FORMAT_PNG', 1);
@@ -104,48 +45,23 @@ class qrstr
 //---- merged_config.php -----------------------------
 
 
-/*
- * PHP QR Code encoder
- *
- * Config file, tuned-up for merged verion
- */
 
-define('QR_CACHEABLE', false);       // use cache - more disk reads but less CPU power, masks and format templates are stored there
-define('QR_CACHE_DIR', false);       // used when QR_CACHEABLE === true
-define('QR_LOG_DIR', false);         // default error logs dir
 
-define('QR_FIND_BEST_MASK', true);                                                          // if true, estimates best mask (spec. default, but extremally slow; set to false to significant performance boost but (propably) worst quality code
-define('QR_FIND_FROM_RANDOM', 2);                                                       // if false, checks all masks available, otherwise value tells count of masks need to be checked, mask id are got randomly
-define('QR_DEFAULT_MASK', 2);                                                               // when QR_FIND_BEST_MASK === false
+define('QR_CACHEABLE', false);       
+define('QR_CACHE_DIR', false);       
+define('QR_LOG_DIR', false);         
 
-define('QR_PNG_MAXIMUM_SIZE', 1024);                                                       // maximum allowed png image width (in pixels), tune to make sure GD and PHP can handle such big images
+define('QR_FIND_BEST_MASK', true);                                                          
+define('QR_FIND_FROM_RANDOM', 2);                                                       
+define('QR_DEFAULT_MASK', 2);                                                               
+
+define('QR_PNG_MAXIMUM_SIZE', 1024);                                                       
 
 
 //---- qrtools.php -----------------------------
 
 
-/*
- * PHP QR Code encoder
- *
- * Toolset, handy and debug utilites.
- *
- * PHP QR Code is distributed under LGPL 3
- * Copyright (C) 2010 Dominik Dzienia <deltalab at poczta dot fm>
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 3 of the License, or any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
- */
+
 
 class QRtools
 {
@@ -313,37 +229,7 @@ QRtools::markTime('start');
 //---- qrspec.php -----------------------------
 
 
-/*
- * PHP QR Code encoder
- *
- * QR Code specifications
- *
- * Based on libqrencode C library distributed under LGPL 2.1
- * Copyright (C) 2006, 2007, 2008, 2009 Kentaro Fukuchi <fukuchi@megaui.net>
- *
- * PHP QR Code is distributed under LGPL 3
- * Copyright (C) 2010 Dominik Dzienia <deltalab at poczta dot fm>
- *
- * The following data / specifications are taken from
- * "Two dimensional symbol -- QR-code -- Basic Specification" (JIS X0510:2004)
- *  or
- * "Automatic identification and data capture techniques --
- *  QR Code 2005 bar code symbology specification" (ISO/IEC 18004:2006)
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 3 of the License, or any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
- */
+
 
 define('QRSPEC_VERSION_MAX', 40);
 define('QRSPEC_WIDTH_MAX', 177);
@@ -358,11 +244,11 @@ class QRspec
 
     public static $capacity = [
         [0, 0, 0, [0, 0, 0, 0]],
-        [21, 26, 0, [7, 10, 13, 17]], // 1
+        [21, 26, 0, [7, 10, 13, 17]], 
         [25, 44, 7, [10, 16, 22, 28]],
         [29, 70, 7, [15, 26, 36, 44]],
         [33, 100, 7, [20, 36, 52, 64]],
-        [37, 134, 7, [26, 48, 72, 88]], // 5
+        [37, 134, 7, [26, 48, 72, 88]], 
         [41, 172, 7, [36, 64, 96, 112]],
         [45, 196, 0, [40, 72, 108, 130]],
         [49, 242, 0, [48, 88, 132, 156]],
@@ -481,23 +367,23 @@ class QRspec
         $words = (1 << $bits) - 1;
 
         if ($mode == QR_MODE_KANJI) {
-            $words *= 2; // the number of bytes is required
+            $words *= 2; 
         }
 
         return $words;
     }
 
-    // Error correction code -----------------------------------------------
-    // Table of the error correction code (Reed-Solomon block)
-    // See Table 12-16 (pp.30-36), JIS X0510:2004.
+    
+    
+    
 
     public static $eccTable = [
         [[0, 0], [0, 0], [0, 0], [0, 0]],
-        [[1, 0], [1, 0], [1, 0], [1, 0]], // 1
+        [[1, 0], [1, 0], [1, 0], [1, 0]], 
         [[1, 0], [1, 0], [1, 0], [1, 0]],
         [[1, 0], [1, 0], [2, 0], [2, 0]],
         [[1, 0], [2, 0], [2, 0], [4, 0]],
-        [[1, 0], [2, 0], [2, 2], [2, 2]], // 5
+        [[1, 0], [2, 0], [2, 2], [2, 2]], 
         [[2, 0], [4, 0], [4, 0], [4, 0]],
         [[2, 0], [4, 0], [2, 4], [4, 1]],
         [[2, 0], [2, 2], [4, 2], [4, 2]],
@@ -536,7 +422,7 @@ class QRspec
     ];
 
     //----------------------------------------------------------------------
-    // CACHEABLE!!!
+    
 
     public static function getEccSpec($version, $level, array &$spec)
     {
@@ -564,19 +450,19 @@ class QRspec
         }
     }
 
-    // Alignment pattern ---------------------------------------------------
+    
 
-    // Positions of alignment patterns.
-    // This array includes only the second and the third position of the
-    // alignment patterns. Rest of them can be calculated from the distance
-    // between them.
+    
+    
+    
+    
 
-    // See Table 1 in Appendix E (pp.71) of JIS X0510:2004.
+    
 
     public static $alignmentPattern = [
         [0, 0],
-        [0, 0], [18, 0], [22, 0], [26, 0], [30, 0], // 1- 5
-        [34, 0], [22, 38], [24, 42], [26, 46], [28, 50], // 6-10
+        [0, 0], [18, 0], [22, 0], [26, 0], [30, 0], 
+        [34, 0], [22, 38], [24, 42], [26, 46], [28, 50], 
         [30, 54], [32, 58], [34, 62], [26, 46], [26, 48], //11-15
         [26, 50], [30, 54], [30, 56], [30, 58], [34, 62], //16-20
         [28, 50], [26, 50], [30, 54], [28, 54], [32, 58], //21-25
@@ -586,12 +472,7 @@ class QRspec
     ];
 
 
-    /** --------------------------------------------------------------------
-     * Put an alignment marker.
-     * @param frame
-     * @param width
-     * @param ox,oy center coordinate of the pattern
-     */
+    
     public static function putAlignmentMarker(array &$frame, $ox, $oy)
     {
         $finder = [
@@ -648,12 +529,12 @@ class QRspec
         }
     }
 
-    // Version information pattern -----------------------------------------
+    
 
-    // Version information pattern (BCH coded).
-    // See Table 1 in Appendix D (pp.68) of JIS X0510:2004.
+    
+    
 
-    // size: [QRSPEC_VERSION_MAX - 6]
+    
 
     public static $versionPattern = [
         0x07c94, 0x085bc, 0x09a99, 0x0a4d3, 0x0bbf6, 0x0c762, 0x0d847, 0x0e60d,
@@ -672,8 +553,8 @@ class QRspec
         return self::$versionPattern[$version - 7];
     }
 
-    // Format information --------------------------------------------------
-    // See calcFormatInfo in tests/test_qrspec.c (orginal qrencode c lib)
+    
+    
 
     public static $formatInfo = [
         [0x77c4, 0x72f3, 0x7daa, 0x789d, 0x662f, 0x6318, 0x6c41, 0x6976],
@@ -693,17 +574,12 @@ class QRspec
         return self::$formatInfo[$level][$mask];
     }
 
-    // Frame ---------------------------------------------------------------
-    // Cache of initial frames.
+    
+    
 
     public static $frames = [];
 
-    /** --------------------------------------------------------------------
-     * Put a finder pattern.
-     * @param frame
-     * @param width
-     * @param ox,oy upper-left coordinate of the pattern
-     */
+    
     public static function putFinderPattern(&$frame, $ox, $oy)
     {
         $finder = [
@@ -728,12 +604,12 @@ class QRspec
         $frameLine = str_repeat("\0", $width);
         $frame     = array_fill(0, $width, $frameLine);
 
-        // Finder pattern
+        
         self::putFinderPattern($frame, 0, 0);
         self::putFinderPattern($frame, $width - 7, 0);
         self::putFinderPattern($frame, 0, $width - 7);
 
-        // Separator
+        
         $yOffset = $width - 7;
 
         for ($y = 0; $y < 7; $y++) {
@@ -749,7 +625,7 @@ class QRspec
         QRstr::set($frame, $width - 8, 7, $setPattern);
         QRstr::set($frame, 0, $width - 8, $setPattern);
 
-        // Format info
+        
         $setPattern = str_repeat("\x84", 9);
         QRstr::set($frame, 0, 8, $setPattern);
         QRstr::set($frame, $width - 8, 8, $setPattern, 8);
@@ -761,17 +637,17 @@ class QRspec
             $frame[$yOffset][8] = "\x84";
         }
 
-        // Timing pattern
+        
 
         for ($i = 1; $i < $width - 15; $i++) {
             $frame[6][7 + $i] = chr(0x90 | ($i & 1));
             $frame[7 + $i][6] = chr(0x90 | ($i & 1));
         }
 
-        // Alignment pattern
+        
         self::putAlignmentPattern($version, $frame, $width);
 
-        // Version information
+        
         if ($version >= 7) {
             $vinf = self::getVersionPattern($version);
 
@@ -793,7 +669,7 @@ class QRspec
             }
         }
 
-        // and a little bit...
+        
         $frame[$width - 8][8] = "\x81";
 
         return $frame;
@@ -964,28 +840,7 @@ class QRspec
 //---- qrimage.php -----------------------------
 
 
-/*
- * PHP QR Code encoder
- *
- * Image output of code using GD2
- *
- * PHP QR Code is distributed under LGPL 3
- * Copyright (C) 2010 Dominik Dzienia <deltalab at poczta dot fm>
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 3 of the License, or any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
- */
+
 
 define('QR_IMAGE', true);
 
@@ -1039,12 +894,12 @@ class QRimage
 
         $base_image = ImageCreate($imgW, $imgH);
 
-        // convert a hexadecimal color code into decimal eps format (green = 0 1 0, blue = 0 0 1, ...)
+        
         $r1 = round((($fore_color & 0xFF0000) >> 16), 5);
         $b1 = round((($fore_color & 0x00FF00) >> 8), 5);
         $g1 = round(($fore_color & 0x0000FF), 5);
 
-        // convert a hexadecimal color code into decimal eps format (green = 0 1 0, blue = 0 0 1, ...)
+        
         $r2 = round((($back_color & 0xFF0000) >> 16), 5);
         $b2 = round((($back_color & 0x00FF00) >> 8), 5);
         $g2 = round(($back_color & 0x0000FF), 5);
@@ -1075,31 +930,7 @@ class QRimage
 //---- qrinput.php -----------------------------
 
 
-/*
- * PHP QR Code encoder
- *
- * Input encoding class
- *
- * Based on libqrencode C library distributed under LGPL 2.1
- * Copyright (C) 2006, 2007, 2008, 2009 Kentaro Fukuchi <fukuchi@megaui.net>
- *
- * PHP QR Code is distributed under LGPL 3
- * Copyright (C) 2010 Dominik Dzienia <deltalab at poczta dot fm>
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 3 of the License, or any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
- */
+
 
 define('STRUCTURE_HEADER_BITS', 20);
 define('MAX_STRUCTURED_SYMBOLS', 16);
@@ -1589,9 +1420,7 @@ class QRinput
         return true;
     }
 
-    /***********************************************************************
-     * Validation
-     **********************************************************************/
+    
 
     public static function check($mode, $size, $data)
     {
@@ -1838,31 +1667,7 @@ class QRinput
 //---- qrbitstream.php -----------------------------
 
 
-/*
- * PHP QR Code encoder
- *
- * Bitstream class
- *
- * Based on libqrencode C library distributed under LGPL 2.1
- * Copyright (C) 2006, 2007, 2008, 2009 Kentaro Fukuchi <fukuchi@megaui.net>
- *
- * PHP QR Code is distributed under LGPL 3
- * Copyright (C) 2010 Dominik Dzienia <deltalab at poczta dot fm>
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 3 of the License, or any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
- */
+
 
 class QRbitstream
 {
@@ -2023,37 +1828,7 @@ class QRbitstream
 //---- qrsplit.php -----------------------------
 
 
-/*
- * PHP QR Code encoder
- *
- * Input splitting classes
- *
- * Based on libqrencode C library distributed under LGPL 2.1
- * Copyright (C) 2006, 2007, 2008, 2009 Kentaro Fukuchi <fukuchi@megaui.net>
- *
- * PHP QR Code is distributed under LGPL 3
- * Copyright (C) 2010 Dominik Dzienia <deltalab at poczta dot fm>
- *
- * The following data / specifications are taken from
- * "Two dimensional symbol -- QR-code -- Basic Specification" (JIS X0510:2004)
- *  or
- * "Automatic identification and data capture techniques --
- *  QR Code 2005 bar code symbology specification" (ISO/IEC 18004:2006)
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 3 of the License, or any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
- */
+
 
 class QRsplit
 {
@@ -2129,16 +1904,16 @@ class QRsplit
 
         if ($mode == QR_MODE_8) {
             $dif = QRinput::estimateBitsModeNum($run) + 4 + $ln
-                + QRinput::estimateBitsMode8(1)         // + 4 + l8
-                - QRinput::estimateBitsMode8($run + 1); // - 4 - l8
+                + QRinput::estimateBitsMode8(1)         
+                - QRinput::estimateBitsMode8($run + 1); 
             if ($dif > 0) {
                 return $this->eat8();
             }
         }
         if ($mode == QR_MODE_AN) {
             $dif = QRinput::estimateBitsModeNum($run) + 4 + $ln
-                + QRinput::estimateBitsModeAn(1)        // + 4 + la
-                - QRinput::estimateBitsModeAn($run + 1);// - 4 - la
+                + QRinput::estimateBitsModeAn(1)        
+                - QRinput::estimateBitsModeAn($run + 1);
             if ($dif > 0) {
                 return $this->eatAn();
             }
@@ -2166,9 +1941,9 @@ class QRsplit
                     $q++;
                 }
 
-                $dif = QRinput::estimateBitsModeAn($p) // + 4 + la
+                $dif = QRinput::estimateBitsModeAn($p) 
                     + QRinput::estimateBitsModeNum($q - $p) + 4 + $ln
-                    - QRinput::estimateBitsModeAn($q); // - 4 - la
+                    - QRinput::estimateBitsModeAn($q); 
 
                 if ($dif < 0) {
                     break;
@@ -2184,8 +1959,8 @@ class QRsplit
 
         if (!self::isalnumat($this->dataStr, $p)) {
             $dif = QRinput::estimateBitsModeAn($run) + 4 + $la
-                + QRinput::estimateBitsMode8(1) // + 4 + l8
-                - QRinput::estimateBitsMode8($run + 1); // - 4 - l8
+                + QRinput::estimateBitsMode8(1) 
+                - QRinput::estimateBitsMode8($run + 1); 
             if ($dif > 0) {
                 return $this->eat8();
             }
@@ -2234,9 +2009,9 @@ class QRsplit
                 while (self::isdigitat($this->dataStr, $q)) {
                     $q++;
                 }
-                $dif = QRinput::estimateBitsMode8($p) // + 4 + l8
+                $dif = QRinput::estimateBitsMode8($p) 
                     + QRinput::estimateBitsModeNum($q - $p) + 4 + $ln
-                    - QRinput::estimateBitsMode8($q); // - 4 - l8
+                    - QRinput::estimateBitsMode8($q); 
                 if ($dif < 0) {
                     break;
                 } else {
@@ -2247,9 +2022,9 @@ class QRsplit
                 while (self::isalnumat($this->dataStr, $q)) {
                     $q++;
                 }
-                $dif = QRinput::estimateBitsMode8($p)  // + 4 + l8
+                $dif = QRinput::estimateBitsMode8($p)  
                     + QRinput::estimateBitsModeAn($q - $p) + 4 + $la
-                    - QRinput::estimateBitsMode8($q); // - 4 - l8
+                    - QRinput::estimateBitsMode8($q); 
                 if ($dif < 0) {
                     break;
                 } else {
@@ -2344,48 +2119,21 @@ class QRsplit
 //---- qrrscode.php -----------------------------
 
 
-/*
- * PHP QR Code encoder
- *
- * Reed-Solomon error correction support
- *
- * Copyright (C) 2002, 2003, 2004, 2006 Phil Karn, KA9Q
- * (libfec is released under the GNU Lesser General Public License.)
- *
- * Based on libqrencode C library distributed under LGPL 2.1
- * Copyright (C) 2006, 2007, 2008, 2009 Kentaro Fukuchi <fukuchi@megaui.net>
- *
- * PHP QR Code is distributed under LGPL 3
- * Copyright (C) 2010 Dominik Dzienia <deltalab at poczta dot fm>
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 3 of the License, or any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
- */
+
 
 class QRrsItem
 {
 
-    public $mm;                  // Bits per symbol
-    public $nn;                  // Symbols per block (= (1<<mm)-1)
-    public $alpha_to = [];  // log lookup table
-    public $index_of = [];  // Antilog lookup table
-    public $genpoly = [];   // Generator polynomial
-    public $nroots;              // Number of generator roots = number of parity symbols
-    public $fcr;                 // First consecutive root, index form
-    public $prim;                // Primitive element, index form
-    public $iprim;               // prim-th root of 1, index form
-    public $pad;                 // Padding bytes in shortened block
+    public $mm;                  
+    public $nn;                  
+    public $alpha_to = [];  
+    public $index_of = [];  
+    public $genpoly = [];   
+    public $nroots;              
+    public $fcr;                 
+    public $prim;                
+    public $iprim;               
+    public $pad;                 
     public $gfpoly;
 
     //----------------------------------------------------------------------
@@ -2402,18 +2150,18 @@ class QRrsItem
     //----------------------------------------------------------------------
     public static function init_rs_char($symsize, $gfpoly, $fcr, $prim, $nroots, $pad)
     {
-        // Common code for intializing a Reed-Solomon control block (char or int symbols)
-        // Copyright 2004 Phil Karn, KA9Q
-        // May be used under the terms of the GNU Lesser General Public License (LGPL)
+        
+        
+        
 
         $rs = null;
 
-        // Check parameter ranges
+        
         if ($symsize < 0 || $symsize > 8) return $rs;
         if ($fcr < 0 || $fcr >= (1 << $symsize)) return $rs;
         if ($prim <= 0 || $prim >= (1 << $symsize)) return $rs;
-        if ($nroots < 0 || $nroots >= (1 << $symsize)) return $rs; // Can't have more roots than symbol values!
-        if ($pad < 0 || $pad >= ((1 << $symsize) - 1 - $nroots)) return $rs; // Too much padding
+        if ($nroots < 0 || $nroots >= (1 << $symsize)) return $rs; 
+        if ($pad < 0 || $pad >= ((1 << $symsize) - 1 - $nroots)) return $rs; 
 
         $rs      = new QRrsItem();
         $rs->mm  = $symsize;
@@ -2423,13 +2171,13 @@ class QRrsItem
         $rs->alpha_to = array_fill(0, $rs->nn + 1, 0);
         $rs->index_of = array_fill(0, $rs->nn + 1, 0);
 
-        // PHP style macro replacement ;)
+        
         $NN =& $rs->nn;
         $A0 =& $NN;
 
-        // Generate Galois field lookup tables
-        $rs->index_of[0]   = $A0; // log(zero) = -inf
-        $rs->alpha_to[$A0] = 0; // alpha**-inf = 0
+        
+        $rs->index_of[0]   = $A0; 
+        $rs->alpha_to[$A0] = 0; 
         $sr                = 1;
 
         for ($i = 0; $i < $rs->nn; $i++) {
@@ -2443,12 +2191,12 @@ class QRrsItem
         }
 
         if ($sr != 1) {
-            // field generator polynomial is not primitive!
+            
             $rs = NULL;
             return $rs;
         }
 
-        /* Form RS code generator polynomial from its roots */
+        
         $rs->genpoly = array_fill(0, $nroots + 1, 0);
 
         $rs->fcr    = $fcr;
@@ -2456,9 +2204,9 @@ class QRrsItem
         $rs->nroots = $nroots;
         $rs->gfpoly = $gfpoly;
 
-        /* Find prim-th root of 1, used in decoding */
+        
         for ($iprim = 1; ($iprim % $prim) != 0; $iprim += $rs->nn)
-            ; // intentional empty-body loop!
+            ; 
 
         $rs->iprim      = (int)($iprim / $prim);
         $rs->genpoly[0] = 1;
@@ -2466,7 +2214,7 @@ class QRrsItem
         for ($i = 0, $root = $fcr * $prim; $i < $nroots; $i++, $root += $prim) {
             $rs->genpoly[$i + 1] = 1;
 
-            // Multiply rs->genpoly[] by  @**(root + x)
+            
             for ($j = $i; $j > 0; $j--) {
                 if ($rs->genpoly[$j] != 0) {
                     $rs->genpoly[$j] = $rs->genpoly[$j - 1] ^ $rs->alpha_to[$rs->modnn($rs->index_of[$rs->genpoly[$j]] + $root)];
@@ -2474,11 +2222,11 @@ class QRrsItem
                     $rs->genpoly[$j] = $rs->genpoly[$j - 1];
                 }
             }
-            // rs->genpoly[0] can never be zero
+            
             $rs->genpoly[0] = $rs->alpha_to[$rs->modnn($rs->index_of[$rs->genpoly[0]] + $root)];
         }
 
-        // convert rs->genpoly[] to index form for quicker encoding
+        
         for ($i = 0; $i <= $nroots; $i++)
             $rs->genpoly[$i] = $rs->index_of[$rs->genpoly[$i]];
 
@@ -2506,10 +2254,10 @@ class QRrsItem
 
             $feedback = $INDEX_OF[$data[$i] ^ $parity[0]];
             if ($feedback != $A0) {
-                // feedback term is non-zero
+                
 
-                // This line is unnecessary when GENPOLY[NROOTS] is unity, as it must
-                // always be for the polynomials constructed by init_rs()
+                
+                
                 $feedback = $this->modnn($NN - $GENPOLY[$NROOTS] + $feedback);
 
                 for ($j = 1; $j < $NROOTS; $j++) {
@@ -2517,7 +2265,7 @@ class QRrsItem
                 }
             }
 
-            // Shift
+            
             array_shift($parity);
             if ($feedback != $A0) {
                 array_push($parity, $ALPHA_TO[$this->modnn($feedback + $GENPOLY[0])]);
@@ -2560,31 +2308,7 @@ class QRrs
 //---- qrmask.php -----------------------------
 
 
-/*
- * PHP QR Code encoder
- *
- * Masking
- *
- * Based on libqrencode C library distributed under LGPL 2.1
- * Copyright (C) 2006, 2007, 2008, 2009 Kentaro Fukuchi <fukuchi@megaui.net>
- *
- * PHP QR Code is distributed under LGPL 3
- * Copyright (C) 2010 Dominik Dzienia <deltalab at poczta dot fm>
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 3 of the License, or any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
- */
+
 
 define('N1', 3);
 define('N2', 3);
@@ -2924,31 +2648,7 @@ class QRmask
 //---- qrencode.php -----------------------------
 
 
-/*
- * PHP QR Code encoder
- *
- * Main encoder classes.
- *
- * Based on libqrencode C library distributed under LGPL 2.1
- * Copyright (C) 2006, 2007, 2008, 2009 Kentaro Fukuchi <fukuchi@megaui.net>
- *
- * PHP QR Code is distributed under LGPL 3
- * Copyright (C) 2010 Dominik Dzienia <deltalab at poczta dot fm>
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 3 of the License, or any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
- */
+
 
 class QRrsblock
 {
@@ -3112,7 +2812,7 @@ class QRcode
             return NULL;
         }
 
-        // inteleaved data and ecc codes
+        
         for ($i = 0; $i < $raw->dataLength + $raw->eccLength; $i++) {
             $code = $raw->getCode();
             $bit  = 0x80;
@@ -3127,7 +2827,7 @@ class QRcode
 
         unset($raw);
 
-        // remainder bits
+        
         $j = QRspec::getRemainder($version);
         for ($i = 0; $i < $j; $i++) {
             $addr = $filler->next();
@@ -3138,7 +2838,7 @@ class QRcode
         unset($filler);
 
 
-        // masking
+        
         $maskObj = new QRmask();
         if ($mask < 0) {
 
@@ -3352,7 +3052,7 @@ class QRencode
     public $back_color = 0xFFFFFF;
     public $fore_color = 0x000000;
 
-    public $structured = 0; // not supported yet
+    public $structured = 0; 
 
     public $level = QR_ECLEVEL_L;
     public $hint = QR_MODE_8;
@@ -3506,28 +3206,7 @@ class QRencode
 //---- qrvect.php -----------------------------
 
 
-/*
- * PHP QR Code encoder
- *
- * Image output of code using GD2
- *
- * PHP QR Code is distributed under LGPL 3
- * Copyright (C) 2010 Dominik Dzienia <deltalab at poczta dot fm>
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 3 of the License, or any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
- */
+
 
 define('QR_VECT', true);
 
@@ -3566,27 +3245,27 @@ class QRvect
         $imgH = $h + 2 * $outerFrame;
 
         if ($cmyk) {
-            // convert color value into decimal eps format
+            
             $c                 = round((($fore_color & 0xFF000000) >> 16) / 255, 5);
             $m                 = round((($fore_color & 0x00FF0000) >> 16) / 255, 5);
             $y                 = round((($fore_color & 0x0000FF00) >> 8) / 255, 5);
             $k                 = round(($fore_color & 0x000000FF) / 255, 5);
             $fore_color_string = $c . ' ' . $m . ' ' . $y . ' ' . $k . ' setcmykcolor' . "\n";
 
-            // convert color value into decimal eps format
+            
             $c                 = round((($back_color & 0xFF000000) >> 16) / 255, 5);
             $m                 = round((($back_color & 0x00FF0000) >> 16) / 255, 5);
             $y                 = round((($back_color & 0x0000FF00) >> 8) / 255, 5);
             $k                 = round(($back_color & 0x000000FF) / 255, 5);
             $back_color_string = $c . ' ' . $m . ' ' . $y . ' ' . $k . ' setcmykcolor' . "\n";
         } else {
-            // convert a hexadecimal color code into decimal eps format (green = 0 1 0, blue = 0 0 1, ...)
+            
             $r                 = round((($fore_color & 0xFF0000) >> 16) / 255, 5);
             $b                 = round((($fore_color & 0x00FF00) >> 8) / 255, 5);
             $g                 = round(($fore_color & 0x0000FF) / 255, 5);
             $fore_color_string = $r . ' ' . $b . ' ' . $g . ' setrgbcolor' . "\n";
 
-            // convert a hexadecimal color code into decimal eps format (green = 0 1 0, blue = 0 0 1, ...)
+            
             $r                 = round((($back_color & 0xFF0000) >> 16) / 255, 5);
             $b                 = round((($back_color & 0x00FF00) >> 8) / 255, 5);
             $g                 = round(($back_color & 0x0000FF) / 255, 5);
@@ -3603,25 +3282,25 @@ class QRvect
             '%%Pages: 1' . "\n" .
             '%%BoundingBox: 0 0 ' . $imgW * $pixelPerPoint . ' ' . $imgH * $pixelPerPoint . "\n";
 
-        // set the scale
+        
         $output .= $pixelPerPoint . ' ' . $pixelPerPoint . ' scale' . "\n";
-        // position the center of the coordinate system
+        
 
         $output .= $outerFrame . ' ' . $outerFrame . ' translate' . "\n";
 
 
-        // redefine the 'rectfill' operator to shorten the syntax
+        
         $output .= '/F { rectfill } def' . "\n";
 
-        // set the symbol color
+        
         $output .= $back_color_string;
         $output .= '-' . $outerFrame . ' -' . $outerFrame . ' ' . ($w + 2 * $outerFrame) . ' ' . ($h + 2 * $outerFrame) . ' F' . "\n";
 
 
-        // set the symbol color
+        
         $output .= $fore_color_string;
 
-        // Convert the matrix into pixels
+        
 
         for ($i = 0; $i < $h; $i++) {
             for ($j = 0; $j < $w; $j++) {
@@ -3695,7 +3374,7 @@ class QRvect
             '<g fill="#' . str_pad(dechex($fore_color), 6, "0", STR_PAD_LEFT) . '">' . "\n";
 
 
-        // Convert the matrix into pixels
+        
 
         for ($i = 0; $i < $h; $i++) {
             for ($j = 0; $j < $w; $j++) {

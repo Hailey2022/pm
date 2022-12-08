@@ -1,13 +1,13 @@
 <?php
-// +---------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
-// +---------------------------------------------------------------------
-// | Copyright (c) 2013-present http://www.thinkcmf.com All rights reserved.
-// +---------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +---------------------------------------------------------------------
-// | Author: Dean <zxxjjforever@163.com>
-// +---------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 namespace cmf\behavior;
 
 use think\Container;
@@ -21,14 +21,14 @@ class LangBehavior
 
     protected static $run = false;
 
-    // 行为扩展的执行入口必须是run
+    
     public function run()
     {
         $request = request();
 
         $app = Container::get('app');
 
-        // 处理API全站跨域
+        
         if ($request->method(true) == 'OPTIONS' && $app->getNamespace() == 'api') {
             $header = [
                 'Access-Control-Allow-Origin'  => '*',
@@ -49,7 +49,7 @@ class LangBehavior
             __DIR__ . '/../lang' . DIRECTORY_SEPARATOR . $langSet . '.php',
         ]);
 
-        // 加载核心应用公共语言包
+        
         $coreApps = ['admin', 'user'];
         foreach ($coreApps as $app) {
             Lang::load([
@@ -58,7 +58,7 @@ class LangBehavior
             ]);
         }
 
-        // 加载应用公共语言包
+        
         $apps = cmf_scan_dir(APP_PATH . '*', GLOB_ONLYDIR);
         foreach ($apps as $app) {
             Lang::load([

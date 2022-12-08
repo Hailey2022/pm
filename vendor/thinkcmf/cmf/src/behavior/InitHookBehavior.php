@@ -1,13 +1,13 @@
 <?php
-// +---------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
-// +---------------------------------------------------------------------
-// | Copyright (c) 2013-present http://www.thinkcmf.com All rights reserved.
-// +---------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +---------------------------------------------------------------------
-// | Author: Dean <zxxjjforever@163.com>
-// +---------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 namespace cmf\behavior;
 
 use think\db\Query;
@@ -20,7 +20,7 @@ use think\facade\Route;
 class InitHookBehavior
 {
 
-    // 行为扩展的执行入口必须是run
+    
     public function run($param)
     {
         Route::any('plugin/:_plugin/[:_controller]/[:_action]', "\\cmf\\controller\\PluginController@index");

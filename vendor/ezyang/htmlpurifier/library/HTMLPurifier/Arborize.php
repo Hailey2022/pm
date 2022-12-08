@@ -1,12 +1,6 @@
 <?php
 
-/**
- * Converts a stream of HTMLPurifier_Token into an HTMLPurifier_Node,
- * and back again.
- *
- * @note This transformation is not an equivalence.  We mutate the input
- * token stream to make it so; see all [MUT] markers in code.
- */
+
 class HTMLPurifier_Arborize
 {
     public static function arborize($tokens, $config, $context) {
@@ -14,10 +8,10 @@ class HTMLPurifier_Arborize
         $parent = new HTMLPurifier_Token_Start($definition->info_parent);
         $stack = array($parent->toNode());
         foreach ($tokens as $token) {
-            $token->skip = null; // [MUT]
-            $token->carryover = null; // [MUT]
+            $token->skip = null; 
+            $token->carryover = null; 
             if ($token instanceof HTMLPurifier_Token_End) {
-                $token->start = null; // [MUT]
+                $token->start = null; 
                 $r = array_pop($stack);
                 //assert($r->name === $token->name);
                 //assert(empty($token->attr));
@@ -43,7 +37,7 @@ class HTMLPurifier_Arborize
         $tokens = array();
         do {
             while (!$nodes[$level]->isEmpty()) {
-                $node = $nodes[$level]->shift(); // FIFO
+                $node = $nodes[$level]->shift(); 
                 list($start, $end) = $node->toTokenPair();
                 if ($level > 0) {
                     $tokens[] = $start;

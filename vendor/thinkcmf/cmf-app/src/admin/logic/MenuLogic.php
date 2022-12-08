@@ -1,13 +1,5 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2013-present http://www.thinkcmf.com All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: 老猫 <thinkcmf@126.com>
-// +----------------------------------------------------------------------
+
 
 namespace app\admin\logic;
 
@@ -18,17 +10,7 @@ use mindplay\annotations\Annotations;
 
 class MenuLogic
 {
-    /**
-     * 导入应用后台菜单
-     * @param $app
-     * @return array
-     * @throws \ReflectionException
-     * @throws \think\Exception
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
-     * @throws \think\exception\PDOException
-     */
+    
     public static function importMenus($app)
     {
         Annotations::$config['cache']                 = false;
@@ -171,7 +153,7 @@ class MenuLogic
                                 ]);
                                 $menuName = $name;
                             } else {
-                                // 只关注菜单层级关系,是否有视图
+                                
                                 AdminMenuModel::where([
                                     'app'        => $app,
                                     'controller' => $controllerName,
@@ -327,7 +309,7 @@ class MenuLogic
                                         ]);
                                         $menuName = $name;
                                     } else {
-                                        // 只关注菜单层级关系,是否有视图
+                                        
                                         AdminMenuModel::where([
                                             'app'        => $app,
                                             'controller' => $controllerName,

@@ -1,13 +1,13 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2013-present http://www.thinkcmf.com All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: 小夏 < 449134904@qq.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 namespace app\admin\controller;
 
 use cmf\controller\AdminBaseController;
@@ -17,23 +17,7 @@ class LinkController extends AdminBaseController
 {
     protected $targets = ["_blank" => "新标签页打开", "_self" => "本窗口打开"];
 
-    /**
-     * 友情链接管理
-     * @adminMenu(
-     *     'name'   => '友情链接',
-     *     'parent' => 'admin/Setting/default',
-     *     'display'=> true,
-     *     'hasView'=> true,
-     *     'order'  => 50,
-     *     'icon'   => '',
-     *     'remark' => '友情链接管理',
-     *     'param'  => ''
-     * )
-     * @return mixed
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
-     */
+    
     public function index()
     {
         $content = hook_one('admin_link_index_view');
@@ -49,38 +33,14 @@ class LinkController extends AdminBaseController
         return $this->fetch();
     }
 
-    /**
-     * 添加友情链接
-     * @adminMenu(
-     *     'name'   => '添加友情链接',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> true,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '添加友情链接',
-     *     'param'  => ''
-     * )
-     */
+    
     public function add()
     {
         $this->assign('targets', $this->targets);
         return $this->fetch();
     }
 
-    /**
-     * 添加友情链接提交保存
-     * @adminMenu(
-     *     'name'   => '添加友情链接提交保存',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> false,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '添加友情链接提交保存',
-     *     'param'  => ''
-     * )
-     */
+    
     public function addPost()
     {
         if ($this->request->isPost()) {
@@ -96,21 +56,7 @@ class LinkController extends AdminBaseController
         }
     }
 
-    /**
-     * 编辑友情链接
-     * @adminMenu(
-     *     'name'   => '编辑友情链接',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> true,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '编辑友情链接',
-     *     'param'  => ''
-     * )
-     * @return mixed
-     * @throws \think\Exception\DbException
-     */
+    
     public function edit()
     {
         $id        = $this->request->param('id', 0, 'intval');
@@ -121,19 +67,7 @@ class LinkController extends AdminBaseController
         return $this->fetch();
     }
 
-    /**
-     * 编辑友情链接提交保存
-     * @adminMenu(
-     *     'name'   => '编辑友情链接提交保存',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> false,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '编辑友情链接提交保存',
-     *     'param'  => ''
-     * )
-     */
+    
     public function editPost()
     {
         if ($this->request->isPost()) {
@@ -149,19 +83,7 @@ class LinkController extends AdminBaseController
         }
     }
 
-    /**
-     * 删除友情链接
-     * @adminMenu(
-     *     'name'   => '删除友情链接',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> false,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '删除友情链接',
-     *     'param'  => ''
-     * )
-     */
+    
     public function delete()
     {
         if ($this->request->isPost()) {
@@ -171,19 +93,7 @@ class LinkController extends AdminBaseController
         }
     }
 
-    /**
-     * 友情链接排序
-     * @adminMenu(
-     *     'name'   => '友情链接排序',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> false,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '友情链接排序',
-     *     'param'  => ''
-     * )
-     */
+    
     public function listOrder()
     {
         $linkModel = new  LinkModel();
@@ -191,19 +101,7 @@ class LinkController extends AdminBaseController
         $this->success("排序更新成功！");
     }
 
-    /**
-     * 友情链接显示隐藏
-     * @adminMenu(
-     *     'name'   => '友情链接显示隐藏',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> false,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '友情链接显示隐藏',
-     *     'param'  => ''
-     * )
-     */
+    
     public function toggle()
     {
         if ($this->request->isPost()) {

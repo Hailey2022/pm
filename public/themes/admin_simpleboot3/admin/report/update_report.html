@@ -1,0 +1,158 @@
+<include file="public@header" />
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/html" id="files-item-tpl">
+        <li id="saved-file{id}">
+            <input class="form-control" id="file-{id}" type="hidden" name="file_urls[]" value="{filepath}">
+            <input class="form-control" id="file-{id}-name" type="text" name="file_names[]" value="{name}"
+                   style="width: 465px;" title="文件名称">
+            <a class="btn" id="file-{id}-preview" href="{preview_url}" target="_blank">下载</a>
+            <a class="btn" href="javascript:uploadOne('文件上传','#file-{id}','file');">替换</a>
+            <a class="btn" href="javascript:(function(){$('#saved-file{id}').remove();})();">移除</a>
+        </li>
+    </script>
+</head>
+
+<body>
+    <div class="wrap js-check-wrap">
+        <ul class="nav nav-tabs">
+            <li><a href="{:url('Report/reports')}">查看报表</a></li>
+            <li><a href="{:url('Report/addReport')}">添加报表</a></li>
+            <li class="active"><a>修改报表</a></li>
+        </ul>
+        <form method="post" class="form-horizontal js-ajax-form margin-top-20"
+            action="{:url('report/postReportUpdate')}">
+            <input name="reportId" style="display: none;" value="{$report.reportId}">
+            <div class="form-group">
+                <label for="input-contractName" class="col-sm-2 control-label">报告类别</label>
+                <div class="col-sm-3">
+                    <select class="form-control" list="reportTypeId" name="reportTypeId" id="input-reportTypeId"
+                        required>
+                        <datalist id="reportTypeId">
+                            <foreach name="reportTypes" item="t">
+                                <if condition="$report.reportTypeId==$t.id">
+                                    <option name="reportTypeId" selected value="{:$t.id}"> {$t.reportType}</option>
+                                    <else />
+                                    <option name="reportTypeId" value="{:$t.id}"> {$t.reportType}</option>
+                                </if>
+                            </foreach>
+                        </datalist>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="input-reportName" class="col-sm-2 control-label">报告名字</label>
+                <div class="col-sm-3">
+                    <input class="form-control" list="reportName" name="reportName" id="input-reportName"
+                        value="{$report.reportName}">
+                    </input>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="input-projectId" class="col-sm-2 control-label">工程名称</label>
+                <div class="col-sm-3">
+                    <select class="form-control" list="users" name="projectId" id="input-projectId" required
+                        onchange="updateContractList()">
+                        <datalist id="users">
+                            <foreach name="projects" item="p">
+                                <if condition="$report.projectId==$p.projectId">
+                                    <option name="projectId" selected value="{:$p.projectId}"> {$p.projectName}</option>
+                                    <else />
+                                    <option name="projectId" value="{:$p.projectId}"> {$p.projectName}</option>
+                                </if>
+                            </foreach>
+                        </datalist>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="input-contractName" class="col-sm-2 control-label">合同名称</label>
+                <div class="col-sm-7">
+                    <select class="form-control" list="contractName" name="contractId" id="input-contractName" required
+                        placeholder="合同名称">
+                        <datalist id="contractName">
+                            <option class="contractName" name="contractName" value="">合同名称</option>
+                        </datalist>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="input-reportTime" class="col-sm-2 control-label">时间</label>
+                <div class="col-md-3 col-sm-5">
+                    <input class="form-control" id="input-reportTime" name="reportTime" type="date"
+                        value="{$report.reportTime}">
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label for="input-files" class="col-sm-2 control-label">附件</label>
+                <div class="col-md-6 col-sm-10">
+                    <tr>
+                        <td>
+                            <ul id="files" class="pic-list list-unstyled form-inline">
+                                <notempty name="files">
+                                    <foreach name="files" key="url" item="name">
+                                        <php>$file_url=cmf_get_file_download_url($url);</php>
+                                        <php>$file_id=hash("sha256", $url);</php>
+                                        <li id="saved-file{$file_id}">
+                                            <input class="form-control" id="file-{$file_id}" type="hidden"
+                                                name="file_urls[]" value="{$url}">
+                                            <input class="form-control" id="file-{$file_id}-name" type="text"
+                                                name="file_names[]" value="{$name}" style="width: 465px;" title="文件名称">
+                                            <a class="btn" id="file-{$file_id}-preview" href="{$file_url}"
+                                                target="_blank" download="{$name}">下载</a>
+                                            <a class="btn"
+                                                href="javascript:uploadOne('文件上传','#file-{$file_id}','file');">替换</a>
+                                            <a class="btn"
+                                                href="javascript:(function(){$('#saved-file{$file_id}').remove();})();">移除</a>
+                                        </li>
+                                    </foreach>
+                                </notempty>
+                            </ul>
+                            <a href="javascript:uploadMultiFile('附件上传','#files','files-item-tpl','file');"
+                                class="btn btn-default">选择文件</a>
+                        </td>
+                    </tr>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-primary js-ajax-submit">提交</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</body>
+
+<script>
+    function updateContractList(contractId = undefined) {
+        var contracts = {$contracts};
+        $(".contractName").each(function () {
+            $(this).remove();
+        })
+        for (var i = 0; i < contracts.length; i++) {
+            if (contracts[i]['projectId'] == $("#input-projectId").val()) {
+                $("#input-contractName").append($('<option>', {
+                    class: 'contractName',
+                    value: contracts[i]['contractId'],
+                    text: contracts[i]['name'] + "---" + contracts[i]['user_login'] + "---" + contracts[i]['contractName'],
+                    selected: contractId == contracts[i]['contractId']
+                }));
+            }
+        }
+    }
+    (function () {
+        updateContractList("{$report.contractId}")
+    })()
+</script>
+
+<script src="__STATIC__/js/admin.js"></script>

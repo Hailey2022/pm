@@ -24,7 +24,7 @@
 		ColumnSeries = seriesTypes.column,
 		fireEvent = HighchartsAdapter.fireEvent;
 
-	// Utilities
+	
 	function tweenColors(startColor, endColor, pos) {
 		var rgba = [
 				Math.round(startColor[0] + (endColor[0] - startColor[0]) * pos),
@@ -35,7 +35,7 @@
 		return 'rgba(' + rgba.join(',') + ')';
 	}
 
-	// Add language
+	
 	extend(defaultOptions.lang, {
 		drillUpText: '◁ Back to {series.name}'
 	});
@@ -61,8 +61,8 @@
 				x: -10,
 				y: 10
 			}
-			// relativeTo: 'plotBox'
-			// theme
+			
+			
 		}
 	};	
 
@@ -82,7 +82,7 @@
 		});
 	};
 
-	// Extend the Chart prototype
+	
 	Chart.prototype.drilldownLevels = [];
 
 	Chart.prototype.addSeriesAsDrilldown = function (point, ddOptions) {
@@ -123,7 +123,7 @@
 			yAxis.userMin = yAxis.userMax = null;
 		}
 
-		// Run fancy cross-animation on supported and equal types
+		
 		if (oldSeries.type === newSeries.type) {
 			newSeries.animate = newSeries.animateDrilldown || noop;
 			newSeries.options.animation = true;
@@ -192,7 +192,7 @@
 
 		oldSeries.remove(false);
 
-		// Reset the zoom level of the upper series
+		
 		if (newSeries.xAxis) {
 			newSeries.xAxis.setExtremes(oldExtremes.xMin, oldExtremes.xMax, false);
 			newSeries.yAxis.setExtremes(oldExtremes.yMin, oldExtremes.yMax, false);
@@ -266,10 +266,10 @@
 			});
 
 
-			// Do dummy animation on first point to get to complete
+			
 			setTimeout(function () {
 				each(newSeries.points, function (point, i) {  
-					// Fade in other points			  
+					
 					var verb = i === level.pointIndex ? 'show' : 'fadeIn';
 					point.graphic[verb]();
 					if (point.dataLabel) {
@@ -281,7 +281,7 @@
 				});
 			}, Math.max(this.chart.options.drilldown.animation.duration - 50, 0));
 
-			// Reset
+			
 			this.animate = noop;
 		}
 
@@ -355,8 +355,8 @@
 			}
 		}
 
-		// Fire the event. If seriesOptions is undefined, the implementer can check for 
-		// seriesOptions, and call addSeriesAsDrilldown async if necessary.
+		
+		
 		fireEvent(chart, 'drilldown', { 
 			point: this,
 			seriesOptions: seriesOptions
@@ -376,12 +376,12 @@
 		
 		if (point.drilldown) {
 			
-			// Add the click event to the point label
+			
 			H.addEvent(point, 'click', function () {
 				point.doDrilldown();
 			});
 			
-			// Make axis labels clickable
+			
 			if (tickLabel) {
 				if (!tickLabel._basicStyle) {
 					tickLabel._basicStyle = tickLabel.element.getAttribute('style');
@@ -422,7 +422,7 @@
 		});
 	});
 
-	// Mark the trackers with a pointer 
+	
 	ColumnSeries.prototype.supportsDrilldown = true;
 	PieSeries.prototype.supportsDrilldown = true;
 	var type, 

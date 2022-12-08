@@ -19,7 +19,7 @@ ALIGN_FACTOR = {
 };
 
 
-// Highcharts helper methods
+
 var inArray = HighchartsAdapter.inArray,
 	merge = Highcharts.merge;
 
@@ -91,7 +91,7 @@ function translatePath(d, xAxis, yAxis, xOffset, yOffset) {
 }
 
 
-// Define annotation prototype
+
 var Annotation = function () {
 	this.init.apply(this, arguments);
 };
@@ -137,7 +137,7 @@ Annotation.prototype = {
 
 		group.add(chart.annotations.group);
 
-		// link annotations to point or series
+		
 		annotation.linkObjects();
 
 		if (redraw !== false) {
@@ -190,7 +190,7 @@ Annotation.prototype = {
 		}
 
 
-		// Based on given options find annotation pixel position
+		
 		x = (defined(options.xValue) ? xAxis.toPixels(options.xValue + xAxis.minPointOffset) - xAxis.minPixelPadding : options.x);
 		y = defined(options.yValue) ? yAxis.toPixels(options.yValue) : options.y;
 
@@ -230,7 +230,7 @@ Annotation.prototype = {
 				}
 			}
 
-			// move the center of the circle to shape x/y
+			
 			if (options.shape.type === 'circle') {
 				shapeParams.x += shapeParams.r;
 				shapeParams.y += shapeParams.r;
@@ -242,14 +242,14 @@ Annotation.prototype = {
 
 		group.bBox = null;
 
-		// If annotation width or height is not defined in options use bounding box size
+		
 		if (!isNumber(width)) {
 			bbox = group.getBBox();
 			width = bbox.width;
 		}
 
 		if (!isNumber(height)) {
-			// get bbox only if it wasn't set before
+			
 			if (!bbox) {
 				bbox = group.getBBox();
 			}
@@ -257,7 +257,7 @@ Annotation.prototype = {
 			height = bbox.height;
 		}
 
-		// Calculate anchor point
+		
 		if (!isNumber(anchorX)) {
 			anchorX = ALIGN_FACTOR.center;
 		}
@@ -266,7 +266,7 @@ Annotation.prototype = {
 			anchorY = ALIGN_FACTOR.center;
 		}
 
-		// Translate group according to its dimension and anchor point
+		
 		x = x - width * anchorX;
 		y = y - height * anchorY;
 
@@ -309,7 +309,7 @@ Annotation.prototype = {
 	update: function (options, redraw) {
 		extend(this.options, options);
 
-		// update link to point or series
+		
 		this.linkObjects();
 
 		this.render(redraw);
@@ -332,7 +332,7 @@ Annotation.prototype = {
 };
 
 
-// Add annotations methods to chart prototype
+
 extend(Chart.prototype, {
 	annotations: {
 		/*
@@ -369,7 +369,7 @@ extend(Chart.prototype, {
 });
 
 
-// Initialize on chart load
+
 Chart.prototype.callbacks.push(function (chart) {
 	var options = chart.options.annotations,
 		group;
@@ -380,20 +380,20 @@ Chart.prototype.callbacks.push(function (chart) {
 	});
 	group.add();
 
-	// initialize empty array for annotations
+	
 	chart.annotations.allItems = [];
 
-	// link chart object to annotations
+	
 	chart.annotations.chart = chart;
 
-	// link annotations group element to the chart
+	
 	chart.annotations.group = group;
 
 	if (isArray(options) && options.length > 0) {
 		chart.annotations.add(chart.options.annotations);
 	}
 
-	// update annotations after chart redraw
+	
 	Highcharts.addEvent(chart, 'redraw', function () {
 		chart.annotations.redraw();
 	});

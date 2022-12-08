@@ -1,13 +1,13 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkPHP [ WE CAN DO IT JUST THINK IT ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2006-2016 http://thinkphp.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: yunwuxin <448901948@qq.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 
 namespace think\exception;
 
@@ -28,17 +28,11 @@ class Handle
         $this->render = $render;
     }
 
-    /**
-     * Report or log an exception.
-     *
-     * @access public
-     * @param  \Exception $exception
-     * @return void
-     */
+    
     public function report(Exception $exception)
     {
         if (!$this->isIgnoreReport($exception)) {
-            // 收集异常数据
+            
             if (Container::get('app')->isDebug()) {
                 $data = [
                     'file'    => $exception->getFile(),
@@ -74,13 +68,7 @@ class Handle
         return false;
     }
 
-    /**
-     * Render an exception into an HTTP response.
-     *
-     * @access public
-     * @param  \Exception $e
-     * @return Response
-     */
+    
     public function render(Exception $e)
     {
         if ($this->render && $this->render instanceof \Closure) {
@@ -98,11 +86,7 @@ class Handle
         }
     }
 
-    /**
-     * @access public
-     * @param  Output    $output
-     * @param  Exception $e
-     */
+    
     public function renderForConsole(Output $output, Exception $e)
     {
         if (Container::get('app')->isDebug()) {
@@ -112,11 +96,7 @@ class Handle
         $output->renderException($e);
     }
 
-    /**
-     * @access protected
-     * @param  HttpException $e
-     * @return Response
-     */
+    
     protected function renderHttpException(HttpException $e)
     {
         $status   = $e->getStatusCode();
@@ -129,16 +109,12 @@ class Handle
         }
     }
 
-    /**
-     * @access protected
-     * @param  Exception $exception
-     * @return Response
-     */
+    
     protected function convertExceptionToResponse(Exception $exception)
     {
-        // 收集异常数据
+        
         if (Container::get('app')->isDebug()) {
-            // 调试模式，获取详细的错误信息
+            
             $data = [
                 'name'    => get_class($exception),
                 'file'    => $exception->getFile(),
@@ -160,14 +136,14 @@ class Handle
                 ],
             ];
         } else {
-            // 部署模式仅显示 Code 和 Message
+            
             $data = [
                 'code'    => $this->getCode($exception),
                 'message' => $this->getMessage($exception),
             ];
 
             if (!Container::get('app')->config('show_error_msg')) {
-                // 不显示详细错误信息
+                
                 $data['message'] = Container::get('app')->config('error_message');
             }
         }
@@ -183,7 +159,7 @@ class Handle
         extract($data);
         include Container::get('app')->config('exception_tmpl');
 
-        // 获取并清空缓存
+        
         $content  = ob_get_clean();
         $response = Response::create($content, 'html');
 
@@ -200,13 +176,7 @@ class Handle
         return $response;
     }
 
-    /**
-     * 获取错误编码
-     * ErrorException则使用错误级别作为错误编码
-     * @access protected
-     * @param  \Exception $exception
-     * @return integer                错误编码
-     */
+    
     protected function getCode(Exception $exception)
     {
         $code = $exception->getCode();
@@ -218,13 +188,7 @@ class Handle
         return $code;
     }
 
-    /**
-     * 获取错误信息
-     * ErrorException则使用错误级别作为错误编码
-     * @access protected
-     * @param  \Exception $exception
-     * @return string                错误信息
-     */
+    
     protected function getMessage(Exception $exception)
     {
         $message = $exception->getMessage();
@@ -248,16 +212,10 @@ class Handle
         return $message;
     }
 
-    /**
-     * 获取出错文件内容
-     * 获取错误的前9行和后9行
-     * @access protected
-     * @param  \Exception $exception
-     * @return array                 错误文件内容
-     */
+    
     protected function getSourceCode(Exception $exception)
     {
-        // 读取前9行和后9行
+        
         $line  = $exception->getLine();
         $first = ($line - 9 > 0) ? $line - 9 : 1;
 
@@ -274,13 +232,7 @@ class Handle
         return $source;
     }
 
-    /**
-     * 获取异常扩展信息
-     * 用于非调试模式html返回类型显示
-     * @access protected
-     * @param  \Exception $exception
-     * @return array                 异常类定义的扩展数据
-     */
+    
     protected function getExtendData(Exception $exception)
     {
         $data = [];
@@ -292,11 +244,7 @@ class Handle
         return $data;
     }
 
-    /**
-     * 获取常量列表
-     * @access private
-     * @return array 常量列表
-     */
+    
     private static function getConst()
     {
         $const = get_defined_constants(true);

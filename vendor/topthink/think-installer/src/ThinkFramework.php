@@ -9,9 +9,7 @@ use InvalidArgumentException;
 class ThinkFramework extends LibraryInstaller
 {
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function getInstallPath(PackageInterface $package)
     {
         if ('topthink/framework' !== $package->getPrettyName()) {
@@ -56,9 +54,7 @@ class ThinkFramework extends LibraryInstaller
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function supports($packageType)
     {
         return 'think-framework' === $packageType;

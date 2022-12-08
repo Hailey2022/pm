@@ -40,7 +40,7 @@
         });
     }
 
-    // 所有加了dialog类名的a链接，自动弹出它的href
+    
     if ($('a.js-dialog').length) {
         Wind.css('artDialog');
         Wind.use('artDialog', 'iframeTools', function () {
@@ -49,7 +49,7 @@
                 var $this = $(this);
                 art.dialog.open($(this).prop('href'), {
                     close: function () {
-                        $this.focus(); // 关闭时让触发弹窗的元素获取焦点
+                        $this.focus(); 
                         return true;
                     },
                     title: $this.prop('title')
@@ -59,7 +59,7 @@
         });
     }
 
-    // 所有的ajax form提交,由于大多业务逻辑都是一样的，故统一处理
+    
     var ajaxForm_list = $('form.js-ajax-form');
     if (ajaxForm_list.length) {
         Wind.css('artDialog');
@@ -212,10 +212,10 @@
                                         type: 'success',
                                         layout: 'topCenter',
                                         modal: true,
-                                        // animation: {
-                                        //     open: 'animated bounceInDown', // Animate.css class names
-                                        //     close: 'animated bounceOutUp', // Animate.css class names
-                                        // },
+                                        
+                                        
+                                        
+                                        
                                         timeout: 800,
                                         callback: {
                                             afterClose: function () {
@@ -251,10 +251,10 @@
                                         type: 'error',
                                         layout: 'topCenter',
                                         modal: true,
-                                        // animation: {
-                                        //     open: 'animated bounceInDown', // Animate.css class names
-                                        //     close: 'animated bounceOutUp', // Animate.css class names
-                                        // },
+                                        
+                                        
+                                        
+                                        
                                         timeout: 800,
                                         callback: {
                                             afterClose: function () {
@@ -342,10 +342,10 @@
                                         type: 'success',
                                         layout: 'topCenter',
                                         modal: true,
-                                        // animation: {
-                                        //     open: 'animated bounceInDown', // Animate.css class names
-                                        //     close: 'animated bounceOutUp', // Animate.css class names
-                                        // },
+                                        
+                                        
+                                        
+                                        
                                         timeout: 800,
                                         callback: {
                                             afterClose: function () {
@@ -421,10 +421,10 @@
                                         type: 'success',
                                         layout: 'topCenter',
                                         modal: true,
-                                        // animation: {
-                                        //     open: 'animated bounceInDown', // Animate.css class names
-                                        //     close: 'animated bounceOutUp', // Animate.css class names
-                                        // },
+                                        
+                                        
+                                        
+                                        
                                         timeout: 800,
                                         callback: {
                                             afterClose: function () {
@@ -622,7 +622,7 @@
         });
     }
 
-    // bootstrap年选择器
+    
     var bootstrapYearInput = $("input.js-bootstrap-year")
     if (bootstrapYearInput.length) {
         Wind.css('bootstrapDatetimePicker');
@@ -638,7 +638,7 @@
         });
     }
 
-    // bootstrap日期选择器
+    
     var bootstrapDateInput = $("input.js-bootstrap-date")
     if (bootstrapDateInput.length) {
         Wind.css('bootstrapDatetimePicker');
@@ -653,7 +653,7 @@
         });
     }
 
-    // bootstrap年月份选择器
+    
     var bootstrapYearMonthInput = $("input.js-bootstrap-year-month");
     if (bootstrapYearMonthInput.length) {
         Wind.css('bootstrapDatetimePicker');
@@ -669,7 +669,7 @@
         });
     }
 
-    // bootstrap日期选择器日期+时间选择器
+    
     var bootstrapDateTimeInput = $("input.js-bootstrap-datetime");
     if (bootstrapDateTimeInput.length) {
         Wind.css('bootstrapDatetimePicker');
@@ -781,7 +781,7 @@ function getCookie(name) {
         var cookies = document.cookie.split(';');
         for (var i = 0; i < cookies.length; i++) {
             var cookie = jQuery.trim(cookies[i]);
-            // Does this cookie string begin with the name we want?
+            
             if (cookie.substring(0, name.length + 1) == (name + '=')) {
                 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
                 break;
@@ -809,7 +809,7 @@ function setCookie(name, value, options) {
         } else {
             date = options.expires;
         }
-        expires = '; expires=' + date.toUTCString(); // use expires attribute, max-age is not supported by IE
+        expires = '; expires=' + date.toUTCString(); 
     }
     var path        = options.path ? '; path=' + options.path : '';
     var domain      = options.domain ? '; domain=' + options.domain : '';
@@ -1012,7 +1012,7 @@ function uploadMultiFile(dialog_title, container_selector, item_tpl_wrapper_id, 
  * 查看图片对话框
  * @param img 图片地址
  */
-function imagePreviewDialog(img) {
+function imagePreviewDialog(img, mini=img) {
     Wind.css('layer');
 
     Wind.use("layer", function () {
@@ -1026,14 +1026,15 @@ function imagePreviewDialog(img) {
                         "alt": "",
                         "pid": 666, //图片id
                         "src": img, //原图地址
-                        "thumb": img //缩略图地址
+                        "thumb": mini //缩略图地址
                     }
                 ]
             } //格式见API文档手册页
             , anim: 5, //0-6的选择，指定弹出图片动画类型，默认随机
             shadeClose: true,
-            // skin: 'layui-layer-nobg',
-            shade: [0.5, '#000000'],
+            closeBtn: 1,
+            
+            shade: [0.8, '#000000'],
             shadeClose: true,
         })
     });
@@ -1064,7 +1065,7 @@ function openIframeLayer(url, title, options) {
         type: 2,
         title: title,
         shadeClose: true,
-        // skin: 'layui-layer-nobg',
+        
         anim: -1,
         shade: [0.001, '#000000'],
         shadeClose: true,

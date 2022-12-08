@@ -7,39 +7,66 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add</title>
+    <script type="text/html" id="photos-item-tpl">
+        <li id="saved-image{id}">
+            <input id="photo-{id}" type="hidden" name="file_urls[]" value="{filepath}">
+            <input class="form-control" id="photo-{id}-name" type="text" name="file_names[]" value="{name}"
+                   style="width: 370px;" title="图片名称">
+            <img id="photo-{id}-preview" src="{url}" style="height:36px;width: 36px;"
+                 onclick="imagePreviewDialog(this.src);">
+            <a href="javascript:uploadOneImage('图片上传','#photo-{id}');">替换</a>
+            <a href="javascript:(function(){$('#saved-image{id}').remove();})();">移除</a>
+        </li>
+    </script>
+
+    <script type="text/html" id="files-item-tpl">
+        <li id="saved-file{id}">
+            <input id="file-{id}" type="hidden" name="file_urls[]" value="{filepath}">
+            <input class="form-control" id="file-{id}-name" type="text" name="file_names[]" value="{name}"
+                   style="width: 370px;" title="文件名称">
+            <a id="file-{id}-preview" href="{preview_url}" target="_blank">下载</a>
+            <a href="javascript:uploadOne('文件上传','#file-{id}','file');">替换</a>
+            <a href="javascript:(function(){$('#saved-file{id}').remove();})();">移除</a>
+        </li>
+    </script>
+
     <link href="__STATIC__/js/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css" rel="stylesheet"
         media="screen">
+    <link src="__STATIC__/js/wind.js">
+    </link>
     <style>
         .信息框大框 {
-            width: 90%;
-            margin-top: 30px;
+            width: 96%;
+            margin-top: 50px;
         }
 
         .信息框标题 {
             width: 200px;
-            height: 20px;
+            height: 22px;
             line-height: 20px;
             text-align: center;
-            font-weight: bolder;
         }
 
         .信息框标题 span {
             padding: 1px 1px;
-            border: 1px solid #222;
-            background-color: #ccc;
-            float: left;
+            margin-top: auto;
             margin-right: 10px;
         }
 
-        .信息框标题 span.工程加号 span.工程减号 {
-            cursor: pointer
+        .信息框标题 a.工程加号 a.工程减号 {
+            cursor: pointer;
+        }
+
+        a:hover {
+            text-decoration: none;
         }
 
         .信息框边框 {
             border: 1px solid #333;
-            /* width: 100%; */
-            padding: 15px;
+            padding: 5px;
             clear: both;
+            border-color: #18BC9C;
+            border-style: none;
         }
 
         ul {
@@ -47,101 +74,496 @@
         }
 
         .上下宽度 {
-            padding: 15px;
+            padding: 1%;
+            border-style: dashed dashed dashed dashed;
+            margin-top: 5px;
+            border-radius: 16px;
+            border-color: #18BC9C;
+        }
+
+        .btn-primary {
+            color: #333333;
+            background-color: #c2fbd7;
+            border-color: #c2fbd7;
+        }
+
+        * {
+            user-select: none;
+        }
+
+        .button-s {
+            --color: #18BC9C;
+            font-family: inherit;
+            display: inline-block;
+            width: 8em;
+            height: 2.6em;
+            line-height: 2.5em;
+            margin: 20px;
+            position: relative;
+            overflow: hidden;
+            border: 0px solid var(--color);
+            transition: color .5s;
+            z-index: 1;
+            font-size: 17px;
+            border-radius: 6px;
+            font-weight: 500;
+            color: var(--color);
+            margin-left: 100px !important;
+        }
+
+        .button-s:before {
+            content: "";
+            position: absolute;
+            z-index: -1;
+            background: var(--color) !important;
+            height: 150px !important;
+            width: 200px !important;
+            border-radius: 80% !important;
+        }
+
+        .button-s:hover {
+            color: #fff;
+        }
+
+        .button-s:before {
+            top: 100% !important;
+            left: 100% !important;
+            transition: all .7s !important;
+        }
+
+        .button-s:hover:before {
+            top: -30px !important;
+            left: -30px !important;
+        }
+
+        .button-s:active:before {
+            background: #18BC9C !important;
+            transition: background 0s !important;
+        }
+
+        .左 {
+            margin-right: 30px;
+        }
+
+        .右 {
+            margin-left: 30px;
+        }
+
+        label {
+            font-size: 10px;
+        }
+
+        input[type="text"] {
+            font-size: 10px;
+        }
+
+        input[type="number"] {
+            font-size: 10px;
+        }
+
+        select {
+            font-size: 10px;
+        }
+
+        textarea[type="text"] {
+            font-size: 10px;
+        }
+
+        @media screen and (min-width: 768px) {
+            .uploadfiles {
+                padding-left: 26%;
+            }
         }
     </style>
     <script>
         $(function () {
-            $('span.工程加号').on("click", function () {
-                var 信息框边框 = $(this).parent().next();
-                信息框边框.find('li').eq(0).clone().appendTo(信息框边框.children());
+            var 第一个li = '<xfli>' + $('.缓存对象 xfli:first').html() + '</xfli>';
+            $('a.工程加号').on("click", function () {
+                $('ul.缓存对象 xfli:last').after(第一个li)
+                var file_num = $('ul.缓存对象 xfli').length - 1
+                $('div.uploadfiles:last ul').attr('id', 'files' + file_num);
+                $('div.uploadfiles:last a.uploadfiles_file_flag').attr('href', "javascript:uploadMultiFile('文件上传','#files" + file_num + "','files-item-tpl','file');");
+                $('div.uploadfiles:last a.uploadfiles_image_flag').attr('href', "javascript:uploadMultiFile('图片上传','#files" + file_num + "','photos-item-tpl','image');");
+                $('.contractAmount').on("keyup", function () {
+                    $(this).parent().next().next().children().first().val(convertCurrency(Math.abs($(this).val())))
+                });
             });
-            $('span.工程减号').on("click", function () {
+            $('a.工程减号').on("click", function () {
                 var 信息框边框 = $(this).parent().next();
-                if (信息框边框.find('li').length == 1) {
+                if (信息框边框.find('xfli').length == 1) {
                     alert("不能再减少了");
                     return
                 }
-                信息框边框.find('li').last().remove();
+                信息框边框.find('xfli').last().remove();
             });
         })
     </script>
 </head>
 
 <body>
-    <form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('manager/postProjectAdd')}">
-        <div class="信息框大框">
-            <div class="信息框标题"><span>工程基本信息</span></div>
-            <div class="信息框边框">
+    <form method="post" class="form-horizontal js-ajax-form" action="{:url('manager/postProjectAdd')}">
+        <div class="信息框大框" style="min-width: 920px">
+            <div class="信息框标题"><a style="font-size: 150%;">工程基本信息</a></div>
+            <div class="上下宽度 右">
                 <div class="form-group">
-                    <div class="row">
-                        <div class="col-md-2">
-
+                    <div class="右 左">
+                        <label for="input-project-name" class="col-sm-1 control-label">工程名称</label>
+                        <div class="col-sm-3" style="padding-bottom: 10px;">
+                            <input class="form-control" id="input-project-name" name="project-name" type="text"
+                                required>
                         </div>
-                        <div class="col-md-6">
-                            <input class="form-control" id="input-project-name" name="project-name" type="text" required
-                                placeholder="请在这里输入工程的名称">
+                    </div>
+                    <div class="右 左">
+                        <label for="input-construction-name" class="col-sm-1 control-label">建设单位</label>
+                        <div class="col-sm-3" style="padding-bottom: 10px;">
+                            <input class="form-control" id="input-construction-name" name="constructionCompany"
+                                type="text">
                         </div>
-                        <div class="col-md-2">
+                    </div>
+                    <div class="右 左">
+                        <label for="input-construction-year" class="col-sm-1 control-label">建设年份</label>
+                        <div class="col-sm-3" style="padding-bottom: 10px;">
+                            <input class="form-control" id="input-construction-year" name="constructionYear"
+                                type="text">
+                        </div>
+                    </div>
+                </div>
+                <br>
 
+                <div class="form-group">
+                    <div class="右 左">
+                        <label for="file-1-name" class="col-sm-1 control-label">可研报告</label>
+                        <div class="col-sm-3" style="padding-bottom: 10px;">
+                            <input id="file-1" type="hidden" name="file_url_1">
+                            <input class="form-control" id="file-1-name" type="text" name="file_name_1" title="可研报告">
+                            <a href="javascript:uploadOne('可研报告上传','#file-1','file');">上传</a>
+                            <a class="previewBtn">预览</a>
+                        </div>
+                    </div>
+                    <div class="右 左">
+                        <label for="file-2-name" class="col-sm-1 control-label">可研批复</label>
+                        <div class="col-sm-3" style="padding-bottom: 10px;">
+                            <input id="file-2" type="hidden" name="file_url_2">
+                            <input class="form-control" id="file-2-name" type="text" name="file_name_2" title="可研批复">
+                            <a href="javascript:uploadOne('可研批复上传','#file-2','file');">上传</a>
+                            <a class="previewBtn">预览</a>
+                        </div>
+                    </div>
+                    <div class="右 左">
+                        <label for="input-estimatedPrice" class="col-sm-1 control-label">估算价</label>
+                        <div class="col-sm-3" style="padding-bottom: 10px;">
+                            <input class="form-control" id="input-estimatedPrice" name="estimatedPrice" type="number"
+                                onkeyup="updateEstimatedPriceChineseNum()">
+                            <input class="form-control" id="chinese-estimatedPrice" type="text" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="右 左">
+                        <label for="file_url_3" class="col-sm-1 control-label">初步设计报告</label>
+                        <div class="col-sm-3" style="padding-bottom: 10px;">
+                            <input id="file-3" type="hidden" name="file_url_3">
+                            <input class="form-control" id="file-3-name" type="text" name="file_name_3" title="初步设计报告">
+                            <a href="javascript:uploadOne('初步设计报告上传','#file-3','file');">上传</a>
+                            <a class="previewBtn">预览</a>
+                        </div>
+                    </div>
+                    <div class="右 左">
+                        <label for="file_url_4" class="col-sm-1 control-label">初步设计批复</label>
+                        <div class="col-sm-3" style="padding-bottom: 10px;">
+                            <input id="file-4" type="hidden" name="file_url_4">
+                            <input class="form-control" id="file-4-name" type="text" name="file_name_4" title="初步设计批复">
+                            <a href="javascript:uploadOne('初步设计批复上传','#file-4','file');">上传</a>
+                            <a class="previewBtn">预览</a>
+                        </div>
+                    </div>
+                    <div class="右 左">
+                        <label for="input-approximatePrice" class="col-sm-1 control-label">概算价</label>
+                        <div class="col-sm-3" style="padding-bottom: 10px;">
+                            <input class="form-control" id="input-approximatePrice" name="approximatePrice"
+                                type="number" onkeyup="updateApproximatePriceChineseNum()">
+                            <input class="form-control" id="chinese-approximatePrice" type="text" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="右 左">
+                        <label for="file-5-name" class="col-sm-1 control-label">预算上报文件</label>
+                        <div class="col-sm-3" style="padding-bottom: 10px;">
+                            <input id="file-5" type="hidden" name="file_url_5">
+                            <input class="form-control" id="file-5-name" type="text" name="file_name_5" title="预算上报文件">
+                            <a href="javascript:uploadOne('预算上报文件上传','#file-5','file');">上传</a>
+                            <a class="previewBtn">预览</a>
+                        </div>
+                    </div>
+                    <div class="右 左">
+                        <label for="input-reportedBudget" class="col-sm-1 control-label">上报预算价</label>
+                        <div class="col-sm-3" style="padding-bottom: 10px;">
+                            <input class="form-control" id="input-reportedBudget" name="reportedBudget" type="text"
+                                onkeyup="updateReportedBudgetChineseNum()">
+                            <input class="form-control" id="chinese-reportedBudget" type="text" readonly>
+                        </div>
+                    </div>
+                    <div class="右 左">
+                        <label for="input-approvedBudget" class="col-sm-1 control-label">批复预算价</label>
+                        <div class="col-sm-3" style="padding-bottom: 10px;">
+                            <input class="form-control" id="input-approvedBudget" name="approvedBudget" type="text"
+                                onkeyup="updateApprovedBudgetChineseNum()">
+                            <input class="form-control" id="chinese-approvedBudget" type="text" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="右 左">
+                        <label for="file_name_6" class="col-sm-1 control-label">施工图</label>
+                        <div class="col-sm-3" style="padding-bottom: 10px;">
+                            <input id="file-6" type="hidden" name="file_url_6">
+                            <input class="form-control" id="file-6-name" type="text" name="file_name_6" title="施工图">
+                            <!-- <a id="file-6-preview" target="_blank">下载</a> -->
+                            <a href="javascript:uploadOne('施工图上传','#file-6','file');">上传</a>
+                            <a class="previewBtn">预览</a>
+                        </div>
+                    </div>
+                    <div class="右 左">
+                        <label for="tenderingMethod" class="col-sm-1 control-label">招标方式</label>
+                        <div class="col-sm-3" style="padding-bottom: 10px;">
+                            <select class="form-control" list="tenderingMethod" name="tenderingMethod"
+                                id="input-tenderingMethod" required>
+                                <datalist id="tenderingMethod">
+                                    <foreach name="tenderingMethods" item="m">
+                                        <option name="tenderingMethod" value="{:$m.id}"> {$m.method}</option>
+                                    </foreach>
+                                </datalist>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="右 左">
+                        <label for="projectStatus" class="col-sm-1 control-label">实施阶段</label>
+                        <div class="col-sm-3" style="padding-bottom: 10px;">
+                            <select class="form-control" list="projectStatus" name="projectStatusId"
+                                id="input-projectStatus" required>
+                                <datalist id="projectStatus">
+                                    <foreach name="theProjectStatus" item="s">
+                                        <option name="projectStatus" value="{:$s.id}"> {$s.projectStatus}</option>
+                                    </foreach>
+                                </datalist>
+                            </select>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        </div>
 
-        <div class="信息框大框">
+        <div class="信息框大框" style="min-width: 920px">
             <div class="信息框标题">
-                <span>服务商基本信息</span>
-                <span class="工程加号">增加</span>
-                <span class="工程减号">减少</span>
+                <a style="font-size: 140%;">服务商基本信息</a>
+            </div>
+            <div class="">
+                <a class="工程加号" style="display: none;">增加+</a>
+                <a class="工程减号" style="display: none;">减少-</a>
             </div>
             <div class="信息框边框">
-                <ul>
-                    <li>
-                        <div class="row 上下宽度">
-
-                            <div class="col-sm-3">
-                                <select class="form-control" list="users" name="clientType[]" id="input-clientType" required>
+                <ul class="缓存对象">
+                    <xfli>
+                        <div class="row 上下宽度" style="padding-bottom: 10px;">
+                            <label for="users" class="col-sm-2 control-label">合同类别</label>
+                            <div class="col-sm-3" style="padding-bottom: 10px;">
+                                <select class="form-control" list="users" name="clientType[]" id="input-clientType"
+                                    required>
                                     <datalist id="users">
-                                        <option name="clientType" value="">类别</option>
+                                        <option name="clientType" value="">合同类别</option>
                                         <foreach name="types" item="u">
-                                            <option name="clientType" value="{:$u.id}"> {$u.name}
-                                            </option>
+                                            <option name="clientType" value="{:$u.id}"> {$u.name}</option>
                                         </foreach>
                                     </datalist>
                                 </select>
+                            </div>
+                            <div style="padding-bottom: 10px;">
+                                <label for="clientId" class="col-sm-2 control-label">实施单位名称</label>
+                                <div class="col-sm-4" style="padding-bottom: 10px;">
+                                    <input class="form-control" list="clientName" name="clientName[]"
+                                        id="input-clientName" required>
+                                    <datalist id="clientName">
+                                        <option name="clientName" value="">实施单位名称</option>
+                                        <foreach name="users" item="u">
+                                            <option name="clientName" value="{:$u.user_login}"> {$u.user_login}</option>
+                                        </foreach>
+                                    </datalist>
+                                    </input>
+                                </div>
+                                <a class="btn" style="display: none;color: #0000ff">提交时自动添加</a>
                             </div>
 
-                            <div class="col-sm-5">
-                                <select class="form-control" list="clientId" name="clientId[]" id="input-clientId" required>
-                                    <datalist id="clientId">
-                                        <option name="clientId" value="">公司</option>
-                                        <foreach name="users" item="u">
-                                            <option name="clientId" value="{:$u.id}"> {$u.user_login}
-                                            </option>
-                                        </foreach>
-                                    </datalist>
-                                </select>
+                            <div>
+                                <label for="input-contractName" class="col-sm-2 control-label">合同名称</label>
+                                <div class="col-sm-5" style="padding-bottom: 10px;">
+                                    <input class="form-control" id="input-contractName" name="contractName[]"
+                                        type="text" placeholder="合同名称">
+                                </div>
+                                <label for="input-contractNumber" class="col-sm-1 control-label">合同编号</label>
+
+                                <div class="col-sm-3" style="padding-bottom: 10px;">
+                                    <input class="form-control" id="input-contractNumber" name="contractNumber[]"
+                                        type="text" placeholder="合同编号">
+                                </div>
                             </div>
-                            <div class="col-sm-4">
-                                <input class="form-control" id="input-clientAlias" name="clientAlias[]" type="text"
-                                    placeholder="备注(可选)">
+
+                            <div>
+                                <label for="input-contractAmount" class="col-sm-2 control-label">合同金额</label>
+                                <div class="col-sm-3" style="padding-bottom: 10px;">
+                                    <input class="form-control contractAmount" id="input-contractAmount"
+                                        name="contractAmount[]" type="number" placeholder="合同金额" onkeyup="">
+                                </div>
+                                <label for="chinese-contractAmount" class="col-sm-1 control-label">金额中文</label>
+                                <div class="col-sm-5" style="padding-bottom: 10px;">
+                                    <input class="form-control" id="chinese-contractAmount" type="text" readonly
+                                        placeholder="中文金额">
+                                </div>
+                            </div>
+                            <div style="padding-bottom: 10px;">
+                                <label for="input-contractTime" class="col-sm-2 control-label">合同起始时间</label>
+                                <div class="col-sm-2" style="padding-bottom: 10px;">
+                                    <input class="form-control" id="input-contractTime" name="contractTime[]"
+                                        type="text" onmouseover="(this.type='date')" placeholder="合同签订时间">
+                                </div>
+                                <div class="col-sm-2" style="padding-bottom: 10px;">
+                                    <input class="form-control" id="input-contractExpTime" name="contractExpTime[]"
+                                        type="text" onmouseover="(this.type='date')" placeholder="合同结束时间">
+                                </div>
+                            </div>
+                            <div class="">
+                                <label for="input-clientAlias" class="col-sm-1 control-label">合同备注</label>
+                                <div class="col-sm-4" style="padding-bottom: 20px;">
+                                    <input class="form-control" id="input-clientAlias" name="clientAlias[]" type="text"
+                                        placeholder="备注(可选)">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-8">
+                                <div class="uploadfiles">
+                                    <tr>
+                                        <td>
+                                            <ul id="files0" class="pic-list list-unstyled form-inline">
+                                            </ul>
+                                            <a href="javascript:uploadMultiFile('附件上传','#files0','files-item-tpl','file');"
+                                                class="btn btn-default uploadfiles_file_flag">选择文件</a>
+                                            <a href="javascript:uploadMultiFile('图片上传','#files0','photos-item-tpl','image');"
+                                                class="btn btn-default uploadfiles_image_flag">选择图片</a>
+                                            <input type="hidden" class="" name="uploadfiles[]" value="">
+                                            <input type="hidden" class="" name="uploadfilenames[]" value="">
+                                        </td>
+                                    </tr>
+                                </div>
                             </div>
                         </div>
-                    </li>
+                    </xfli>
                 </ul>
             </div>
         </div>
-
-        <div class="form-group">
-            <div class="">
-                <div class="col-sm-3">
-                    <button type="submit" class="btn btn-primary js-ajax-submit">提交</button>
-                </div>
+        <div class="信息框标题">
+            <a class="工程加号" style="font-size: 120%;">增加+</a>
+            <a onclick="$('.工程减号').first().click()" style="font-size: 120%;">减少-</a>
+        </div>
+        <button id="add_project_submit" style="display: none;">
+            提交
+        </button>
+    </form>
+    <div class="form-group">
+        <div class="">
+            <div class="col-md-3">
+                <button class="button-s" id="" onclick="$('#add_project_submit').click()">
+                    提交
+                </button>
+            </div>
+            <div class="col-md-3">
+                <button class="button-s" onclick="return ask()">
+                    返回
+                </button>
             </div>
         </div>
-    </form>
+    </div>
 </body>
+<script>
+    $('.previewBtn').on('click', function(){
+        var url = $(this).prev().prev().prev().val();
+        if (url == ""){
+            alert("请先上传")
+            return
+        }
+        var link = '/upload/' + url 
+        handlePreview(link)
+    });
 
+    $('#add_project_submit').on("click", function () {
+        $('xfli').each(function () {
+            var str0 = '';
+            $(this).find("input:hidden[name='file_urls[]']").each(function () {
+                str0 += $(this).val() + '|'
+            });
+            $(this).find("input:hidden[name='uploadfiles[]']").val(str0.substring(0, str0.lastIndexOf('|')));
+
+            var str1 = '';
+            $(this).find("input:text[name='file_names[]']").each(function () {
+                str1 += $(this).val() + '|'
+            });
+            $(this).find("input:hidden[name='uploadfilenames[]']").val(str1.substring(0, str1.lastIndexOf('|')));
+        });
+    });
+    function convertCurrency(r) { var t = ["零", "壹", "贰", "叁", "肆", "伍", "陆", "柒", "捌", "玖"], e = ["", "拾", "佰", "仟"], n = ["", "万", "亿", "兆"], s = ["角", "分", "毫", "厘"], a = "整", f = "元", i = 1e15, u, o, v = "", l; if ("" == r) return ""; if ((r = parseFloat(r)) >= 1e15) return ""; if (0 == r) return v = "零元整"; if (-1 == (r = r.toString()).indexOf(".") ? (u = r, o = "") : (u = (l = r.split("."))[0], o = l[1].substr(0, 4)), parseInt(u, 10) > 0) { for (var p = 0, b = u.length, c = 0; c < b; c++) { var g, h = b - c - 1, I = h / 4, d = h % 4; "0" == (g = u.substr(c, 1)) ? p++ : (p > 0 && (v += "零"), p = 0, v += t[parseInt(g)] + e[d]), 0 == d && p < 4 && (v += n[I]) } v += "元" } if ("" != o) for (var x = o.length, c = 0; c < x; c++) { var g; "0" != (g = o.substr(c, 1)) && (v += t[+g] + s[c]) } return "" == v ? v += "零元整" : "" == o && (v += "整"), v }
+    $('.contractAmount').on("keyup", function () {
+        $(this).parent().next().next().children().first().val(convertCurrency(Math.abs($(this).val())))
+    });
+    function updateEstimatedPriceChineseNum() {
+        var num = convertCurrency(Math.abs($("#input-estimatedPrice").val()))
+        $("#chinese-estimatedPrice").val(num);
+    }
+    function updateApproximatePriceChineseNum() {
+        var num = convertCurrency(Math.abs($("#input-approximatePrice").val()))
+        $("#chinese-approximatePrice").val(num);
+    }
+
+    function updateReportedBudgetChineseNum() {
+        var num = convertCurrency(Math.abs($("#input-reportedBudget").val()))
+        $("#chinese-reportedBudget").val(num);
+    }
+
+    function updateApprovedBudgetChineseNum() {
+        var num = convertCurrency(Math.abs($("#input-approvedBudget").val()))
+        $("#chinese-approvedBudget").val(num);
+    }
+
+    function ask() {
+        if (confirm("确定返回？")) { window.location.href = "{:url('manager/view')}" } else { return false }
+    }
+
+</script>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<script type="text/javascript" src="__STATIC__/js/frontend.js"></script>
+<script type="text/javascript">
+    function handlePreview(url) {
+        if (url == ""){
+            alert("请先上传")
+            return
+        }
+        if (url.slice(-3) == 'pdf') {
+            window.open(url, '预览pdf');
+            return;
+        } else if (url.slice(-3) == 'png' || url.slice(-3) == 'jpg' || url.slice(-4) == 'jepg') {
+            var openstr = '<img align="center" height="550" style="margin-top:8px;margin-left:8px" src="' + url + '" />';
+        } else {
+            var openstr = '此格式暂不支持预览,请<a href="' + url + '" target="_blank">下载</a>后再查看'
+        }
+        parent.openIframeLayer(openstr, '预览', {
+            type: 1,
+            skin: 'layui-layer-rim',
+            closeBtn: 1,
+            shadeClose: true,
+            area: ['900px', '600px']
+        })
+    }
+</script>
 </html>

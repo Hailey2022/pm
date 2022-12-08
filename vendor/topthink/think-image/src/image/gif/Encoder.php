@@ -1,19 +1,19 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkPHP [ WE CAN DO IT JUST THINK IT ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2006-2015 http://thinkphp.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: yunwuxin <448901948@qq.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 namespace think\image\gif;
 
 class Encoder
 {
-    public $GIF = "GIF89a"; /* GIF header 6 bytes    */
-    public $VER = "GIFEncoder V2.05"; /* Encoder version        */
+    public $GIF = "GIF89a"; 
+    public $VER = "GIFEncoder V2.05"; 
     public $BUF = [];
     public $LOP = 0;
     public $DIS = 2;
@@ -26,12 +26,7 @@ class Encoder
         'ERR03' => "Does not make animation from animated GIF source",
     ];
 
-    /*
-    :::::::::::::::::::::::::::::::::::::::::::::::::::
-    ::
-    ::    GIFEncoder...
-    ::
-     */
+    
     public function __construct(
         $GIF_src, $GIF_dly, $GIF_lop, $GIF_dis,
         $GIF_red, $GIF_grn, $GIF_blu, $GIF_mod
@@ -79,12 +74,7 @@ class Encoder
         $this->addFooter();
     }
 
-    /*
-    :::::::::::::::::::::::::::::::::::::::::::::::::::
-    ::
-    ::    GIFAddHeader...
-    ::
-     */
+    
     public function addHeader()
     {
         if (ord($this->BUF[0]{10}) & 0x80) {
@@ -95,12 +85,7 @@ class Encoder
         }
     }
 
-    /*
-    :::::::::::::::::::::::::::::::::::::::::::::::::::
-    ::
-    ::    GIFAddFrames...
-    ::
-     */
+    
     public function addFrames($i, $d)
     {
         $Locals_img = '';
@@ -130,9 +115,7 @@ class Encoder
         }
         switch ($Locals_tmp{0}) {
             case "!":
-                /**
-                 * @var string $Locals_img ;
-                 */
+                
                 $Locals_img = substr($Locals_tmp, 8, 10);
                 $Locals_tmp = substr($Locals_tmp, 18, strlen($Locals_tmp) - 18);
                 break;
@@ -167,23 +150,13 @@ class Encoder
         $this->IMG = 1;
     }
 
-    /*
-    :::::::::::::::::::::::::::::::::::::::::::::::::::
-    ::
-    ::    GIFAddFooter...
-    ::
-     */
+    
     public function addFooter()
     {
         $this->GIF .= ";";
     }
 
-    /*
-    :::::::::::::::::::::::::::::::::::::::::::::::::::
-    ::
-    ::    GIFBlockCompare...
-    ::
-     */
+    
     public function blockCompare($GlobalBlock, $LocalBlock, $Len)
     {
         for ($i = 0; $i < $Len; $i++) {
@@ -198,23 +171,13 @@ class Encoder
         return (1);
     }
 
-    /*
-    :::::::::::::::::::::::::::::::::::::::::::::::::::
-    ::
-    ::    GIFWord...
-    ::
-     */
+    
     public function word($int)
     {
         return (chr($int & 0xFF) . chr(($int >> 8) & 0xFF));
     }
 
-    /*
-    :::::::::::::::::::::::::::::::::::::::::::::::::::
-    ::
-    ::    GetAnimation...
-    ::
-     */
+    
     public function getAnimation()
     {
         return ($this->GIF);

@@ -1,13 +1,13 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2013-present http://www.thinkcmf.com All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: 小夏 < 449134904@qq.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 namespace app\admin\controller;
 
 use app\admin\model\AuthAccessModel;
@@ -21,23 +21,7 @@ use app\admin\model\AdminMenuModel;
 class RbacController extends AdminBaseController
 {
 
-    /**
-     * 角色管理列表
-     * @adminMenu(
-     *     'name'   => '角色管理',
-     *     'parent' => 'admin/User/default',
-     *     'display'=> true,
-     *     'hasView'=> true,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '角色管理',
-     *     'param'  => ''
-     * )
-     * @return mixed
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
-     */
+    
     public function index()
     {
         $content = hook_one('admin_rbac_index_view');
@@ -51,20 +35,7 @@ class RbacController extends AdminBaseController
         return $this->fetch();
     }
 
-    /**
-     * 添加角色
-     * @adminMenu(
-     *     'name'   => '添加角色',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> true,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '添加角色',
-     *     'param'  => ''
-     * )
-     * @return mixed
-     */
+    
     public function roleAdd()
     {
         $content = hook_one('admin_rbac_role_add_view');
@@ -76,26 +47,14 @@ class RbacController extends AdminBaseController
         return $this->fetch();
     }
 
-    /**
-     * 添加角色提交
-     * @adminMenu(
-     *     'name'   => '添加角色提交',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> false,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '添加角色提交',
-     *     'param'  => ''
-     * )
-     */
+    
     public function roleAddPost()
     {
         if ($this->request->isPost()) {
             $data   = $this->request->param();
             $result = $this->validate($data, 'role');
             if ($result !== true) {
-                // 验证失败 输出错误信息
+                
                 $this->error($result);
             } else {
                 $result = RoleModel::insert($data);
@@ -109,23 +68,7 @@ class RbacController extends AdminBaseController
         }
     }
 
-    /**
-     * 编辑角色
-     * @adminMenu(
-     *     'name'   => '编辑角色',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> true,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '编辑角色',
-     *     'param'  => ''
-     * )
-     * @return mixed
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
-     */
+    
     public function roleEdit()
     {
         $content = hook_one('admin_rbac_role_edit_view');
@@ -146,21 +89,7 @@ class RbacController extends AdminBaseController
         return $this->fetch();
     }
 
-    /**
-     * 编辑角色提交
-     * @adminMenu(
-     *     'name'   => '编辑角色提交',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> false,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '编辑角色提交',
-     *     'param'  => ''
-     * )
-     * @throws \think\Exception
-     * @throws \think\exception\PDOException
-     */
+    
     public function roleEditPost()
     {
         $id = $this->request->param("id", 0, 'intval');
@@ -171,7 +100,7 @@ class RbacController extends AdminBaseController
             $data   = $this->request->param();
             $result = $this->validate($data, 'role');
             if ($result !== true) {
-                // 验证失败 输出错误信息
+                
                 $this->error($result);
 
             } else {
@@ -184,21 +113,7 @@ class RbacController extends AdminBaseController
         }
     }
 
-    /**
-     * 删除角色
-     * @adminMenu(
-     *     'name'   => '删除角色',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> false,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '删除角色',
-     *     'param'  => ''
-     * )
-     * @throws \think\Exception
-     * @throws \think\exception\PDOException
-     */
+    
     public function roleDelete()
     {
         if ($this->request->isPost()) {
@@ -220,20 +135,7 @@ class RbacController extends AdminBaseController
         }
     }
 
-    /**
-     * 设置角色权限
-     * @adminMenu(
-     *     'name'   => '设置角色权限',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> true,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '设置角色权限',
-     *     'param'  => ''
-     * )
-     * @return mixed
-     */
+    
     public function authorize()
     {
         $content = hook_one('admin_rbac_authorize_view');
@@ -281,24 +183,7 @@ class RbacController extends AdminBaseController
         return $this->fetch();
     }
 
-    /**
-     * 角色授权提交
-     * @adminMenu(
-     *     'name'   => '角色授权提交',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> false,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '角色授权提交',
-     *     'param'  => ''
-     * )
-     * @throws \think\Exception
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
-     * @throws \think\exception\PDOException
-     */
+    
     public function authorizePost()
     {
         if ($this->request->isPost()) {
@@ -321,7 +206,7 @@ class RbacController extends AdminBaseController
                     }
                 }
 
-                Cache::clear('admin_menus');// 删除后台菜单缓存
+                Cache::clear('admin_menus');
 
                 $this->success("授权成功！");
             } else {
@@ -332,12 +217,7 @@ class RbacController extends AdminBaseController
         }
     }
 
-    /**
-     * 检查指定菜单是否有权限
-     * @param array $menu menu表中数组
-     * @param       $privData
-     * @return bool
-     */
+    
     private function _isChecked($menu, $privData)
     {
         $app    = $menu['app'];
@@ -356,13 +236,7 @@ class RbacController extends AdminBaseController
 
     }
 
-    /**
-     * 获取菜单深度
-     * @param       $id
-     * @param array $array
-     * @param int   $i
-     * @return int
-     */
+    
     protected function _getLevel($id, $array = [], $i = 0)
     {
         if ($array[$id]['parent_id'] == 0 || empty($array[$array[$id]['parent_id']]) || $array[$id]['parent_id'] == $id) {

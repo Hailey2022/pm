@@ -1,24 +1,20 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2013-present http://www.thinkcmf.com All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: kane <chengjin005@163.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 namespace app\user\controller;
 
 use cmf\controller\AdminBaseController;
 use cmf\lib\Upload;
 use think\facade\View;
 
-/**
- * 附件上传控制器
- * Class Asset
- * @package app\asset\controller
- */
+
 class AssetController extends AdminBaseController
 {
     public function initialize()
@@ -30,9 +26,7 @@ class AssetController extends AdminBaseController
         }
     }
 
-    /**
-     * webuploader 上传
-     */
+    
     public function webuploader()
     {
         if ($this->request->isPost()) {
@@ -81,7 +75,7 @@ class AssetController extends AdminBaseController
             $chunkSize = intval($uploadSetting['chunk_size']);
             $chunkSize = empty($chunkSize) ? 512 : $chunkSize;
             View::share('max_files', $arrData["multi"] ? $maxFiles : 1);
-            View::share('chunk_size', $chunkSize); //// 单位KB
+            View::share('chunk_size', $chunkSize); //
             View::share('multi', $arrData["multi"]);
             View::share('app', $arrData["app"]);
 

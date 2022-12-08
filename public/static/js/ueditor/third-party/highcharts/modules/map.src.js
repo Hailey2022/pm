@@ -49,7 +49,7 @@
 		return 'rgba(' + rgba.join(',') + ')';
 	}
 
-	// Set the default map navigation options
+	
 	defaultOptions.mapNavigation = {
 		buttonOptions: {
 			align: 'right',
@@ -79,10 +79,10 @@
 				y: 0
 			}
 		}
-		// enableButtons: false,
-		// enableTouchZoom: false,
-		// zoomOnDoubleClick: false,
-		// zoomOnMouseWheel: false
+		
+		
+		
+		
 
 	};
 	
@@ -92,15 +92,15 @@
 	Highcharts.splitPath = function (path) {
 		var i;
 
-		// Move letters apart
+		
 		path = path.replace(/([A-Za-z])/g, ' $1 ');
-		// Trim
+		
 		path = path.replace(/^\s*/, "").replace(/\s*$/, "");
 		
-		// Split on spaces and commas
+		
 		path = path.split(/[ ,]+/);
 		
-		// Parse numbers
+		
 		for (i = 0; i < path.length; i++) {
 			if (!/[a-zA-Z]/.test(path[i])) {
 				path[i] = parseFloat(path[i]);
@@ -109,7 +109,7 @@
 		return path;
 	};
 
-	// A placeholder for map definitions
+	
 	Highcharts.maps = {};
 	
 	/**
@@ -122,7 +122,7 @@
 			dataMax,
 			xData = [];
 
-		// Remove the xData array and cache it locally so that the proceed method doesn't use it
+		
 		each(this.series, function (series, i) {
 			if (series.useMapGeometry) {
 				xData[i] = series.xData;
@@ -130,17 +130,17 @@
 			}
 		});
 
-		// Call base to reach normal cartesian series (like mappoint)
+		
 		proceed.call(this);
 
-		// Run extremes logic for map and mapline
+		
 		dataMin = pick(this.dataMin, Number.MAX_VALUE);
 		dataMax = pick(this.dataMax, Number.MIN_VALUE);
 		each(this.series, function (series, i) {
 			if (series.useMapGeometry) {
 				dataMin = Math.min(dataMin, series[isXAxis ? 'minX' : 'minY']);
 				dataMax = Math.max(dataMax, series[isXAxis ? 'maxX' : 'maxY']);
-				series.xData = xData[i]; // Reset xData array
+				series.xData = xData[i]; 
 			}
 		});
 		
@@ -160,21 +160,21 @@
 			xAxis = chart.xAxis[0],
 			padAxis;
 		
-		// Run the parent method
+		
 		proceed.call(this);
 		
-		// On Y axis, handle both
+		
 		if (chart.options.chart.type === 'map' && !isXAxis && xAxis.transA !== UNDEFINED) {
 			
-			// Use the same translation for both axes
+			
 			this.transA = xAxis.transA = Math.min(this.transA, xAxis.transA);
 			
 			mapRatio = (xAxis.max - xAxis.min) / (this.max - this.min);
 			
-			// What axis to pad to put the map in the middle
+			
 			padAxis = mapRatio > plotRatio ? this : xAxis;
 			
-			// Pad it
+			
 			adjustedAxisLength = (padAxis.max - padAxis.min) * padAxis.transA;
 			padAxis.minPixelPadding = (padAxis.len - adjustedAxisLength) / 2;
 		}
@@ -189,17 +189,17 @@
 
 		proceed.call(chart);
 
-		// Render the plus and minus buttons
+		
 		chart.renderMapNavigation();
 
-		// Add the double click event
+		
 		if (mapNavigation.zoomOnDoubleClick) {
 			Highcharts.addEvent(chart.container, 'dblclick', function (e) {
 				chart.pointer.onContainerDblClick(e);
 			});
 		}
 
-		// Add the mousewheel event
+		
 		if (mapNavigation.zoomOnMouseWheel) {
 			Highcharts.addEvent(chart.container, document.onmousewheel === undefined ? 'DOMMouseScroll' : 'mousewheel', function (e) {
 				chart.pointer.onContainerMouseWheel(e);
@@ -207,7 +207,7 @@
 		}
 	});
 
-	// Extend the Pointer
+	
 	extend(Pointer.prototype, {
 
 		/**
@@ -236,7 +236,7 @@
 
 			e = this.normalize(e);
 
-			// Firefox uses e.detail, WebKit and IE uses wheelDelta
+			
 			delta = e.detail || -(e.wheelDelta / 120);
 			if (chart.isInsidePlot(e.chartX - chart.plotLeft, e.chartY - chart.plotTop)) {
 				chart.mapZoom(
@@ -247,19 +247,19 @@
 			}
 		}
 	});
-	// Implement the pinchType option
+	
 	wrap(Pointer.prototype, 'init', function (proceed, chart, options) {
 
 		proceed.call(this, chart, options);
 
-		// Pinch status
+		
 		if (options.mapNavigation.enableTouchZoom) {
 			this.pinchX = this.pinchHor = 
 				this.pinchY = this.pinchVert = true;
 		}
 	});
 
-	// Add events to the Chart object itself
+	
 	extend(Chart.prototype, {
 		renderMapNavigation: function () {
 			var chart = this,
@@ -300,11 +300,11 @@
 			each([['x', 'width'], ['y', 'height']], function (dim) {
 				var pos = dim[0],
 					size = dim[1];
-				if (inner[pos] + inner[size] > outer[pos] + outer[size]) { // right overflow
-					if (inner[size] > outer[size]) { // the general size is greater, fit fully to outer
+				if (inner[pos] + inner[size] > outer[pos] + outer[size]) { 
+					if (inner[size] > outer[size]) { 
 						inner[size] = outer[size];
 						inner[pos] = outer[pos];
-					} else { // align right
+					} else { 
 						inner[pos] = outer[pos] + outer[size] - inner[size];
 					}
 				}
@@ -357,7 +357,7 @@
 			xAxis.setExtremes(newExt.x, newExt.x + newExt.width, false);
 			yAxis.setExtremes(newExt.y, newExt.y + newExt.height, false);
 
-			// Prevent zooming until this one is finished animating
+			
 			delay = animation ? animation.duration || 500 : 0;
 			if (delay) {
 				chart.isMapZooming = true;
@@ -374,7 +374,7 @@
 	 * Extend the default options with map options
 	 */
 	plotOptions.map = merge(plotOptions.scatter, {
-		animation: false, // makes the complex shapes slow
+		animation: false, 
 		nullColor: '#F8F8F8',
 		borderColor: 'silver',
 		borderWidth: 1,
@@ -431,7 +431,7 @@
 				duration = animation && (animation.duration || 500);
 
 			if (duration && normalColor.rgba.length === 4 && hoverColor.rgba.length === 4) {
-				delete point.pointAttr[''].fill; // avoid resetting it in Point.setState
+				delete point.pointAttr[''].fill; 
 
 				clearTimeout(point.colorInterval);
 				point.colorInterval = setInterval(function () {
@@ -457,7 +457,7 @@
 	 */
 	seriesTypes.map = Highcharts.extendClass(seriesTypes.scatter, {
 		type: 'map',
-		pointAttrToOptions: { // mapping between SVG attributes and the corresponding options
+		pointAttrToOptions: { 
 			stroke: 'borderColor',
 			'stroke-width': 'borderWidth',
 			fill: 'color'
@@ -468,7 +468,7 @@
 		getSymbol: noop,
 		supportsDrilldown: true,
 		getExtremesFromAll: true,
-		useMapGeometry: true, // get axis extremes from paths, not values
+		useMapGeometry: true, 
 		init: function (chart) {
 			var series = this,
 				valueDecimals = chart.options.legend.valueDecimals,
@@ -495,7 +495,7 @@
 					from = range.from;
 					to = range.to;
 					
-					// Assemble the default name. This can be overridden by legend.options.labelFormatter
+					
 					name = '';
 					if (from === UNDEFINED) {
 						name = '< ';
@@ -512,7 +512,7 @@
 						name += numberFormat(to, valueDecimals);
 					}
 					
-					// Add a mock object to the legend items
+					
 					legendItems.push(Highcharts.extend({
 						chart: series.chart,
 						name: name,
@@ -532,7 +532,7 @@
 				fromLabel = colorRange.fromLabel;
 				toLabel = colorRange.toLabel;
 
-				// Flips linearGradient variables and label text.
+				
 				grad = horizontal ? [0, 0, 1, 0] : [0, 1, 0, 0]; 
 				if (!horizontal) {
 					tmpLabel = fromLabel;
@@ -540,7 +540,7 @@
 					toLabel = tmpLabel;
 				} 
 
-				// Creates color gradient.
+				
 				gradientColor = {
 					linearGradient: { x1: grad[0], y1: grad[1], x2: grad[2], y2: grad[3] },
 					stops: 
@@ -550,7 +550,7 @@
 					]
 				};
 
-				// Add a mock object to the legend items.
+				
 				legendItems = [{
 					chart: series.chart,
 					options: {},
@@ -590,7 +590,7 @@
 				box3,
 				rectangleLength = pick(legend.options.rectangleLength, 200);
 
-			// Set local variables based on option.
+			
 			if (horizontal) {
 				positionY = -(spacing / 2);
 				positionX = 0;
@@ -599,31 +599,31 @@
 				positionX = padding + gradientSize;
 			}
 
-			// Creates the from text.
+			
 			item.fromText = this.chart.renderer.text(
-					item.fromLabel,	// Text.
-					positionX,		// Lower left x.
-					positionY		// Lower left y.
+					item.fromLabel,	
+					positionX,		
+					positionY		
 				).attr({
 					zIndex: 2
 				}).add(item.legendGroup);
 			box1 = item.fromText.getBBox();
 
-			// Creates legend symbol.
-			// Ternary changes variables based on option.
+			
+			
 			item.legendSymbol = this.chart.renderer.rect(
-				horizontal ? box1.x + box1.width + spacing : box1.x - gradientSize - spacing,		// Upper left x.
-				box1.y,																				// Upper left y.
-				horizontal ? rectangleLength : gradientSize,											// Width.
-				horizontal ? gradientSize : rectangleLength,										// Height.
-				2																					// Corner radius.
+				horizontal ? box1.x + box1.width + spacing : box1.x - gradientSize - spacing,		
+				box1.y,																				
+				horizontal ? rectangleLength : gradientSize,											
+				horizontal ? gradientSize : rectangleLength,										
+				2																					
 			).attr({
 				zIndex: 1
 			}).add(item.legendGroup);
 			box2 = item.legendSymbol.getBBox();
 
-			// Creates the to text.
-			// Vertical coordinate changed based on option.
+			
+			
 			item.toText = this.chart.renderer.text(
 					item.toLabel,
 					box2.x + box2.width + spacing,
@@ -633,7 +633,7 @@
 				}).add(item.legendGroup);
 			box3 = item.toText.getBBox();
 
-			// Changes legend box settings based on option.
+			
 			if (horizontal) {
 				legend.offsetWidth = box1.width + box2.width + box3.width + (spacing * 2) + padding;
 				legend.itemY = gradientSize + padding;
@@ -654,11 +654,11 @@
 				minY =  Number.MAX_VALUE;
 			
 			
-			// Find the bounding box
+			
 			each(paths || this.options.data, function (point) {
 				var path = point.path,
 					i = path.length,
-					even = false, // while loop reads from the end
+					even = false, 
 					pointMaxX = Number.MIN_VALUE, 
 					pointMinX =  Number.MAX_VALUE, 
 					pointMaxY = Number.MIN_VALUE, 
@@ -666,17 +666,17 @@
 					
 				while (i--) {
 					if (typeof path[i] === 'number' && !isNaN(path[i])) {
-						if (even) { // even = x
+						if (even) { 
 							pointMaxX = Math.max(pointMaxX, path[i]);
 							pointMinX = Math.min(pointMinX, path[i]);
-						} else { // odd = Y
+						} else { 
 							pointMaxY = Math.max(pointMaxY, path[i]);
 							pointMinY = Math.min(pointMinY, path[i]);
 						}
 						even = !even;
 					}
 				}
-				// Cache point bounding box for use to position data labels
+				
 				point._maxX = pointMaxX;
 				point._minX = pointMinX;
 				point._maxY = pointMaxY;
@@ -703,21 +703,21 @@
 		translatePath: function (path) {
 			
 			var series = this,
-				even = false, // while loop reads from the end
+				even = false, 
 				xAxis = series.xAxis,
 				yAxis = series.yAxis,
 				i;
 				
-			// Preserve the original
+			
 			path = [].concat(path);
 				
-			// Do the translation
+			
 			i = path.length;
 			while (i--) {
 				if (typeof path[i] === 'number') {
-					if (even) { // even = x
+					if (even) { 
 						path[i] = Math.round(xAxis.translate(path[i]));
-					} else { // odd = Y
+					} else { 
 						path[i] = Math.round(yAxis.len - yAxis.translate(path[i]));
 					}
 					even = !even;
@@ -748,7 +748,7 @@
 					d: series.translatePath(point.path)
 				};
 				
-				// TODO: do point colors in drawPoints instead of point.init
+				
 				if (typeof point.y === 'number') {
 					if (point.y > dataMax) {
 						dataMax = point.y;
@@ -804,7 +804,7 @@
 				}
 
 				if (color) {
-					point.color = null; // reset from previous drilldowns, use of the same data options
+					point.color = null; 
 					point.options.color = color;
 				}
 			});
@@ -828,16 +828,16 @@
 				yAxis = series.yAxis,
 				colorKey = series.colorKey;
 			
-			// Make points pass test in drawing
+			
 			each(series.data, function (point) {
-				point.plotY = 1; // pass null test in column.drawPoints
+				point.plotY = 1; 
 				if (point[colorKey] === null) {
 					point[colorKey] = 0;
 					point.isNull = true;
 				}
 			});
 			
-			// Draw them
+			
 			seriesTypes.column.prototype.drawPoints.apply(series);
 			
 			each(series.data, function (point) {
@@ -852,13 +852,13 @@
 				point.plotY = Math.round(minY + (maxY - minY) * pick(dataLabels && dataLabels.anchorY, 0.5)); 
 				
 				
-				// Reset escaped null points
+				
 				if (point.isNull) {
 					point[colorKey] = null;
 				}
 			});
 
-			// Now draw the data labels
+			
 			Highcharts.Series.prototype.drawDataLabels.call(series);
 			
 		},
@@ -884,7 +884,7 @@
 					translateY: fromBox.y
 				};
 				
-				// TODO: Animate this.group instead
+				
 				each(this.points, function (point) {
 
 					point.graphic
@@ -922,14 +922,14 @@
 	});
 
 
-	// The mapline series type
+	
 	plotOptions.mapline = merge(plotOptions.map, {
 		lineWidth: 1,
 		backgroundColor: 'none'
 	});
 	seriesTypes.mapline = Highcharts.extendClass(seriesTypes.map, {
 		type: 'mapline',
-		pointAttrToOptions: { // mapping between SVG attributes and the corresponding options
+		pointAttrToOptions: { 
 			stroke: 'color',
 			'stroke-width': 'lineWidth',
 			fill: 'backgroundColor'
@@ -937,7 +937,7 @@
 		drawLegendSymbol: seriesTypes.line.prototype.drawLegendSymbol
 	});
 
-	// The mappoint series type
+	
 	plotOptions.mappoint = merge(plotOptions.scatter, {
 		dataLabels: {
 			enabled: true,
@@ -974,7 +974,7 @@
 			},
 			seriesOptions;
 		
-		// Don't merge the data
+		
 		seriesOptions = options.series;
 		options.series = null;
 		
@@ -986,9 +986,9 @@
 			xAxis: hiddenAxis,
 			yAxis: merge(hiddenAxis, { reversed: true })	
 		},
-		options, // user's options
+		options, 
 	
-		{ // forced options
+		{ 
 			chart: {
 				inverted: false
 			}

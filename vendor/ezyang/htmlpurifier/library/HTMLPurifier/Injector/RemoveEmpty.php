@@ -2,42 +2,25 @@
 
 class HTMLPurifier_Injector_RemoveEmpty extends HTMLPurifier_Injector
 {
-    /**
-     * @type HTMLPurifier_Context
-     */
+    
     private $context;
 
-    /**
-     * @type HTMLPurifier_Config
-     */
+    
     private $config;
 
-    /**
-     * @type HTMLPurifier_AttrValidator
-     */
+    
     private $attrValidator;
 
-    /**
-     * @type bool
-     */
+    
     private $removeNbsp;
 
-    /**
-     * @type bool
-     */
+    
     private $removeNbspExceptions;
 
-    /**
-     * Cached contents of %AutoFormat.RemoveEmpty.Predicate
-     * @type array
-     */
+    
     private $exclude;
 
-    /**
-     * @param HTMLPurifier_Config $config
-     * @param HTMLPurifier_Context $context
-     * @return void
-     */
+    
     public function prepare($config, $context)
     {
         parent::prepare($config, $context);
@@ -48,23 +31,21 @@ class HTMLPurifier_Injector_RemoveEmpty extends HTMLPurifier_Injector
         $this->exclude = $config->get('AutoFormat.RemoveEmpty.Predicate');
         foreach ($this->exclude as $key => $attrs) {
             if (!is_array($attrs)) {
-                // HACK, see HTMLPurifier/Printer/ConfigForm.php
+                
                 $this->exclude[$key] = explode(';', $attrs);
             }
         }
         $this->attrValidator = new HTMLPurifier_AttrValidator();
     }
 
-    /**
-     * @param HTMLPurifier_Token $token
-     */
+    
     public function handleElement(&$token)
     {
         if (!$token instanceof HTMLPurifier_Token_Start) {
             return;
         }
         $next = false;
-        $deleted = 1; // the current tag
+        $deleted = 1; 
         for ($i = count($this->inputZipper->back) - 1; $i >= 0; $i--, $deleted++) {
             $next = $this->inputZipper->back[$i];
             if ($next instanceof HTMLPurifier_Token_Text) {
@@ -102,11 +83,11 @@ class HTMLPurifier_Injector_RemoveEmpty extends HTMLPurifier_Injector
                 }
                 break;
             }
-            // This is safe because we removed the token that triggered this.
+            
             $this->rewindOffset($b+$deleted);
             return;
         }
     }
 }
 
-// vim: et sw=4 sts=4
+

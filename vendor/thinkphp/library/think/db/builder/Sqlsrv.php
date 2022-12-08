@@ -1,13 +1,13 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkPHP [ WE CAN DO IT JUST THINK IT ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2006-2012 http://thinkphp.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: liu21st <liu21st@gmail.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 
 namespace think\db\builder;
 
@@ -16,9 +16,7 @@ use think\db\Expression;
 use think\db\Query;
 use think\Exception;
 
-/**
- * Sqlsrv数据库驱动
- */
+
 class Sqlsrv extends Builder
 {
     protected $selectSql       = 'SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER (%ORDER%) AS ROW_NUMBER FROM (SELECT %DISTINCT% %FIELD% FROM %TABLE%%JOIN%%WHERE%%GROUP%%HAVING%) AS thinkphp) AS T1 %LIMIT%%COMMENT%';
@@ -28,13 +26,7 @@ class Sqlsrv extends Builder
     protected $insertSql       = 'INSERT INTO %TABLE% (%FIELD%) VALUES (%DATA%) %COMMENT%';
     protected $insertAllSql    = 'INSERT INTO %TABLE% (%FIELD%) %DATA% %COMMENT%';
 
-    /**
-     * order分析
-     * @access protected
-     * @param  Query     $query        查询对象
-     * @param  mixed     $order
-     * @return string
-     */
+    
     protected function parseOrder(Query $query, $order)
     {
         if (empty($order)) {
@@ -66,25 +58,13 @@ class Sqlsrv extends Builder
         return empty($array) ? '' : ' ORDER BY ' . implode(',', $array);
     }
 
-    /**
-     * 随机排序
-     * @access protected
-     * @param  Query     $query        查询对象
-     * @return string
-     */
+    
     protected function parseRand(Query $query)
     {
         return 'rand()';
     }
 
-    /**
-     * 字段和表名处理
-     * @access public
-     * @param  Query     $query     查询对象
-     * @param  mixed     $key       字段名
-     * @param  bool      $strict   严格检测
-     * @return string
-     */
+    
     public function parseKey(Query $query, $key, $strict = false)
     {
         if (is_numeric($key)) {
@@ -125,13 +105,7 @@ class Sqlsrv extends Builder
         return $key;
     }
 
-    /**
-     * limit
-     * @access protected
-     * @param  Query     $query        查询对象
-     * @param  mixed     $limit
-     * @return string
-     */
+    
     protected function parseLimit(Query $query, $limit)
     {
         if (empty($limit)) {

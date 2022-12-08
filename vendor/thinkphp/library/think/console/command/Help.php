@@ -1,13 +1,13 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkPHP [ WE CAN DO IT JUST THINK ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2006~2015 http://thinkphp.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: yunwuxin <448901948@qq.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 
 namespace think\console\command;
 
@@ -21,9 +21,7 @@ class Help extends Command
 {
     private $command;
 
-    /**
-     * {@inheritdoc}
-     */
+    
     protected function configure()
     {
         $this->ignoreValidationErrors();
@@ -41,18 +39,13 @@ EOF
         );
     }
 
-    /**
-     * Sets the command.
-     * @param Command $command The command to set
-     */
+    
     public function setCommand(Command $command)
     {
         $this->command = $command;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    
     protected function execute(Input $input, Output $output)
     {
         if (null === $this->command) {

@@ -1,11 +1,7 @@
 <?php
 namespace wxapp\aes;
 
-/**
- * Prpcrypt class
- *
- *
- */
+
 class Prpcrypt
 {
     public $key;
@@ -15,12 +11,7 @@ class Prpcrypt
         $this->key = $k;
     }
 
-    /**
-     * 对密文进行解密
-     * @param string $aesCipher 需要解密的密文
-     * @param string $aesIV 解密的初始向量
-     * @return string 解密得到的明文
-     */
+    
     public function decrypt($aesCipher, $aesIV)
     {
 

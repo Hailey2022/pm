@@ -1,28 +1,22 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkPHP [ WE CAN DO IT JUST THINK ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2006~2018 http://thinkphp.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: liu21st <liu21st@gmail.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 
 namespace think;
 
 class Build
 {
-    /**
-     * 应用对象
-     * @var App
-     */
+    
     protected $app;
 
-    /**
-     * 应用目录
-     * @var string
-     */
+    
     protected $basePath;
 
     public function __construct(App $app)
@@ -31,17 +25,10 @@ class Build
         $this->basePath = $this->app->getAppPath();
     }
 
-    /**
-     * 根据传入的build资料创建目录和文件
-     * @access public
-     * @param  array  $build build列表
-     * @param  string $namespace 应用类库命名空间
-     * @param  bool   $suffix 类库后缀
-     * @return void
-     */
+    
     public function run(array $build = [], $namespace = 'app', $suffix = false)
     {
-        // 锁定
+        
         $lockfile = $this->basePath . 'build.lock';
 
         if (is_writable($lockfile)) {
@@ -52,27 +39,22 @@ class Build
 
         foreach ($build as $module => $list) {
             if ('__dir__' == $module) {
-                // 创建目录列表
+                
                 $this->buildDir($list);
             } elseif ('__file__' == $module) {
-                // 创建文件列表
+                
                 $this->buildFile($list);
             } else {
-                // 创建模块
+                
                 $this->module($module, $list, $namespace, $suffix);
             }
         }
 
-        // 解除锁定
+        
         unlink($lockfile);
     }
 
-    /**
-     * 创建目录
-     * @access protected
-     * @param  array $list 目录列表
-     * @return void
-     */
+    
     protected function buildDir($list)
     {
         foreach ($list as $dir) {
@@ -80,17 +62,12 @@ class Build
         }
     }
 
-    /**
-     * 创建文件
-     * @access protected
-     * @param  array $list 文件列表
-     * @return void
-     */
+    
     protected function buildFile($list)
     {
         foreach ($list as $file) {
             if (!is_dir($this->basePath . dirname($file))) {
-                // 创建目录
+                
                 mkdir($this->basePath . dirname($file), 0755, true);
             }
 
@@ -100,75 +77,67 @@ class Build
         }
     }
 
-    /**
-     * 创建模块
-     * @access public
-     * @param  string $module 模块名
-     * @param  array  $list build列表
-     * @param  string $namespace 应用类库命名空间
-     * @param  bool   $suffix 类库后缀
-     * @return void
-     */
+    
     public function module($module = '', $list = [], $namespace = 'app', $suffix = false)
     {
         $module = $module ? $module : '';
 
         if (!is_dir($this->basePath . $module)) {
-            // 创建模块目录
+            
             mkdir($this->basePath . $module);
         }
 
         if (basename($this->app->getRuntimePath()) != $module) {
-            // 创建配置文件和公共文件
+            
             $this->buildCommon($module);
-            // 创建模块的默认页面
+            
             $this->buildHello($module, $namespace, $suffix);
         }
 
         if (empty($list)) {
-            // 创建默认的模块目录和文件
+            
             $list = [
                 '__file__' => ['common.php'],
                 '__dir__'  => ['controller', 'model', 'view', 'config'],
             ];
         }
 
-        // 创建子目录和文件
+        
         foreach ($list as $path => $file) {
             $modulePath = $this->basePath . $module . DIRECTORY_SEPARATOR;
             if ('__dir__' == $path) {
-                // 生成子目录
+                
                 foreach ($file as $dir) {
                     $this->checkDirBuild($modulePath . $dir);
                 }
             } elseif ('__file__' == $path) {
-                // 生成（空白）文件
+                
                 foreach ($file as $name) {
                     if (!is_file($modulePath . $name)) {
                         file_put_contents($modulePath . $name, 'php' == pathinfo($name, PATHINFO_EXTENSION) ? "<?php\n" : '');
                     }
                 }
             } else {
-                // 生成相关MVC文件
+                
                 foreach ($file as $val) {
                     $val      = trim($val);
                     $filename = $modulePath . $path . DIRECTORY_SEPARATOR . $val . ($suffix ? ucfirst($path) : '') . '.php';
                     $space    = $namespace . '\\' . ($module ? $module . '\\' : '') . $path;
                     $class    = $val . ($suffix ? ucfirst($path) : '');
                     switch ($path) {
-                        case 'controller': // 控制器
+                        case 'controller': 
                             $content = "<?php\nnamespace {$space};\n\nclass {$class}\n{\n\n}";
                             break;
-                        case 'model': // 模型
+                        case 'model': 
                             $content = "<?php\nnamespace {$space};\n\nuse think\Model;\n\nclass {$class} extends Model\n{\n\n}";
                             break;
-                        case 'view': // 视图
+                        case 'view': 
                             $filename = $modulePath . $path . DIRECTORY_SEPARATOR . $val . '.html';
                             $this->checkDirBuild(dirname($filename));
                             $content = '';
                             break;
                         default:
-                            // 其他文件
+                            
                             $content = "<?php\nnamespace {$space};\n\nclass {$class}\n{\n\n}";
                     }
 
@@ -180,13 +149,7 @@ class Build
         }
     }
 
-    /**
-     * 根据注释自动生成路由规则
-     * @access public
-     * @param  bool   $suffix 类库后缀
-     * @param  string $layer  控制器层目录名
-     * @return string
-     */
+    
     public function buildRoute($suffix = false, $layer = '')
     {
         $namespace = $this->app->getNameSpace();
@@ -220,16 +183,7 @@ class Build
         return $filename;
     }
 
-    /**
-     * 生成子目录控制器类的路由规则
-     * @access protected
-     * @param  string $path  控制器目录
-     * @param  string $namespace 应用命名空间
-     * @param  string $module 模块
-     * @param  bool   $suffix 类库后缀
-     * @param  string $layer 控制器层目录名
-     * @return string
-     */
+    
     protected function buildDirRoute($path, $namespace, $module, $suffix, $layer)
     {
         $content     = '';
@@ -241,7 +195,7 @@ class Build
             $class = new \ReflectionClass($namespace . '\\' . ($module ? $module . '\\' : '') . $layer . '\\' . $controller);
 
             if (strpos($layer, '\\')) {
-                // 多级控制器
+                
                 $level      = str_replace(DIRECTORY_SEPARATOR, '.', substr($layer, 11));
                 $controller = $level . '.' . $controller;
                 $length     = strlen(strstr($layer, '\\', true));
@@ -265,14 +219,7 @@ class Build
         return $content;
     }
 
-    /**
-     * 生成控制器类的路由规则
-     * @access protected
-     * @param  string $class        控制器完整类名
-     * @param  string $module       模块名
-     * @param  string $controller   控制器名
-     * @return string
-     */
+    
     protected function getControllerRoute($class, $module, $controller)
     {
         $content = '';
@@ -302,13 +249,7 @@ class Build
         return $content;
     }
 
-    /**
-     * 解析路由注释
-     * @access protected
-     * @param  string $comment
-     * @param  string $tag
-     * @return string
-     */
+    
     protected function parseRouteComment($comment, $tag = '@route(')
     {
         $comment = substr($comment, 3, -2);
@@ -330,14 +271,7 @@ class Build
         return $comment;
     }
 
-    /**
-     * 获取方法的路由注释
-     * @access protected
-     * @param  string           $module 模块
-     * @param  string           $controller 控制器名
-     * @param  \ReflectMethod   $reflectMethod
-     * @return string|void
-     */
+    
     protected function getMethodRouteComment($module, $controller, $reflectMethod)
     {
         $comment = $reflectMethod->getDocComment();
@@ -358,14 +292,7 @@ class Build
         }
     }
 
-    /**
-     * 创建模块的欢迎页面
-     * @access protected
-     * @param  string $module 模块名
-     * @param  string $namespace 应用类库命名空间
-     * @param  bool   $suffix 类库后缀
-     * @return void
-     */
+    
     protected function buildHello($module, $namespace, $suffix = false)
     {
         $filename = $this->basePath . ($module ? $module . DIRECTORY_SEPARATOR : '') . 'controller' . DIRECTORY_SEPARATOR . 'Index' . ($suffix ? 'Controller' : '') . '.php';
@@ -378,12 +305,7 @@ class Build
         }
     }
 
-    /**
-     * 创建模块的公共文件
-     * @access protected
-     * @param  string $module 模块名
-     * @return void
-     */
+    
     protected function buildCommon($module)
     {
         $filename = $this->app->getConfigPath() . ($module ? $module . DIRECTORY_SEPARATOR : '') . 'app.php';
@@ -400,12 +322,7 @@ class Build
         }
     }
 
-    /**
-     * 创建目录
-     * @access protected
-     * @param  string $dirname 目录名称
-     * @return void
-     */
+    
     protected function checkDirBuild($dirname)
     {
         if (!is_dir($dirname)) {

@@ -1,22 +1,18 @@
 <?php
-// +----------------------------------------------------------------------
-// | TopThink [ WE CAN DO IT JUST THINK IT ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2015 http://www.topthink.com All rights reserved.
-// +----------------------------------------------------------------------
-// | Author: zhangyajun <448901948@qq.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
 
 namespace think\process;
 
 class Utils
 {
 
-    /**
-     * 转义字符串
-     * @param string $argument
-     * @return string
-     */
+    
     public static function escapeArgument($argument)
     {
 
@@ -29,10 +25,10 @@ class Utils
             if ('"' === $part) {
                 $escapedArgument .= '\\"';
             } elseif (self::isSurroundedBy($part, '%')) {
-                // Avoid environment variable expansion
+                
                 $escapedArgument .= '^%"' . substr($part, 1, -1) . '"^%';
             } else {
-                // escape trailing backslash
+                
                 if ('\\' === substr($part, -1)) {
                     $part .= '\\';
                 }
@@ -46,13 +42,7 @@ class Utils
         return $escapedArgument;
     }
 
-    /**
-     * 验证并进行规范化Process输入。
-     * @param string $caller
-     * @param mixed  $input
-     * @return string
-     * @throws \InvalidArgumentException
-     */
+    
     public static function validateInput($caller, $input)
     {
         if (null !== $input) {

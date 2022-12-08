@@ -1,17 +1,15 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2013-2018 http://www.thinkcmf.com All rights reserved.
-// +----------------------------------------------------------------------
-// | Author: Dean <zxxjjforever@163.com>
-// +----------------------------------------------------------------------
-namespace plugins\mobile_code_demo;//Demo插件英文名，改成你的插件英文就行了
+
+
+
+
+
+
+
+namespace plugins\mobile_code_demo;
 use cmf\lib\Plugin;
 
-/**
- * MobileCodeDemoPlugin
- */
+
 class MobileCodeDemoPlugin extends Plugin
 {
 
@@ -47,10 +45,10 @@ class MobileCodeDemoPlugin extends Plugin
         $expire_time   = time() + $expire_minute * 60;
         $result        = false;
 
-//        $result = [
-//            'error'     => 1,
-//            'message' => '服务商返回结果错误'
-//        ];
+
+
+
+
 
         $result = [
             'error'     => 0,

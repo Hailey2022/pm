@@ -56,7 +56,7 @@ $(function () {
         var marginLeft = $taskContentInner.css("margin-left");
         marginLeft     = parseInt(marginLeft.replace("px", ""));
         marginLeft     = marginLeft + tabwidth > 0 ? 0 : marginLeft + tabwidth;
-        // $taskContentInner.css("margin-left", marginLeft + "px");
+        
         $taskContentInner.stop();
         $taskContentInner.animate({"margin-left": marginLeft + "px"}, 300, 'swing');
     });
@@ -166,7 +166,7 @@ function openapp(url, appId, appname, refresh) {
     }
 
     //url要添加参数。获取最外部的window.修改href
-    // 支持History API
+    
     if (window.history && history.pushState){
         var tw = window.top;
 

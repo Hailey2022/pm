@@ -19,7 +19,7 @@ foreach (file('index.php') as $lineNumber => $line) {
 
         echo str_replace('`', '``', rtrim(substr(ltrim($line), 3))) . PHP_EOL;
     } else {
-        // it's code
+        
         if ($codeStart === false) {
             $codeStart = $lineNumber;
         }

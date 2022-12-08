@@ -1,34 +1,31 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkPHP [ WE CAN DO IT JUST THINK IT ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2006-2016 http://thinkphp.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: luofei614 <weibo.com/luofei614>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 
 namespace think\log\driver;
 
 use think\App;
 
-/**
- * github: https://github.com/luofei614/SocketLog
- * @author luofei614<weibo.com/luofei614>
- */
+
 class Socket
 {
     public $port = 1116; //SocketLog 服务的http的端口号
 
     protected $config = [
-        // socket服务器地址
+        
         'host'                => 'localhost',
-        // 是否显示加载的文件列表
+        
         'show_included_files' => false,
-        // 日志强制记录到配置的client_id
+        
         'force_client_ids'    => [],
-        // 限制允许读取日志的client_id
+        
         'allow_client_ids'    => [],
         //输出到浏览器默认展开的日志级别
         'expand_level'        => ['debug'],
@@ -45,11 +42,7 @@ class Socket
     protected $allowForceClientIds = []; //配置强制推送且被授权的client_id
     protected $app;
 
-    /**
-     * 架构函数
-     * @access public
-     * @param  array $config 缓存参数
-     */
+    
     public function __construct(App $app, array $config = [])
     {
         $this->app = $app;
@@ -59,12 +52,7 @@ class Socket
         }
     }
 
-    /**
-     * 调试输出接口
-     * @access public
-     * @param  array     $log 日志信息
-     * @return bool
-     */
+    
     public function save(array $log = [], $append = false)
     {
         if (!$this->check()) {
@@ -87,7 +75,7 @@ class Socket
                 $current_uri = 'cmd:' . implode(' ', $_SERVER['argv']);
             }
 
-            // 基本信息
+            
             $trace[] = [
                 'type' => 'group',
                 'msg'  => $current_uri . $time_str . $memory_str . $file_load,
@@ -165,15 +153,7 @@ class Socket
         return true;
     }
 
-    /**
-     * 发送给指定客户端
-     * @access protected
-     * @author Zjmainstay
-     * @param  $tabid
-     * @param  $client_id
-     * @param  $logs
-     * @param  $force_client_id
-     */
+    
     protected function sendToClient($tabid, $client_id, $logs, $force_client_id)
     {
         $logs = [
@@ -248,13 +228,7 @@ class Socket
         return;
     }
 
-    /**
-     * @access protected
-     * @param  string $host - $host of socket server
-     * @param  string $message - 发送的消息
-     * @param  string $address - 地址
-     * @return bool
-     */
+    
     protected function send($host, $message = '', $address = '/')
     {
         $url = 'http://' . $host . ':' . $this->port . $address;

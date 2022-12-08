@@ -1,13 +1,13 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2013-present http://www.thinkcmf.com All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: Powerless < wzxaini9@gmail.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 namespace app\user\controller;
 
 use cmf\controller\UserBaseController;
@@ -16,9 +16,7 @@ use app\user\model\UserFavoriteModel;
 class FavoriteController extends UserBaseController
 {
 
-    /**
-     * 个人中心我的收藏列表
-     */
+    
     public function index()
     {
         $userFavoriteModel = new UserFavoriteModel();
@@ -30,9 +28,7 @@ class FavoriteController extends UserBaseController
         return $this->fetch();
     }
 
-    /**
-     * 用户取消收藏
-     */
+    
     public function delete()
     {
         if ($this->request->isPost()) {
@@ -47,9 +43,7 @@ class FavoriteController extends UserBaseController
         }
     }
 
-    /**
-     * 用户收藏
-     */
+    
     public function add()
     {
         if (!$this->request->isPost()) {

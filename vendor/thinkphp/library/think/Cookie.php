@@ -1,54 +1,43 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkPHP [ WE CAN DO IT JUST THINK ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2006~2018 http://thinkphp.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: liu21st <liu21st@gmail.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 
 namespace think;
 
 class Cookie
 {
-    /**
-     * 配置参数
-     * @var array
-     */
+    
     protected $config = [
-        // cookie 名称前缀
+        
         'prefix'    => '',
-        // cookie 保存时间
+        
         'expire'    => 0,
-        // cookie 保存路径
+        
         'path'      => '/',
-        // cookie 有效域名
+        
         'domain'    => '',
-        //  cookie 启用安全传输
+        
         'secure'    => false,
-        // httponly设置
+        
         'httponly'  => false,
-        // 是否使用 setcookie
+        
         'setcookie' => true,
     ];
 
-    /**
-     * 构造方法
-     * @access public
-     */
+    
     public function __construct(array $config = [])
     {
         $this->init($config);
     }
 
-    /**
-     * Cookie初始化
-     * @access public
-     * @param  array $config
-     * @return void
-     */
+    
     public function init(array $config = [])
     {
         $this->config = array_merge($this->config, array_change_key_case($config));
@@ -63,12 +52,7 @@ class Cookie
         return new static($config->pull('cookie'));
     }
 
-    /**
-     * 设置或者获取cookie作用域（前缀）
-     * @access public
-     * @param  string $prefix
-     * @return string|void
-     */
+    
     public function prefix($prefix = '')
     {
         if (empty($prefix)) {
@@ -78,18 +62,10 @@ class Cookie
         $this->config['prefix'] = $prefix;
     }
 
-    /**
-     * Cookie 设置、获取、删除
-     *
-     * @access public
-     * @param  string $name  cookie名称
-     * @param  mixed  $value cookie值
-     * @param  mixed  $option 可选参数 可能会是 null|integer|string
-     * @return void
-     */
+    
     public function set($name, $value = '', $option = null)
     {
-        // 参数设置(会覆盖黙认设置)
+        
         if (!is_null($option)) {
             if (is_numeric($option)) {
                 $option = ['expire' => $option];
@@ -104,7 +80,7 @@ class Cookie
 
         $name = $config['prefix'] . $name;
 
-        // 设置cookie
+        
         if (is_array($value)) {
             array_walk_recursive($value, [$this, 'jsonFormatProtect'], 'encode');
             $value = 'think:' . json_encode($value);
@@ -119,28 +95,13 @@ class Cookie
         $_COOKIE[$name] = $value;
     }
 
-    /**
-     * Cookie 设置保存
-     *
-     * @access public
-     * @param  string $name  cookie名称
-     * @param  mixed  $value cookie值
-     * @param  array  $option 可选参数
-     * @return void
-     */
+    
     protected function setCookie($name, $value, $expire, $option = [])
     {
         setcookie($name, $value, $expire, $option['path'], $option['domain'], $option['secure'], $option['httponly']);
     }
 
-    /**
-     * 永久保存Cookie数据
-     * @access public
-     * @param  string $name  cookie名称
-     * @param  mixed  $value cookie值
-     * @param  mixed  $option 可选参数 可能会是 null|integer|string
-     * @return void
-     */
+    
     public function forever($name, $value = '', $option = null)
     {
         if (is_null($option) || is_numeric($option)) {
@@ -152,13 +113,7 @@ class Cookie
         $this->set($name, $value, $option);
     }
 
-    /**
-     * 判断Cookie数据
-     * @access public
-     * @param  string        $name cookie名称
-     * @param  string|null   $prefix cookie前缀
-     * @return bool
-     */
+    
     public function has($name, $prefix = null)
     {
         $prefix = !is_null($prefix) ? $prefix : $this->config['prefix'];
@@ -167,13 +122,7 @@ class Cookie
         return isset($_COOKIE[$name]);
     }
 
-    /**
-     * Cookie获取
-     * @access public
-     * @param  string        $name cookie名称 留空获取全部
-     * @param  string|null   $prefix cookie前缀
-     * @return mixed
-     */
+    
     public function get($name = '', $prefix = null)
     {
         $prefix = !is_null($prefix) ? $prefix : $this->config['prefix'];
@@ -205,13 +154,7 @@ class Cookie
         return $value;
     }
 
-    /**
-     * Cookie删除
-     * @access public
-     * @param  string        $name cookie名称
-     * @param  string|null   $prefix cookie前缀
-     * @return void
-     */
+    
     public function delete($name, $prefix = null)
     {
         $config = $this->config;
@@ -222,29 +165,24 @@ class Cookie
             $this->setcookie($name, '', $_SERVER['REQUEST_TIME'] - 3600, $config);
         }
 
-        // 删除指定cookie
+        
         unset($_COOKIE[$name]);
     }
 
-    /**
-     * Cookie清空
-     * @access public
-     * @param  string|null $prefix cookie前缀
-     * @return void
-     */
+    
     public function clear($prefix = null)
     {
-        // 清除指定前缀的所有cookie
+        
         if (empty($_COOKIE)) {
             return;
         }
 
-        // 要删除的cookie前缀，不指定则删除config设置的指定前缀
+        
         $config = $this->config;
         $prefix = !is_null($prefix) ? $prefix : $config['prefix'];
 
         if ($prefix) {
-            // 如果前缀为空字符串将不作处理直接返回
+            
             foreach ($_COOKIE as $key => $val) {
                 if (0 === strpos($key, $prefix)) {
                     if ($config['setcookie']) {

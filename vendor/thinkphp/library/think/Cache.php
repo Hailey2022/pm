@@ -1,44 +1,28 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkPHP [ WE CAN DO IT JUST THINK ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2006~2018 http://thinkphp.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: liu21st <liu21st@gmail.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 
 namespace think;
 
 use think\cache\Driver;
 
-/**
- * Class Cache
- *
- * @package think
- *
- * @mixin Driver
- * @mixin \think\cache\driver\File
- */
+
 class Cache
 {
-    /**
-     * 缓存实例
-     * @var array
-     */
+    
     protected $instance = [];
 
-    /**
-     * 缓存配置
-     * @var array
-     */
+    
     protected $config = [];
 
-    /**
-     * 操作句柄
-     * @var object
-     */
+    
     protected $handler;
 
     public function __construct(array $config = [])
@@ -47,13 +31,7 @@ class Cache
         $this->init($config);
     }
 
-    /**
-     * 连接缓存
-     * @access public
-     * @param  array         $options  配置数组
-     * @param  bool|string   $name 缓存连接标识 true 强制重新连接
-     * @return Driver
-     */
+    
     public function connect(array $options = [], $name = false)
     {
         if (false === $name) {
@@ -73,13 +51,7 @@ class Cache
         return $this->instance[$name];
     }
 
-    /**
-     * 自动初始化缓存
-     * @access public
-     * @param  array         $options  配置数组
-     * @param  bool          $force    强制更新
-     * @return Driver
-     */
+    
     public function init(array $options = [], $force = false)
     {
         if (is_null($this->handler) || $force) {
@@ -110,12 +82,7 @@ class Cache
         $this->config = array_merge($this->config, $config);
     }
 
-    /**
-     * 切换缓存类型 需要配置 cache.type 为 complex
-     * @access public
-     * @param  string $name 缓存标识
-     * @return Driver
-     */
+    
     public function store($name = '')
     {
         if ('' !== $name && 'complex' == $this->config['type']) {

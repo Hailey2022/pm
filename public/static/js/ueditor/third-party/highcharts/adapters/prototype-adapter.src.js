@@ -8,10 +8,10 @@
  * Highcharts license: www.highcharts.com/license.
  */
 
-// JSLint options:
+
 /*global Effect, Class, Event, Element, $, $$, $A */
 
-// Adapter interface between prototype and the Highcharts charting library
+
 var HighchartsAdapter = (function () {
 
 var hasEffect = typeof Effect !== 'undefined';
@@ -40,7 +40,7 @@ return {
 					this.key = attr;
 					from = element.attr ? element.attr(attr) : $(element).getStyle(attr);
 
-					// special treatment for paths
+					
 					if (attr === 'd') {
 						this.paths = pathAnim.init(
 							element,
@@ -50,7 +50,7 @@ return {
 						this.toD = to;
 
 
-						// fake values in order to read relative position as a float in update
+						
 						from = 0;
 						to = 1;
 					}
@@ -64,13 +64,13 @@ return {
 				},
 				setup: function () {
 					HighchartsAdapter._extend(this.element);
-					// If this is the first animation on this object, create the _highcharts_animation helper that
-					// contain pointers to the animation objects.
+					
+					
 					if (!this.element._highchart_animation) {
 						this.element._highchart_animation = {};
 					}
 
-					// Store a reference to this animation instance.
+					
 					this.element._highchart_animation[this.key] = this;
 				},
 				update: function (position) {
@@ -82,13 +82,13 @@ return {
 						position = pathAnim.step(paths[0], paths[1], position, this.toD);
 					}
 
-					if (element.attr) { // SVGElement
+					if (element.attr) { 
 						
-						if (element.element) { // If not, it has been destroyed (#1405)
+						if (element.element) { 
 							element.attr(this.options.attribute, position);
 						}
 					
-					} else { // HTML, #409
+					} else { 
 						obj = {};
 						obj[this.options.attribute] = position;
 						$(element).setStyle(obj);
@@ -96,9 +96,9 @@ return {
 					
 				},
 				finish: function () {
-					// Delete the property that holds this animation now that it is finished.
-					// Both canceled animations and complete ones gets a 'finish' call.
-					if (this.element && this.element._highchart_animation) { // #1405
+					
+					
+					if (this.element && this.element._highchart_animation) { 
 						delete this.element._highchart_animation[this.key];
 					}
 				}
@@ -113,8 +113,8 @@ return {
 	 */
 	adapterRun: function (el, method) {
 		
-		// This currently works for getting inner width and height. If adding
-		// more methods later, we need a conditional implementation for each.
+		
+		
 		return parseInt($(el).getStyle(method), 10);
 		
 	},
@@ -125,9 +125,9 @@ return {
 	 * @param {Function} callback
 	 */
 	getScript: function (scriptLocation, callback) {
-		var head = $$('head')[0]; // Returns an array, so pick the first element.
+		var head = $$('head')[0]; 
 		if (head) {
-			// Append a new 'script' element, set its type and src attributes, add a 'load' handler that calls the callback
+			
 			head.appendChild(new Element('script', { type: 'text/javascript', src: scriptLocation}).observe('load', callback));
 		}
 	},
@@ -144,7 +144,7 @@ return {
 			'h:' + eventName;
 	},
 
-	// el needs an event to be attached. el is not necessarily a dom element
+	
 	addEvent: function (el, event, fn) {
 		if (el.addEventListener || el.attachEvent) {
 			Event.observe($(el), HighchartsAdapter.addNS(event), fn);
@@ -155,26 +155,26 @@ return {
 		}
 	},
 
-	// motion makes things pretty. use it if effects is loaded, if not... still get to the end result.
+	
 	animate: function (el, params, options) {
 		var key,
 			fx;
 
-		// default options
+		
 		options = options || {};
 		options.delay = 0;
 		options.duration = (options.duration || 500) / 1000;
 		options.afterFinish = options.complete;
 
-		// animate wrappers and DOM elements
+		
 		if (hasEffect) {
 			for (key in params) {
-				// The fx variable is seemingly thrown away here, but the Effect.setup will add itself to the _highcharts_animation object
-				// on the element itself so its not really lost.
+				
+				
 				fx = new Effect.HighchartsTransition($(el), key, params[key], options);
 			}
 		} else {
-			if (el.attr) { // #409 without effects
+			if (el.attr) { 
 				for (key in params) {
 					el.attr(key, params[key]);
 				}
@@ -184,24 +184,24 @@ return {
 			}
 		}
 
-		if (!el.attr) { // HTML element, #409
+		if (!el.attr) { 
 			$(el).setStyle(params);
 		}
 	},
 
-	// this only occurs in higcharts 2.0+
+	
 	stop: function (el) {
 		var key;
 		if (el._highcharts_extended && el._highchart_animation) {
 			for (key in el._highchart_animation) {
-				// Cancel the animation
-				// The 'finish' function in the Effect object will remove the reference
+				
+				
 				el._highchart_animation[key].cancel();
 			}
 		}
 	},
 
-	// um.. each
+	
 	each: function (arr, fn) {
 		$A(arr).each(fn);
 	},
@@ -219,8 +219,8 @@ return {
 		return $(el).cumulativeOffset();
 	},
 
-	// fire an event based on an event name (event) and an object (el).
-	// again, el may not be a dom element
+	
+	
 	fireEvent: function (el, event, eventArguments, defaultFunction) {
 		if (el.fire) {
 			el.fire(HighchartsAdapter.addNS(event), eventArguments);
@@ -256,18 +256,18 @@ return {
 		return e;
 	},
 
-	// um, grep
+	
 	grep: function (arr, fn) {
 		return arr.findAll(fn);
 	},
 
-	// um, map
+	
 	map: function (arr, fn) {
 		return arr.map(fn);
 	},
 
-	// extend an object to handle highchart events (highchart objects, not svg elements).
-	// this is a very simple way of handling events but whatever, it works (i think)
+	
+	
 	_extend: function (object) {
 		if (!object._highcharts_extended) {
 			Object.extend(object, {
@@ -291,18 +291,18 @@ return {
 				_highcharts_fire: function (name, args) {
 					var target = this;
 					(this._highchart_events[name] || []).each(function (fn) {
-						// args is never null here
+						
 						if (args.stopped) {
-							return; // "throw $break" wasn't working. i think because of the scope of 'this'.
+							return; 
 						}
 
-						// Attach a simple preventDefault function to skip default handler if called
+						
 						args.preventDefault = function () {
 							args.defaultPrevented = true;
 						};
 						args.target = target;
 
-						// If the event handler return false, prevent the default handler from executing
+						
 						if (fn.bind(this)(args) === false) {
 							args.preventDefault();
 						}

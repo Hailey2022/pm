@@ -1,13 +1,13 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkPHP [ WE CAN DO IT JUST THINK ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2006~2015 http://thinkphp.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: yunwuxin <448901948@qq.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 namespace think\console\output;
 
 use think\console\output\formatter\Stack as StyleStack;
@@ -20,19 +20,13 @@ class Formatter
     private $styles    = [];
     private $styleStack;
 
-    /**
-     * 转义
-     * @param string $text
-     * @return string
-     */
+    
     public static function escape($text)
     {
         return preg_replace('/([^\\\\]?)</is', '$1\\<', $text);
     }
 
-    /**
-     * 初始化命令行输出格式
-     */
+    
     public function __construct()
     {
         $this->setStyle('error', new Style('white', 'red'));
@@ -45,50 +39,31 @@ class Formatter
         $this->styleStack = new StyleStack();
     }
 
-    /**
-     * 设置外观标识
-     * @param bool $decorated 是否美化文字
-     */
+    
     public function setDecorated($decorated)
     {
         $this->decorated = (bool) $decorated;
     }
 
-    /**
-     * 获取外观标识
-     * @return bool
-     */
+    
     public function isDecorated()
     {
         return $this->decorated;
     }
 
-    /**
-     * 添加一个新样式
-     * @param string $name  样式名
-     * @param Style  $style 样式实例
-     */
+    
     public function setStyle($name, Style $style)
     {
         $this->styles[strtolower($name)] = $style;
     }
 
-    /**
-     * 是否有这个样式
-     * @param string $name
-     * @return bool
-     */
+    
     public function hasStyle($name)
     {
         return isset($this->styles[strtolower($name)]);
     }
 
-    /**
-     * 获取样式
-     * @param string $name
-     * @return Style
-     * @throws \InvalidArgumentException
-     */
+    
     public function getStyle($name)
     {
         if (!$this->hasStyle($name)) {
@@ -98,11 +73,7 @@ class Formatter
         return $this->styles[strtolower($name)];
     }
 
-    /**
-     * 使用所给的样式格式化文字
-     * @param string $message 文字
-     * @return string
-     */
+    
     public function format($message)
     {
         $offset   = 0;
@@ -127,7 +98,7 @@ class Formatter
             }
 
             if (!$open && !$tag) {
-                // </>
+                
                 $this->styleStack->pop();
             } elseif (false === $style = $this->createStyleFromString(strtolower($tag))) {
                 $output .= $this->applyCurrentStyle($text);
@@ -143,19 +114,13 @@ class Formatter
         return str_replace('\\<', '<', $output);
     }
 
-    /**
-     * @return StyleStack
-     */
+    
     public function getStyleStack()
     {
         return $this->styleStack;
     }
 
-    /**
-     * 根据字符串创建新的样式实例
-     * @param string $string
-     * @return Style|bool
-     */
+    
     private function createStyleFromString($string)
     {
         if (isset($this->styles[$string])) {
@@ -186,11 +151,7 @@ class Formatter
         return $style;
     }
 
-    /**
-     * 从堆栈应用样式到文字
-     * @param string $text 文字
-     * @return string
-     */
+    
     private function applyCurrentStyle($text)
     {
         return $this->isDecorated() && strlen($text) > 0 ? $this->styleStack->getCurrent()->apply($text) : $text;

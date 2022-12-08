@@ -1,13 +1,13 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2013-present http://www.thinkcmf.com All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: Powerless < wzxaini9@gmail.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 namespace api\user\controller;
 
 use api\user\model\UserBalanceLogModel;
@@ -17,11 +17,7 @@ use cmf\controller\RestUserBaseController;
 
 class BalanceController extends RestUserBaseController
 {
-    /**
-     * 余额变更
-     * @return mixed
-     * @throws \think\exception\DbException
-     */
+    
     public function logs()
     {
         $userId = $this->getUserId();
@@ -32,13 +28,7 @@ class BalanceController extends RestUserBaseController
         $this->success('请求成功', ['list' => $result->items()]);
     }
 
-    /**
-     * 转账
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
-     * @throws \think\exception\PDOException
-     */
+    
     public function transfer()
     {
         $userId   = $this->getUserId();

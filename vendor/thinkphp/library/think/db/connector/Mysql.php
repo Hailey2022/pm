@@ -1,13 +1,13 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkPHP [ WE CAN DO IT JUST THINK ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2006~2018 http://thinkphp.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: liu21st <liu21st@gmail.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 
 namespace think\db\connector;
 
@@ -15,22 +15,16 @@ use PDO;
 use think\db\Connection;
 use think\db\Query;
 
-/**
- * mysql数据库驱动
- */
+
 class Mysql extends Connection
 {
 
     protected $builder = '\\think\\db\\builder\\Mysql';
 
-    /**
-     * 初始化
-     * @access protected
-     * @return void
-     */
+    
     protected function initialize()
     {
-        // Point类型支持
+        
         Query::extend('point', function ($query, $field, $value = null, $fun = 'GeomFromText', $type = 'POINT') {
             if (!is_null($value)) {
                 $query->data($field, ['point', $value, $fun, $type]);
@@ -45,12 +39,7 @@ class Mysql extends Connection
         });
     }
 
-    /**
-     * 解析pdo连接的dsn信息
-     * @access protected
-     * @param  array $config 连接信息
-     * @return string
-     */
+    
     protected function parseDsn($config)
     {
         if (!empty($config['socket'])) {
@@ -69,12 +58,7 @@ class Mysql extends Connection
         return $dsn;
     }
 
-    /**
-     * 取得数据表的字段信息
-     * @access public
-     * @param  string $tableName
-     * @return array
-     */
+    
     public function getFields($tableName)
     {
         list($tableName) = explode(' ', $tableName);
@@ -108,12 +92,7 @@ class Mysql extends Connection
         return $this->fieldCase($info);
     }
 
-    /**
-     * 取得数据库的表信息
-     * @access public
-     * @param  string $dbName
-     * @return array
-     */
+    
     public function getTables($dbName = '')
     {
         $sql    = !empty($dbName) ? 'SHOW TABLES FROM ' . $dbName : 'SHOW TABLES ';
@@ -128,18 +107,13 @@ class Mysql extends Connection
         return $info;
     }
 
-    /**
-     * SQL性能分析
-     * @access protected
-     * @param  string $sql
-     * @return array
-     */
+    
     protected function getExplain($sql)
     {
         $pdo = $this->linkID->prepare("EXPLAIN " . $this->queryStr);
 
         foreach ($this->bind as $key => $val) {
-            // 占位符
+            
             $param = is_int($key) ? $key + 1 : ':' . $key;
 
             if (is_array($val)) {
@@ -174,12 +148,7 @@ class Mysql extends Connection
         return true;
     }
 
-    /**
-     * 启动XA事务
-     * @access public
-     * @param  string $xid XA事务id
-     * @return void
-     */
+    
     public function startTransXa($xid)
     {
         $this->initConnect(true);
@@ -190,12 +159,7 @@ class Mysql extends Connection
         $this->linkID->exec("XA START '$xid'");
     }
 
-    /**
-     * 预编译XA事务
-     * @access public
-     * @param  string $xid XA事务id
-     * @return void
-     */
+    
     public function prepareXa($xid)
     {
         $this->initConnect(true);
@@ -203,24 +167,14 @@ class Mysql extends Connection
         $this->linkID->exec("XA PREPARE '$xid'");
     }
 
-    /**
-     * 提交XA事务
-     * @access public
-     * @param  string $xid XA事务id
-     * @return void
-     */
+    
     public function commitXa($xid)
     {
         $this->initConnect(true);
         $this->linkID->exec("XA COMMIT '$xid'");
     }
 
-    /**
-     * 回滚XA事务
-     * @access public
-     * @param  string $xid XA事务id
-     * @return void
-     */
+    
     public function rollbackXa($xid)
     {
         $this->initConnect(true);

@@ -1,14 +1,5 @@
 <?php
-/**
- * Charset and document types test.
- *
- * Remember:
- * - never test charset with htmlentities ! Use htmlspecialchars (or define charset as parameter)
- *
- * TODO:
- * - document fragments tests (with all 4 charset scenarios)
- *
- */
+
 class phpQuery {
 	static $defaultDocumentID;
 	static $debug = 0;
@@ -22,11 +13,11 @@ class phpQuery {
 require_once('../phpQuery/DOMDocumentWrapper.php');
 phpQuery::$debug = 2;
 
-/* ENCODINGS */
+
 //print '<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-2">';
 print '<meta http-equiv="Content-Type" content="text/html;charset=utf-8">';
 
-/* HTML */
+
 
 //$htmlIso = new DOMDocumentWrapper(
 //	file_get_contents('document-types/document-iso88592.html')
@@ -52,7 +43,7 @@ var_dump($htmlUtf->markup());
 //print htmlspecialchars($htmlUtf->markup());
 //print htmlspecialchars($htmlUtfNoCharset->markup());
 
-/* XML */
+
 
 //$xmlIso = new DOMDocumentWrapper(
 //	file_get_contents('document-types/document-iso88592.xml')
@@ -75,7 +66,7 @@ var_dump($htmlUtf->markup());
 //print htmlspecialchars($xmlUtf->markup());
 //print htmlspecialchars($xmlUtfNoCharset->markup());
 
-/* XHTML */
+
 
 //$xhtmlIso = new DOMDocumentWrapper(
 //	file_get_contents('document-types/document-iso88592.xhtml')
@@ -102,9 +93,9 @@ var_dump($htmlUtf->markup());
 //));
 //print htmlspecialchars($xhtmlUtfNoCharset->markup());
 
-/** FRAGMETNS **/
 
-/* HTML fragment */
+
+
 
 //$htmlFragmentUtf = new DOMDocumentWrapper(
 //	file_get_contents('document-types/document-fragment-utf8.html')
@@ -114,7 +105,7 @@ var_dump($htmlUtf->markup());
 //	$htmlFragmentUtf->document->getElementsByTagName('span')
 //);
 
-/* XML fragment */
+
 
 //$xmlFragmentUtf = new DOMDocumentWrapper(
 //	file_get_contents('document-types/document-fragment-utf8.xml'),
@@ -129,7 +120,7 @@ var_dump($htmlUtf->markup());
 //	$xmlFragmentUtf->document->getElementsByTagName('step')
 //);
 
-/* XHTML fragment */
+
 
 //$xhtmlFragmentUtf = new DOMDocumentWrapper(
 //	file_get_contents('document-types/document-fragment-utf8.xhtml'),
@@ -141,7 +132,7 @@ var_dump($htmlUtf->markup());
 //	$xhtmlFragmentUtf->document->getElementsByTagName('p')
 //);
 
-/* Test template */
+
 //$result = pq('p:eq(1)');
 //if ( $result->hasClass('newTitle') )
 //	print "Test '{$testName}' PASSED :)";

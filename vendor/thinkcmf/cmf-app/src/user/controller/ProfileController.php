@@ -1,13 +1,13 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2013-present http://www.thinkcmf.com All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: Powerless < wzxaini9@gmail.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 namespace app\user\controller;
 
 use cmf\lib\Storage;
@@ -19,9 +19,7 @@ use app\user\model\UserModel;
 class ProfileController extends UserBaseController
 {
 
-    /**
-     * 会员中心首页
-     */
+    
     public function center()
     {
         $user = cmf_get_current_user();
@@ -35,9 +33,7 @@ class ProfileController extends UserBaseController
         return $this->fetch();
     }
 
-    /**
-     * 编辑用户资料
-     */
+    
     public function edit()
     {
         $user = cmf_get_current_user();
@@ -45,9 +41,7 @@ class ProfileController extends UserBaseController
         return $this->fetch('edit');
     }
 
-    /**
-     * 编辑用户资料提交
-     */
+    
     public function editPost()
     {
         if ($this->request->isPost()) {
@@ -84,9 +78,7 @@ class ProfileController extends UserBaseController
         }
     }
 
-    /**
-     * 个人中心修改密码
-     */
+    
     public function password()
     {
         $user = cmf_get_current_user();
@@ -94,9 +86,7 @@ class ProfileController extends UserBaseController
         return $this->fetch();
     }
 
-    /**
-     * 个人中心修改密码提交
-     */
+    
     public function passwordPost()
     {
         if ($this->request->isPost()) {
@@ -143,7 +133,7 @@ class ProfileController extends UserBaseController
 
     }
 
-    // 用户头像编辑
+    
     public function avatar()
     {
         $user = cmf_get_current_user();
@@ -151,7 +141,7 @@ class ProfileController extends UserBaseController
         return $this->fetch();
     }
 
-    // 用户头像上传
+    
     public function avatarUpload()
     {
         $file   = $this->request->file('file');
@@ -181,7 +171,7 @@ class ProfileController extends UserBaseController
         }
     }
 
-    // 用户头像裁剪
+    
     public function avatarUpdate()
     {
         $avatar = session('avatar');
@@ -212,9 +202,7 @@ class ProfileController extends UserBaseController
         }
     }
 
-    /**
-     * 绑定手机号或邮箱
-     */
+    
     public function binding()
     {
         $user = cmf_get_current_user();
@@ -222,9 +210,7 @@ class ProfileController extends UserBaseController
         return $this->fetch();
     }
 
-    /**
-     * 绑定手机号
-     */
+    
     public function bindingMobile()
     {
         if ($this->request->isPost()) {
@@ -261,9 +247,7 @@ class ProfileController extends UserBaseController
         }
     }
 
-    /**
-     * 绑定邮箱
-     */
+    
     public function bindingEmail()
     {
         if ($this->request->isPost()) {

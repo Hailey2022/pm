@@ -1,13 +1,13 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkPHP [ WE CAN DO IT JUST THINK ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2006~2015 http://thinkphp.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: yunwuxin <448901948@qq.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 
 namespace think\process\pipes;
 
@@ -16,11 +16,11 @@ use think\Process;
 class Unix extends Pipes
 {
 
-    /** @var bool */
+    
     private $ttyMode;
-    /** @var bool */
+    
     private $ptyMode;
-    /** @var bool */
+    
     private $disableOutput;
 
     public function __construct($ttyMode, $ptyMode, $input, $disableOutput)
@@ -41,9 +41,7 @@ class Unix extends Pipes
         $this->close();
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    
     public function getDescriptors()
     {
         if ($this->disableOutput) {
@@ -74,22 +72,18 @@ class Unix extends Pipes
 
         return [
             ['pipe', 'r'],
-            ['pipe', 'w'], // stdout
-            ['pipe', 'w'], // stderr
+            ['pipe', 'w'], 
+            ['pipe', 'w'], 
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    
     public function getFiles()
     {
         return [];
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    
     public function readAndWrite($blocking, $close = false)
     {
 
@@ -158,7 +152,7 @@ class Unix extends Pipes
 
         if (null !== $w && 0 < count($w)) {
             while (strlen($this->inputBuffer)) {
-                $written = fwrite($w[0], $this->inputBuffer, 2 << 18); // write 512k
+                $written = fwrite($w[0], $this->inputBuffer, 2 << 18); 
                 if ($written > 0) {
                     $this->inputBuffer = (string) substr($this->inputBuffer, $written);
                 } else {
@@ -175,20 +169,13 @@ class Unix extends Pipes
         return $read;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    
     public function areOpen()
     {
         return (bool) $this->pipes;
     }
 
-    /**
-     * 创建一个新的 UnixPipes 实例
-     * @param Process         $process
-     * @param string|resource $input
-     * @return self
-     */
+    
     public static function create(Process $process, $input)
     {
         return new static($process->isTty(), $process->isPty(), $input, $process->isOutputDisabled());

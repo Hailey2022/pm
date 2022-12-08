@@ -1,11 +1,11 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2013-present http://www.thinkcmf.com All rights reserved.
-// +----------------------------------------------------------------------
-// | Author: Dean <zxxjjforever@163.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
 namespace api\wxapp\controller;
 
 use think\facade\Db;
@@ -15,7 +15,7 @@ use think\Validate;
 
 class PublicController extends RestBaseController
 {
-    // 微信小程序用户登录 TODO 增加最后登录信息记录,如 ip
+    
     public function login()
     {
         $validate = new Validate([

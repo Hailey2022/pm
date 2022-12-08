@@ -1,11 +1,5 @@
 <?php
-/**
- * Automated google account login.
- * Uses __config.php to keep login data.
- *
- * @package phpQuery.Plugins.Scripts
- * @author Tobiasz Cudnik <tobiasz.cudnik/gmail.com>
- */
+
 phpQuery::ajaxAllowHost(
 	'code.google.com',
 	'google.com', 'www.google.com',

@@ -1,20 +1,10 @@
 <?php
 
-/**
- * Validates an IPv6 address.
- * @author Feyd @ forums.devnetwork.net (public domain)
- * @note This function requires brackets to have been removed from address
- *       in URI.
- */
+
 class HTMLPurifier_AttrDef_URI_IPv6 extends HTMLPurifier_AttrDef_URI_IPv4
 {
 
-    /**
-     * @param string $aIP
-     * @param HTMLPurifier_Config $config
-     * @param HTMLPurifier_Context $context
-     * @return bool|string
-     */
+    
     public function validate($aIP, $config, $context)
     {
         if (!$this->ip4) {
@@ -25,9 +15,9 @@ class HTMLPurifier_AttrDef_URI_IPv6 extends HTMLPurifier_AttrDef_URI_IPv4
 
         $hex = '[0-9a-fA-F]';
         $blk = '(?:' . $hex . '{1,4})';
-        $pre = '(?:/(?:12[0-8]|1[0-1][0-9]|[1-9][0-9]|[0-9]))'; // /0 - /128
+        $pre = '(?:/(?:12[0-8]|1[0-1][0-9]|[1-9][0-9]|[0-9]))'; 
 
-        //      prefix check
+        
         if (strpos($aIP, '/') !== false) {
             if (preg_match('#' . $pre . '$#s', $aIP, $find)) {
                 $aIP = substr($aIP, 0, 0 - strlen($find[0]));
@@ -37,7 +27,7 @@ class HTMLPurifier_AttrDef_URI_IPv6 extends HTMLPurifier_AttrDef_URI_IPv4
             }
         }
 
-        //      IPv4-compatiblity check
+        
         if (preg_match('#(?<=:' . ')' . $this->ip4 . '$#s', $aIP, $find)) {
             $aIP = substr($aIP, 0, 0 - strlen($find[0]));
             $ip = explode('.', $find[0]);
@@ -46,7 +36,7 @@ class HTMLPurifier_AttrDef_URI_IPv6 extends HTMLPurifier_AttrDef_URI_IPv4
             unset($find, $ip);
         }
 
-        //      compression check
+        
         $aIP = explode('::', $aIP);
         $c = count($aIP);
         if ($c > 2) {
@@ -76,7 +66,7 @@ class HTMLPurifier_AttrDef_URI_IPv6 extends HTMLPurifier_AttrDef_URI_IPv4
             return false;
         }
 
-        //      All the pieces should be 16-bit hex strings. Are they?
+        
         foreach ($aIP as $piece) {
             if (!preg_match('#^[0-9a-fA-F]{4}$#s', sprintf('%04s', $piece))) {
                 return false;
@@ -86,4 +76,4 @@ class HTMLPurifier_AttrDef_URI_IPv6 extends HTMLPurifier_AttrDef_URI_IPv4
     }
 }
 
-// vim: et sw=4 sts=4
+

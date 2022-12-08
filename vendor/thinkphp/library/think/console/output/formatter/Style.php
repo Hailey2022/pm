@@ -1,13 +1,13 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkPHP [ WE CAN DO IT JUST THINK ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2006~2015 http://thinkphp.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: yunwuxin <448901948@qq.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 
 namespace think\console\output\formatter;
 
@@ -46,13 +46,7 @@ class Style
     private $background;
     private $options = [];
 
-    /**
-     * 初始化输出的样式
-     * @param string|null $foreground 字体颜色
-     * @param string|null $background 背景色
-     * @param array       $options    格式
-     * @api
-     */
+    
     public function __construct($foreground = null, $background = null, array $options = [])
     {
         if (null !== $foreground) {
@@ -66,12 +60,7 @@ class Style
         }
     }
 
-    /**
-     * 设置字体颜色
-     * @param string|null $color 颜色名
-     * @throws \InvalidArgumentException
-     * @api
-     */
+    
     public function setForeground($color = null)
     {
         if (null === $color) {
@@ -87,12 +76,7 @@ class Style
         $this->foreground = static::$availableForegroundColors[$color];
     }
 
-    /**
-     * 设置背景色
-     * @param string|null $color 颜色名
-     * @throws \InvalidArgumentException
-     * @api
-     */
+    
     public function setBackground($color = null)
     {
         if (null === $color) {
@@ -108,12 +92,7 @@ class Style
         $this->background = static::$availableBackgroundColors[$color];
     }
 
-    /**
-     * 设置字体格式
-     * @param string $option 格式名
-     * @throws \InvalidArgumentException When the option name isn't defined
-     * @api
-     */
+    
     public function setOption($option)
     {
         if (!isset(static::$availableOptions[$option])) {
@@ -125,11 +104,7 @@ class Style
         }
     }
 
-    /**
-     * 重置字体格式
-     * @param string $option 格式名
-     * @throws \InvalidArgumentException
-     */
+    
     public function unsetOption($option)
     {
         if (!isset(static::$availableOptions[$option])) {
@@ -142,10 +117,7 @@ class Style
         }
     }
 
-    /**
-     * 批量设置字体格式
-     * @param array $options
-     */
+    
     public function setOptions(array $options)
     {
         $this->options = [];
@@ -155,11 +127,7 @@ class Style
         }
     }
 
-    /**
-     * 应用样式到文字
-     * @param string $text 文字
-     * @return string
-     */
+    
     public function apply($text)
     {
         $setCodes   = [];

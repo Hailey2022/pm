@@ -9,12 +9,12 @@
 (function( root, factory ) {
     var modules = {},
 
-        // 内部require, 简单不完全实现。
-        // https://github.com/amdjs/amdjs-api/wiki/require
+        
+        
         _require = function( deps, callback ) {
             var args, len, i;
 
-            // 如果deps不是数组，则直接返回指定module
+            
             if ( typeof deps === 'string' ) {
                 return getModule( deps );
             } else {
@@ -27,7 +27,7 @@
             }
         },
 
-        // 内部define，暂时不支持不指定id.
+        
         _define = function( id, deps, factory ) {
             if ( arguments.length === 2 ) {
                 factory = deps;
@@ -39,7 +39,7 @@
             });
         },
 
-        // 设置module, 兼容CommonJs写法。
+        
         setModule = function( id, factory, args ) {
             var module = {
                     exports: factory
@@ -55,7 +55,7 @@
             modules[ id ] = module.exports;
         },
 
-        // 根据id获取module
+        
         getModule = function( id ) {
             var module = modules[ id ] || root[ id ];
 
@@ -66,11 +66,11 @@
             return module;
         },
 
-        // 将所有modules，将路径ids装换成对象。
+        
         exportsTo = function( obj ) {
             var key, host, parts, part, last, ucFirst;
 
-            // make the first character upper case.
+            
             ucFirst = function( str ) {
                 return str && (str.charAt( 0 ).toUpperCase() + str.substr( 1 ));
             };
@@ -97,24 +97,24 @@
         exports = factory( root, _define, _require ),
         origin;
 
-    // exports every module.
+    
     exportsTo( exports );
 
     if ( typeof module === 'object' && typeof module.exports === 'object' ) {
 
-        // For CommonJS and CommonJS-like environments where a proper window is present,
+        
         module.exports = exports;
     } else if ( typeof define === 'function' && define.amd ) {
 
-        // Allow using this built library as an AMD module
-        // in another project. That other project will only
-        // see this AMD call, not the internal modules in
-        // the closure below.
+        
+        
+        
+        
         define([], exports );
     } else {
 
-        // Browser globals case. Just assign the
-        // result to a property on the global.
+        
+        
         origin = root.WebUploader;
         root.WebUploader = exports;
         root.WebUploader.noConflict = function() {
@@ -189,8 +189,8 @@
         var noop = function() {},
             call = Function.call;
     
-        // http://jsperf.com/uncurrythis
-        // 反科里化
+        
+        
         function uncurryThis( fn ) {
             return function() {
                 return call.apply( fn, arguments );
@@ -282,11 +282,11 @@
             os: (function( ua ) {
                 var ret = {},
     
-                    // osx = !!ua.match( /\(Macintosh\; Intel / ),
+                    
                     android = ua.match( /(?:Android);?[\s\/]+([\d.]+)?/ ),
                     ios = ua.match( /(?:iPad|iPod|iPhone).*OS\s([\d_]+)/ );
     
-                // osx && (ret.osx = true);
+                
                 android && (ret.android = parseFloat( android[ 1 ] ));
                 ios && (ret.ios = parseFloat( ios[ 1 ].replace( /_/g, '.' ) ));
     
@@ -318,15 +318,15 @@
              *     }
              * });
              *
-             * // 因为没有指定构造器，父类的构造器将会执行。
-             * var instance = new Manager();    // => Super
+             * 
+             * var instance = new Manager();    
              *
-             * // 继承子父类的方法
-             * instance.hello();    // => hello
-             * instance.world();    // => World
+             * 
+             * instance.hello();    
+             * instance.world();    
              *
-             * // 子类的__super__属性指向父类
-             * console.log( Manager.__super__ === Person );    // => true
+             * 
+             * console.log( Manager.__super__ === Person );    
              */
             inherits: function( Super, protos, staticProtos ) {
                 var child;
@@ -342,16 +342,16 @@
                     };
                 }
     
-                // 复制静态方法
+                
                 $.extend( true, child, Super, staticProtos || {} );
     
                 /* jshint camelcase: false */
     
-                // 让子类的__super__属性指向父类。
+                
                 child.__super__ = Super.prototype;
     
-                // 构建原型，添加原型方法或属性。
-                // 暂时用Object.create实现。
+                
+                
                 child.prototype = createObject( Super.prototype );
                 protos && $.extend( true, child.prototype, protos );
     
@@ -377,7 +377,7 @@
              *     },
              *     aliasFn = Base.bind( doSomething, obj );
              *
-             *  aliasFn();    // => Object Name
+             *  aliasFn();    
              *
              */
             bindFn: bindFn,
@@ -400,16 +400,16 @@
                     setTimeout( cb, 1 );
                 };
     
-                // @bug 当浏览器不在当前窗口时就停了。
-                // var next = window.requestAnimationFrame ||
-                //     window.webkitRequestAnimationFrame ||
-                //     window.mozRequestAnimationFrame ||
-                //     function( cb ) {
-                //         window.setTimeout( cb, 1000 / 60 );
-                //     };
+                
+                
+                
+                
+                
+                
+                
     
-                // // fix: Uncaught TypeError: Illegal invocation
-                // return bindFn( next, window );
+                
+                
             })(),
     
             /**
@@ -423,7 +423,7 @@
              *     console.log( args );
              * }
              *
-             * doSomthing( 'ignored', 'arg2', 'arg3' );    // => Array ["arg2", "arg3"]
+             * doSomthing( 'ignored', 'arg2', 'arg3' );    
              */
             slice: uncurryThis( [].slice ),
     
@@ -458,12 +458,12 @@
              * @param {Number} [pointLength=2] 精确到的小数点数。
              * @param {Array} [units=[ 'B', 'K', 'M', 'G', 'TB' ]] 单位数组。从字节，到千字节，一直往上指定。如果单位数组里面只指定了到了K(千字节)，同时文件大小大于M, 此方法的输出将还是显示成多少K.
              * @example
-             * console.log( Base.formatSize( 100 ) );    // => 100B
-             * console.log( Base.formatSize( 1024 ) );    // => 1.00K
-             * console.log( Base.formatSize( 1024, 0 ) );    // => 1K
-             * console.log( Base.formatSize( 1024 * 1024 ) );    // => 1.00M
-             * console.log( Base.formatSize( 1024 * 1024 * 1024 ) );    // => 1.00G
-             * console.log( Base.formatSize( 1024 * 1024 * 1024, 0, ['B', 'KB', 'MB'] ) );    // => 1024MB
+             * console.log( Base.formatSize( 100 ) );    
+             * console.log( Base.formatSize( 1024 ) );    
+             * console.log( Base.formatSize( 1024, 0 ) );    
+             * console.log( Base.formatSize( 1024 * 1024 ) );    
+             * console.log( Base.formatSize( 1024 * 1024 * 1024 ) );    
+             * console.log( Base.formatSize( 1024 * 1024 * 1024, 0, ['B', 'KB', 'MB'] ) );    
              */
             formatSize: function( size, pointLength, units ) {
                 var unit;
@@ -491,7 +491,7 @@
             separator = /\s+/,
             protos;
     
-        // 根据条件过滤出事件handlers.
+        
         function findHandlers( arr, name, callback, context ) {
             return $.grep( arr, function( handler ) {
                 return handler &&
@@ -503,7 +503,7 @@
         }
     
         function eachEvent( events, callback, iterator ) {
-            // 不支持对象，只支持多个event用空格隔开
+            
             $.each( (events || '').split( separator ), function( _, key ) {
                 iterator( key, callback );
             });
@@ -536,11 +536,11 @@
              * ```javascript
              * var obj = {};
              *
-             * // 使得obj有事件行为
+             * 
              * Mediator.installTo( obj );
              *
              * obj.on( 'testa', function( arg1, arg2 ) {
-             *     console.log( arg1, arg2 ); // => 'arg1', 'arg2'
+             *     console.log( arg1, arg2 ); 
              * });
              *
              * obj.trigger( 'testa', 'arg1', 'arg2' );
@@ -553,7 +553,7 @@
              * 就是第一个参数为`type`，记录当前是什么事件在触发。此类`callback`的优先级比脚低，会再正常`callback`执行完后触发。
              * ```javascript
              * obj.on( 'all', function( type, arg1, arg2 ) {
-             *     console.log( type, arg1, arg2 ); // => 'testa', 'arg1', 'arg2'
+             *     console.log( type, arg1, arg2 ); 
              * });
              * ```
              *
@@ -714,7 +714,7 @@
          * var uploader = WebUploader.Uploader({
          *     swf: 'path_of_swf/Uploader.swf',
          *
-         *     // 开起分片上传。
+         *     
          *     chunked: true
          * });
          */
@@ -723,12 +723,12 @@
             this._init( this.options );
         }
     
-        // default Options
-        // widgets中有相应扩展
+        
+        
         Uploader.options = {};
         Mediator.installTo( Uploader.prototype );
     
-        // 批量添加纯命令式方法。
+        
         $.each({
             upload: 'start-upload',
             stop: 'stop-upload',
@@ -774,12 +774,12 @@
              * @grammar option( key, val ) => self
              * @example
              *
-             * // 初始状态图片上传前不会压缩
+             * 
              * var uploader = new WebUploader.Uploader({
              *     resize: null;
              * });
              *
-             * // 修改后图片上传前，尝试将图片压缩到1600 * 1600
+             * 
              * uploader.options( 'resize', {
              *     width: 1600,
              *     height: 1600
@@ -788,7 +788,7 @@
             option: function( key, val ) {
                 var opts = this.options;
     
-                // setter
+                
                 if ( arguments.length > 1 ) {
     
                     if ( $.isPlainObject( val ) &&
@@ -798,7 +798,7 @@
                         opts[ key ] = val;
                     }
     
-                } else {    // getter
+                } else {    
                     return key ? opts[ key ] : opts;
                 }
             },
@@ -814,14 +814,14 @@
              * @grammar getStats() => Object
              */
             getStats: function() {
-                // return this._mgr.getStats.apply( this._mgr, arguments );
+                
                 var stats = this.request('get-stats');
     
                 return {
                     successNum: stats.numOfSuccess,
     
-                    // who care?
-                    // queueFailNum: 0,
+                    
+                    
                     cancelNum: stats.numOfCancel,
                     invalidNum: stats.numOfInvalid,
                     uploadFailNum: stats.numOfUploadFailed,
@@ -829,7 +829,7 @@
                 };
             },
     
-            // 需要重写此方法来来支持opts.onEvent和instance.onEvent的处理器
+            
             trigger: function( type/*, args...*/ ) {
                 var args = [].slice.call( arguments, 1 ),
                     opts = this.options,
@@ -837,18 +837,18 @@
                         type.substring( 1 );
     
                 if (
-                        // 调用通过on方法注册的handler.
+                        
                         Mediator.trigger.apply( this, arguments ) === false ||
     
-                        // 调用opts.onEvent
+                        
                         $.isFunction( opts[ name ] ) &&
                         opts[ name ].apply( this, args ) === false ||
     
-                        // 调用this.onEvent
+                        
                         $.isFunction( this[ name ] ) &&
                         this[ name ].apply( this, args ) === false ||
     
-                        // 广播所有uploader的事件。
+                        
                         Mediator.trigger.apply( Mediator,
                         [ this, type ].concat( args ) ) === false ) {
     
@@ -858,7 +858,7 @@
                 return true;
             },
     
-            // widgets/widget.js将补充此方法的详细文档。
+            
             request: Base.noop
         });
     
@@ -873,7 +873,7 @@
             return new Uploader( opts );
         };
     
-        // 暴露Uploader，可以通过它来扩展业务逻辑。
+        
         Base.Uploader = Uploader;
     
         return Uploader;
@@ -889,7 +889,7 @@
         var $ = Base.$,
             factories = {},
     
-            // 获取对象的第一个key
+            
             getFirstKey = function( obj ) {
                 for ( var key in obj ) {
                     if ( obj.hasOwnProperty( key ) ) {
@@ -899,7 +899,7 @@
                 return null;
             };
     
-        // 接口类。
+        
         function Runtime( options ) {
             this.options = $.extend({
                 container: document.body
@@ -1016,7 +1016,7 @@
                     }
     
                     for ( i in obj ) {
-                        // 有些类型不能重用，比如filepicker.
+                        
                         if ( standalone && obj[ i ].__standalone ) {
                             continue;
                         }
@@ -1039,14 +1039,14 @@
     
             this.uid = Base.guid('client_');
     
-            // 允许runtime没有初始化之前，注册一些方法在初始化后执行。
+            
             this.runtimeReady = function( cb ) {
                 return deferred.done( cb );
             };
     
             this.connectRuntime = function( opts, cb ) {
     
-                // already connected.
+                
                 if ( runtime ) {
                     throw new Error('already connected!');
                 }
@@ -1057,10 +1057,10 @@
                     runtime = cache.get( opts );
                 }
     
-                // 像filePicker只能独立存在，不能公用。
+                
                 runtime = runtime || cache.get( null, standalone );
     
-                // 需要创建
+                
                 if ( !runtime ) {
                     runtime = Runtime.create( opts, opts.runtimeOrder );
                     runtime.__promise = deferred.promise();
@@ -1069,7 +1069,7 @@
                     cache.add( runtime );
                     runtime.__client = 1;
                 } else {
-                    // 来自cache
+                    
                     Base.$.extend( runtime.options, opts );
                     runtime.__promise.then( deferred.resolve );
                     runtime.__client++;
@@ -1216,8 +1216,8 @@
     
             init: Base.noop,
     
-            // 类Backbone的事件监听声明，监听uploader实例上的事件
-            // widget直接无法监听事件，事件只能通过uploader来传递
+            
+            
             invoke: function( apiName, args ) {
     
                 /*
@@ -1227,7 +1227,7 @@
                  */
                 var map = this.responseMap;
     
-                // 如果无API响应声明则忽略
+                
                 if ( !map || !(apiName in map) || !(map[ apiName ] in this) ||
                         !$.isFunction( this[ map[ apiName ] ] ) ) {
     
@@ -1250,10 +1250,10 @@
             }
         });
     
-        // 扩展Uploader.
+        
         $.extend( Uploader.prototype, {
     
-            // 覆写_init用来初始化widgets
+            
             _init: function() {
                 var me = this,
                     widgets = me._widgets = [];
@@ -1281,7 +1281,7 @@
     
                     if ( rlt !== IGNORE ) {
     
-                        // Deferred对象
+                        
                         if ( Base.isPromise( rlt ) ) {
                             dfds.push( rlt );
                         } else {
@@ -1290,13 +1290,13 @@
                     }
                 }
     
-                // 如果有callback，则用异步方式。
+                
                 if ( callback || dfds.length ) {
                     promise = Base.when.apply( Base, dfds );
                     key = promise.pipe ? 'pipe' : 'then';
     
-                    // 很重要不能删除。删除了会死循环。
-                    // 保证执行顺序。让callback总是在下一个tick中执行。
+                    
+                    
                     return promise[ key ](function() {
                                 var deferred = Base.Deferred(),
                                     args = arguments;
@@ -1393,7 +1393,7 @@
                     me.request( 'add-file', [ files ]);
                 });
     
-                // 检测文件是否全部允许添加。
+                
                 dnd.on( 'accept', function( items ) {
                     return me.owner.trigger( 'dndAccept', items );
                 });
@@ -1548,16 +1548,16 @@
             this.name = file.name || ('untitled' + uid++);
             ext = rExt.exec( file.name ) ? RegExp.$1.toLowerCase() : '';
     
-            // todo 支持其他类型文件的转换。
+            
     
-            // 如果有mimetype, 但是文件名里面没有找出后缀规律
+            
             if ( !ext && this.type ) {
                 ext = /\/(jpg|jpeg|png|gif|bmp)$/i.exec( this.type ) ?
                         RegExp.$1.toLowerCase() : '';
                 this.name += '.' + ext;
             }
     
-            // 如果没有指定mimetype, 但是知道文件后缀。
+            
             if ( !this.type &&  ~'jpg,jpeg,png,gif,bmp'.indexOf( ext ) ) {
                 this.type = 'image/' + (ext === 'jpg' ? 'jpeg' : ext);
             }
@@ -1637,7 +1637,7 @@
                             me.trigger( 'select', $.map( files, function( file ) {
                                 file = new File( me.getRuid(), file );
     
-                                // 记录来源。
+                                
                                 file._refer = opts.container;
                                 return file;
                             }), opts.container );
@@ -1843,7 +1843,7 @@
     ], function( Base, RuntimeClient, Blob ) {
         var $ = Base.$;
     
-        // 构造器。
+        
         function Image( opts ) {
             this.options = $.extend({}, Image.options, opts );
             RuntimeClient.call( this, 'Image' );
@@ -1854,47 +1854,47 @@
             });
         }
     
-        // 默认选项。
+        
         Image.options = {
     
-            // 默认的图片处理质量
+            
             quality: 90,
     
-            // 是否裁剪
+            
             crop: false,
     
-            // 是否保留头部信息
+            
             preserveHeaders: true,
     
-            // 是否允许放大。
+            
             allowMagnify: true
         };
     
-        // 继承RuntimeClient.
+        
         Base.inherits( RuntimeClient, {
             constructor: Image,
     
             info: function( val ) {
     
-                // setter
+                
                 if ( val ) {
                     this._info = val;
                     return this;
                 }
     
-                // getter
+                
                 return this._info;
             },
     
             meta: function( val ) {
     
-                // setter
+                
                 if ( val ) {
                     this._meta = val;
                     return this;
                 }
     
-                // getter
+                
                 return this._meta;
             },
     
@@ -1939,7 +1939,7 @@
         var $ = Base.$,
             throttle;
     
-        // 根据要处理的文件大小来节流，一次不能处理太多，会卡。
+        
         throttle = (function( max ) {
             var occupied = 0,
                 waiting = [],
@@ -1978,20 +1978,20 @@
              *     width: 110,
              *     height: 110,
              *
-             *     // 图片质量，只有type为`image/jpeg`的时候才有效。
+             *     
              *     quality: 70,
              *
-             *     // 是否允许放大，如果想要生成小图的时候不失真，此选项应该设置为false.
+             *     
              *     allowMagnify: true,
              *
-             *     // 是否允许裁剪。
+             *     
              *     crop: true,
              *
-             *     // 是否保留头部meta信息。
+             *     
              *     preserveHeaders: false,
              *
-             *     // 为空的话则保留原有图片格式。
-             *     // 否则强制转换成指定的类型。
+             *     
+             *     
              *     type: 'image/jpeg'
              * }
              * ```
@@ -2004,10 +2004,10 @@
                 crop: true,
                 preserveHeaders: false,
     
-                // 为空的话则保留原有图片格式。
-                // 否则强制转换成指定的类型。
-                // IE 8下面 base64 大小不能超过 32K 否则预览失败，而非 jpeg 编码的图片很可
-                // 能会超过 32k, 所以这里设置成预览的时候都是 image/jpeg
+                
+                
+                
+                
                 type: 'image/jpeg'
             },
     
@@ -2024,16 +2024,16 @@
              *     width: 1600,
              *     height: 1600,
              *
-             *     // 图片质量，只有type为`image/jpeg`的时候才有效。
+             *     
              *     quality: 90,
              *
-             *     // 是否允许放大，如果想要生成小图的时候不失真，此选项应该设置为false.
+             *     
              *     allowMagnify: false,
              *
-             *     // 是否允许裁剪。
+             *     
              *     crop: false,
              *
-             *     // 是否保留头部meta信息。
+             *     
              *     preserveHeaders: true
              * }
              * ```
@@ -2090,7 +2090,7 @@
     
                 file = this.request( 'get-file', file );
     
-                // 只预览图片格式。
+                
                 if ( !file.type.match( /^image/ ) ) {
                     cb( true );
                     return;
@@ -2098,7 +2098,7 @@
     
                 opts = $.extend({}, this.options.thumb );
     
-                // 如果传入的是object.
+                
                 if ( $.isPlainObject( width ) ) {
                     opts = $.extend( opts, width );
                     width = null;
@@ -2139,7 +2139,7 @@
     
                 file = this.request( 'get-file', file );
     
-                // 只预览图片格式。
+                
                 if ( !opts || !~'image/jpeg,image/jpg'.indexOf( file.type ) ||
                         file.size < compressSize ||
                         file._compressed ) {
@@ -2165,28 +2165,28 @@
                 image.once( 'complete', function() {
                     var blob, size;
     
-                    // 移动端 UC / qq 浏览器的无图模式下
-                    // ctx.getImageData 处理大图的时候会报 Exception
-                    // INDEX_SIZE_ERR: DOM Exception 1
+                    
+                    
+                    
                     try {
                         blob = image.getAsBlob( opts.type );
     
                         size = file.size;
     
-                        // 如果压缩后，比原来还大则不用压缩后的。
+                        
                         if ( blob.size < size ) {
-                            // file.source.destroy && file.source.destroy();
+                            
                             file.source = blob;
                             file.size = blob.size;
     
                             file.trigger( 'resize', blob.size, size );
                         }
     
-                        // 标记，避免重复压缩。
+                        
                         file._compressed = true;
                         deferred.resolve();
                     } catch ( e ) {
-                        // 出错了直接继续，让其上传原始图片
+                        
                         deferred.resolve();
                     }
                 });
@@ -2279,7 +2279,7 @@
              */
             this.statusText = '';
     
-            // 存储文件状态，防止通过属性直接修改
+            
             statusMap[ this.id ] = WUFile.Status.INITED;
     
             this.source = source;
@@ -2322,17 +2322,17 @@
              * @example
                      文件状态具体包括以下几种类型：
                      {
-                         // 初始化
+                         
                         INITED:     0,
-                        // 已入队列
+                        
                         QUEUED:     1,
-                        // 正在上传
+                        
                         PROGRESS:     2,
-                        // 上传出错
+                        
                         ERROR:         3,
-                        // 上传成功
+                        
                         COMPLETE:     4,
-                        // 上传取消
+                        
                         CANCELLED:     5
                     }
              */
@@ -2371,14 +2371,14 @@
          * @static
          */
         WUFile.Status = {
-            INITED:     'inited',    // 初始状态
-            QUEUED:     'queued',    // 已经进入队列, 等待上传
-            PROGRESS:   'progress',    // 上传中
-            ERROR:      'error',    // 上传出错，可重试
-            COMPLETE:   'complete',    // 上传完成。
-            CANCELLED:  'cancelled',    // 上传取消。
-            INTERRUPT:  'interrupt',    // 上传中断，可续传。
-            INVALID:    'invalid'    // 文件不合格，不能重试上传。
+            INITED:     'inited',    
+            QUEUED:     'queued',    
+            PROGRESS:   'progress',    
+            ERROR:      'error',    
+            COMPLETE:   'complete',    
+            CANCELLED:  'cancelled',    
+            INTERRUPT:  'interrupt',    
+            INVALID:    'invalid'    
         };
     
         return WUFile;
@@ -2422,10 +2422,10 @@
                 numOfInvalid: 0
             };
     
-            // 上传队列，仅包括等待上传的文件
+            
             this._queue = [];
     
-            // 存储所有文件
+            
             this._map = {};
         }
     
@@ -2638,7 +2638,7 @@
                     opts.accept = [ opts.accept ];
                 }
     
-                // accept中的中生成匹配正则。
+                
                 if ( opts.accept ) {
                     arr = [];
     
@@ -2659,14 +2659,14 @@
                 me.queue = new Queue();
                 me.stats = me.queue.stats;
     
-                // 如果当前不是html5运行时，那就算了。
-                // 不执行后续操作
+                
+                
                 if ( this.request('predict-runtime-type') !== 'html5' ) {
                     return;
                 }
     
-                // 创建一个 html5 运行时的 placeholder
-                // 以至于外部添加原生 File 对象的时候能正确包裹一下供 webuploader 使用。
+                
+                
                 deferred = Base.Deferred();
                 runtime = new RuntimeClient('Placeholder');
                 runtime.connectRuntime({
@@ -2679,7 +2679,7 @@
             },
     
     
-            // 为了支持外部直接添加一个原生File对象。
+            
             _wrapFile: function( file ) {
                 if ( !(file instanceof WUFile) ) {
     
@@ -2696,11 +2696,11 @@
                 return file;
             },
     
-            // 判断文件是否可以被加入队列
+            
             acceptFile: function( file ) {
                 var invalid = !file || file.size < 6 || this.accept &&
     
-                        // 如果名字中有后缀，才做后缀白名单处理。
+                        
                         rExt.exec( file.name ) && !this.accept.test( file.name );
     
                 return !invalid;
@@ -2726,12 +2726,12 @@
     
                 file = me._wrapFile( file );
     
-                // 不过类型判断允许不允许，先派送 `beforeFileQueued`
+                
                 if ( !me.owner.trigger( 'beforeFileQueued', file ) ) {
                     return;
                 }
     
-                // 类型不匹配，则派送错误事件，并返回。
+                
                 if ( !me.acceptFile( file ) ) {
                     me.owner.trigger( 'error', 'Q_TYPE_DENIED', file );
                     return;
@@ -2819,8 +2819,8 @@
              * @description 返回指定状态的文件集合，不传参数将返回所有状态的文件。
              * @for  Uploader
              * @example
-             * console.log( uploader.getFiles() );    // => all files
-             * console.log( uploader.getFiles('error') )    // => all error files.
+             * console.log( uploader.getFiles() );    
+             * console.log( uploader.getFiles('error') )    
              */
             getFiles: function() {
                 return this.queue.getFiles.apply( this.queue, arguments );
@@ -2970,10 +2970,10 @@
             server: '',
             method: 'POST',
     
-            // 跨域时，是否允许携带cookie, 只有html5 runtime才有效
+            
             withCredentials: false,
             fileVal: 'file',
-            timeout: 2 * 60 * 1000,    // 2分钟
+            timeout: 2 * 60 * 1000,    
             formData: {},
             headers: {},
             sendAsBinary: false
@@ -2981,7 +2981,7 @@
     
         $.extend( Transport.prototype, {
     
-            // 添加Blob, 只能添加一次，最后一次有效。
+            
             appendBlob: function( key, blob, filename ) {
                 var me = this,
                     opts = me.options;
@@ -2990,7 +2990,7 @@
                     me.disconnectRuntime();
                 }
     
-                // 连接到blob归属的同一个runtime.
+                
                 me.connectRuntime( blob.ruid, function() {
                     me.exec('init');
                 });
@@ -3000,7 +3000,7 @@
                 opts.filename = filename || opts.filename;
             },
     
-            // 添加其他字段
+            
             append: function( key, value ) {
                 if ( typeof key === 'object' ) {
                     $.extend( this._formData, key );
@@ -3063,7 +3063,7 @@
     
         });
     
-        // 让Transport具备事件功能。
+        
         Mediator.installTo( Transport.prototype );
     
         return Transport;
@@ -3083,7 +3083,7 @@
             isPromise = Base.isPromise,
             Status = WUFile.Status;
     
-        // 添加默认配置项
+        
         $.extend( Uploader.options, {
     
     
@@ -3161,7 +3161,7 @@
              */
         });
     
-        // 负责将文件切片。
+        
         function CuteFile( file, chunkSize ) {
             var pending = [],
                 blob = file.source,
@@ -3213,18 +3213,18 @@
     
                 this.runing = false;
     
-                // 记录当前正在传的数据，跟threads相关
+                
                 this.pool = [];
     
-                // 缓存即将上传的文件。
+                
                 this.pending = [];
     
-                // 跟踪还有多少分片没有完成上传。
+                
                 this.remaning = 0;
                 this.__tick = Base.bindFn( this._tick, this );
     
                 owner.on( 'uploadComplete', function( file ) {
-                    // 把其他块取消了。
+                    
                     file.blocks && $.each( file.blocks, function( _, v ) {
                         v.transport && (v.transport.abort(), v.transport.destroy());
                         delete v.transport;
@@ -3250,7 +3250,7 @@
             start: function() {
                 var me = this;
     
-                // 移出invalid的文件
+                
                 $.each( me.request( 'get-files', Status.INVALID ), function() {
                     me.request( 'remove-file', this );
                 });
@@ -3261,7 +3261,7 @@
     
                 me.runing = true;
     
-                // 如果有暂停的，则续传
+                
                 $.each( me.pool, function( _, v ) {
                     var file = v.file;
     
@@ -3333,7 +3333,7 @@
                 file.setStatus( status || Status.COMPLETE );
                 file.skipped = true;
     
-                // 如果正在上传。
+                
                 file.blocks && $.each( file.blocks, function( _, v ) {
                     var _tr = v.transport;
     
@@ -3357,26 +3357,26 @@
                     opts = me.options,
                     fn, val;
     
-                // 上一个promise还没有结束，则等待完成后再执行。
+                
                 if ( me._promise ) {
                     return me._promise.always( me.__tick );
                 }
     
-                // 还有位置，且还有文件要处理的话。
+                
                 if ( me.pool.length < opts.threads && (val = me._nextBlock()) ) {
                     me._trigged = false;
     
                     fn = function( val ) {
                         me._promise = null;
     
-                        // 有可能是reject过来的，所以要检测val的类型。
+                        
                         val && val.file && me._startSend( val );
                         Base.nextTick( me.__tick );
                     };
     
                     me._promise = isPromise( val ) ? val.always( fn ) : fn( val );
     
-                // 没有要上传的了，且没有正在传输的了。
+                
                 } else if ( !me.remaning && !me.getStats().numOfQueue ) {
                     me.runing = false;
     
@@ -3393,21 +3393,21 @@
                     opts = me.options,
                     next, done;
     
-                // 如果当前文件还有没有需要传输的，则直接返回剩下的。
+                
                 if ( act && act.has() &&
                         act.file.getStatus() === Status.PROGRESS ) {
     
-                    // 是否提前准备下一个文件
+                    
                     if ( opts.prepareNextFile && !me.pending.length ) {
                         me._prepareNextFile();
                     }
     
                     return act.fetch();
     
-                // 否则，如果正在运行，则准备下一个文件，并等待完成后返回下个分片。
+                
                 } else if ( me.runing ) {
     
-                    // 如果缓存中有，则直接在缓存中取，没有则去queue中取。
+                    
                     if ( !me.pending.length && me.getStats().numOfQueue ) {
                         me._prepareNextFile();
                     }
@@ -3423,7 +3423,7 @@
                         return act.fetch();
                     };
     
-                    // 文件可能还在prepare中，也有可能已经完全准备好了。
+                    
                     return isPromise( next ) ?
                             next[ next.pipe ? 'pipe' : 'then']( done ) :
                             done( next );
@@ -3446,7 +3446,7 @@
                 if ( file ) {
                     promise = me.request( 'before-send-file', file, function() {
     
-                        // 有可能文件被skip掉了。文件被skip掉后，状态坑定不是Queued.
+                        
                         if ( file.getStatus() === Status.QUEUED ) {
                             me.owner.trigger( 'uploadStart', file );
                             file.setStatus( Status.PROGRESS );
@@ -3456,14 +3456,14 @@
                         return me._finishFile( file );
                     });
     
-                    // 如果还在pending中，则替换成文件本身。
+                    
                     promise.done(function() {
                         var idx = $.inArray( promise, pending );
     
                         ~idx && pending.splice( idx, 1, file );
                     });
     
-                    // befeore-send-file的钩子就有错误发生。
+                    
                     promise.fail(function( reason ) {
                         file.setStatus( Status.ERROR, reason );
                         me.owner.trigger( 'uploadError', file, reason );
@@ -3474,7 +3474,7 @@
                 }
             },
     
-            // 让出位置了，可以让其他分片开始上传
+            
             _popBlock: function( block ) {
                 var idx = $.inArray( block, this.pool );
     
@@ -3483,7 +3483,7 @@
                 this.remaning--;
             },
     
-            // 开始上传，可以被掉过。如果promise被reject了，则表示跳过此分片。
+            
             _startSend: function( block ) {
                 var me = this,
                     file = block.file,
@@ -3492,15 +3492,15 @@
                 me.pool.push( block );
                 me.remaning++;
     
-                // 如果没有分片，则直接使用原始的。
-                // 不会丢失content-type信息。
+                
+                
                 block.blob = block.chunks === 1 ? file.source :
                         file.source.slice( block.start, block.end );
     
-                // hook, 每个分片发送之前可能要做些异步的事情。
+                
                 promise = me.request( 'before-send', block, function() {
     
-                    // 有可能文件已经上传出错了，所以不需要再传输了。
+                    
                     if ( file.getStatus() === Status.PROGRESS ) {
                         me._doSend( block );
                     } else {
@@ -3509,7 +3509,7 @@
                     }
                 });
     
-                // 如果为fail了，则跳过此分片。
+                
                 promise.fail(function() {
                     if ( file.remaning === 1 ) {
                         me._finishFile( file ).always(function() {
@@ -3575,7 +3575,7 @@
              * @for  Uploader
              */
     
-            // 做上传操作。
+            
             _doSend: function( block ) {
                 var me = this,
                     owner = me.owner,
@@ -3594,19 +3594,19 @@
                     Base.nextTick( me.__tick );
                 });
     
-                // 广播上传进度。以文件为单位。
+                
                 tr.on( 'progress', function( percentage ) {
                     var totalPercent = 0,
                         uploaded = 0;
     
-                    // 可能没有abort掉，progress还是执行进来了。
-                    // if ( !file.blocks ) {
-                    //     return;
-                    // }
+                    
+                    
+                    
+                    
     
                     totalPercent = block.percentage = percentage;
     
-                    if ( block.chunks > 1 ) {    // 计算文件的整体速度。
+                    if ( block.chunks > 1 ) {    
                         $.each( file.blocks, function( _, v ) {
                             uploaded += (v.percentage || 0) * (v.end - v.start);
                         });
@@ -3617,7 +3617,7 @@
                     owner.trigger( 'uploadProgress', file, totalPercent || 0 );
                 });
     
-                // 用来询问，是否返回的结果是有错误的。
+                
                 requestAccept = function( reject ) {
                     var fn;
     
@@ -3627,7 +3627,7 @@
                         reject = value;
                     };
     
-                    // 服务端响应了，不代表成功了，询问是否响应正确。
+                    
                     if ( !owner.trigger( 'uploadAccept', block, ret, fn ) ) {
                         reject = reject || 'server';
                     }
@@ -3635,11 +3635,11 @@
                     return reject;
                 };
     
-                // 尝试重试，然后广播文件上传出错。
+                
                 tr.on( 'error', function( type, flag ) {
                     block.retried = block.retried || 0;
     
-                    // 自动重试
+                    
                     if ( block.chunks > 1 && ~'http,abort'.indexOf( type ) &&
                             block.retried < opts.chunkRetry ) {
     
@@ -3648,7 +3648,7 @@
     
                     } else {
     
-                        // http status 500 ~ 600
+                        
                         if ( !flag && type === 'server' ) {
                             type = requestAccept( type );
                         }
@@ -3659,17 +3659,17 @@
                     }
                 });
     
-                // 上传成功
+                
                 tr.on( 'load', function() {
                     var reason;
     
-                    // 如果非预期，转向上传出错。
+                    
                     if ( (reason = requestAccept()) ) {
                         tr.trigger( 'error', reason, true );
                         return;
                     }
     
-                    // 全部上传完成。
+                    
                     if ( file.remaning === 1 ) {
                         me._finishFile( file, ret );
                     } else {
@@ -3677,7 +3677,7 @@
                     }
                 });
     
-                // 配置默认的上传字段。
+                
                 data = $.extend( data, {
                     id: file.id,
                     name: file.name,
@@ -3691,18 +3691,18 @@
                     chunk: block.chunk
                 });
     
-                // 在发送之间可以添加字段什么的。。。
-                // 如果默认的字段不够使用，可以通过监听此事件来扩展
+                
+                
                 owner.trigger( 'uploadBeforeSend', block, data, headers );
     
-                // 开始发送。
+                
                 tr.appendBlob( opts.fileVal, block.blob, file.name );
                 tr.append( data );
                 tr.setRequestHeader( headers );
                 tr.send();
             },
     
-            // 完成上传。
+            
             _finishFile: function( file, ret, hds ) {
                 var owner = this.owner;
     
@@ -3713,7 +3713,7 @@
                         })
                         .fail(function( reason ) {
     
-                            // 如果外部已经标记为invalid什么的，不再改状态。
+                            
                             if ( file.getStatus() === Status.PROGRESS ) {
                                 file.setStatus( Status.ERROR, reason );
                             }
@@ -3752,21 +3752,21 @@
          * @for  Uploader
          */
     
-        // 暴露给外面的api
+        
         api = {
     
-            // 添加验证器
+            
             addValidator: function( type, cb ) {
                 validators[ type ] = cb;
             },
     
-            // 移除验证器
+            
             removeValidator: function( type ) {
                 delete validators[ type ];
             }
         };
     
-        // 在Uploader初始化的时候启动Validators的初始化
+        
         Uploader.register({
             init: function() {
                 var me = this;
@@ -3924,7 +3924,7 @@
                 var hash = file.__hash || (file.__hash = hashString( file.name +
                         file.size + file.lastModifiedDate ));
     
-                // 已经重复了
+                
                 if ( mapping[ hash ] ) {
                     this.trigger( 'error', 'F_DUPLICATE', file );
                     return false;
@@ -3993,7 +3993,7 @@
             me.type = type;
     
     
-            // 这个方法的调用者，实际上是RuntimeClient
+            
             me.exec = function( comp, fn/*, args...*/) {
                 var client = this,
                     uid = client.uid,
@@ -4011,7 +4011,7 @@
             };
     
             me.destory = function() {
-                // @todo 删除池子中的所有实例
+                
                 return destory && destory.apply( this, arguments );
             };
         }
@@ -4019,7 +4019,7 @@
         Base.inherits( Runtime, {
             constructor: Html5Runtime,
     
-            // 不需要连接其他程序，直接执行callback
+            
             init: function() {
                 var me = this;
                 setTimeout(function() {
@@ -4029,14 +4029,14 @@
     
         });
     
-        // 注册Components
+        
         Html5Runtime.register = function( name, component ) {
             var klass = components[ name ] = Base.inherits( CompBase, component );
             return klass;
         };
     
-        // 注册html5运行时。
-        // 只有在支持的前提下注册。
+        
+        
         if ( window.Blob && window.FileReader && window.DataView ) {
             Runtime.addRuntime( type, Html5Runtime );
         }
@@ -4105,7 +4105,7 @@
                 if ( !me.dndOver ) {
                     me.dndOver = true;
     
-                    // 注意只有 chrome 支持。
+                    
                     items = e.dataTransfer.items;
     
                     if ( items && items.length ) {
@@ -4124,7 +4124,7 @@
             },
     
             _dragOverHandler: function( e ) {
-                // 只处理框内的。
+                
                 var parentElem = this.elem.parent().get( 0 );
                 if ( parentElem && !$.contains( parentElem, e.currentTarget ) ) {
                     return false;
@@ -4155,7 +4155,7 @@
                     ruid = me.getRuid(),
                     parentElem = me.elem.parent().get( 0 );
     
-                // 只处理框内的。
+                
                 if ( parentElem && !$.contains( parentElem, e.currentTarget ) ) {
                     return false;
                 }
@@ -4171,7 +4171,7 @@
                 return false;
             },
     
-            // 如果传入 callback 则去查看文件夹，否则只管当前文件夹。
+            
             _getTansferFiles: function( e, callback ) {
                 var results  = [],
                     promises = [],
@@ -4221,7 +4221,7 @@
                     entry.createReader().readEntries(function( entries ) {
                         var len = entries.length,
                             promises = [],
-                            arr = [],    // 为了保证顺序。
+                            arr = [],    
                             i;
     
                         for ( i = 0; i < len; i++ ) {
@@ -4271,7 +4271,7 @@
                     accept = '.*',
                     arr, i, len, item;
     
-                // accetp的mimeTypes中生成匹配正则。
+                
                 if ( opts.accept ) {
                     arr = [];
     
@@ -4309,7 +4309,7 @@
                 }
     
                 if ( allowed.length ) {
-                    // 不阻止非文件粘贴（文字粘贴）的事件冒泡
+                    
                     e.preventDefault();
                     e.stopPropagation();
                     this.trigger( 'paste', allowed );
@@ -4363,7 +4363,7 @@
                     input.attr( 'multiple', 'multiple' );
                 }
     
-                // @todo Firefox不支持单独指定后缀
+                
                 if ( opts.accept && opts.accept.length > 0 ) {
                     arr = [];
     
@@ -4387,7 +4387,7 @@
     
                     me.files = e.target.files;
     
-                    // reset input
+                    
                     clone = this.cloneNode( true );
                     this.parentNode.replaceChild( clone, this );
     
@@ -4408,7 +4408,7 @@
             },
     
             destroy: function() {
-                // todo
+                
             }
         });
     });
@@ -4430,7 +4430,7 @@
     
         if ( urlAPI ) {
     
-            // 更安全的方式调用，比如android里面就能把context改成其他的对象。
+            
             createObjectURL = function() {
                 return urlAPI.createObjectURL.apply( urlAPI, arguments );
             };
@@ -4491,7 +4491,7 @@
                 var builder = window.BlobBuilder || window.WebKitBlobBuilder,
                     bb;
     
-                // android不支持直接new Blob, 只能借助blobbuilder.
+                
                 if ( builder ) {
                     bb = new builder();
                     bb.append( buffer );
@@ -4501,18 +4501,18 @@
                 return new Blob([ buffer ], type ? { type: type } : {} );
             },
     
-            // 抽出来主要是为了解决android下面canvas.toDataUrl不支持jpeg.
-            // 你得到的结果是png.
+            
+            
             canvasToDataUrl: function( canvas, type, quality ) {
                 return canvas.toDataURL( type, quality / 100 );
             },
     
-            // imagemeat会复写这个方法，如果用户选择加载那个文件了的话。
+            
             parseMeta: function( blob, callback ) {
                 callback( false, {});
             },
     
-            // imagemeat会复写这个方法，如果用户选择加载那个文件了的话。
+            
             updateImageHead: function( data ) {
                 return data;
             }
@@ -4601,8 +4601,8 @@
                         if ( buffer.slice ) {
                             ret.imageHead = buffer.slice( 2, headLength );
                         } else {
-                            // Workaround for IE10, which does not yet
-                            // support ArrayBuffer.slice:
+                            
+                            
                             ret.imageHead = new Uint8Array( buffer )
                                     .subarray( 2, headLength );
                         }
@@ -4657,41 +4657,41 @@
      * @fileOverview EXIF解析
      */
     
-    // Sample
-    // ====================================
-    // Make : Apple
-    // Model : iPhone 4S
-    // Orientation : 1
-    // XResolution : 72 [72/1]
-    // YResolution : 72 [72/1]
-    // ResolutionUnit : 2
-    // Software : QuickTime 7.7.1
-    // DateTime : 2013:09:01 22:53:55
-    // ExifIFDPointer : 190
-    // ExposureTime : 0.058823529411764705 [1/17]
-    // FNumber : 2.4 [12/5]
-    // ExposureProgram : Normal program
-    // ISOSpeedRatings : 800
-    // ExifVersion : 0220
-    // DateTimeOriginal : 2013:09:01 22:52:51
-    // DateTimeDigitized : 2013:09:01 22:52:51
-    // ComponentsConfiguration : YCbCr
-    // ShutterSpeedValue : 4.058893515764426
-    // ApertureValue : 2.5260688216892597 [4845/1918]
-    // BrightnessValue : -0.3126686601998395
-    // MeteringMode : Pattern
-    // Flash : Flash did not fire, compulsory flash mode
-    // FocalLength : 4.28 [107/25]
-    // SubjectArea : [4 values]
-    // FlashpixVersion : 0100
-    // ColorSpace : 1
-    // PixelXDimension : 2448
-    // PixelYDimension : 3264
-    // SensingMethod : One-chip color area sensor
-    // ExposureMode : 0
-    // WhiteBalance : Auto white balance
-    // FocalLengthIn35mmFilm : 35
-    // SceneCaptureType : Standard
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     define('runtime/html5/imagemeta/exif',[
         'base',
         'runtime/html5/imagemeta'
@@ -4712,7 +4712,7 @@
         };
     
         EXIF.exifTagTypes = {
-            // byte, 8-bit unsigned int:
+            
             1: {
                 getValue: function( dataView, dataOffset ) {
                     return dataView.getUint8( dataOffset );
@@ -4720,7 +4720,7 @@
                 size: 1
             },
     
-            // ascii, 8-bit byte:
+            
             2: {
                 getValue: function( dataView, dataOffset ) {
                     return String.fromCharCode( dataView.getUint8( dataOffset ) );
@@ -4729,7 +4729,7 @@
                 ascii: true
             },
     
-            // short, 16 bit int:
+            
             3: {
                 getValue: function( dataView, dataOffset, littleEndian ) {
                     return dataView.getUint16( dataOffset, littleEndian );
@@ -4737,7 +4737,7 @@
                 size: 2
             },
     
-            // long, 32 bit int:
+            
             4: {
                 getValue: function( dataView, dataOffset, littleEndian ) {
                     return dataView.getUint32( dataOffset, littleEndian );
@@ -4745,8 +4745,8 @@
                 size: 4
             },
     
-            // rational = two long values,
-            // first is numerator, second is denominator:
+            
+            
             5: {
                 getValue: function( dataView, dataOffset, littleEndian ) {
                     return dataView.getUint32( dataOffset, littleEndian ) /
@@ -4755,7 +4755,7 @@
                 size: 8
             },
     
-            // slong, 32 bit signed int:
+            
             9: {
                 getValue: function( dataView, dataOffset, littleEndian ) {
                     return dataView.getInt32( dataOffset, littleEndian );
@@ -4763,7 +4763,7 @@
                 size: 4
             },
     
-            // srational, two slongs, first is numerator, second is denominator:
+            
             10: {
                 getValue: function( dataView, dataOffset, littleEndian ) {
                     return dataView.getInt32( dataOffset, littleEndian ) /
@@ -4773,7 +4773,7 @@
             }
         };
     
-        // undefined, 8-bit byte, value depending on field:
+        
         EXIF.exifTagTypes[ 7 ] = EXIF.exifTagTypes[ 1 ];
     
         EXIF.getExifValue = function( dataView, tiffOffset, offset, type, length,
@@ -4789,8 +4789,8 @@
     
             tagSize = tagType.size * length;
     
-            // Determine if the value is contained in the dataOffset bytes,
-            // or if the value at the dataOffset is a pointer to the actual data:
+            
+            
             dataOffset = tagSize > 4 ? tiffOffset + dataView.getUint32( offset + 8,
                     littleEndian ) : (offset + 8);
     
@@ -4813,11 +4813,11 @@
             if ( tagType.ascii ) {
                 str = '';
     
-                // Concatenate the chars:
+                
                 for ( i = 0; i < values.length; i += 1 ) {
                     c = values[ i ];
     
-                    // Ignore the terminating NULL byte(s):
+                    
                     if ( c === '\u0000' ) {
                         break;
                     }
@@ -4834,8 +4834,8 @@
     
             var tag = dataView.getUint16( offset, littleEndian );
             data.exif[ tag ] = EXIF.getExifValue( dataView, tiffOffset, offset,
-                    dataView.getUint16( offset + 2, littleEndian ),    // tag type
-                    dataView.getUint32( offset + 4, littleEndian ),    // tag length
+                    dataView.getUint16( offset + 2, littleEndian ),    
+                    dataView.getUint32( offset + 4, littleEndian ),    
                     littleEndian );
         };
     
@@ -4859,38 +4859,38 @@
     
             for ( i = 0; i < tagsNumber; i += 1 ) {
                 this.parseExifTag( dataView, tiffOffset,
-                        dirOffset + 2 + 12 * i,    // tag offset
+                        dirOffset + 2 + 12 * i,    
                         littleEndian, data );
             }
     
-            // Return the offset to the next directory:
+            
             return dataView.getUint32( dirEndOffset, littleEndian );
         };
     
-        // EXIF.getExifThumbnail = function(dataView, offset, length) {
-        //     var hexData,
-        //         i,
-        //         b;
-        //     if (!length || offset + length > dataView.byteLength) {
-        //         Base.log('Invalid Exif data: Invalid thumbnail data.');
-        //         return;
-        //     }
-        //     hexData = [];
-        //     for (i = 0; i < length; i += 1) {
-        //         b = dataView.getUint8(offset + i);
-        //         hexData.push((b < 16 ? '0' : '') + b.toString(16));
-        //     }
-        //     return 'data:image/jpeg,%' + hexData.join('%');
-        // };
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
     
         EXIF.parseExifData = function( dataView, offset, length, data ) {
     
             var tiffOffset = offset + 10,
                 littleEndian, dirOffset;
     
-            // Check for the ASCII code for "Exif" (0x45786966):
+            
             if ( dataView.getUint32( offset + 4 ) !== 0x45786966 ) {
-                // No Exif data, might be XMP data instead
+                
                 return;
             }
             if ( tiffOffset + 8 > dataView.byteLength ) {
@@ -4898,13 +4898,13 @@
                 return;
             }
     
-            // Check for the two null bytes:
+            
             if ( dataView.getUint16( offset + 8 ) !== 0x0000 ) {
                 Base.log('Invalid Exif data: Missing byte alignment offset.');
                 return;
             }
     
-            // Check the byte alignment:
+            
             switch ( dataView.getUint16( tiffOffset ) ) {
                 case 0x4949:
                     littleEndian = true;
@@ -4919,41 +4919,41 @@
                     return;
             }
     
-            // Check for the TIFF tag marker (0x002A):
+            
             if ( dataView.getUint16( tiffOffset + 2, littleEndian ) !== 0x002A ) {
                 Base.log('Invalid Exif data: Missing TIFF marker.');
                 return;
             }
     
-            // Retrieve the directory offset bytes, usually 0x00000008 or 8 decimal:
+            
             dirOffset = dataView.getUint32( tiffOffset + 4, littleEndian );
-            // Create the exif object to store the tags:
+            
             data.exif = new EXIF.ExifMap();
-            // Parse the tags of the main image directory and retrieve the
-            // offset to the next directory, usually the thumbnail directory:
+            
+            
             dirOffset = EXIF.parseExifTags( dataView, tiffOffset,
                     tiffOffset + dirOffset, littleEndian, data );
     
-            // 尝试读取缩略图
-            // if ( dirOffset ) {
-            //     thumbnailData = {exif: {}};
-            //     dirOffset = EXIF.parseExifTags(
-            //         dataView,
-            //         tiffOffset,
-            //         tiffOffset + dirOffset,
-            //         littleEndian,
-            //         thumbnailData
-            //     );
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
     
-            //     // Check for JPEG Thumbnail offset:
-            //     if (thumbnailData.exif[0x0201]) {
-            //         data.exif.Thumbnail = EXIF.getExifThumbnail(
-            //             dataView,
-            //             tiffOffset + thumbnailData.exif[0x0201],
-            //             thumbnailData.exif[0x0202] // Thumbnail data length
-            //         );
-            //     }
-            // }
+            
+            
+            
+            
+            
+            
+            
+            
+            
         };
     
         ImageMeta.parsers[ 0xffe1 ].push( EXIF.parseExifData );
@@ -5216,7 +5216,7 @@
                     }
                 }
     
-                // IO functions
+                
                 function writeBits(bs)
                 {
                     var value = bs[0];
@@ -5243,7 +5243,7 @@
     
                 function writeByte(value)
                 {
-                    byteout.push(clt[value]); // write char directly instead of converting later
+                    byteout.push(clt[value]); 
                 }
     
                 function writeWord(value)
@@ -5252,7 +5252,7 @@
                     writeByte((value   )&0xFF);
                 }
     
-                // DCT & quantization core
+                
                 function fDCTQuant(data, fdtbl)
                 {
                     var d0, d1, d2, d3, d4, d5, d6, d7;
@@ -5373,11 +5373,11 @@
                         dataOff++; /* advance pointer to next column */
                     }
     
-                    // Quantize/descale the coefficients
+                    
                     var fDCTQuant;
                     for (i=0; i<I64; ++i)
                     {
-                        // Apply the quantization and scaling factor & Round to nearest integer
+                        
                         fDCTQuant = data[i]*fdtbl[i];
                         outputfDCTQuant[i] = (fDCTQuant > 0.0) ? ((fDCTQuant + 0.5)|0) : ((fDCTQuant - 0.5)|0);
                         //outputfDCTQuant[i] = fround(fDCTQuant);
@@ -5388,45 +5388,45 @@
     
                 function writeAPP0()
                 {
-                    writeWord(0xFFE0); // marker
-                    writeWord(16); // length
-                    writeByte(0x4A); // J
-                    writeByte(0x46); // F
-                    writeByte(0x49); // I
-                    writeByte(0x46); // F
-                    writeByte(0); // = "JFIF",'\0'
-                    writeByte(1); // versionhi
-                    writeByte(1); // versionlo
-                    writeByte(0); // xyunits
-                    writeWord(1); // xdensity
-                    writeWord(1); // ydensity
-                    writeByte(0); // thumbnwidth
-                    writeByte(0); // thumbnheight
+                    writeWord(0xFFE0); 
+                    writeWord(16); 
+                    writeByte(0x4A); 
+                    writeByte(0x46); 
+                    writeByte(0x49); 
+                    writeByte(0x46); 
+                    writeByte(0); 
+                    writeByte(1); 
+                    writeByte(1); 
+                    writeByte(0); 
+                    writeWord(1); 
+                    writeWord(1); 
+                    writeByte(0); 
+                    writeByte(0); 
                 }
     
                 function writeSOF0(width, height)
                 {
-                    writeWord(0xFFC0); // marker
-                    writeWord(17);   // length, truecolor YUV JPG
-                    writeByte(8);    // precision
+                    writeWord(0xFFC0); 
+                    writeWord(17);   
+                    writeByte(8);    
                     writeWord(height);
                     writeWord(width);
-                    writeByte(3);    // nrofcomponents
-                    writeByte(1);    // IdY
-                    writeByte(0x11); // HVY
-                    writeByte(0);    // QTY
-                    writeByte(2);    // IdU
-                    writeByte(0x11); // HVU
-                    writeByte(1);    // QTU
-                    writeByte(3);    // IdV
-                    writeByte(0x11); // HVV
-                    writeByte(1);    // QTV
+                    writeByte(3);    
+                    writeByte(1);    
+                    writeByte(0x11); 
+                    writeByte(0);    
+                    writeByte(2);    
+                    writeByte(0x11); 
+                    writeByte(1);    
+                    writeByte(3);    
+                    writeByte(0x11); 
+                    writeByte(1);    
                 }
     
                 function writeDQT()
                 {
-                    writeWord(0xFFDB); // marker
-                    writeWord(132);    // length
+                    writeWord(0xFFDB); 
+                    writeWord(132);    
                     writeByte(0);
                     for (var i=0; i<64; i++) {
                         writeByte(YTable[i]);
@@ -5439,10 +5439,10 @@
     
                 function writeDHT()
                 {
-                    writeWord(0xFFC4); // marker
-                    writeWord(0x01A2); // length
+                    writeWord(0xFFC4); 
+                    writeWord(0x01A2); 
     
-                    writeByte(0); // HTYDCinfo
+                    writeByte(0); 
                     for (var i=0; i<16; i++) {
                         writeByte(std_dc_luminance_nrcodes[i+1]);
                     }
@@ -5450,7 +5450,7 @@
                         writeByte(std_dc_luminance_values[j]);
                     }
     
-                    writeByte(0x10); // HTYACinfo
+                    writeByte(0x10); 
                     for (var k=0; k<16; k++) {
                         writeByte(std_ac_luminance_nrcodes[k+1]);
                     }
@@ -5458,7 +5458,7 @@
                         writeByte(std_ac_luminance_values[l]);
                     }
     
-                    writeByte(1); // HTUDCinfo
+                    writeByte(1); 
                     for (var m=0; m<16; m++) {
                         writeByte(std_dc_chrominance_nrcodes[m+1]);
                     }
@@ -5466,7 +5466,7 @@
                         writeByte(std_dc_chrominance_values[n]);
                     }
     
-                    writeByte(0x11); // HTUACinfo
+                    writeByte(0x11); 
                     for (var o=0; o<16; o++) {
                         writeByte(std_ac_chrominance_nrcodes[o+1]);
                     }
@@ -5477,18 +5477,18 @@
     
                 function writeSOS()
                 {
-                    writeWord(0xFFDA); // marker
-                    writeWord(12); // length
-                    writeByte(3); // nrofcomponents
-                    writeByte(1); // IdY
-                    writeByte(0); // HTY
-                    writeByte(2); // IdU
-                    writeByte(0x11); // HTU
-                    writeByte(3); // IdV
-                    writeByte(0x11); // HTV
-                    writeByte(0); // Ss
-                    writeByte(0x3f); // Se
-                    writeByte(0); // Bf
+                    writeWord(0xFFDA); 
+                    writeWord(12); 
+                    writeByte(3); 
+                    writeByte(1); 
+                    writeByte(0); 
+                    writeByte(2); 
+                    writeByte(0x11); 
+                    writeByte(3); 
+                    writeByte(0x11); 
+                    writeByte(0); 
+                    writeByte(0x3f); 
+                    writeByte(0); 
                 }
     
                 function processDU(CDU, fdtbl, DC, HTDC, HTAC){
@@ -5506,14 +5506,14 @@
                     var Diff = DU[0] - DC; DC = DU[0];
                     //Encode DC
                     if (Diff==0) {
-                        writeBits(HTDC[0]); // Diff might be 0
+                        writeBits(HTDC[0]); 
                     } else {
                         pos = 32767+Diff;
                         writeBits(HTDC[category[pos]]);
                         writeBits(bitcode[pos]);
                     }
                     //Encode ACs
-                    var end0pos = 63; // was const... which is crazy
+                    var end0pos = 63; 
                     for (; (end0pos>0)&&(DU[end0pos]==0); end0pos--) {};
                     //end0pos = first element in reverse order !=0
                     if ( end0pos == 0) {
@@ -5545,24 +5545,24 @@
     
                 function initCharLookupTable(){
                     var sfcc = String.fromCharCode;
-                    for(var i=0; i < 256; i++){ ///// ACHTUNG // 255
+                    for(var i=0; i < 256; i++){ ///
                         clt[i] = sfcc(i);
                     }
                 }
     
-                this.encode = function(image,quality) // image data object
+                this.encode = function(image,quality) 
                 {
-                    // var time_start = new Date().getTime();
+                    
     
                     if(quality) setQuality(quality);
     
-                    // Initialize bit writer
+                    
                     byteout = new Array();
                     bytenew=0;
                     bytepos=7;
     
-                    // Add JPEG headers
-                    writeWord(0xFFD8); // SOI
+                    
+                    writeWord(0xFFD8); 
                     writeAPP0();
                     writeDQT();
                     writeSOF0(image.width,image.height);
@@ -5570,7 +5570,7 @@
                     writeSOS();
     
     
-                    // Encode 8x8 macroblocks
+                    
                     var DCY=0;
                     var DCU=0;
                     var DCV=0;
@@ -5600,15 +5600,15 @@
                         row = 0;
     
                         for(pos=0; pos < 64; pos++){
-                            row = pos >> 3;// /8
-                            col = ( pos & 7 ) * 4; // %8
+                            row = pos >> 3;
+                            col = ( pos & 7 ) * 4; 
                             p = start + ( row * quadWidth ) + col;
     
-                            if(y+row >= height){ // padding bottom
+                            if(y+row >= height){ 
                                 p-= (quadWidth*(y+1+row-height));
                             }
     
-                            if(x+col >= quadWidth){ // padding right
+                            if(x+col >= quadWidth){ 
                                 p-= ((x+col) - quadWidth +4)
                             }
     
@@ -5617,13 +5617,13 @@
                             b = imageData[ p++ ];
     
     
-                            /* // calculate YUV values dynamically
+                            /* 
                             YDU[pos]=((( 0.29900)*r+( 0.58700)*g+( 0.11400)*b))-128; //-0x80
                             UDU[pos]=(((-0.16874)*r+(-0.33126)*g+( 0.50000)*b));
                             VDU[pos]=((( 0.50000)*r+(-0.41869)*g+(-0.08131)*b));
                             */
     
-                            // use lookup table (slightly faster)
+                            
                             YDU[pos] = ((RGB_YUV_TABLE[r]             + RGB_YUV_TABLE[(g +  256)>>0] + RGB_YUV_TABLE[(b +  512)>>0]) >> 16)-128;
                             UDU[pos] = ((RGB_YUV_TABLE[(r +  768)>>0] + RGB_YUV_TABLE[(g + 1024)>>0] + RGB_YUV_TABLE[(b + 1280)>>0]) >> 16)-128;
                             VDU[pos] = ((RGB_YUV_TABLE[(r + 1280)>>0] + RGB_YUV_TABLE[(g + 1536)>>0] + RGB_YUV_TABLE[(b + 1792)>>0]) >> 16)-128;
@@ -5641,7 +5641,7 @@
     
                     ////////////////////////////////////////////////////////////////
     
-                    // Do the bit alignment of the EOI marker
+                    
                     if ( bytepos >= 0 ) {
                         var fillbits = [];
                         fillbits[1] = bytepos+1;
@@ -5655,9 +5655,9 @@
     
                     byteout = [];
     
-                    // benchmarking
-                    // var duration = new Date().getTime() - time_start;
-                    // console.log('Encoding time: '+ currentQuality + 'ms');
+                    
+                    
+                    
                     //
     
                     return jpegDataUri
@@ -5671,7 +5671,7 @@
                     quality = 100;
                 }
     
-                if(currentQuality == quality) return // don't recalc if unchanged
+                if(currentQuality == quality) return 
     
                 var sf = 0;
                 if (quality < 50) {
@@ -5682,21 +5682,21 @@
     
                 initQuantTables(sf);
                 currentQuality = quality;
-                // console.log('Quality set to: '+quality +'%');
+                
             }
     
             function init(){
-                // var time_start = new Date().getTime();
+                
                 if(!quality) quality = 50;
-                // Create tables
+                
                 initCharLookupTable()
                 initHuffmanTbl();
                 initCategoryNumber();
                 initRGBYUVTable();
     
                 setQuality(quality);
-                // var duration = new Date().getTime() - time_start;
-                // console.log('Initialization '+ duration + 'ms');
+                
+                
             }
     
             init();
@@ -5725,13 +5725,13 @@
         Util.canvasToDataUrl = function( canvas, type, quality ) {
             var ctx, w, h, fragement, parts;
     
-            // 非android手机直接跳过。
+            
             if ( !Base.os.android ) {
                 return origin.apply( null, arguments );
             }
     
-            // 检测是否canvas支持jpeg导出，根据数据格式来判断。
-            // JPEG 前两位分别是：255, 216
+            
+            
             if ( type === 'image/jpeg' && typeof supportJpeg === 'undefined' ) {
                 fragement = origin.apply( null, arguments );
     
@@ -5749,7 +5749,7 @@
                         fragement.charCodeAt( 1 ) === 216;
             }
     
-            // 只有在android环境下才修复
+            
             if ( type === 'image/jpeg' && !supportJpeg ) {
                 w = canvas.width;
                 h = canvas.height;
@@ -5774,7 +5774,7 @@
     
         return Html5Runtime.register( 'Image', {
     
-            // flag: 标记是否被修改过。
+            
             modified: false,
     
             init: function() {
@@ -5789,7 +5789,7 @@
                         height: this.height
                     };
     
-                    // 读取meta信息。
+                    
                     if ( !me._metas && 'image/jpeg' === me.type ) {
                         Util.parseMeta( me._blob, function( error, ret ) {
                             me._metas = ret;
@@ -5824,7 +5824,7 @@
                         (this._canvas = document.createElement('canvas'));
     
                 this._resize( this._img, canvas, width, height );
-                this._blob = null;    // 没用了，可以删掉了。
+                this._blob = null;    
                 this.modified = true;
                 this.owner.trigger('complete');
             },
@@ -5836,7 +5836,7 @@
     
                 type = type || this.type;
     
-                // blob需要重新生成。
+                
                 if ( this.modified || this.type !== type ) {
                     canvas = this._canvas;
     
@@ -5883,25 +5883,25 @@
     
             info: function( val ) {
     
-                // setter
+                
                 if ( val ) {
                     this._info = val;
                     return this;
                 }
     
-                // getter
+                
                 return this._info;
             },
     
             meta: function( val ) {
     
-                // setter
+                
                 if ( val ) {
                     this._meta = val;
                     return this;
                 }
     
-                // getter
+                
                 return this._meta;
             },
     
@@ -5916,7 +5916,7 @@
                     this._canvas = null;
                 }
     
-                // 释放内存。非常重要，否则释放不了image的内存。
+                
                 this._img.src = BLANK;
                 this._img = this._blob = null;
             },
@@ -5928,10 +5928,10 @@
                     orientation = this.getOrientation(),
                     scale, w, h, x, y;
     
-                // values that require 90 degree rotation
+                
                 if ( ~[ 5, 6, 7, 8 ].indexOf( orientation ) ) {
     
-                    // 交换width, height的值。
+                    
                     width ^= height;
                     height ^= width;
                     width ^= height;
@@ -5940,7 +5940,7 @@
                 scale = Math[ opts.crop ? 'max' : 'min' ]( width / naturalWidth,
                         height / naturalHeight );
     
-                // 不允许放大。
+                
                 opts.allowMagnify || (scale = Math.min( 1, scale ));
     
                 w = naturalWidth * scale;
@@ -5978,49 +5978,49 @@
                 }
     
                 switch ( orientation ) {
-                    case 2:    // horizontal flip
+                    case 2:    
                         ctx.translate( width, 0 );
                         ctx.scale( -1, 1 );
                         break;
     
-                    case 3:    // 180 rotate left
+                    case 3:    
                         ctx.translate( width, height );
                         ctx.rotate( Math.PI );
                         break;
     
-                    case 4:    // vertical flip
+                    case 4:    
                         ctx.translate( 0, height );
                         ctx.scale( 1, -1 );
                         break;
     
-                    case 5:    // vertical flip + 90 rotate right
+                    case 5:    
                         ctx.rotate( 0.5 * Math.PI );
                         ctx.scale( 1, -1 );
                         break;
     
-                    case 6:    // 90 rotate right
+                    case 6:    
                         ctx.rotate( 0.5 * Math.PI );
                         ctx.translate( 0, -height );
                         break;
     
-                    case 7:    // horizontal flip + 90 rotate right
+                    case 7:    
                         ctx.rotate( 0.5 * Math.PI );
                         ctx.translate( width, -height );
                         ctx.scale( -1, 1 );
                         break;
     
-                    case 8:    // 90 rotate left
+                    case 8:    
                         ctx.rotate( -0.5 * Math.PI );
                         ctx.translate( -width, 0 );
                         break;
                 }
             },
     
-            // https://github.com/stomita/ios-imagefile-megapixel/
-            // blob/master/src/megapix-image.js
+            
+            
             _renderImageToCanvas: (function() {
     
-                // 如果不是ios, 不需要这么复杂！
+                
                 if ( !Base.os.ios ) {
                     return function( canvas, img, x, y, w, h ) {
                         canvas.getContext('2d').drawImage( img, x, y, w, h );
@@ -6046,8 +6046,8 @@
                     ctx.drawImage( img, 0, 0 );
                     data = ctx.getImageData( 0, 0, 1, ih ).data;
     
-                    // search image edge pixel position in case
-                    // it is squashed vertically.
+                    
+                    
                     while ( py > sy ) {
                         alpha = data[ (py - 1) * 4 + 3 ];
     
@@ -6064,9 +6064,9 @@
                     return (ratio === 0) ? 1 : ratio;
                 }
     
-                // fix ie7 bug
-                // http://stackoverflow.com/questions/11929099/
-                // html5-canvas-drawimage-ratio-bug-ios
+                
+                
+                
                 if ( Base.os.ios >= 7 ) {
                     return function( canvas, img, x, y, w, h ) {
                         var iw = img.naturalWidth,
@@ -6089,17 +6089,17 @@
                         ih = img.naturalHeight,
                         canvas, ctx;
     
-                    // subsampling may happen overmegapixel image
+                    
                     if ( iw * ih > 1024 * 1024 ) {
                         canvas = document.createElement('canvas');
                         canvas.width = canvas.height = 1;
                         ctx = canvas.getContext('2d');
                         ctx.drawImage( img, -iw + 1, 0 );
     
-                        // subsampled image becomes half smaller in rendering size.
-                        // check alpha channel value to confirm image is covering
-                        // edge pixel or not. if alpha value is 0
-                        // image is not covering, hence subsampled.
+                        
+                        
+                        
+                        
                         return ctx.getImageData( 0, 0, 1, 1 ).data[ 3 ] === 0;
                     } else {
                         return false;
@@ -6209,10 +6209,10 @@
                 if ( binary ) {
                     xhr.overrideMimeType('application/octet-stream');
     
-                    // android直接发送blob会导致服务端接收到的是空文件。
-                    // bug详情。
-                    // https://code.google.com/p/android/issues/detail?id=39882
-                    // 所以先用fileReader读取出来再通过arraybuffer的方式发送。
+                    
+                    
+                    
+                    
                     if ( Base.os.android ) {
                         fr = new FileReader();
     
@@ -6367,7 +6367,7 @@
             me.type = type;
     
     
-            // 这个方法的调用者，实际上是RuntimeClient
+            
             me.exec = function( comp, fn/*, args...*/ ) {
                 var client = this,
                     uid = client.uid,
@@ -6399,7 +6399,7 @@
                 uid = parts[ 0 ];
                 type = parts[ 1 ];
     
-                // console.log.apply( console, arguments );
+                
     
                 if ( type === 'Ready' && uid === me.uid ) {
                     me.trigger('ready');
@@ -6407,14 +6407,14 @@
                     clients[ uid ].trigger( type.toLowerCase(), evt, obj );
                 }
     
-                // Base.log( evt, obj );
+                
             }
     
-            // flash的接受器。
+            
             window[ jsreciver ] = function() {
                 var args = arguments;
     
-                // 为了能捕获得到。
+                
                 setTimeout(function() {
                     handler.apply( null, args );
                 }, 1 );
@@ -6423,7 +6423,7 @@
             this.jsreciver = jsreciver;
     
             this.destory = function() {
-                // @todo 删除池子中的所有实例
+                
                 return destory && destory.apply( this, arguments );
             };
     
@@ -6434,7 +6434,7 @@
                 return flash.exec( this.uid, comp, fn, args );
             };
     
-            // @todo
+            
         }
     
         Base.inherits( Runtime, {
@@ -6445,8 +6445,8 @@
                     opts = this.options,
                     html;
     
-                // if not the minimal height, shims are not initialized
-                // in older browsers (e.g FF3.6, IE6,7,8, Safari 4.0,5.0, etc)
+                
+                
                 container.css({
                     position: 'absolute',
                     top: '-8px',
@@ -6456,7 +6456,7 @@
                     overflow: 'hidden'
                 });
     
-                // insert flash object
+                
                 html = '<object id="' + this.uid + '" type="application/' +
                         'x-shockwave-flash" data="' +  opts.swf + '" ';
     
@@ -6489,7 +6489,7 @@
         FlashRuntime.register = function( name, component ) {
             component = components[ name ] = Base.inherits( CompBase, $.extend({
     
-                // @todo fix this later
+                
                 flashExec: function() {
                     var owner = this.owner,
                         runtime = this.getRuntime();
@@ -6521,7 +6521,7 @@
                 var copy = $.extend({}, opts ),
                     len, i;
     
-                // 修复Flash再没有设置title的情况下无法弹出flash文件选择框的bug.
+                
                 len = copy.accept && copy.accept.length;
                 for (  i = 0; i < len; i++ ) {
                     if ( !copy.accept[ i ].title ) {
@@ -6536,7 +6536,7 @@
             },
     
             destroy: function() {
-                // todo
+                
             }
         });
     });
@@ -6548,14 +6548,14 @@
     ], function( FlashRuntime ) {
     
         return FlashRuntime.register( 'Image', {
-            // init: function( options ) {
-            //     var owner = this.owner;
+            
+            
     
-            //     this.flashExec( 'Image', 'init', options );
-            //     owner.on( 'load', function() {
-            //         debugger;
-            //     });
-            // },
+            
+            
+            
+            
+            
     
             loadFromBlob: function( blob ) {
                 var owner = this.owner;
@@ -6696,7 +6696,7 @@
     define('preset/all',[
         'base',
     
-        // widgets
+        
         'widgets/filednd',
         'widgets/filepaste',
         'widgets/filepicker',
@@ -6706,8 +6706,8 @@
         'widgets/upload',
         'widgets/validator',
     
-        // runtimes
-        // html5
+        
+        
         'runtime/html5/blob',
         'runtime/html5/dnd',
         'runtime/html5/filepaste',
@@ -6717,7 +6717,7 @@
         'runtime/html5/image',
         'runtime/html5/transport',
     
-        // flash
+        
         'runtime/flash/filepicker',
         'runtime/flash/image',
         'runtime/flash/transport'

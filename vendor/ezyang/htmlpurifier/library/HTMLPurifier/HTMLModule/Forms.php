@@ -1,31 +1,21 @@
 <?php
 
-/**
- * XHTML 1.1 Forms module, defines all form-related elements found in HTML 4.
- */
+
 class HTMLPurifier_HTMLModule_Forms extends HTMLPurifier_HTMLModule
 {
-    /**
-     * @type string
-     */
+    
     public $name = 'Forms';
 
-    /**
-     * @type bool
-     */
+    
     public $safe = false;
 
-    /**
-     * @type array
-     */
+    
     public $content_sets = array(
         'Block' => 'Form',
         'Inline' => 'Formctrl',
     );
 
-    /**
-     * @param HTMLPurifier_Config $config
-     */
+    
     public function setup($config)
     {
         if ($config->get('HTML.Forms')) {
@@ -42,7 +32,7 @@ class HTMLPurifier_HTMLModule_Forms extends HTMLPurifier_HTMLModule
                 'accept-charset' => 'Charsets',
                 'action*' => 'URI',
                 'method' => 'Enum#get,post',
-                // really ContentType, but these two are the only ones used today
+                
                 'enctype' => 'Enum#application/x-www-form-urlencoded,multipart/form-data',
             )
         );
@@ -97,9 +87,9 @@ class HTMLPurifier_HTMLModule_Forms extends HTMLPurifier_HTMLModule
                 'value' => 'CDATA',
             )
         );
-        // It's illegal for there to be more than one selected, but not
-        // be multiple. Also, no selected means undefined behavior. This might
-        // be difficult to implement; perhaps an injector, or a context variable.
+        
+        
+        
 
         $textarea = $this->addElement(
             'textarea',
@@ -133,25 +123,25 @@ class HTMLPurifier_HTMLModule_Forms extends HTMLPurifier_HTMLModule
             )
         );
 
-        // For exclusions, ideally we'd specify content sets, not literal elements
+        
         $button->excludes = $this->makeLookup(
             'form',
-            'fieldset', // Form
+            'fieldset', 
             'input',
             'select',
             'textarea',
             'label',
-            'button', // Formctrl
-            'a', // as per HTML 4.01 spec, this is omitted by modularization
+            'button', 
+            'a', 
             'isindex',
-            'iframe' // legacy items
+            'iframe' 
         );
 
-        // Extra exclusion: img usemap="" is not permitted within this element.
-        // We'll omit this for now, since we don't have any good way of
-        // indicating it yet.
+        
+        
+        
 
-        // This is HIGHLY user-unfriendly; we need a custom child-def for this
+        
         $this->addElement('fieldset', 'Form', 'Custom: (#WS?,legend,(Flow|#PCDATA)*)', 'Common');
 
         $label = $this->addElement(
@@ -161,7 +151,7 @@ class HTMLPurifier_HTMLModule_Forms extends HTMLPurifier_HTMLModule
             'Common',
             array(
                 'accesskey' => 'Character',
-                // 'for' => 'IDREF', // IDREF not implemented, cannot allow
+                
             )
         );
         $label->excludes = array('label' => true);
@@ -186,9 +176,9 @@ class HTMLPurifier_HTMLModule_Forms extends HTMLPurifier_HTMLModule
                 'label*' => 'Text',
             )
         );
-        // Don't forget an injector for <isindex>. This one's a little complex
-        // because it maps to multiple elements.
+        
+        
     }
 }
 
-// vim: et sw=4 sts=4
+

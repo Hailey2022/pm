@@ -34,29 +34,22 @@ class Colors
         'light_gray' => '47',
     );
 
-    /**
-     * Returns colored string
-     *
-     * @param string $text            Text to color.
-     * @param string $foregroundColor Foreground color.
-     * @param string $backgroundColor Background color.
-     * @return string
-     */
+    
     public function getColoredString($text, $foregroundColor = null, $backgroundColor = null)
     {
         $coloredString = '';
 
-        // check if given foreground color found
+        
         if (isset($this->foregroundColors[$foregroundColor])) {
             $coloredString .= "\033[" . $this->foregroundColors[$foregroundColor] . 'm';
         }
 
-        // check if given background color found
+        
         if (isset($this->backgroundColors[$backgroundColor])) {
             $coloredString .= "\033[" . $this->backgroundColors[$backgroundColor] . 'm';
         }
 
-        // Add string and end coloring
+        
         $coloredString .= $text . "\033[0m";
 
         return $coloredString;

@@ -1,30 +1,12 @@
 <?php
 
-/**
- * Transforms FONT tags to the proper form (SPAN with CSS styling)
- *
- * This transformation takes the three proprietary attributes of FONT and
- * transforms them into their corresponding CSS attributes.  These are color,
- * face, and size.
- *
- * @note Size is an interesting case because it doesn't map cleanly to CSS.
- *       Thanks to
- *       http://style.cleverchimp.com/font_size_intervals/altintervals.html
- *       for reasonable mappings.
- * @warning This doesn't work completely correctly; specifically, this
- *          TagTransform operates before well-formedness is enforced, so
- *          the "active formatting elements" algorithm doesn't get applied.
- */
+
 class HTMLPurifier_TagTransform_Font extends HTMLPurifier_TagTransform
 {
-    /**
-     * @type string
-     */
+    
     public $transform_to = 'span';
 
-    /**
-     * @type array
-     */
+    
     protected $_size_lookup = array(
         '0' => 'xx-small',
         '1' => 'xx-small',
@@ -42,12 +24,7 @@ class HTMLPurifier_TagTransform_Font extends HTMLPurifier_TagTransform
         '+4' => '300%'
     );
 
-    /**
-     * @param HTMLPurifier_Token_Tag $tag
-     * @param HTMLPurifier_Config $config
-     * @param HTMLPurifier_Context $context
-     * @return HTMLPurifier_Token_End|string
-     */
+    
     public function transform($tag, $config, $context)
     {
         if ($tag instanceof HTMLPurifier_Token_End) {
@@ -59,21 +36,21 @@ class HTMLPurifier_TagTransform_Font extends HTMLPurifier_TagTransform
         $attr = $tag->attr;
         $prepend_style = '';
 
-        // handle color transform
+        
         if (isset($attr['color'])) {
             $prepend_style .= 'color:' . $attr['color'] . ';';
             unset($attr['color']);
         }
 
-        // handle face transform
+        
         if (isset($attr['face'])) {
             $prepend_style .= 'font-family:' . $attr['face'] . ';';
             unset($attr['face']);
         }
 
-        // handle size transform
+        
         if (isset($attr['size'])) {
-            // normalize large numbers
+            
             if ($attr['size'] !== '') {
                 if ($attr['size'][0] == '+' || $attr['size'][0] == '-') {
                     $size = (int)$attr['size'];
@@ -111,4 +88,4 @@ class HTMLPurifier_TagTransform_Font extends HTMLPurifier_TagTransform
     }
 }
 
-// vim: et sw=4 sts=4
+

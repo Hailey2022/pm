@@ -1,25 +1,25 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkPHP [ WE CAN DO IT JUST THINK ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2006~2018 http://thinkphp.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: liu21st <liu21st@gmail.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 namespace think;
 
-// 载入Loader类
+
 require __DIR__ . '/library/think/Loader.php';
 
-// 注册自动加载
+
 Loader::register();
 
-// 注册错误和异常处理机制
+
 Error::register();
 
-// 实现日志接口
+
 if (interface_exists('Psr\Log\LoggerInterface')) {
     interface LoggerInterface extends \Psr\Log\LoggerInterface
     {}
@@ -28,7 +28,7 @@ if (interface_exists('Psr\Log\LoggerInterface')) {
     {}
 }
 
-// 注册类库别名
+
 Loader::addClassAlias([
     'App'      => facade\App::class,
     'Build'    => facade\Build::class,

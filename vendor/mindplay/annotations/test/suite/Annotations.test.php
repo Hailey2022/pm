@@ -17,19 +17,12 @@ if (version_compare(PHP_VERSION, '5.4.0', '>=')) {
     require_once __DIR__ . '/traits/toplevel.php';
 }
 
-/**
- * This class implements tests for core annotations
- */
+
 class AnnotationsTest extends xTest
 {
     const ANNOTATION_EXCEPTION = 'mindplay\annotations\AnnotationException';
 
-    /**
-     * Run this test.
-     *
-     * @param xTestRunner $testRunner Test runner.
-     * @return boolean
-     */
+    
     public function run(xTestRunner $testRunner)
     {
         $testRunner->startCoverageCollector(__CLASS__);
@@ -43,14 +36,14 @@ class AnnotationsTest extends xTest
             die('cache path is not writable: ' . $cachePath);
         }
 
-        // manually wipe out the cache:
+        
         $pattern = Annotations::getManager()->cache->getRoot() . DIRECTORY_SEPARATOR . '*.annotations.php';
 
         foreach (glob($pattern) as $path) {
             unlink($path);
         }
 
-        // disable some annotations not used during testing:
+        
         Annotations::getManager()->registry['var'] = false;
         Annotations::getManager()->registry['undefined'] = 'UndefinedAnnotation';
         $testRunner->stopCoverageCollector();
@@ -61,8 +54,8 @@ class AnnotationsTest extends xTest
     protected function testCanResolveAnnotationNames()
     {
         $manager = new AnnotationManager;
-        $manager->namespace = ''; // look for annotations in the global namespace
-        $manager->suffix = 'Annotation'; // use a suffix for annotation class-names
+        $manager->namespace = ''; 
+        $manager->suffix = 'Annotation'; 
 
         $this->check(
             $manager->resolveName('test') === 'TestAnnotation',
@@ -92,7 +85,7 @@ class AnnotationsTest extends xTest
 
     protected function testCanGetAnnotationFile()
     {
-        // This test is for an internal API, so we need to perform some invasive maneuvers:
+        
 
         $manager = Annotations::getManager();
 
@@ -103,12 +96,12 @@ class AnnotationsTest extends xTest
 
         $class_reflection = new ReflectionClass('mindplay\test\Sample\SampleClass');
 
-        // absolute path to the class-file used for testing
+        
         $file_path = $class_reflection->getFileName();
 
-        // Now get the AnnotationFile instance:
+        
 
-        /** @var AnnotationFile $file */
+        
         $file = $method->invoke($manager, $file_path);
 
         $this->check($file instanceof AnnotationFile, 'should be an instance of AnnotationFile');
@@ -125,8 +118,8 @@ class AnnotationsTest extends xTest
     {
         $manager = new AnnotationManager;
         Package::register($manager);
-        $manager->namespace = ''; // look for annotations in the global namespace
-        $manager->suffix = 'Annotation'; // use a suffix for annotation class-names
+        $manager->namespace = ''; 
+        $manager->suffix = 'Annotation'; 
 
         $parser = $manager->getParser();
 
@@ -139,20 +132,15 @@ class AnnotationsTest extends xTest
                 baz\\Hat as Zing,
                 baz\\Zap;
 
-            /**
-             * @doc 123
-             * @note('abc')
-             * @required
-             * @note('xyz');
-             */
+            
             class Sample {
                 public function test()
                 {
                     \$var = null;
 
                     \$test = function () use (\$var) {
-                        // this inline function is here to assert that the parser
-                        // won't pick up the use-clause of an inline function
+                        
+                        
                     };
                 }
             }
@@ -473,8 +461,8 @@ class AnnotationsTest extends xTest
 
     protected function testCanHandleEdgeCaseInParser()
     {
-        // an edge-case was found in the parser - this test asserts that a php-doc style
-        // annotation with no trailing characters after it will be parsed correctly.
+        
+        
 
         $anns = Annotations::ofClass('TestBase', 'DocAnnotation');
 
@@ -483,9 +471,9 @@ class AnnotationsTest extends xTest
 
     protected function testCanHandleNamespaces()
     {
-        // This test asserts that a namespaced class can be annotated, that annotations can
-        // be namespaced, and that asking for annotations of a namespaced annotation-type
-        // yields the expected result.
+        
+        
+        
 
         $anns = Annotations::ofClass('mindplay\test\Sample\SampleClass', 'mindplay\test\Sample\SampleAnnotation');
 
@@ -527,7 +515,7 @@ class AnnotationsTest extends xTest
 
         $manager->registry['aliased'] = 'mindplay\test\Sample\SampleAnnotation';
 
-        /** @var Annotation[] $anns */
+        
         $anns = $manager->getClassAnnotations('mindplay\test\Sample\AliasMe');
 
         $this->check(count($anns) == 1, 'the @aliased annotation should be aliased');
@@ -945,7 +933,7 @@ class AnnotationsTest extends xTest
         $manager->namespace = 'mindplay\test\Sample';
         $manager->cache = false;
 
-        /** @var Annotation[] $annotations */
+        
         $annotations = $manager->getMethodAnnotations('mindplay\test\Sample\OrphanedAnnotations', 'someMethod');
 
         $this->check(count($annotations) == 1, 'the @return annotation was found');

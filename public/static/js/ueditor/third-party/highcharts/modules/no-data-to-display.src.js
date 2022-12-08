@@ -8,19 +8,19 @@
  * License: www.highcharts.com/license
  */
 
-(function (H) { // docs
+(function (H) { 
 	
 	var seriesTypes = H.seriesTypes,
 		chartPrototype = H.Chart.prototype,
 		defaultOptions = H.getOptions(),
 		extend = H.extend;
 
-	// Add language option
+	
 	extend(defaultOptions.lang, {
 		noData: 'No data to display'
 	});
 	
-	// Add default display options for message
+	
 	defaultOptions.noData = {
 		position: {
 			x: 0,

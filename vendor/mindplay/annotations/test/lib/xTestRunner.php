@@ -6,38 +6,21 @@ use mindplay\test\lib\ResultPrinter\CliResultPrinter;
 use mindplay\test\lib\ResultPrinter\ResultPrinter;
 use mindplay\test\lib\ResultPrinter\WebResultPrinter;
 
-/**
- * This class implements a very simple test suite runner and code
- * coverage benchmarking (where supported by the xdebug extension).
- */
+
 class xTestRunner
 {
     protected $rootPath;
 
-    /**
-     * Code coverage information tracker.
-     *
-     * @var \PHP_CodeCoverage
-     */
+    
     protected $coverage;
 
-    /**
-     * Result printer.
-     *
-     * @var ResultPrinter
-     */
+    
     protected $resultPrinter;
     
-    /**
-     * @var boolean
-     */
+    
     protected $hasCoverage;
 
-    /**
-     * Creates result printer based on environment.
-     *
-     * @return ResultPrinter
-     */
+    
     public static function createResultPrinter()
     {
         if (PHP_SAPI == 'cli') {
@@ -47,13 +30,7 @@ class xTestRunner
         return new WebResultPrinter();
     }
 
-    /**
-     * Creates test runner instance.
-     *
-     * @param string        $rootPath      The absolute path to the root folder of the test suite.
-     * @param ResultPrinter $resultPrinter Result printer.
-     * @throws \Exception
-     */
+    
     public function __construct($rootPath, ResultPrinter $resultPrinter)
     {
         if (!is_dir($rootPath)) {
@@ -69,27 +46,18 @@ class xTestRunner
                 $this->coverage = new \PHP_CodeCoverage();
                 $this->coverage->filter()->addDirectoryToWhitelist($rootPath);
             } catch (\PHP_CodeCoverage_Exception $e) {
-                // can't collect coverage
+                
             }
         }
     }
 
-    /**
-     * Returns library root path.
-     *
-     * @return string
-     */
+    
     public function getRootPath()
     {
         return $this->rootPath;
     }
 
-    /**
-     * Starts coverage information collection for a test.
-     *
-     * @param string $testName Test name.
-     * @return void
-     */
+    
     public function startCoverageCollector($testName)
     {
         if (isset($this->coverage)) {
@@ -97,11 +65,7 @@ class xTestRunner
         }
     }
 
-    /**
-     * Stops coverage information collection.
-     *
-     * @return void
-     */
+    
     public function stopCoverageCollector()
     {
         if (isset($this->coverage)) {
@@ -109,14 +73,7 @@ class xTestRunner
         }
     }
 
-    /**
-     * Runs a suite of unit tests
-     *
-     * @param string $directory Directory with tests.
-     * @param string $suffix    Test file suffix.
-     * @throws \Exception When invalid test found.
-     * @return boolean
-     */
+    
     public function run($directory, $suffix)
     {
         $this->resultPrinter->suiteHeader($this, $directory . '/*' . $suffix);

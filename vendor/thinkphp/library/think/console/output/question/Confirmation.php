@@ -1,13 +1,13 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkPHP [ WE CAN DO IT JUST THINK ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2006~2015 http://thinkphp.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: yunwuxin <448901948@qq.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 
 namespace think\console\output\question;
 
@@ -18,12 +18,7 @@ class Confirmation extends Question
 
     private $trueAnswerRegex;
 
-    /**
-     * 构造方法
-     * @param string $question        问题
-     * @param bool   $default         默认答案
-     * @param string $trueAnswerRegex 验证正则
-     */
+    
     public function __construct($question, $default = true, $trueAnswerRegex = '/^y/i')
     {
         parent::__construct($question, (bool) $default);
@@ -32,10 +27,7 @@ class Confirmation extends Question
         $this->setNormalizer($this->getDefaultNormalizer());
     }
 
-    /**
-     * 获取默认的答案回调
-     * @return callable
-     */
+    
     private function getDefaultNormalizer()
     {
         $default = $this->getDefault();

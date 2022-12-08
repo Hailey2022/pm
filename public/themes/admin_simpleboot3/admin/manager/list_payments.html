@@ -13,35 +13,55 @@
     <table class="table table-hover table-bordered">
         <thead>
             <tr>
-                <th style="text-align: center;">合同名称</th>
-                <th style="text-align: center;">资金名称</th>
-                <th style="text-align: center;">进度款（期数）</th>
-                <th style="text-align: center;">支付金额</th>
-                <!-- <th style="text-align: center;">中央，省，市</th>
-                <th style="text-align: center;">市</th>
-                <th style="text-align: center;">专项债</th>
-                <th style="text-align: center;">预算</th>
-                <th style="text-align: center;">其他</th> -->
-                <th style="text-align: center;">附件</th>
-                <th style="text-align: center;">操作</th>
+                <th style="text-align: center; vertical-align: middle;" rowspan="3">工程名称</th>
+                <th style="text-align: center; vertical-align: middle;" rowspan="3">合同名称</th>
+                <th style="text-align: center; vertical-align: middle;" rowspan="3">进度款（期数）</th>
+                <th style="text-align: center; vertical-align: middle;" rowspan="3">合同总价（申请拨付金额）</th>
+                <th style="text-align: center; vertical-align: text-top;" colspan="6">资金来源</th>
+                <th style="text-align: center; vertical-align: text-top;">已支付</th>
+                <th style="text-align: center; vertical-align: middle;" rowspan="3">未付款</th>
+                <th style="text-align: center; vertical-align: middle;" rowspan="3">备注</th>
+                <th style="text-align: center; vertical-align: middle;" rowspan="3">支付凭证</th>
+                <th style="text-align: center; vertical-align: middle;" rowspan="3">操作</th>
+            </tr>
+            <tr>
+                <th style="text-align: center; vertical-align: text-top;" rowspan="2">中央</th>
+                <th style="text-align: center; vertical-align: text-top;" rowspan="2">省</th>
+                <th style="text-align: center; vertical-align: text-top;" rowspan="2">市</th>
+                <th style="text-align: center; vertical-align: text-top;" colspan="2">区</th>
+                <th style="text-align: center; vertical-align: text-top;" rowspan="2">其他</th>
+                <th style="text-align: center; vertical-align: text-top;" rowspan="2">小计</th>
+            </tr>
+            <tr>
+                <th style="text-align: center; vertical-align: text-top;">专项债</th>
+                <th style="text-align: center; vertical-align: text-top;">预算</th>
             </tr>
         </thead>
         <tbody>
-            <foreach name="data" item="d">
-                <tr>
-                    <td style="text-align: center;">{$d.contractName}</td>
-                    <td style="text-align: center;">{$d.comment}</td>
-                    <td style="text-align: center;">{$d.installment}</td>
-                    <td style="text-align: center;">{$d.total}</td>
-                    <!-- <td style="text-align: center;">{$d.provice}</td>
-                    <td style="text-align: center;">{$d.city}</td>
-                    <td style="text-align: center;">{$d.bond}</td>
-                    <td style="text-align: center;">{$d.budget}</td>
-                    <td style="text-align: center;">{$d.others}</td> -->
-                    <td style="text-align: center;"><a class="btn btn-primary"
-                            href="javascript:handlePreview('{:url('manager/viewPaymentFiles',array('paymentId'=>$d['paymentId']))}')">点击查看</a></td>
-                    <td style="text-align: center;"><a class="btn btn-primary"
-                            href="{:url('manager/updatePayment',array('paymentId'=>$d['paymentId']))}">修改</a></td>
+            <foreach name="data" item="d" key="k">
+                <if condition="$k%2!=0">
+                    <tr>
+                        <else />
+                    <tr style='background-color:#EDEDED'>
+                </if>
+                <td style="text-align: center;">{$d.projectName}</td>
+                <td style="text-align: center;">{$d.contractName}</td>
+                <td style="text-align: center;">{$d.installment}</td>
+                <td style="text-align: center; vertical-align: middle;">{$d.contractAmount}</td>
+                <td style="text-align: center;">{$d.total}</td>
+                <td style="text-align: center;">{$d.ccp}</td>
+                <td style="text-align: center;">{$d.province}</td>
+                <td style="text-align: center;">{$d.city}</td>
+                <td style="text-align: center;">{$d.bond}</td>
+                <td style="text-align: center;">{$d.budget}</td>
+                <td style="text-align: center;">{$d.others}</td>
+                <td style="text-align: center; vertical-align: middle;">{$d.contractAmount - $d.total}</td>
+                <td style="text-align: center;">{$d.comment}</td>
+                <td style="text-align: center;"><a class="btn btn-primary"
+                        href="javascript:handlePreview('{:url('manager/viewPaymentFiles',array('paymentId'=>$d['paymentId']))}')">点击查看</a>
+                </td>
+                <td style="text-align: center;"><a class="btn btn-primary"
+                        href="{:url('manager/updatePayment',array('paymentId'=>$d['paymentId']))}">修改</a></td>
                 </tr>
             </foreach>
         </tbody>

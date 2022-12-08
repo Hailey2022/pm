@@ -1,18 +1,12 @@
 <?php
 
-/**
- * XHTML 1.1 Target Module, defines target attribute in link elements.
- */
+
 class HTMLPurifier_HTMLModule_Target extends HTMLPurifier_HTMLModule
 {
-    /**
-     * @type string
-     */
+    
     public $name = 'Target';
 
-    /**
-     * @param HTMLPurifier_Config $config
-     */
+    
     public function setup($config)
     {
         $elements = array('a');
@@ -25,4 +19,4 @@ class HTMLPurifier_HTMLModule_Target extends HTMLPurifier_HTMLModule
     }
 }
 
-// vim: et sw=4 sts=4
+

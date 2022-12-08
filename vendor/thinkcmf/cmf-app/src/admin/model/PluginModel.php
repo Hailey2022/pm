@@ -1,13 +1,5 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2013-present http://www.thinkcmf.com All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: 老猫 <thinkcmf@126.com>
-// +----------------------------------------------------------------------
+
 namespace app\admin\model;
 
 use think\Model;
@@ -15,15 +7,10 @@ use think\Model;
 class PluginModel extends Model
 {
 
-    /**
-     * 模型名称
-     * @var string
-     */
+    
     protected $name = 'plugin';
 
-    /**
-     * 获取插件列表
-     */
+    
     public function getList()
     {
         $dirs = array_map('basename', glob(WEB_ROOT . 'plugins/*', GLOB_ONLYDIR));
@@ -44,7 +31,7 @@ class PluginModel extends Model
             $pluginDir = cmf_parse_name($pluginDir, 1);
             if (!isset($plugins[$pluginDir])) {
                 $class = cmf_get_plugin_class($pluginDir);
-                if (!class_exists($class)) { // 实例化插件失败忽略
+                if (!class_exists($class)) { 
                     //TODO 加入到日志中
                     continue;
                 }
@@ -73,7 +60,7 @@ class PluginModel extends Model
     public function getHooks($refresh = false)
     {
         if (!$refresh) {
-            // TODO 加入缓存
+            
         }
 
         $returnHooks = [];
@@ -133,12 +120,12 @@ class PluginModel extends Model
                 }
             }
 
-            // 删除后台菜单
+            
             AdminMenuModel::where([
                 'app' => "plugin/{$findPlugin['name']}",
             ])->delete();
 
-            // 删除权限规则
+            
             AuthRuleModel::where('app', "plugin/{$findPlugin['name']}")->delete();
 
             HookPluginModel::commit();

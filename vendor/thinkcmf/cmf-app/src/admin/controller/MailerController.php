@@ -1,13 +1,13 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2013-present http://www.thinkcmf.com All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: 小夏 < 449134904@qq.com>
-// +----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 namespace app\admin\controller;
 
 use cmf\controller\AdminBaseController;
@@ -16,19 +16,7 @@ use think\Validate;
 class MailerController extends AdminBaseController
 {
 
-    /**
-     * 邮箱配置
-     * @adminMenu(
-     *     'name'   => '邮箱配置',
-     *     'parent' => 'admin/Setting/default',
-     *     'display'=> true,
-     *     'hasView'=> true,
-     *     'order'  => 10,
-     *     'icon'   => '',
-     *     'remark' => '邮箱配置',
-     *     'param'  => ''
-     * )
-     */
+    
     public function index()
     {
         $emailSetting = cmf_get_option('smtp_setting');
@@ -36,19 +24,7 @@ class MailerController extends AdminBaseController
         return $this->fetch();
     }
 
-    /**
-     * 邮箱配置
-     * @adminMenu(
-     *     'name'   => '邮箱配置提交保存',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> false,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '邮箱配置提交保存',
-     *     'param'  => ''
-     * )
-     */
+    
     public function indexPost()
     {
         if ($this->request->isPost()) {
@@ -64,19 +40,7 @@ class MailerController extends AdminBaseController
         }
     }
 
-    /**
-     * 邮件模板
-     * @adminMenu(
-     *     'name'   => '邮件模板',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> true,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '邮件模板',
-     *     'param'  => ''
-     * )
-     */
+    
     public function template()
     {
         $allowedTemplateKeys = ['verification_code'];
@@ -91,19 +55,7 @@ class MailerController extends AdminBaseController
         return $this->fetch('template_verification_code');
     }
 
-    /**
-     * 邮件模板提交
-     * @adminMenu(
-     *     'name'   => '邮件模板提交',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> false,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '邮件模板提交',
-     *     'param'  => ''
-     * )
-     */
+    
     public function templatePost()
     {
         if ($this->request->isPost()) {
@@ -124,19 +76,7 @@ class MailerController extends AdminBaseController
         }
     }
 
-    /**
-     * 邮件发送测试
-     * @adminMenu(
-     *     'name'   => '邮件发送测试',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> true,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '邮件发送测试',
-     *     'param'  => ''
-     * )
-     */
+    
     public function test()
     {
         if ($this->request->isPost()) {

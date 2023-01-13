@@ -1,18 +1,5 @@
-///#source 1 1 /src/1.0.0/core.js
-/*! head.core - v1.0.2 */
-/*
- * HeadJS     The only script in your <HEAD>
- * Author     Tero Piirainen  (tipiirai)
- * Maintainer Robert Hoffmann (itechnology)
- * License    MIT / http://bit.ly/mit-license
- * WebSite    http://headjs.com
- */
 (function (win, undefined) {
     "use strict";
-
-    
-    
-    
     var doc   = win.document,
         nav   = win.navigator,
         loc   = win.location,
@@ -23,12 +10,6 @@
             screensCss: {"gt": true, "gte": false, "lt": true, "lte": false, "eq": false},
             browsers: [
                 {ie: {min: 6, max: 11}}
-                //,{ chrome : { min: 8, max: 33 } }
-                //,{ ff     : { min: 3, max: 26 } }
-                //,{ ios    : { min: 3, max:  7 } }
-                //,{ android: { min: 2, max:  4 } }
-                //,{ webkit : { min: 9, max: 12 } }
-                //,{ opera  : { min: 9, max: 12 } }
             ],
             browserCss: {"gt": true, "gte": false, "lt": true, "lte": false, "eq": true},
             html5: true,
@@ -50,9 +31,6 @@
     }
 
     function removeClass(name) {
-        
-        
-        
         var re         = new RegExp(" ?\\b" + name + "\\b");
         html.className = html.className.replace(re, "");
     }
@@ -63,14 +41,12 @@
         }
     }
 
-    
     var api = win[conf.head] = function () {
         api.ready.apply(null, arguments);
     };
 
     api.feature = function (key, enabled, queue) {
 
-        
         if (!key) {
             html.className += " " + klass.join(" ");
             klass = [];
@@ -85,7 +61,6 @@
         pushClass((enabled ? "" : "no-") + key);
         api[key] = !!enabled;
 
-        
         if (!queue) {
             removeClass("no-" + key);
             removeClass(key);
@@ -95,19 +70,14 @@
         return api;
     };
 
-    
     api.feature("js", true);
 
-    
     var ua     = nav.userAgent.toLowerCase(),
         mobile = /mobile|android|kindle|silk|midp|phone|(windows .+arm|touch)/.test(ua);
 
-    
     api.feature("mobile", mobile, true);
     api.feature("desktop", !mobile, true);
 
-    
-    
     ua = /(chrome|firefox)[ \/]([\w.]+)/.exec(ua) || 
         /(iphone|ipad|ipod)(?:.*version)?[ \/]([\w.]+)/.exec(ua) || 
         /(android)(?:.*version)?[ \/]([\w.]+)/.exec(ua) || 
@@ -140,7 +110,6 @@
             break;
     }
 
-    
     api.browser          = {
         name: browser,
         version: version
@@ -195,23 +164,18 @@
     pushClass(browser);
     pushClass(browser + parseInt(version, 10));
 
-    
     if (conf.html5 && browser === "ie" && version < 9) {
-        
-        
         each("abbr|article|aside|audio|canvas|details|figcaption|figure|footer|header|hgroup|main|mark|meter|nav|output|progress|section|summary|time|video".split("|"), function (el) {
             doc.createElement(el);
         });
     }
 
-    
     each(loc.pathname.split("/"), function (el, i) {
         if (this.length > 2 && this[i + 1] !== undefined) {
             if (i) {
                 pushClass(this.slice(i, i + 1).join("-").toLowerCase() + conf.section);
             }
         } else {
-            
             var id = el || "index", index = id.indexOf(".");
             if (index > 0) {
                 id = id.substring(0, index);
@@ -219,32 +183,24 @@
 
             html.id = id.toLowerCase() + conf.page;
 
-            
             if (!i) {
                 pushClass("root" + conf.section);
             }
         }
     });
 
-    
     api.screen = {
         height: win.screen.height,
         width: win.screen.width
     };
 
-    
     function screenSize() {
-        
         html.className = html.className.replace(/ (w-|eq-|gt-|gte-|lt-|lte-|portrait|no-portrait|landscape|no-landscape)\d+/g, "");
-
-        
         var iw = win.innerWidth || html.clientWidth,
             ow = win.outerWidth || win.screen.width;
 
         api.screen.innerWidth = iw;
         api.screen.outerWidth = ow;
-
-        
         pushClass("w-" + iw);
 
         each(conf.screens, function (width) {
@@ -279,21 +235,18 @@
             }
         });
 
-        
         var ih = win.innerHeight || html.clientHeight,
             oh = win.outerHeight || win.screen.height;
 
         api.screen.innerHeight = ih;
         api.screen.outerHeight = oh;
 
-        
         api.feature("portrait", (ih > iw));
         api.feature("landscape", (ih < iw));
     }
 
     screenSize();
 
-    
     var resizeId = 0;
 
     function onResize() {
@@ -301,50 +254,24 @@
         resizeId = win.setTimeout(screenSize, 50);
     }
 
-    
     if (win.addEventListener) {
         win.addEventListener("resize", onResize, false);
 
     } else {
-        
         win.attachEvent("onresize", onResize);
     }
 }(window));
-///#source 1 1 /src/1.0.0/css3.js
-/*! head.css3 - v1.0.0 */
-/*
- * HeadJS     The only script in your <HEAD>
- * Author     Tero Piirainen  (tipiirai)
- * Maintainer Robert Hoffmann (itechnology)
- * License    MIT / http://bit.ly/mit-license
- * WebSite    http://headjs.com
- */
+
 (function (win, undefined) {
     "use strict";
 
     var doc      = win.document,
-        /*
-         To add a new test:
-
-         head.feature("video", function() {
-         var tag = document.createElement('video');
-         return !!tag.canPlayType;
-         });
-
-         Good place to grab more tests
-
-         https://github.com/Modernizr/Modernizr/blob/master/modernizr.js
-         */
-
-        /* CSS modernizer */
         el       = doc.createElement("i"),
         style    = el.style,
         prefs    = " -o- -moz- -ms- -webkit- -khtml- ".split(" "),
         domPrefs = "Webkit Moz O ms Khtml".split(" "),
         headVar  = win.head_conf && win.head_conf.head || "head",
         api      = win[headVar];
-
-    
 
     function testProps(props) {
         for (var i in props) {
@@ -365,8 +292,6 @@
     }
 
     var tests = {
-        
-        
         gradient: function () {
             var s1 = "background-image:",
                 s2 = "gradient(linear,left top,right bottom,from(#9f9),to(#fff));",
@@ -391,9 +316,6 @@
 
         multiplebgs: function () {
             style.cssText = "background:url(https://),url(https://),red url(https://)";
-
-            
-            
             var result = (style.background || "").match(/url/g);
 
             return Object.prototype.toString.call(result) === "[object Array]" && result.length === 3;
@@ -429,10 +351,6 @@
             return (win.devicePixelRatio > 1);
         },
 
-        /*
-         font-face support. Uses browser sniffing but is synchronous.
-         http://paulirish.com/2009/font-face-feature-detection/
-         */
         fontface: function () {
             var browser = api.browser.name, version = api.browser.version;
 
@@ -464,30 +382,19 @@
         }
     };
 
-    
     for (var key in tests) {
         if (tests[key]) {
             api.feature(key, tests[key].call(), true);
         }
     }
 
-    
     api.feature();
 
 }(window));
-///#source 1 1 /src/1.0.0/load.js
-/*! head.load - v1.0.3 */
-/*
- * HeadJS     The only script in your <HEAD>
- * Author     Tero Piirainen  (tipiirai)
- * Maintainer Robert Hoffmann (itechnology)
- * License    MIT / http://bit.ly/mit-license
- * WebSite    http://headjs.com
- */
+
 (function (win, undefined) {
     "use strict";
 
-    //#region variables
     var doc        = win.document,
         domWaiters = [],
         handlers   = {}, 
@@ -495,24 +402,17 @@
         isAsync    = "async" in doc.createElement("script") || "MozAppearance" in doc.documentElement.style || win.opera,
         isDomReady,
 
-        /*** public API ***/
         headVar    = win.head_conf && win.head_conf.head || "Wind",
         api        = win[headVar] = (win[headVar] || function () {
             api.ready.apply(null, arguments);
         }),
 
-        
         PRELOADING = 1,
         PRELOADED  = 2,
         LOADING    = 3,
         LOADED     = 4;
-    //#endregion
 
-    //#region PRIVATE functions
-
-    //#region Helper functions
     function noop() {
-        
     }
 
     function each(arr, callback) {
@@ -520,19 +420,15 @@
             return;
         }
 
-        
         if (typeof arr === "object") {
             arr = [].slice.call(arr);
         }
 
-        
         for (var i = 0, l = arr.length; i < l; i++) {
             callback.call(arr, arr[i], i);
         }
     }
 
-    /* A must read: http://bonsaiden.github.com/JavaScript-Garden
-     ************************************************************/
     function is(type, obj) {
         var clas = Object.prototype.toString.call(obj).slice(8, -1);
         return obj !== undefined && obj !== null && clas === type;
@@ -547,7 +443,6 @@
     }
 
     function toLabel(url) {
-        ///<summary>Converts a url to a file label</summary>
         var items = url.split("/"),
             name  = items[items.length - 1],
             i     = name.indexOf("?");
@@ -555,10 +450,7 @@
         return i !== -1 ? name.substring(0, i) : name;
     }
 
-    
-    
     function one(callback) {
-        ///<summary>Execute a callback only once</summary>
         callback = callback || noop;
 
         if (callback._done) {
@@ -569,28 +461,8 @@
         callback._done = 1;
     }
 
-    //#endregion
-
     function conditional(test, success, failure, callback) {
-        ///<summary>
-        /
-        /
-        /
-        /
-        /
-        /
-        /
-        /
-        /
-        /
-        /
-        /
-        /
-        /
-        /
-        /
-        /
-        ///</summary>
+
         var obj = (typeof test === "object") ? test : {
             test: test,
             success: !!success ? isArray(success) ? success : [success] : false,
@@ -598,15 +470,12 @@
             callback: callback || noop
         };
 
-        
         var passed = !!obj.test;
 
-        
         if (passed && !!obj.success) {
             obj.success.push(obj.callback);
             api.load.apply(null, obj.success);
         }
-        
         else if (!passed && !!obj.failure) {
             obj.failure.push(obj.callback);
             api.load.apply(null, obj.failure);
@@ -619,14 +488,6 @@
     }
 
     function getAsset(item) {
-        ///<summary>
-        /
-        /
-        /
-        /
-        /
-        /
-        ///</summary>
         var asset = {};
 
         if (typeof item === "object") {
@@ -646,7 +507,6 @@
             };
         }
 
-        
         var existing = assets[asset.name];
         if (existing && existing.url === asset.url) {
             return existing;
@@ -689,13 +549,6 @@
     }
 
     function apiLoadHack() {
-        /
-        ///
-        /
-        /
-        /
-        /
-        /
         var args     = arguments,
             callback = args[args.length - 1],
             rest     = [].slice.call(args, 1),
@@ -705,7 +558,6 @@
             callback = null;
         }
 
-        
         if (isArray(args[0])) {
             args[0].push(callback);
             api.load.apply(null, args[0]);
@@ -713,27 +565,18 @@
             return api;
         }
 
-        
         if (!!next) {
-            /* Preload with text/cache hack (not good!)
-             * http://blog.getify.com/on-script-loaders/
-             * http://www.nczonline.net/blog/2010/12/21/thoughts-on-script-loaders/
-             * If caching is not configured correctly on the server, then items could load twice !
-             *************************************************************************************/
             each(rest, function (item) {
-                
                 if (!isFunction(item) && !!item) {
                     preLoad(getAsset(item));
                 }
             });
 
-            
             load(getAsset(args[0]), isFunction(next) ? next : function () {
                 api.load.apply(null, rest);
             });
         }
         else {
-            
             load(getAsset(args[0]));
         }
 
@@ -741,14 +584,6 @@
     }
 
     function apiLoadAsync() {
-        ///<summary>
-        /
-        ///
-        /
-        /
-        /
-        /
-        ///</summary>
         var args     = arguments,
             callback = args[args.length - 1],
             items    = {};
@@ -757,7 +592,6 @@
             callback = null;
         }
 
-        
         if (isArray(args[0])) {
             args[0].push(callback);
             api.load.apply(null, args[0]);
@@ -765,10 +599,6 @@
             return api;
         }
 
-        
-        
-        
-        
         each(args, function (item, i) {
             if (item !== callback) {
                 item             = getAsset(item);
@@ -792,7 +622,6 @@
     }
 
     function load(asset, callback) {
-        ///<summary>Used with normal loading logic</summary>
         callback = callback || noop;
 
         if (asset.state === LOADED) {
@@ -800,7 +629,6 @@
             return;
         }
 
-        
         if (asset.state === LOADING) {
             api.ready(asset.name, callback);
             return;
@@ -820,13 +648,10 @@
 
             callback();
 
-            
             each(handlers[asset.name], function (fn) {
                 one(fn);
             });
 
-            
-            
             if (isDomReady && allLoaded()) {
                 each(handlers.ALL, function (fn) {
                     one(fn);
@@ -842,97 +667,36 @@
         return items[items.length - 1].toLowerCase();
     }
 
-    /* Parts inspired from: https://github.com/cujojs/curl
-     ******************************************************/
     function loadAsset(asset, callback) {
         callback = callback || noop;
 
         function error(event) {
             event = event || win.event;
-
-            
             ele.onload = ele.onreadystatechange = ele.onerror = null;
-
-            
             callback();
-
-            
         }
 
         function process(event) {
             event = event || win.event;
 
-            
-            
-            
-
-            
-            
-
-            
-
-            
-            
-            
-            
-
-            
-            
-            
-
-            
-            
-
-            
-            
-            
-            
-
-            
-            
-            
-            
-
-            
-            
-
-            
-            
-
-            
-            
-
-            
-
-            
             if (event.type === "load" || (/loaded|complete/.test(ele.readyState) && (!doc.documentMode || doc.documentMode < 9))) {
-                
                 win.clearTimeout(asset.errorTimeout);
                 win.clearTimeout(asset.cssTimeout);
-
-                
                 ele.onload = ele.onreadystatechange = ele.onerror = null;
-
-                
                 callback();
             }
         }
 
         function isCssLoaded() {
-            
             if (asset.state !== LOADED && asset.cssRetries <= 20) {
 
-                
                 for (var i = 0, l = doc.styleSheets.length; i < l; i++) {
-                    
-                    
                     if (doc.styleSheets[i].href === ele.href) {
                         process({"type": "load"});
                         return;
                     }
                 }
 
-                
                 asset.cssRetries++;
                 asset.cssTimeout = win.setTimeout(isCssLoaded, 250);
             }
@@ -946,12 +710,6 @@
             ele.type = "text/" + (asset.type || "css");
             ele.rel  = "stylesheet";
             ele.href = asset.url;
-
-            /* onload supported for CSS on unsupported browsers
-             * Safari windows 5.1.7, FF < 10
-             */
-
-            
             asset.cssRetries = 0;
             asset.cssTimeout = win.setTimeout(isCssLoaded, 500);
         }
@@ -964,35 +722,21 @@
         ele.onload = ele.onreadystatechange = process;
         ele.onerror = error;
 
-        /* Good read, but doesn't give much hope !
-         * http://blog.getify.com/on-script-loaders/
-         * http://www.nczonline.net/blog/2010/12/21/thoughts-on-script-loaders/
-         * https://hacks.mozilla.org/2009/06/defer/
-         */
-
-        
         ele.async = false;
-        
         ele.defer = false;
 
-        
         asset.errorTimeout = win.setTimeout(function () {
             error({type: "timeout"});
         }, 7e3);
 
-        
         var head = doc.head || doc.getElementsByTagName("head")[0];
 
-        
         head.insertBefore(ele, head.lastChild);
     }
 
-    /* Parts inspired from: https://github.com/jrburke/requirejs
-     ************************************************************/
     function init() {
         var items = doc.getElementsByTagName("script");
 
-        
         for (var i = 0, l = items.length; i < l; i++) {
             var dataMain = items[i].getAttribute("data-headjs-load");
             if (!!dataMain) {
@@ -1003,16 +747,7 @@
     }
 
     function ready(key, callback) {
-        ///<summary>
-        /
-        /
-        /
-        /
-        /
-        /
-        ///</summary>
 
-        
         if (key === doc) {
             if (isDomReady) {
                 one(callback);
@@ -1024,13 +759,11 @@
             return api;
         }
 
-        
         if (isFunction(key)) {
             callback = key;
-            key      = "ALL"; 
+            key      = "ALL";
         }
 
-        
         if (isArray(key)) {
             var items = {};
 
@@ -1047,15 +780,12 @@
             return api;
         }
 
-        
         if (typeof key !== "string" || !isFunction(callback)) {
             return api;
         }
 
-        
         var asset = assets[key];
 
-        
         if (asset && asset.state === LOADED || key === "ALL" && allLoaded() && isDomReady) {
             one(callback);
             return api;
@@ -1072,13 +802,8 @@
         return api;
     }
 
-    /* Mix of stuff from jQuery & IEContentLoaded
-     * http://dev.w3.org/html5/spec/the-end.html#the-end
-     ***************************************************/
     function domReady() {
-        
         if (!doc.body) {
-            
             win.clearTimeout(api.readyTimeout);
             api.readyTimeout = win.setTimeout(domReady, 50);
             return;
@@ -1095,46 +820,30 @@
     }
 
     function domContentLoaded() {
-        
         if (doc.addEventListener) {
             doc.removeEventListener("DOMContentLoaded", domContentLoaded, false);
             domReady();
         }
 
-        
         else if (doc.readyState === "complete") {
-            
-            
             doc.detachEvent("onreadystatechange", domContentLoaded);
             domReady();
         }
     }
 
-    
-    
-    
     if (doc.readyState === "complete") {
         domReady();
     }
 
-    
     else if (doc.addEventListener) {
         doc.addEventListener("DOMContentLoaded", domContentLoaded, false);
 
-        
         win.addEventListener("load", domReady, false);
     }
 
-    
     else {
-        
         doc.attachEvent("onreadystatechange", domContentLoaded);
-
-        
         win.attachEvent("onload", domReady);
-
-        
-        
         var top = false;
 
         try {
@@ -1146,33 +855,20 @@
             (function doScrollCheck() {
                 if (!isDomReady) {
                     try {
-                        
-                        
                         top.doScroll("left");
                     } catch (error) {
-                        
                         win.clearTimeout(api.readyTimeout);
                         api.readyTimeout = win.setTimeout(doScrollCheck, 50);
                         return;
                     }
-
-                    
                     domReady();
                 }
             }());
         }
     }
-    //#endregion
-
-    //#region Public Exports
-    
     api.load = api.js = isAsync ? apiLoadAsync : apiLoadHack;
     api.test  = conditional;
     api.ready = ready;
-    //#endregion
-
-    //#region INIT
-    
     api.ready(doc, function () {
         if (allLoaded()) {
             each(handlers.ALL, function (callback) {
@@ -1184,23 +880,9 @@
             api.feature("domloaded", true);
         }
     });
-    //#endregion
 }(window));
 
-/*********Wind JS*********/
-/*
- * PHPWind JS core
- * @Copyright   : Copyright 2011, phpwind.com
- * @Descript    : PHPWind核心JS
- * @Author      : chaoren1641@gmail.com
- * @Thanks      : head.js (http://headjs.com)
- * $Id: wind.js 21971 2012-12-17 12:11:36Z hao.lin $            :
- */
 
-
-/*
- * 防止浏览器不支持console报错
- */
 if (!window.console) {
     window.console = {};
     var funs       = ["profiles", "memory", "_commandLineAPI", "debug", "error", "info", "log", "warn", "dir", "dirxml", "trace", "assert", "count", "markTimeline", "profile", "profileEnd", "time", "timeEnd", "timeStamp", "group", "groupCollapsed", "groupEnd"];
@@ -1210,9 +892,7 @@ if (!window.console) {
     }
 }
 
-/*
- *解决ie6下不支持背景缓存
- */
+
 Wind.ready(function () {
     if (!+'\v1' && !('maxHeight' in document.body.style)) {
         try {
@@ -1222,13 +902,9 @@ Wind.ready(function () {
     }
 });
 
-/*
- *wind core
- */
 (function (win) {
-    var root      = win.GV.WEB_ROOT + win.GV.JS_ROOT || location.origin + '/public/js/', //在wind.js加载之前定义GV.JS_ROOT
+    var root      = win.GV.WEB_ROOT + win.GV.JS_ROOT || location.origin + '/public/js/',
         ver       = '',
-        //定义常用JS组件别名，使用别名加载
         alias     = {
             datePicker: 'datePicker/datePicker',
             jquery: 'jquery',
@@ -1237,7 +913,6 @@ Wind.ready(function () {
             swfobject: 'swfobject',
             imgready: 'imgready',
 
-            //jquery util plugs
             ajaxForm: 'ajaxForm',
             cookie: 'cookie',
             treeview: 'treeview',
@@ -1247,7 +922,7 @@ Wind.ready(function () {
             'validate-extends': 'jquery.validate/additional-methods',
             artDialog: 'artDialog/artDialog',
             iframeTools: 'artDialog/iframeTools',
-            xd: 'xd',//Iframe跨域通信
+            xd: 'xd',
 
             noty: 'noty/noty-2.4.1',
             noty3: 'noty3/noty.min',
@@ -1268,7 +943,6 @@ Wind.ready(function () {
             masonry3: 'masonry/masonry-3.3.2.pkgd',
             ueditor:'ueditor/ueditor.all.min'
         },
-        //CSS路径
         alias_css = {
             colorPicker: 'colorPicker/style',
             artDialog: 'artDialog/skins/default',
@@ -1286,7 +960,6 @@ Wind.ready(function () {
             ueditor:'ueditor/themes/default/css/ueditor'
         };
 
-    //add suffix and version
     for (var i in alias) {
         if (alias.hasOwnProperty(i)) {
             alias[i] = root + alias[i] + '.js?v=' + ver;
@@ -1299,15 +972,13 @@ Wind.ready(function () {
         }
     }
 
-    //css loader
     win.Wind = win.Wind || {};
-    //!TODO old webkit and old firefox does not support
     Wind.css = function (alias/*alias or path*/, callback) {
         var url     = alias_css[alias] ? alias_css[alias] : alias
         var link    = document.createElement('link');
         link.rel    = 'stylesheet';
         link.href   = url;
-        link.onload = link.onreadystatechange = function () {//chrome link无onload事件
+        link.onload = link.onreadystatechange = function () {
             var state = link.readyState;
             if (callback && !callback.done && (!state || /loaded|complete/.test(state))) {
                 callback.done = true;
@@ -1317,27 +988,18 @@ Wind.ready(function () {
         document.getElementsByTagName('head')[0].appendChild(link);
     };
 
-    /**
-     * 更新或者添加js 别名,在 Wind.use()调用名使用
-     * @param newAlias ,要设置的别名对象
-     */
     Wind.alias = function (newAlias) {
         for (var i in newAlias) {
             alias[i] = newAlias[i];
         }
     }
 
-    /**
-     * 更新或者添加css 别名,在 Wind.css()调用名使用
-     * @param newAlias ,要设置的别名对象
-     */
     Wind.aliasCss = function (newAlias) {
         for (var i in newAlias) {
             alias_css[i] = newAlias[i];
         }
     }
 
-    //Using the alias to load the script file
     Wind.use = function () {
         var args = arguments, len = args.length;
         for (var i = 0; i < len; i++) {
@@ -1348,7 +1010,6 @@ Wind.ready(function () {
         Wind.js.apply(null, args);
     };
 
-    //Wind javascript template (author: John Resig http://ejohn.org/blog/javascript-micro-templating/)
     var cache = {};
     Wind.tmpl = function (str, data) {
         var fn = !/\W/.test(str) ? cache[str] = cache[str] || tmpl(str) :
@@ -1357,6 +1018,5 @@ Wind.ready(function () {
                 str.replace(/[\r\t\n]/g, " ").split("<%").join("\t").replace(/((^|%>)[^\t]*)'/g, "$1\r").replace(/\t=(.*?)%>/g, "',$1,'").split("\t").join("');").split("%>").join("p.push('").split("\r").join("\\'") + "');}return p.join('');");
         return data ? fn(data) : fn;
     };
-    //Wind全局功能函数命名空间
     Wind.Util = {}
 })(window);

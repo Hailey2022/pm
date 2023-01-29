@@ -14,7 +14,7 @@ if (PHP_SAPI == 'cli') {
 
         if (file_exists($commandFile)) {
             $commands = include $commandFile;
-            
+
             \think\Console::addDefaultCommands($commands);
         }
     }
@@ -26,7 +26,7 @@ if (PHP_SAPI == 'cli') {
 
         if (file_exists($commandFile)) {
             $commands = include $commandFile;
-            
+
             \think\Console::addDefaultCommands($commands);
         }
     }
@@ -73,7 +73,7 @@ function cmf_get_current_user()
 {
     $sessionUser = session('user');
     if (!empty($sessionUser)) {
-        unset($sessionUser['user_pass']); 
+        unset($sessionUser['user_pass']);
         return $sessionUser;
     } else {
         return false;
@@ -143,7 +143,7 @@ function cmf_get_current_theme()
         }
     }
 
-    $t     = 't';
+    $t = 't';
     $theme = config('template.cmf_default_theme');
 
     $cmfDetectTheme = config('template.cmf_detect_theme');
@@ -191,7 +191,7 @@ function cmf_get_current_admin_theme()
         }
     }
 
-    $t     = '_at';
+    $t = '_at';
     $theme = config('template.cmf_admin_default_theme');
 
     $cmfDetectTheme = true;
@@ -224,7 +224,7 @@ function cmf_get_theme_path($theme = null)
 {
     $themePath = config('template.cmf_theme_path');
     if ($theme === null) {
-        
+
         $theme = cmf_get_current_theme();
     }
 
@@ -274,7 +274,7 @@ function cmf_password($pw, $authCode = '')
 function cmf_password_old($pw)
 {
     $decor = md5(config('database.prefix'));
-    $mi    = md5($pw);
+    $mi = md5($pw);
     return substr($decor, 0, 12) . $mi . substr($decor, -4, 4);
 }
 
@@ -310,16 +310,72 @@ function cmf_log($content, $file = "log.txt")
  */
 function cmf_random_string($len = 6)
 {
-    $chars    = [
-        "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k",
-        "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v",
-        "w", "x", "y", "z", "A", "B", "C", "D", "E", "F", "G",
-        "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R",
-        "S", "T", "U", "V", "W", "X", "Y", "Z", "0", "1", "2",
-        "3", "4", "5", "6", "7", "8", "9"
+    $chars = [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g",
+        "h",
+        "i",
+        "j",
+        "k",
+        "l",
+        "m",
+        "n",
+        "o",
+        "p",
+        "q",
+        "r",
+        "s",
+        "t",
+        "u",
+        "v",
+        "w",
+        "x",
+        "y",
+        "z",
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G",
+        "H",
+        "I",
+        "J",
+        "K",
+        "L",
+        "M",
+        "N",
+        "O",
+        "P",
+        "Q",
+        "R",
+        "S",
+        "T",
+        "U",
+        "V",
+        "W",
+        "X",
+        "Y",
+        "Z",
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9"
     ];
     $charsLen = count($chars) - 1;
-    shuffle($chars);    
+    shuffle($chars);
     $output = "";
     for ($i = 0; $i < $len; $i++) {
         $output .= $chars[mt_rand(0, $charsLen)];
@@ -332,17 +388,17 @@ function cmf_random_string($len = 6)
  */
 function cmf_clear_cache()
 {
-    
+
     if (function_exists("opcache_reset")) {
         opcache_reset();
     }
 
     $runtimePath = Env::get('runtime_path');
-    $dirs        = [];
-    $rootDirs    = cmf_scan_dir($runtimePath . "*");
+    $dirs = [];
+    $rootDirs = cmf_scan_dir($runtimePath . "*");
     //$noNeedClear=array(".","..","Data");
     $noNeedClear = ['.', '..', 'log'];
-    $rootDirs    = array_diff($rootDirs, $noNeedClear);
+    $rootDirs = array_diff($rootDirs, $noNeedClear);
     foreach ($rootDirs as $dir) {
 
         if ($dir != "." && $dir != "..") {
@@ -356,7 +412,7 @@ function cmf_clear_cache()
 
 
 
-//
+                //
 
 
 
@@ -502,7 +558,7 @@ function cmf_set_option($key, $data, $replace = false)
         return false;
     }
 
-    $key    = strtolower($key);
+    $key = strtolower($key);
     $option = [];
 
     $findOption = OptionModel::where('option_name', $key)->find();
@@ -517,12 +573,12 @@ function cmf_set_option($key, $data, $replace = false)
         $option['option_value'] = json_encode($data, JSON_UNESCAPED_UNICODE);
         OptionModel::where('option_name', $key)->update($option);
     } else {
-        $option['option_name']  = $key;
+        $option['option_name'] = $key;
         $option['option_value'] = $data;
         OptionModel::create($option);
     }
 
-    cache('cmf_options_' . $key, null);//删除缓存
+    cache('cmf_options_' . $key, null); //删除缓存
 
     return true;
 }
@@ -576,24 +632,24 @@ function cmf_get_upload_setting()
         $uploadSetting = [
             'file_types' => [
                 'image' => [
-                    'upload_max_filesize' => '102400000',//单位KB
-                    'extensions'          => 'jpg,jpeg,png,gif,bmp4'
+                    'upload_max_filesize' => '102400000', //单位KB
+                    'extensions' => 'jpg,jpeg,png,gif,bmp4'
                 ],
                 'video' => [
                     'upload_max_filesize' => '102400000',
-                    'extensions'          => 'mp4,avi,wmv,rm,rmvb,mkv'
+                    'extensions' => 'mp4,avi,wmv,rm,rmvb,mkv'
                 ],
                 'audio' => [
                     'upload_max_filesize' => '102400000',
-                    'extensions'          => 'mp3,wma,wav'
+                    'extensions' => 'mp3,wma,wav'
                 ],
-                'file'  => [
+                'file' => [
                     'upload_max_filesize' => '102400000',
-                    'extensions'          => 'txt,pdf,doc,docx,xls,xlsx,ppt,pptx,zip,rar,iso,jpg,jpeg,png,gif,bmp4,mp4,avi,wmv,rm,rmvb,mkv,mp3,wma,wav'
+                    'extensions' => 'txt,pdf,doc,docx,xls,xlsx,ppt,pptx,zip,rar,iso,jpg,jpeg,png,gif,bmp4,mp4,avi,wmv,rm,rmvb,mkv,mp3,wma,wav'
                 ]
             ],
-            'chunk_size' => 512,//单位KB
-            'max_files'  => 100 //最大同时上传文件数
+            'chunk_size' => 512, //单位KB
+            'max_files' => 100 //最大同时上传文件数
         ];
     }
 
@@ -602,7 +658,7 @@ function cmf_get_upload_setting()
         foreach ($uploadSetting['file_types'] as $setting) {
             $extensions = explode(',', trim($setting['extensions']));
             if (!empty($extensions)) {
-                $uploadMaxFileSize = intval($setting['upload_max_filesize']) * 1024;//转化成B
+                $uploadMaxFileSize = intval($setting['upload_max_filesize']) * 1024; //转化成B
                 foreach ($extensions as $ext) {
                     if (!isset($uploadMaxFileSizeSetting[$ext]) || $uploadMaxFileSize > $uploadMaxFileSizeSetting[$ext]) {
                         $uploadMaxFileSizeSetting[$ext] = $uploadMaxFileSize;
@@ -632,16 +688,16 @@ function cmf_get_content_images($content)
 {
     //import('phpQuery.phpQuery', EXTEND_PATH);
     \phpQuery::newDocumentHTML($content);
-    $pq         = pq(null);
-    $images     = $pq->find("img");
+    $pq = pq(null);
+    $images = $pq->find("img");
     $imagesData = [];
     if ($images->length) {
         foreach ($images as $img) {
-            $img            = pq($img);
-            $image          = [];
-            $image['src']   = $img->attr("src");
+            $img = pq($img);
+            $image = [];
+            $image['src'] = $img->attr("src");
             $image['title'] = $img->attr("title");
-            $image['alt']   = $img->attr("alt");
+            $image['alt'] = $img->attr("alt");
             array_push($imagesData, $image);
         }
     }
@@ -676,40 +732,40 @@ function cmf_strip_chars($str, $chars = '?<*.>\'\"')
 function cmf_send_email($address, $subject, $message)
 {
     $smtpSetting = cmf_get_option('smtp_setting');
-    $mail        = new \PHPMailer\PHPMailer\PHPMailer();
-    
+    $mail = new \PHPMailer\PHPMailer\PHPMailer();
+
     $mail->IsSMTP();
     $mail->IsHTML(true);
     //$mail->SMTPDebug = 3;
-    
+
     $mail->CharSet = 'UTF-8';
-    
+
     $mail->AddAddress($address);
-    
+
     $mail->Body = $message;
-    
+
     $mail->From = $smtpSetting['from'];
-    
+
     $mail->FromName = $smtpSetting['from_name'];
-    
+
     $mail->Subject = $subject;
-    
+
     $mail->Host = $smtpSetting['host'];
     //by Rainfer
-    
-    $Secure           = $smtpSetting['smtp_secure'];
+
+    $Secure = $smtpSetting['smtp_secure'];
     $mail->SMTPSecure = empty($Secure) ? '' : $Secure;
-    
-    $port       = $smtpSetting['port'];
+
+    $port = $smtpSetting['port'];
     $mail->Port = empty($port) ? "25" : $port;
-    
-    $mail->SMTPAuth    = true;
+
+    $mail->SMTPAuth = true;
     $mail->SMTPAutoTLS = false;
-    $mail->Timeout     = 10;
-    
+    $mail->Timeout = 10;
+
     $mail->Username = $smtpSetting['username'];
     $mail->Password = $smtpSetting['password'];
-    
+
     if (!$mail->Send()) {
         $mailError = $mail->ErrorInfo;
         return ["error" => 1, "message" => $mailError];
@@ -840,19 +896,19 @@ function cmf_str_decode($string, $key = '', $expiry = 0, $operation = 'DECODE')
 {
     $ckey_length = 4;
 
-    $key  = md5($key ? $key : config("database.authcode"));
+    $key = md5($key ? $key : config("database.authcode"));
     $keya = md5(substr($key, 0, 16));
     $keyb = md5(substr($key, 16, 16));
     $keyc = $ckey_length ? ($operation == 'DECODE' ? substr($string, 0, $ckey_length) : substr(md5(microtime()), -$ckey_length)) : '';
 
-    $cryptkey   = $keya . md5($keya . $keyc);
+    $cryptkey = $keya . md5($keya . $keyc);
     $key_length = strlen($cryptkey);
 
-    $string        = $operation == 'DECODE' ? base64_decode(substr($string, $ckey_length)) : sprintf('%010d', $expiry ? $expiry + time() : 0) . substr(md5($string . $keyb), 0, 16) . $string;
+    $string = $operation == 'DECODE' ? base64_decode(substr($string, $ckey_length)) : sprintf('%010d', $expiry ? $expiry + time() : 0) . substr(md5($string . $keyb), 0, 16) . $string;
     $string_length = strlen($string);
 
     $result = '';
-    $box    = range(0, 255);
+    $box = range(0, 255);
 
     $rndkey = [];
     for ($i = 0; $i <= 255; $i++) {
@@ -860,19 +916,19 @@ function cmf_str_decode($string, $key = '', $expiry = 0, $operation = 'DECODE')
     }
 
     for ($j = $i = 0; $i < 256; $i++) {
-        $j       = ($j + $box[$i] + $rndkey[$i]) % 256;
-        $tmp     = $box[$i];
+        $j = ($j + $box[$i] + $rndkey[$i]) % 256;
+        $tmp = $box[$i];
         $box[$i] = $box[$j];
         $box[$j] = $tmp;
     }
 
     for ($a = $j = $i = 0; $i < $string_length; $i++) {
-        $a       = ($a + 1) % 256;
-        $j       = ($j + $box[$a]) % 256;
-        $tmp     = $box[$a];
+        $a = ($a + 1) % 256;
+        $j = ($j + $box[$a]) % 256;
+        $tmp = $box[$a];
         $box[$a] = $box[$j];
         $box[$j] = $tmp;
-        $result  .= chr(ord($string[$i]) ^ ($box[($box[$a] + $box[$j]) % 256]));
+        $result .= chr(ord($string[$i]) ^ ($box[($box[$a] + $box[$j]) % 256]));
     }
 
     if ($operation == 'DECODE') {
@@ -929,7 +985,7 @@ function cmf_asset_relative_url($assetUrl)
 function cmf_check_user_action($object = "", $countLimit = 1, $ipLimit = false, $expire = 0)
 {
     $request = request();
-    $action  = $request->module() . "/" . $request->controller() . "/" . $request->action();
+    $action = $request->module() . "/" . $request->controller() . "/" . $request->action();
 
     if (is_array($object)) {
         $userId = $object['user_id'];
@@ -938,7 +994,7 @@ function cmf_check_user_action($object = "", $countLimit = 1, $ipLimit = false, 
         $userId = cmf_get_current_user_id();
     }
 
-    $ip = get_client_ip(0, true);//修复ip获取
+    $ip = get_client_ip(0, true); //修复ip获取
 
     $where = ["user_id" => $userId, "action" => $action, "object" => $object];
 
@@ -951,9 +1007,9 @@ function cmf_check_user_action($object = "", $countLimit = 1, $ipLimit = false, 
     $time = time();
     if ($findLog) {
         Db::name('user_action_log')->where($where)->update([
-            "count"           => Db::raw("count+1"),
+            "count" => Db::raw("count+1"),
             "last_visit_time" => $time,
-            "ip"              => $ip
+            "ip" => $ip
         ]);
 
         if ($findLog['count'] >= $countLimit) {
@@ -965,12 +1021,12 @@ function cmf_check_user_action($object = "", $countLimit = 1, $ipLimit = false, 
         }
     } else {
         Db::name('user_action_log')->insert([
-            "user_id"         => $userId,
-            "action"          => $action,
-            "object"          => $object,
-            "count"           => Db::raw("count+1"),
+            "user_id" => $userId,
+            "action" => $action,
+            "object" => $object,
+            "count" => Db::raw("count+1"),
             "last_visit_time" => $time,
-            "ip"              => $ip
+            "ip" => $ip
         ]);
     }
 
@@ -1085,9 +1141,9 @@ function hook_one($hook, $params = null)
  */
 function cmf_get_plugin_class($name)
 {
-    $name      = ucwords($name);
+    $name = ucwords($name);
     $pluginDir = cmf_parse_name($name);
-    $class     = "plugins\\{$pluginDir}\\{$name}Plugin";
+    $class = "plugins\\{$pluginDir}\\{$name}Plugin";
     return $class;
 }
 
@@ -1133,8 +1189,8 @@ function cmf_scan_dir($pattern, $flags = null)
  */
 function cmf_sub_dirs($dir)
 {
-    $dir     = ltrim($dir, "/");
-    $dirs    = [];
+    $dir = ltrim($dir, "/");
+    $dirs = [];
     $subDirs = cmf_scan_dir("$dir/*", GLOB_ONLYDIR);
     if (!empty($subDirs)) {
         foreach ($subDirs as $subDir) {
@@ -1162,27 +1218,27 @@ function cmf_plugin_url($url, $vars = [], $domain = false)
     global $CMF_GV_routes;
 
     if (empty($CMF_GV_routes)) {
-        $routeModel    = new \app\admin\model\RouteModel();
+        $routeModel = new \app\admin\model\RouteModel();
         $CMF_GV_routes = $routeModel->getRoutes();
     }
 
-    $url              = parse_url($url);
+    $url = parse_url($url);
     $case_insensitive = true;
-    $plugin           = $case_insensitive ? cmf_parse_name($url['scheme']) : $url['scheme'];
-    $controller       = $case_insensitive ? cmf_parse_name($url['host']) : $url['host'];
-    $action           = trim($case_insensitive ? strtolower($url['path']) : $url['path'], '/');
+    $plugin = $case_insensitive ? cmf_parse_name($url['scheme']) : $url['scheme'];
+    $controller = $case_insensitive ? cmf_parse_name($url['host']) : $url['host'];
+    $action = trim($case_insensitive ? strtolower($url['path']) : $url['path'], '/');
 
-    
+
     if (isset($url['query'])) {
         parse_str($url['query'], $query);
         $vars = array_merge($query, $vars);
     }
 
-    
+
     $params = [
-        '_plugin'     => $plugin,
+        '_plugin' => $plugin,
         '_controller' => $controller,
-        '_action'     => $action,
+        '_action' => $action,
     ];
 
     $pluginUrl = '\\cmf\\controller\\PluginController@index?' . http_build_query($params);
@@ -1195,7 +1251,7 @@ function cmf_plugin_url($url, $vars = [], $domain = false)
             if (count($sameVars) == count($actionRoute['vars'])) {
                 ksort($sameVars);
                 $pluginUrl = $pluginUrl . '&' . http_build_query($sameVars);
-                $vars      = array_diff_assoc($vars, $sameVars);
+                $vars = array_diff_assoc($vars, $sameVars);
                 break;
             }
         }
@@ -1223,11 +1279,11 @@ function cmf_auth_check($userId, $name = null, $relation = 'or')
 
     $authObj = new \cmf\lib\Auth();
     if (empty($name)) {
-        $request    = request();
-        $app        = $request->module();
+        $request = request();
+        $app = $request->module();
         $controller = $request->controller();
-        $action     = $request->action();
-        $name       = strtolower($app . "/" . $controller . "/" . $action);
+        $action = $request->action();
+        $name = strtolower($app . "/" . $controller . "/" . $action);
     }
     return $authObj->check($userId, $name, $relation);
 }
@@ -1236,18 +1292,20 @@ function cmf_alpha_id($in, $to_num = false, $pad_up = 4, $passKey = null)
 {
     $index = "aBcDeFgHiJkLmNoPqRsTuVwXyZAbCdEfGhIjKlMnOpQrStUvWxYz0123456789";
     if ($passKey !== null) {
-        
-        
-        
-        
-        
 
-        for ($n = 0; $n < strlen($index); $n++) $i[] = substr($index, $n, 1);
+
+
+
+
+
+        for ($n = 0; $n < strlen($index); $n++)
+            $i[] = substr($index, $n, 1);
 
         $passhash = hash('sha256', $passKey);
         $passhash = (strlen($passhash) < strlen($index)) ? hash('sha512', $passKey) : $passhash;
 
-        for ($n = 0; $n < strlen($index); $n++) $p[] = substr($passhash, $n, 1);
+        for ($n = 0; $n < strlen($index); $n++)
+            $p[] = substr($passhash, $n, 1);
 
         array_multisort($p, SORT_DESC, $i);
         $index = implode($i);
@@ -1256,36 +1314,38 @@ function cmf_alpha_id($in, $to_num = false, $pad_up = 4, $passKey = null)
     $base = strlen($index);
 
     if ($to_num) {
-        
-        $in  = strrev($in);
+
+        $in = strrev($in);
         $out = 0;
         $len = strlen($in) - 1;
         for ($t = 0; $t <= $len; $t++) {
             $bcpow = pow($base, $len - $t);
-            $out   = $out + strpos($index, substr($in, $t, 1)) * $bcpow;
+            $out = $out + strpos($index, substr($in, $t, 1)) * $bcpow;
         }
 
         if (is_numeric($pad_up)) {
             $pad_up--;
-            if ($pad_up > 0) $out -= pow($base, $pad_up);
+            if ($pad_up > 0)
+                $out -= pow($base, $pad_up);
         }
         $out = sprintf('%F', $out);
         $out = substr($out, 0, strpos($out, '.'));
     } else {
-        
+
         if (is_numeric($pad_up)) {
             $pad_up--;
-            if ($pad_up > 0) $in += pow($base, $pad_up);
+            if ($pad_up > 0)
+                $in += pow($base, $pad_up);
         }
 
         $out = "";
         for ($t = floor(log($in, $base)); $t >= 0; $t--) {
             $bcp = pow($base, $t);
-            $a   = floor($in / $bcp) % $base;
+            $a = floor($in / $bcp) % $base;
             $out = $out . substr($index, $a, 1);
-            $in  = $in - ($a * $bcp);
+            $in = $in - ($a * $bcp);
         }
-        $out = strrev($out); 
+        $out = strrev($out);
     }
 
     return $out;
@@ -1300,7 +1360,7 @@ function cmf_alpha_id($in, $to_num = false, $pad_up = 4, $passKey = null)
  */
 function cmf_captcha_check($value, $id = "", $reset = true)
 {
-    $captcha        = new \think\captcha\Captcha();
+    $captcha = new \think\captcha\Captcha();
     $captcha->reset = $reset;
     return $captcha->check($value, $id);
 }
@@ -1320,12 +1380,12 @@ function cmf_split_sql($file, $tablePre, $charset = 'utf8mb4', $defaultTablePre 
         //读取SQL文件
         $sql = file_get_contents($file);
         $sql = str_replace("\r", "\n", $sql);
-        $sql = str_replace("BEGIN;\n", '', $sql);//兼容 navicat 导出的 insert 语句
-        $sql = str_replace("COMMIT;\n", '', $sql);//兼容 navicat 导出的 insert 语句
+        $sql = str_replace("BEGIN;\n", '', $sql); //兼容 navicat 导出的 insert 语句
+        $sql = str_replace("COMMIT;\n", '', $sql); //兼容 navicat 导出的 insert 语句
         $sql = str_replace($defaultCharset, $charset, $sql);
         $sql = trim($sql);
         //替换表前缀
-        $sql  = str_replace(" `{$defaultTablePre}", " `{$tablePre}", $sql);
+        $sql = str_replace(" `{$defaultTablePre}", " `{$tablePre}", $sql);
         $sqls = explode(";\n", $sql);
         return $sqls;
     }
@@ -1373,16 +1433,17 @@ function cmf_get_file_extension($filename)
  */
 function cmf_get_verification_code($account, $length = 6)
 {
-    if (empty($account)) return false;
+    if (empty($account))
+        return false;
     $verificationCodeQuery = Db::name('verification_code');
-    $currentTime           = time();
-    $maxCount              = 5;
-    $findVerificationCode  = $verificationCodeQuery->where('account', $account)->find();
-    $result                = false;
+    $currentTime = time();
+    $maxCount = 5;
+    $findVerificationCode = $verificationCodeQuery->where('account', $account)->find();
+    $result = false;
     if (empty($findVerificationCode)) {
         $result = true;
     } else {
-        $sendTime       = $findVerificationCode['send_time'];
+        $sendTime = $findVerificationCode['send_time'];
         $todayStartTime = strtotime(date('Y-m-d', $currentTime));
         if ($sendTime < $todayStartTime) {
             $result = true;
@@ -1425,12 +1486,12 @@ function cmf_get_verification_code($account, $length = 6)
 function cmf_verification_code_log($account, $code, $expireTime = 0)
 {
     $currentTime = time();
-    $expireTime  = $expireTime > $currentTime ? $expireTime : $currentTime + 30 * 60;
+    $expireTime = $expireTime > $currentTime ? $expireTime : $currentTime + 30 * 60;
 
     $findVerificationCode = Db::name('verification_code')->where('account', $account)->find();
 
     if ($findVerificationCode) {
-        $todayStartTime = strtotime(date("Y-m-d"));//当天0点
+        $todayStartTime = strtotime(date("Y-m-d")); //当天0点
         if ($findVerificationCode['send_time'] <= $todayStartTime) {
             $count = 1;
         } else {
@@ -1439,18 +1500,18 @@ function cmf_verification_code_log($account, $code, $expireTime = 0)
         $result = Db::name('verification_code')
             ->where('account', $account)
             ->update([
-                'send_time'   => $currentTime,
+                'send_time' => $currentTime,
                 'expire_time' => $expireTime,
-                'code'        => $code,
-                'count'       => $count
+                'code' => $code,
+                'count' => $count
             ]);
     } else {
         $result = Db::name('verification_code')
             ->insert([
-                'account'     => $account,
-                'send_time'   => $currentTime,
-                'code'        => $code,
-                'count'       => 1,
+                'account' => $account,
+                'send_time' => $currentTime,
+                'code' => $code,
+                'count' => 1,
                 'expire_time' => $expireTime
             ]);
     }
@@ -1506,7 +1567,7 @@ function cmf_check_verification_code($account, $code, $clear = false)
 function cmf_clear_verification_code($account)
 {
     $verificationCodeQuery = Db::name('verification_code');
-    $result                = $verificationCodeQuery->where('account', $account)->update(['code' => '']);
+    $result = $verificationCodeQuery->where('account', $account)->update(['code' => '']);
     return $result;
 }
 
@@ -1543,14 +1604,14 @@ function cmf_generate_user_token($userId, $deviceType)
     $userTokenQuery = Db::name("user_token")
         ->where('user_id', $userId)
         ->where('device_type', $deviceType);
-    $findUserToken  = $userTokenQuery->find();
-    $currentTime    = time();
-    $expireTime     = $currentTime + 24 * 3600 * 180;
-    $token          = md5(uniqid()) . md5(uniqid());
+    $findUserToken = $userTokenQuery->find();
+    $currentTime = time();
+    $expireTime = $currentTime + 24 * 3600 * 180;
+    $token = md5(uniqid()) . md5(uniqid());
     if (empty($findUserToken)) {
         Db::name("user_token")->insert([
-            'token'       => $token,
-            'user_id'     => $userId,
+            'token' => $token,
+            'user_id' => $userId,
             'expire_time' => $expireTime,
             'create_time' => $currentTime,
             'device_type' => $deviceType
@@ -1563,7 +1624,7 @@ function cmf_generate_user_token($userId, $deviceType)
                 ->where('user_id', $userId)
                 ->where('device_type', $deviceType)
                 ->update([
-                    'token'       => $token,
+                    'token' => $token,
                     'expire_time' => $expireTime,
                     'create_time' => $currentTime
                 ]);
@@ -1631,8 +1692,8 @@ function cmf_get_cmf_settings($key = "")
     $cmfSettings = cache("cmf_settings");
     if (empty($cmfSettings)) {
         $objOptions = new \app\admin\model\OptionModel();
-        $objResult  = $objOptions->where("option_name", 'cmf_settings')->find();
-        $arrOption  = $objResult ? $objResult->toArray() : [];
+        $objResult = $objOptions->where("option_name", 'cmf_settings')->find();
+        $arrOption = $objResult ? $objResult->toArray() : [];
         if ($arrOption) {
             $cmfSettings = json_decode($arrOption['option_value'], true);
         } else {
@@ -1684,9 +1745,9 @@ function get_client_ip($type = 0, $adv = true)
  */
 function cmf_url_encode($url, $params)
 {
-    
+
     if (is_string($params)) {
-        
+
         parse_str($params, $params);
     }
 
@@ -1709,38 +1770,38 @@ function cmf_url($url = '', $vars = '', $suffix = true, $domain = false)
     global $CMF_GV_routes;
 
     if (empty($CMF_GV_routes)) {
-        $routeModel    = new \app\admin\model\RouteModel();
+        $routeModel = new \app\admin\model\RouteModel();
         $CMF_GV_routes = $routeModel->getRoutes();
     }
 
     if (false === strpos($url, '://') && 0 !== strpos($url, '/')) {
         $info = parse_url($url);
-        $url  = !empty($info['path']) ? $info['path'] : '';
+        $url = !empty($info['path']) ? $info['path'] : '';
         if (isset($info['fragment'])) {
-            
+
             $anchor = $info['fragment'];
             if (false !== strpos($anchor, '?')) {
-                
+
                 list($anchor, $info['query']) = explode('?', $anchor, 2);
             }
             if (false !== strpos($anchor, '@')) {
-                
+
                 list($anchor, $domain) = explode('@', $anchor, 2);
             }
         } elseif (strpos($url, '@') && false === strpos($url, '\\')) {
-            
+
             list($url, $domain) = explode('@', $url, 2);
         }
     }
 
-    
+
     if (is_string($vars)) {
-        
+
         parse_str($vars, $vars);
     }
 
     if (isset($info['query'])) {
-        
+
         parse_str($info['query'], $params);
         $vars = array_merge($params, $vars);
     }
@@ -1752,7 +1813,7 @@ function cmf_url($url = '', $vars = '', $suffix = true, $domain = false)
 
             if (count($sameVars) == count($actionRoute['vars'])) {
                 ksort($sameVars);
-                $url  = $url . '?' . http_build_query($sameVars);
+                $url = $url . '?' . http_build_query($sameVars);
                 $vars = array_diff_assoc($vars, $sameVars);
                 break;
             }
@@ -1794,15 +1855,15 @@ function cmf_replace_content_file_url($content, $isForDbSave = false)
     \phpQuery::newDocumentHTML($content);
     $pq = pq(null);
 
-    $storage       = Storage::instance();
-    $localStorage  = new cmf\lib\storage\Local([]);
+    $storage = Storage::instance();
+    $localStorage = new cmf\lib\storage\Local([]);
     $storageDomain = $storage->getDomain();
-    $domain        = request()->host();
+    $domain = request()->host();
 
     $images = $pq->find("img");
     if ($images->length) {
         foreach ($images as $img) {
-            $img    = pq($img);
+            $img = pq($img);
             $imgSrc = $img->attr("src");
 
             if ($isForDbSave) {
@@ -1880,10 +1941,10 @@ function cmf_curl_get($url)
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_TIMEOUT, 5);
     $SSL = substr($url, 0, 8) == "https://" ? true : false;
-
-
-
-
+    if ($SSL) {
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 信任任何证书
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2); // 检查证书中是否设置域名
+    }
     $content = curl_exec($ch);
     curl_close($ch);
     return $content;
@@ -1921,10 +1982,10 @@ function cmf_user_action($action)
         if (!empty($findUserScoreLog)) {
             $cycleType = intval($findUserAction['cycle_type']);
             $cycleTime = intval($findUserAction['cycle_time']);
-            switch ($cycleType) {//1:按天;2:按小时;3:永久
+            switch ($cycleType) { //1:按天;2:按小时;3:永久
                 case 1:
                     $firstDayStartTime = strtotime(date('Y-m-d', $findUserScoreLog['create_time']));
-                    $endDayEndTime     = strtotime(date('Y-m-d', strtotime("+{$cycleTime} day", $firstDayStartTime)));
+                    $endDayEndTime = strtotime(date('Y-m-d', strtotime("+{$cycleTime} day", $firstDayStartTime)));
 
 
                     $findUserScoreLogCount = Db::name('user_score_log')
@@ -1953,11 +2014,11 @@ function cmf_user_action($action)
     if ($changeScore) {
         if (!empty($findUserAction['score']) || !empty($findUserAction['coin'])) {
             Db::name('user_score_log')->insert([
-                'user_id'     => $userId,
+                'user_id' => $userId,
                 'create_time' => time(),
-                'action'      => $action,
-                'score'       => $findUserAction['score'],
-                'coin'        => $findUserAction['coin'],
+                'action' => $action,
+                'score' => $findUserAction['score'],
+                'coin' => $findUserAction['coin'],
             ]);
         }
 
@@ -2044,10 +2105,10 @@ function cmf_xml_encode($data, $root = 'think', $item = 'item', $attr = '', $id 
     }
     $attr = trim($attr);
     $attr = empty($attr) ? '' : " {$attr}";
-    $xml  = "<?xml version=\"1.0\" encoding=\"{$encoding}\"?>";
-    $xml  .= "<{$root}{$attr}>";
-    $xml  .= cmf_data_to_xml($data, $item, $id);
-    $xml  .= "</{$root}>";
+    $xml = "<?xml version=\"1.0\" encoding=\"{$encoding}\"?>";
+    $xml .= "<{$root}{$attr}>";
+    $xml .= cmf_data_to_xml($data, $item, $id);
+    $xml .= "</{$root}>";
     return $xml;
 }
 
@@ -2104,11 +2165,11 @@ function cmf_check_mobile($mobile)
 function cmf_file_size_format($bytes)
 {
     $type = ['B', 'KB', 'MB', 'GB', 'TB'];
-    for ($i = 0; $bytes >= 1024; $i++)//单位每增大1024，则单位数组向后移动一位表示相应的单位
+    for ($i = 0; $bytes >= 1024; $i++) //单位每增大1024，则单位数组向后移动一位表示相应的单位
     {
         $bytes /= 1024;
     }
-    return (floor($bytes * 100) / 100) . $type[$i];//floor是取整函数，为了防止出现一串的小数，这里取了两位小数
+    return (floor($bytes * 100) / 100) . $type[$i]; //floor是取整函数，为了防止出现一串的小数，这里取了两位小数
 }
 
 /**
@@ -2126,7 +2187,7 @@ function cmf_counter_inc($name, $min = 1, $step = 1)
 
         if (empty($id)) {
             $id = Db::name('core_counter')->insertGetId([
-                'name'  => $name,
+                'name' => $name,
                 'value' => 0
             ]);
         }
@@ -2220,8 +2281,8 @@ function order_shift($order)
 {
     $orderArr = [];
     foreach ($order as $key => $value) {
-        $upDwn      = substr($value, 0, 1);
-        $orderType  = $upDwn == '-' ? 'desc' : 'asc';
+        $upDwn = substr($value, 0, 1);
+        $orderType = $upDwn == '-' ? 'desc' : 'asc';
         $orderField = substr($value, 1);
         if (!empty($whiteParams)) {
             if (in_array($orderField, $whiteParams)) {

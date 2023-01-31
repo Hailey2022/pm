@@ -1,0 +1,15 @@
+<include file="public@header" />
+<table class="table table-hover table-bordered">
+    <thead>
+        <tr>
+            <th style="text-align: center;">序号</th>
+            <th style="text-align: center;">用户名</th>
+        </tr>
+    </thead>
+    <foreach name="usernames" item="u" key="k">
+        <tbody>
+            <td style="text-align: center;">{$k + 1}</td>
+            <td style="text-align: center;">{$u}</td>
+        </tbody>
+    </foreach>
+</table>

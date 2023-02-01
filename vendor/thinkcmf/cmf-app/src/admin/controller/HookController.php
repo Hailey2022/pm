@@ -1,13 +1,5 @@
 <?php
 
-
-
-
-
-
-
-
-
 namespace app\admin\controller;
 
 use app\admin\logic\HookLogic;
@@ -16,24 +8,23 @@ use app\admin\model\HookModel;
 use app\admin\model\PluginModel;
 use app\admin\model\HookPluginModel;
 
-
 class HookController extends AdminBaseController
 {
-    
+
     public function index()
     {
         $hookModel = new HookModel();
-        $hooks     = $hookModel->select();
+        $hooks = $hookModel->select();
         $this->assign('hooks', $hooks);
         return $this->fetch();
     }
 
-    
+
     public function plugins()
     {
-        $hook        = $this->request->param('hook');
+        $hook = $this->request->param('hook');
         $pluginModel = new PluginModel();
-        $plugins     = $pluginModel
+        $plugins = $pluginModel
             ->field('a.*,b.hook,b.plugin,b.list_order,b.status as hook_plugin_status,b.id as hook_plugin_id')
             ->alias('a')
             ->join('hook_plugin b', 'a.name = b.plugin')
@@ -44,7 +35,7 @@ class HookController extends AdminBaseController
         return $this->fetch();
     }
 
-    
+
     public function pluginListOrder()
     {
         $hookPluginModel = new HookPluginModel();
@@ -53,7 +44,7 @@ class HookController extends AdminBaseController
         $this->success("排序更新成功！");
     }
 
-    
+
     public function sync()
     {
 

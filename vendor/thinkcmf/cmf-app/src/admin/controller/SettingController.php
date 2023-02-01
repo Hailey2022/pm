@@ -1,24 +1,12 @@
 <?php
-
-
-
-
-
-
-
-
-
 namespace app\admin\controller;
 
 use app\admin\model\RouteModel;
 use app\admin\model\UserModel;
 use cmf\controller\AdminBaseController;
 
-
 class SettingController extends AdminBaseController
 {
-
-    
     public function site()
     {
         $content = hook_one('admin_setting_site_view');
@@ -27,16 +15,16 @@ class SettingController extends AdminBaseController
             return $content;
         }
 
-        $noNeedDirs     = [".", "..", ".svn", 'fonts'];
+        $noNeedDirs = [".", "..", ".svn", 'fonts'];
         $adminThemesDir = WEB_ROOT . config('template.cmf_admin_theme_path') . config('template.cmf_admin_default_theme') . '/public/assets/themes/';
-        $adminStyles    = cmf_scan_dir($adminThemesDir . '*', GLOB_ONLYDIR);
-        $adminStyles    = array_diff($adminStyles, $noNeedDirs);
-        $cdnSettings    = cmf_get_option('cdn_settings');
-        $cmfSettings    = cmf_get_option('cmf_settings');
-        $adminSettings  = cmf_get_option('admin_settings');
+        $adminStyles = cmf_scan_dir($adminThemesDir . '*', GLOB_ONLYDIR);
+        $adminStyles = array_diff($adminStyles, $noNeedDirs);
+        $cdnSettings = cmf_get_option('cdn_settings');
+        $cmfSettings = cmf_get_option('cmf_settings');
+        $adminSettings = cmf_get_option('admin_settings');
 
         $adminThemes = [];
-        $themes      = cmf_scan_dir(WEB_ROOT . config('template.cmf_admin_theme_path') . '/*', GLOB_ONLYDIR);
+        $themes = cmf_scan_dir(WEB_ROOT . config('template.cmf_admin_theme_path') . '/*', GLOB_ONLYDIR);
 
         foreach ($themes as $theme) {
             if (strpos($theme, 'admin_') === 0) {
@@ -44,7 +32,7 @@ class SettingController extends AdminBaseController
             }
         }
 
-        if (APP_DEBUG && false) { 
+        if (APP_DEBUG && false) {
             $apps = cmf_scan_dir(APP_PATH . '*', GLOB_ONLYDIR);
             $apps = array_diff($apps, $noNeedDirs);
             $this->assign('apps', $apps);
@@ -61,19 +49,6 @@ class SettingController extends AdminBaseController
         return $this->fetch();
     }
 
-    /**
-     * 网站信息设置提交
-     * @adminMenu(
-     *     'name'   => '网站信息设置提交',
-     *     'parent' => 'site',
-     *     'display'=> false,
-     *     'hasView'=> false,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '网站信息设置提交',
-     *     'param'  => ''
-     * )
-     */
     public function sitePost()
     {
         if ($this->request->isPost()) {
@@ -87,7 +62,7 @@ class SettingController extends AdminBaseController
 
             $cmfSettings = $this->request->param('cmf_settings/a');
 
-            $bannedUsernames                 = preg_replace("/[^0-9A-Za-z_\\x{4e00}-\\x{9fa5}-]/u", ",", $cmfSettings['banned_usernames']);
+            $bannedUsernames = preg_replace("/[^0-9A-Za-z_\\x{4e00}-\\x{9fa5}-]/u", ",", $cmfSettings['banned_usernames']);
             $cmfSettings['banned_usernames'] = $bannedUsernames;
             cmf_set_option('cmf_settings', $cmfSettings);
 
@@ -124,13 +99,13 @@ class SettingController extends AdminBaseController
         }
     }
 
-    
+
     public function password()
     {
         return $this->fetch();
     }
 
-    
+
     public function passwordPost()
     {
         if ($this->request->isPost()) {
@@ -148,8 +123,8 @@ class SettingController extends AdminBaseController
             $admin = UserModel::where("id", $userId)->find();
 
             $oldPassword = $data['old_password'];
-            $password    = $data['password'];
-            $rePassword  = $data['re_password'];
+            $password = $data['password'];
+            $rePassword = $data['re_password'];
 
             if (cmf_compare_password($oldPassword, $admin['user_pass'])) {
                 if ($password == $rePassword) {
@@ -170,7 +145,7 @@ class SettingController extends AdminBaseController
         }
     }
 
-    
+
     public function upload()
     {
         $uploadSetting = cmf_get_upload_setting();
@@ -178,7 +153,7 @@ class SettingController extends AdminBaseController
         return $this->fetch();
     }
 
-    
+
     public function uploadPost()
     {
         if ($this->request->isPost()) {
@@ -191,7 +166,7 @@ class SettingController extends AdminBaseController
 
     }
 
-    
+
     public function clearCache()
     {
         $content = hook_one('admin_setting_clear_cache_view');

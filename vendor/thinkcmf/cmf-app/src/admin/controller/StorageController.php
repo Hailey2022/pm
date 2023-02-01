@@ -1,13 +1,5 @@
 <?php
 
-
-
-
-
-
-
-
-
 namespace app\admin\controller;
 
 use cmf\controller\AdminBaseController;

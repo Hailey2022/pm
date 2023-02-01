@@ -1,13 +1,4 @@
 <?php
-
-
-
-
-
-
-
-
-
 namespace app\admin\controller;
 
 use app\admin\model\RecycleBinModel;
@@ -17,8 +8,6 @@ use cmf\controller\AdminBaseController;
 
 class SlideController extends AdminBaseController
 {
-
-    
     public function index()
     {
         $content = hook_one('admin_slide_index_view');
@@ -28,24 +17,24 @@ class SlideController extends AdminBaseController
         }
 
         $slidePostModel = new SlideModel();
-        $slides         = $slidePostModel->where('delete_time', 0)->select();
+        $slides = $slidePostModel->where('delete_time', 0)->select();
         $this->assign('slides', $slides);
         return $this->fetch();
     }
 
-    
+
     public function add()
     {
         return $this->fetch();
     }
 
-    
+
     public function addPost()
     {
         if ($this->request->isPost()) {
-            $data           = $this->request->param();
+            $data = $this->request->param();
             $slidePostModel = new SlideModel();
-            $result         = $this->validate($data, 'Slide');
+            $result = $this->validate($data, 'Slide');
             if ($result !== true) {
                 $this->error($result);
             }
@@ -55,21 +44,21 @@ class SlideController extends AdminBaseController
         }
     }
 
-    
+
     public function edit()
     {
-        $id             = $this->request->param('id');
+        $id = $this->request->param('id');
         $slidePostModel = new SlideModel();
-        $result         = $slidePostModel->where('id', $id)->find();
+        $result = $slidePostModel->where('id', $id)->find();
         $this->assign('result', $result);
         return $this->fetch();
     }
 
-    
+
     public function editPost()
     {
         if ($this->request->isPost()) {
-            $data   = $this->request->param();
+            $data = $this->request->param();
             $result = $this->validate($data, 'Slide');
             if ($result !== true) {
                 $this->error($result);
@@ -80,11 +69,11 @@ class SlideController extends AdminBaseController
         }
     }
 
-    
+
     public function delete()
     {
         if ($this->request->isPost()) {
-            $id             = $this->request->param('id', 0, 'intval');
+            $id = $this->request->param('id', 0, 'intval');
             $slidePostModel = SlideModel::where('id', $id)->find();
             if (empty($slidePostModel)) {
                 $this->error('幻灯片不存在!');
@@ -97,10 +86,10 @@ class SlideController extends AdminBaseController
             }
 
             $data = [
-                'object_id'   => $id,
+                'object_id' => $id,
                 'create_time' => time(),
-                'table_name'  => 'slide',
-                'name'        => $result['name']
+                'table_name' => 'slide',
+                'name' => $result['name']
             ];
 
             $resultSlide = $slidePostModel->save(['delete_time' => time()]);

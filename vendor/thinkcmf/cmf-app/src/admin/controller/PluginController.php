@@ -1,20 +1,11 @@
 <?php
 
-
-
-
-
-
-
-
-
 namespace app\admin\controller;
 
 use app\admin\logic\PluginLogic;
 use cmf\controller\AdminBaseController;
 use app\admin\model\PluginModel;
 use app\admin\model\HookPluginModel;
-use mindplay\annotations\Annotations;
 use think\facade\Cache;
 use think\Validate;
 
@@ -24,16 +15,16 @@ class PluginController extends AdminBaseController
 
     protected $pluginModel;
 
-    
+
     public function index()
     {
         $pluginModel = new PluginModel();
-        $plugins     = $pluginModel->getList();
+        $plugins = $pluginModel->getList();
         $this->assign("plugins", $plugins);
         return $this->fetch();
     }
 
-    
+
     public function toggle()
     {
         if ($this->request->isPost()) {
@@ -45,11 +36,11 @@ class PluginController extends AdminBaseController
                 $this->error('插件不存在！');
             }
 
-            $status         = 1;
+            $status = 1;
             $successMessage = "启用成功！";
 
             if ($this->request->param('disable')) {
-                $status         = 0;
+                $status = 0;
                 $successMessage = "禁用成功！";
             }
 
@@ -78,13 +69,13 @@ class PluginController extends AdminBaseController
         }
     }
 
-    
+
     public function setting()
     {
         $id = $this->request->param('id', 0, 'intval');
 
         $pluginModel = new PluginModel();
-        $plugin      = $pluginModel->find($id);
+        $plugin = $pluginModel->find($id);
 
         if (empty($plugin)) {
             $this->error('插件未安装!');
@@ -132,14 +123,14 @@ class PluginController extends AdminBaseController
 
     }
 
-    
+
     public function settingPost()
     {
         if ($this->request->isPost()) {
             $id = $this->request->param('id', 0, 'intval');
 
             $pluginModel = new PluginModel();
-            $plugin      = $pluginModel->find($id)->toArray();
+            $plugin = $pluginModel->find($id)->toArray();
 
             if (!$plugin) {
                 $this->error('插件未安装!');
@@ -156,7 +147,7 @@ class PluginController extends AdminBaseController
             $pluginConfigInDb = $plugin['config'];
             $plugin['config'] = include $pluginObj->getConfigFilePath();
 
-            $rules    = [];
+            $rules = [];
             $messages = [];
 
             foreach ($plugin['config'] as $key => $value) {
@@ -191,7 +182,7 @@ class PluginController extends AdminBaseController
             $config = $this->request->param('config/a');
 
             $validate = new Validate($rules, $messages);
-            $result   = $validate->check($config);
+            $result = $validate->check($config);
             if ($result !== true) {
                 $this->error($validate->getError());
             }
@@ -202,17 +193,28 @@ class PluginController extends AdminBaseController
         }
     }
 
-    
+
     private function _parseRules($rules)
     {
         $newRules = [];
 
         $simpleRules = [
-            'require', 'number',
-            'integer', 'float', 'boolean', 'email',
-            'array', 'accepted', 'date', 'alpha',
-            'alphaNum', 'alphaDash', 'activeUrl',
-            'url', 'ip'];
+            'require',
+            'number',
+            'integer',
+            'float',
+            'boolean',
+            'email',
+            'array',
+            'accepted',
+            'date',
+            'alpha',
+            'alphaNum',
+            'alphaDash',
+            'activeUrl',
+            'url',
+            'ip'
+        ];
         foreach ($rules as $key => $rule) {
             if (in_array($key, $simpleRules) && $rule) {
                 array_push($newRules, $key);
@@ -222,12 +224,12 @@ class PluginController extends AdminBaseController
         return $newRules;
     }
 
-    
+
     public function install()
     {
         if ($this->request->isPost()) {
             $pluginName = $this->request->param('name', '', 'trim');
-            $result     = PluginLogic::install($pluginName);
+            $result = PluginLogic::install($pluginName);
 
             if ($result !== true) {
                 $this->error($result);
@@ -237,12 +239,12 @@ class PluginController extends AdminBaseController
         }
     }
 
-    
+
     public function update()
     {
         if ($this->request->isPost()) {
             $pluginName = $this->request->param('name', '', 'trim');
-            $result     = PluginLogic::update($pluginName);
+            $result = PluginLogic::update($pluginName);
 
             if ($result !== true) {
                 $this->error($result);
@@ -251,12 +253,12 @@ class PluginController extends AdminBaseController
         }
     }
 
-    
+
     public function uninstall()
     {
         if ($this->request->isPost()) {
             $pluginModel = new PluginModel();
-            $id          = $this->request->param('id', 0, 'intval');
+            $id = $this->request->param('id', 0, 'intval');
 
             $result = $pluginModel->uninstall($id);
 

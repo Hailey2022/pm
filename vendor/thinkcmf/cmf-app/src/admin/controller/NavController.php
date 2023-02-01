@@ -1,22 +1,12 @@
 <?php
-
-
-
-
-
-
-
-
-
 namespace app\admin\controller;
 
 use cmf\controller\AdminBaseController;
 use app\admin\model\NavModel;
 
-
 class NavController extends AdminBaseController
 {
-    
+
     public function index()
     {
         $content = hook_one('admin_nav_index_view');
@@ -34,18 +24,18 @@ class NavController extends AdminBaseController
 
     }
 
-    
+
     public function add()
     {
         return $this->fetch();
     }
 
-    
+
     public function addPost()
     {
         if ($this->request->isPost()) {
             $navModel = new NavModel();
-            $arrData  = $this->request->post();
+            $arrData = $this->request->post();
 
             if (empty($arrData["is_main"])) {
                 $arrData["is_main"] = 0;
@@ -59,11 +49,11 @@ class NavController extends AdminBaseController
 
     }
 
-    
+
     public function edit()
     {
         $navModel = new NavModel();
-        $intId    = $this->request->param("id", 0, 'intval');
+        $intId = $this->request->param("id", 0, 'intval');
 
         $objNavCat = $navModel->where("id", $intId)->find();
         $arrNavCat = $objNavCat ? $objNavCat->toArray() : [];
@@ -73,12 +63,12 @@ class NavController extends AdminBaseController
     }
 
 
-    
+
     public function editPost()
     {
         if ($this->request->isPost()) {
             $navModel = new NavModel();
-            $arrData  = $this->request->post();
+            $arrData = $this->request->post();
 
             if (empty($arrData["is_main"])) {
                 $arrData["is_main"] = 0;
@@ -91,12 +81,12 @@ class NavController extends AdminBaseController
         }
     }
 
-    
+
     public function delete()
     {
         if ($this->request->isPost()) {
             $navModel = new NavModel();
-            $intId    = $this->request->param("id", 0, "intval");
+            $intId = $this->request->param("id", 0, "intval");
 
             if (empty($intId)) {
                 $this->error(lang("NO_ID"));

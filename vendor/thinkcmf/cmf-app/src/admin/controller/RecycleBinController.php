@@ -1,13 +1,5 @@
 <?php
 
-
-
-
-
-
-
-
-
 namespace app\admin\controller;
 
 use app\admin\model\RecycleBinModel;
@@ -19,7 +11,7 @@ use think\exception\PDOException;
 
 class RecycleBinController extends AdminBaseController
 {
-    
+
     public function index()
     {
         $content = hook_one('admin_recycle_bin_index_view');
@@ -29,15 +21,15 @@ class RecycleBinController extends AdminBaseController
         }
 
         $recycleBinModel = new RecycleBinModel();
-        $list            = $recycleBinModel->order('create_time desc')->paginate(10);
-        
+        $list = $recycleBinModel->order('create_time desc')->paginate(10);
+
         $page = $list->render();
         $this->assign('page', $page);
         $this->assign('list', $list);
         return $this->fetch();
     }
 
-    
+
     public function restore()
     {
         if ($this->request->isPost()) {
@@ -50,7 +42,7 @@ class RecycleBinController extends AdminBaseController
         }
     }
 
-    
+
     public function delete()
     {
         if ($this->request->isPost()) {
@@ -63,7 +55,7 @@ class RecycleBinController extends AdminBaseController
         }
     }
 
-    
+
     public function clear()
     {
         if ($this->request->isPost()) {
@@ -72,7 +64,7 @@ class RecycleBinController extends AdminBaseController
         }
     }
 
-    
+
     private function operate($ids, $isDelete = true)
     {
         if (!empty($ids) && !is_array($ids)) {
@@ -87,12 +79,9 @@ class RecycleBinController extends AdminBaseController
                 foreach ($records as $record) {
                     $desIds[] = $record['id'];
                     if ($isDelete) {
-                        
-                        if ($record['table_name'] === 'portal_post#page') {
-                            
-                            Db::name('portal_post')->delete($record['object_id']);
 
-                            
+                        if ($record['table_name'] === 'portal_post#page') {
+                            Db::name('portal_post')->delete($record['object_id']);
                             $routeModel = new RouteModel();
                             $routeModel->setRoute('', 'portal/Page/index', ['id' => $record['object_id']], 2, 5000);
                             $routeModel->getRoutes(true);
@@ -100,15 +89,15 @@ class RecycleBinController extends AdminBaseController
                             Db::name($record['table_name'])->delete($record['object_id']);
                         }
 
-                        
+
                         if ($record['table_name'] === 'portal_post') {
                             Db::name('portal_category_post')->where('post_id', '=', $record['object_id'])->delete();
                             Db::name('portal_tag_post')->where('post_id', '=', $record['object_id'])->delete();
                         }
                     } else {
-                        
+
                         $tableNameArr = explode('#', $record['table_name']);
-                        $tableName    = $tableNameArr[0];
+                        $tableName = $tableNameArr[0];
 
                         $result = Db::name($tableName)->where('id', '=', $record['object_id'])->update(['delete_time' => '0']);
                         if ($result) {
@@ -119,7 +108,7 @@ class RecycleBinController extends AdminBaseController
                         }
                     }
                 }
-                
+
                 RecycleBinModel::destroy($desIds);
                 Db::commit();
             } catch (PDOException $e) {

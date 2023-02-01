@@ -1,13 +1,5 @@
 <?php
 
-
-
-
-
-
-
-
-
 namespace app\admin\controller;
 
 use cmf\controller\AdminBaseController;
@@ -16,7 +8,7 @@ use think\Validate;
 class MailerController extends AdminBaseController
 {
 
-    
+
     public function index()
     {
         $emailSetting = cmf_get_option('smtp_setting');
@@ -24,7 +16,7 @@ class MailerController extends AdminBaseController
         return $this->fetch();
     }
 
-    
+
     public function indexPost()
     {
         if ($this->request->isPost()) {
@@ -40,11 +32,11 @@ class MailerController extends AdminBaseController
         }
     }
 
-    
+
     public function template()
     {
         $allowedTemplateKeys = ['verification_code'];
-        $templateKey         = $this->request->param('template_key');
+        $templateKey = $this->request->param('template_key');
 
         if (empty($templateKey) || !in_array($templateKey, $allowedTemplateKeys)) {
             $this->error('非法请求！');
@@ -55,12 +47,12 @@ class MailerController extends AdminBaseController
         return $this->fetch('template_verification_code');
     }
 
-    
+
     public function templatePost()
     {
         if ($this->request->isPost()) {
             $allowedTemplateKeys = ['verification_code'];
-            $templateKey         = $this->request->param('template_key');
+            $templateKey = $this->request->param('template_key');
 
             if (empty($templateKey) || !in_array($templateKey, $allowedTemplateKeys)) {
                 $this->error('非法请求！');
@@ -76,19 +68,19 @@ class MailerController extends AdminBaseController
         }
     }
 
-    
+
     public function test()
     {
         if ($this->request->isPost()) {
 
             $validate = new Validate([
-                'to'      => 'require|email',
+                'to' => 'require|email',
                 'subject' => 'require',
                 'content' => 'require',
             ]);
             $validate->message([
-                'to.require'      => '收件箱不能为空！',
-                'to.email'        => '收件箱格式不正确！',
+                'to.require' => '收件箱不能为空！',
+                'to.email' => '收件箱格式不正确！',
                 'subject.require' => '标题不能为空！',
                 'content.require' => '内容不能为空！',
             ]);
@@ -113,4 +105,3 @@ class MailerController extends AdminBaseController
 
 
 }
-

@@ -3,6 +3,7 @@ namespace app\admin\controller;
 
 use cmf\controller\RestBaseController;
 use think\facade\Db;
+use think\db\Query;
 
 class WeChatController extends RestBaseController
 {
@@ -103,5 +104,31 @@ class WeChatController extends RestBaseController
         //TODO: 区分用户
         $locations = Db::name('wechat_punch_in_location')->select();
         $this->success("ok", ['locs' => $locations]);
+    }
+    public function getRecords()
+    {
+        $uid = $this->request->param('uid');
+        $date = $this->request->param('date');
+        if ($uid == null) {
+            $this->error("not allowed");
+        }
+
+        //TODO: 区分用户
+        $records = Db::name('wechat_punch_in_record')
+            // ->where('uid', $uid)
+            ->where(function (Query $query) use ($date, $uid) {
+                if ($date != null) {
+                    $query->whereBetweenTime('time', $date);
+                } else {
+                    $query->whereTime('time', 'today');
+                }
+                if ($uid != "all") {
+                    $query->where('uid', $uid);
+                }
+            })
+            // ->whereTime('time', 'today')
+            ->select();
+
+        $this->success("ok", ['records' => $records]);
     }
 }

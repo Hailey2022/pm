@@ -1,13 +1,5 @@
 <?php
 
-
-
-
-
-
-
-
-
 namespace app\admin\controller;
 
 use app\admin\model\AuthAccessModel;
@@ -20,8 +12,6 @@ use app\admin\model\AdminMenuModel;
 
 class RbacController extends AdminBaseController
 {
-
-    
     public function index()
     {
         $content = hook_one('admin_rbac_index_view');
@@ -35,7 +25,7 @@ class RbacController extends AdminBaseController
         return $this->fetch();
     }
 
-    
+
     public function roleAdd()
     {
         $content = hook_one('admin_rbac_role_add_view');
@@ -47,14 +37,14 @@ class RbacController extends AdminBaseController
         return $this->fetch();
     }
 
-    
+
     public function roleAddPost()
     {
         if ($this->request->isPost()) {
-            $data   = $this->request->param();
+            $data = $this->request->param();
             $result = $this->validate($data, 'role');
             if ($result !== true) {
-                
+
                 $this->error($result);
             } else {
                 $result = RoleModel::insert($data);
@@ -68,7 +58,7 @@ class RbacController extends AdminBaseController
         }
     }
 
-    
+
     public function roleEdit()
     {
         $content = hook_one('admin_rbac_role_edit_view');
@@ -89,7 +79,7 @@ class RbacController extends AdminBaseController
         return $this->fetch();
     }
 
-    
+
     public function roleEditPost()
     {
         $id = $this->request->param("id", 0, 'intval');
@@ -97,10 +87,10 @@ class RbacController extends AdminBaseController
             $this->error("超级管理员角色不能被修改！");
         }
         if ($this->request->isPost()) {
-            $data   = $this->request->param();
+            $data = $this->request->param();
             $result = $this->validate($data, 'role');
             if ($result !== true) {
-                
+
                 $this->error($result);
 
             } else {
@@ -113,7 +103,7 @@ class RbacController extends AdminBaseController
         }
     }
 
-    
+
     public function roleDelete()
     {
         if ($this->request->isPost()) {
@@ -135,7 +125,7 @@ class RbacController extends AdminBaseController
         }
     }
 
-    
+
     public function authorize()
     {
         $content = hook_one('admin_rbac_authorize_view');
@@ -151,23 +141,23 @@ class RbacController extends AdminBaseController
             $this->error("参数错误！");
         }
 
-        $tree       = new Tree();
+        $tree = new Tree();
         $tree->icon = ['│ ', '├─ ', '└─ '];
         $tree->nbsp = '&nbsp;&nbsp;&nbsp;';
 
         $result = $adminMenuModel->menuCache();
 
-        $newMenus      = [];
-        $privilegeData = AuthAccessModel::where("role_id", $roleId)->column("rule_name");//获取权限表数据
+        $newMenus = [];
+        $privilegeData = AuthAccessModel::where("role_id", $roleId)->column("rule_name"); //获取权限表数据
 
         foreach ($result as $m) {
             $newMenus[$m['id']] = $m;
         }
 
         foreach ($result as $n => $t) {
-            $result[$n]['checked']      = ($this->_isChecked($t, $privilegeData)) ? ' checked' : '';
-            $result[$n]['level']        = $this->_getLevel($t['id'], $newMenus);
-            $result[$n]['style']        = empty($t['parent_id']) ? '' : 'display:none;';
+            $result[$n]['checked'] = ($this->_isChecked($t, $privilegeData)) ? ' checked' : '';
+            $result[$n]['level'] = $this->_getLevel($t['id'], $newMenus);
+            $result[$n]['style'] = empty($t['parent_id']) ? '' : 'display:none;';
             $result[$n]['parentIdNode'] = ($t['parent_id']) ? ' class="child-of-node-' . $t['parent_id'] . '"' : '';
         }
 
@@ -183,7 +173,7 @@ class RbacController extends AdminBaseController
         return $this->fetch();
     }
 
-    
+
     public function authorizePost()
     {
         if ($this->request->isPost()) {
@@ -198,10 +188,10 @@ class RbacController extends AdminBaseController
                 foreach ($menuIds as $menuId) {
                     $menu = AdminMenuModel::where("id", $menuId)->field("app,controller,action")->find();
                     if ($menu) {
-                        $app    = $menu['app'];
-                        $model  = $menu['controller'];
+                        $app = $menu['app'];
+                        $model = $menu['controller'];
                         $action = $menu['action'];
-                        $name   = strtolower("$app/$model/$action");
+                        $name = strtolower("$app/$model/$action");
                         AuthAccessModel::insert(["role_id" => $roleId, "rule_name" => $name, 'type' => 'admin_url']);
                     }
                 }
@@ -217,13 +207,13 @@ class RbacController extends AdminBaseController
         }
     }
 
-    
+
     private function _isChecked($menu, $privData)
     {
-        $app    = $menu['app'];
-        $model  = $menu['controller'];
+        $app = $menu['app'];
+        $model = $menu['controller'];
         $action = $menu['action'];
-        $name   = strtolower("$app/$model/$action");
+        $name = strtolower("$app/$model/$action");
         if ($privData) {
             if (in_array($name, $privData)) {
                 return true;
@@ -236,7 +226,7 @@ class RbacController extends AdminBaseController
 
     }
 
-    
+
     protected function _getLevel($id, $array = [], $i = 0)
     {
         if ($array[$id]['parent_id'] == 0 || empty($array[$array[$id]['parent_id']]) || $array[$id]['parent_id'] == $id) {
@@ -255,4 +245,3 @@ class RbacController extends AdminBaseController
     }
 
 }
-

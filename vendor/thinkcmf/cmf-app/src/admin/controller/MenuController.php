@@ -1,13 +1,5 @@
 <?php
 
-
-
-
-
-
-
-
-
 namespace app\admin\controller;
 
 use app\admin\logic\MenuLogic;
@@ -16,11 +8,10 @@ use app\admin\model\AuthRuleModel;
 use cmf\controller\AdminBaseController;
 use think\facade\Cache;
 use tree\Tree;
-use mindplay\annotations\Annotations;
 
 class MenuController extends AdminBaseController
 {
-    
+
     public function index()
     {
         $content = hook_one('admin_menu_index_view');
@@ -30,8 +21,8 @@ class MenuController extends AdminBaseController
         }
 
         session('admin_menu_index', 'Menu/index');
-        $result     = AdminMenuModel::order(["list_order" => "ASC"])->select()->toArray();
-        $tree       = new Tree();
+        $result = AdminMenuModel::order(["list_order" => "ASC"])->select()->toArray();
+        $tree = new Tree();
         $tree->icon = ['&nbsp;&nbsp;&nbsp;│ ', '&nbsp;&nbsp;&nbsp;├─', '&nbsp;&nbsp;&nbsp;└─ '];
         $tree->nbsp = '&nbsp;&nbsp;&nbsp;';
 
@@ -42,18 +33,18 @@ class MenuController extends AdminBaseController
         foreach ($result as $key => $value) {
 
             $result[$key]['parent_id_node'] = ($value['parent_id']) ? ' class="child-of-node-' . $value['parent_id'] . '"' : '';
-            $result[$key]['style']          = empty($value['parent_id']) ? '' : 'display:none;';
-            $result[$key]['str_manage']     = '<a class="btn btn-xs btn-primary" href="' . url("Menu/add", ["parent_id" => $value['id'], "menu_id" => $this->request->param("menu_id")]) . '">' . lang('ADD_SUB_MENU') . '</a> 
+            $result[$key]['style'] = empty($value['parent_id']) ? '' : 'display:none;';
+            $result[$key]['str_manage'] = '<a class="btn btn-xs btn-primary" href="' . url("Menu/add", ["parent_id" => $value['id'], "menu_id" => $this->request->param("menu_id")]) . '">' . lang('ADD_SUB_MENU') . '</a> 
                                                <a class="btn btn-xs btn-primary" href="' . url("Menu/edit", ["id" => $value['id'], "menu_id" => $this->request->param("menu_id")]) . '">' . lang('EDIT') . '</a>  
                                                <a class="btn btn-xs btn-danger js-ajax-delete" href="' . url("Menu/delete", ["id" => $value['id'], "menu_id" => $this->request->param("menu_id")]) . '">' . lang('DELETE') . '</a> ';
-            $result[$key]['status']         = $value['status'] ? '<span class="label label-success">' . lang('DISPLAY') . '</span>' : '<span class="label label-warning">' . lang('HIDDEN') . '</span>';
+            $result[$key]['status'] = $value['status'] ? '<span class="label label-success">' . lang('DISPLAY') . '</span>' : '<span class="label label-warning">' . lang('HIDDEN') . '</span>';
             if (APP_DEBUG) {
                 $result[$key]['app'] = $value['app'] . "/" . $value['controller'] . "/" . $value['action'];
             }
         }
 
         $tree->init($result);
-        $str      = "<tr id='node-\$id' \$parent_id_node style='\$style'>
+        $str = "<tr id='node-\$id' \$parent_id_node style='\$style'>
                         <td style='padding-left:20px;'><input name='list_orders[\$id]' type='text' size='3' value='\$list_order' class='input input-order'></td>
                         <td>\$id</td>
                         <td>\$spacer\$name</td>
@@ -66,7 +57,7 @@ class MenuController extends AdminBaseController
         return $this->fetch();
     }
 
-    
+
     public function lists()
     {
         session('admin_menu_index', 'Menu/lists');
@@ -75,16 +66,16 @@ class MenuController extends AdminBaseController
         return $this->fetch();
     }
 
-    
+
     public function add()
     {
-        $tree     = new Tree();
+        $tree = new Tree();
         $parentId = $this->request->param("parent_id", 0, 'intval');
-        $result   = AdminMenuModel::order(["list_order" => "ASC"])->select()->toArray();
-        $array    = [];
+        $result = AdminMenuModel::order(["list_order" => "ASC"])->select()->toArray();
+        $array = [];
         foreach ($result as $r) {
             $r['selected'] = $r['id'] == $parentId ? 'selected' : '';
-            $array[]       = $r;
+            $array[] = $r;
         }
         $str = "<option value='\$id' \$selected>\$spacer \$name</option>";
         $tree->init($array);
@@ -93,7 +84,7 @@ class MenuController extends AdminBaseController
         return $this->fetch();
     }
 
-    
+
     public function addPost()
     {
         if ($this->request->isPost()) {
@@ -104,29 +95,30 @@ class MenuController extends AdminBaseController
                 $data = $this->request->param();
                 AdminMenuModel::strict(false)->field(true)->insert($data);
 
-                $app          = $this->request->param("app");
-                $controller   = $this->request->param("controller");
-                $action       = $this->request->param("action");
-                $param        = $this->request->param("param");
+                $app = $this->request->param("app");
+                $controller = $this->request->param("controller");
+                $action = $this->request->param("action");
+                $param = $this->request->param("param");
                 $authRuleName = "$app/$controller/$action";
-                $menuName     = $this->request->param("name");
+                $menuName = $this->request->param("name");
 
                 $findAuthRuleCount = AuthRuleModel::where([
-                    'app'  => $app,
+                    'app' => $app,
                     'name' => $authRuleName,
                     'type' => 'admin_url'
                 ])->count();
                 if (empty($findAuthRuleCount)) {
                     AuthRuleModel::insert([
-                        "name"  => $authRuleName,
-                        "app"   => $app,
-                        "type"  => "admin_url", //type 1-admin rule;2-user rule
+                        "name" => $authRuleName,
+                        "app" => $app,
+                        "type" => "admin_url",
+                        //type 1-admin rule;2-user rule
                         "title" => $menuName,
                         'param' => $param,
                     ]);
                 }
                 $sessionAdminMenuIndex = session('admin_menu_index');
-                $to                    = empty($sessionAdminMenuIndex) ? "Menu/index" : $sessionAdminMenuIndex;
+                $to = empty($sessionAdminMenuIndex) ? "Menu/index" : $sessionAdminMenuIndex;
                 $this->_exportAppMenuDefaultLang();
                 Cache::clear('admin_menus');
                 $this->success("添加成功！", url($to));
@@ -134,17 +126,17 @@ class MenuController extends AdminBaseController
         }
     }
 
-    
+
     public function edit()
     {
-        $tree      = new Tree();
-        $id        = $this->request->param("id", 0, 'intval');
+        $tree = new Tree();
+        $id = $this->request->param("id", 0, 'intval');
         $adminMenu = AdminMenuModel::where("id", $id)->find();
-        $result    = AdminMenuModel::order(["list_order" => "ASC"])->select()->toArray();
-        $array     = [];
+        $result = AdminMenuModel::order(["list_order" => "ASC"])->select()->toArray();
+        $array = [];
         foreach ($result as $r) {
             $r['selected'] = $r['id'] == $adminMenu['parent_id'] ? 'selected' : '';
-            $array[]       = $r;
+            $array[] = $r;
         }
         $str = "<option value='\$id' \$selected>\$spacer \$name</option>";
         $tree->init($array);
@@ -154,11 +146,11 @@ class MenuController extends AdminBaseController
         return $this->fetch();
     }
 
-    
+
     public function editPost()
     {
         if ($this->request->isPost()) {
-            $id      = $this->request->param('id', 0, 'intval');
+            $id = $this->request->param('id', 0, 'intval');
             $oldMenu = AdminMenuModel::where('id', $id)->find();
 
             $result = $this->validate($this->request->param(), 'AdminMenu.edit');
@@ -167,46 +159,47 @@ class MenuController extends AdminBaseController
                 $this->error($result);
             } else {
                 AdminMenuModel::strict(false)->field(true)->update($this->request->param());
-                $app          = $this->request->param("app");
-                $controller   = $this->request->param("controller");
-                $action       = $this->request->param("action");
-                $param        = $this->request->param("param");
+                $app = $this->request->param("app");
+                $controller = $this->request->param("controller");
+                $action = $this->request->param("action");
+                $param = $this->request->param("param");
                 $authRuleName = "$app/$controller/$action";
-                $menuName     = $this->request->param("name");
+                $menuName = $this->request->param("name");
 
                 $findAuthRuleCount = AuthRuleModel::where([
-                    'app'  => $app,
+                    'app' => $app,
                     'name' => $authRuleName,
                     'type' => 'admin_url'
                 ])->count();
                 if (empty($findAuthRuleCount)) {
-                    $oldApp        = $oldMenu['app'];
+                    $oldApp = $oldMenu['app'];
                     $oldController = $oldMenu['controller'];
-                    $oldAction     = $oldMenu['action'];
-                    $oldName       = "$oldApp/$oldController/$oldAction";
+                    $oldAction = $oldMenu['action'];
+                    $oldName = "$oldApp/$oldController/$oldAction";
                     $findOldRuleId = AuthRuleModel::where("name", $oldName)->value('id');
                     if (empty($findOldRuleId)) {
                         AuthRuleModel::insert([
-                            "name"  => $authRuleName,
-                            "app"   => $app,
-                            "type"  => "admin_url",
+                            "name" => $authRuleName,
+                            "app" => $app,
+                            "type" => "admin_url",
                             "title" => $menuName,
                             "param" => $param
-                        ]);//type 1-admin rule;2-user rule
+                        ]); //type 1-admin rule;2-user rule
                     } else {
                         AuthRuleModel::where('id', $findOldRuleId)->update([
-                            "name"  => $authRuleName,
-                            "app"   => $app,
-                            "type"  => "admin_url",
+                            "name" => $authRuleName,
+                            "app" => $app,
+                            "type" => "admin_url",
                             "title" => $menuName,
-                            "param" => $param]);//type 1-admin rule;2-user rule
+                            "param" => $param
+                        ]); //type 1-admin rule;2-user rule
                     }
                 } else {
                     AuthRuleModel::where([
-                        'app'  => $app,
+                        'app' => $app,
                         'name' => $authRuleName,
                         'type' => 'admin_url'
-                    ])->update(["title" => $menuName, 'param' => $param]);//type 1-admin rule;2-user rule
+                    ])->update(["title" => $menuName, 'param' => $param]); //type 1-admin rule;2-user rule
                 }
                 $this->_exportAppMenuDefaultLang();
                 Cache::clear('admin_menus');
@@ -215,11 +208,11 @@ class MenuController extends AdminBaseController
         }
     }
 
-    
+
     public function delete()
     {
         if ($this->request->isPost()) {
-            $id    = $this->request->param("id", 0, 'intval');
+            $id = $this->request->param("id", 0, 'intval');
             $count = AdminMenuModel::where("parent_id", $id)->count();
             if ($count > 0) {
                 $this->error("该菜单下还有子菜单，无法删除！");
@@ -232,7 +225,7 @@ class MenuController extends AdminBaseController
         }
     }
 
-    
+
     public function listOrder()
     {
         $adminMenuModel = new AdminMenuModel();
@@ -240,7 +233,7 @@ class MenuController extends AdminBaseController
         $this->success("排序更新成功！");
     }
 
-    
+
     public function getActions()
     {
         $apps = cmf_scan_dir(APP_PATH . '*', GLOB_ONLYDIR);
@@ -258,8 +251,8 @@ class MenuController extends AdminBaseController
             $this->error('应用' . $app . '不存在!');
         }
 
-        $newMenus  = MenuLogic::importMenus($app);
-        $index     = array_search($app, $apps);
+        $newMenus = MenuLogic::importMenus($app);
+        $index = array_search($app, $apps);
         $nextIndex = $index + 1;
         $nextIndex = $nextIndex >= count($apps) ? 0 : $nextIndex;
         if ($nextIndex) {
@@ -274,11 +267,11 @@ class MenuController extends AdminBaseController
 
     }
 
-    
+
     private function _exportAppMenuDefaultLang()
     {
-        $menus         = AdminMenuModel::order(["app" => "ASC", "controller" => "ASC", "action" => "ASC"])->select();
-        $langDir       = cmf_current_lang();
+        $menus = AdminMenuModel::order(["app" => "ASC", "controller" => "ASC", "action" => "ASC"])->select();
+        $langDir = cmf_current_lang();
         $adminMenuLang = CMF_DATA . "lang/" . $langDir . "/admin_menu.php";
 
         if (!empty($adminMenuLang) && !file_exists_case($adminMenuLang)) {
@@ -288,7 +281,7 @@ class MenuController extends AdminBaseController
         $lang = [];
 
         foreach ($menus as $menu) {
-            $lang_key        = strtoupper($menu['app'] . '_' . $menu['controller'] . '_' . $menu['action']);
+            $lang_key = strtoupper($menu['app'] . '_' . $menu['controller'] . '_' . $menu['action']);
             $lang[$lang_key] = $menu['name'];
         }
 

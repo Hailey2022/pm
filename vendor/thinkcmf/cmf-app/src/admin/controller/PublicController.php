@@ -1,13 +1,5 @@
 <?php
 
-
-
-
-
-
-
-
-
 namespace app\admin\controller;
 
 use app\admin\model\RoleUserModel;
@@ -20,7 +12,7 @@ class PublicController extends AdminBaseController
     {
     }
 
-    
+
     public function login()
     {
         $loginAllowed = session("__LOGIN_BY_CMF_ADMIN_PW__");
@@ -30,7 +22,7 @@ class PublicController extends AdminBaseController
         }
 
         $admin_id = session('ADMIN_ID');
-        if (!empty($admin_id)) {//已经登录
+        if (!empty($admin_id)) { //已经登录
             return redirect(url("admin/Index/index"));
         } else {
             session("__SP_ADMIN_LOGIN_PAGE_SHOWED_SUCCESS__", true);
@@ -42,7 +34,7 @@ class PublicController extends AdminBaseController
         }
     }
 
-    
+
     public function doLogin()
     {
         if (!$this->request->isPost()) {
@@ -57,14 +49,14 @@ class PublicController extends AdminBaseController
             $this->error('非法登录!', cmf_get_root() . '/');
         }
 
-        
-        
-        
-        
+
+
+
+
         //验证码
-        
-        
-        
+
+
+
 
         $name = $this->request->param("username");
         if (empty($name)) {
@@ -94,10 +86,10 @@ class PublicController extends AdminBaseController
                 //登入成功页面跳转
                 session('ADMIN_ID', $result["id"]);
                 session('name', $result["user_login"]);
-                $data                    = [];
-                $data['last_login_ip']   = get_client_ip(0, true);
+                $data = [];
+                $data['last_login_ip'] = get_client_ip(0, true);
                 $data['last_login_time'] = time();
-                $token                   = cmf_generate_user_token($result["id"], 'web');
+                $token = cmf_generate_user_token($result["id"], 'web');
                 if (!empty($token)) {
                     session('token', $token);
                 }
@@ -113,7 +105,7 @@ class PublicController extends AdminBaseController
         }
     }
 
-    
+
     public function logout()
     {
         session('ADMIN_ID', null);

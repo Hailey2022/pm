@@ -8,31 +8,30 @@ use cmf\controller\AdminBaseController;
 class RouteController extends AdminBaseController
 {
 
-    
     public function index()
     {
         global $CMF_GV_routes;
         $routeModel = new RouteModel();
-        $routes     = RouteModel::order("list_order asc")->select();
+        $routes = RouteModel::order("list_order asc")->select();
         $routeModel->getRoutes(true);
         unset($CMF_GV_routes);
         $this->assign("routes", $routes);
         return $this->fetch();
     }
 
-    
+
     public function add()
     {
         return $this->fetch();
     }
 
-    
+
     public function addPost()
     {
         if ($this->request->isPost()) {
-            $data       = $this->request->param();
+            $data = $this->request->param();
             $routeModel = new RouteModel();
-            $result     = $this->validate($data, 'Route');
+            $result = $this->validate($data, 'Route');
             if ($result !== true) {
                 $this->error($result);
             }
@@ -42,22 +41,22 @@ class RouteController extends AdminBaseController
         }
     }
 
-    
+
     public function edit()
     {
-        $id    = $this->request->param("id", 0, 'intval');
+        $id = $this->request->param("id", 0, 'intval');
         $route = RouteModel::where('id', $id)->find()->toArray();
         $this->assign($route);
         return $this->fetch();
     }
 
-    
+
     public function editPost()
     {
         if ($this->request->isPost()) {
-            $data       = $this->request->param();
+            $data = $this->request->param();
             $routeModel = new RouteModel();
-            $result     = $this->validate($data, 'Route');
+            $result = $this->validate($data, 'Route');
             if ($result !== true) {
                 $this->error($result);
             }
@@ -67,7 +66,7 @@ class RouteController extends AdminBaseController
         }
     }
 
-    
+
     public function delete()
     {
         if ($this->request->isPost()) {
@@ -78,37 +77,37 @@ class RouteController extends AdminBaseController
         }
     }
 
-    
+
     public function ban()
     {
         if ($this->request->isPost()) {
-            $id             = $this->request->param("id", 0, 'intval');
-            $data           = [];
+            $id = $this->request->param("id", 0, 'intval');
+            $data = [];
             $data['status'] = 0;
-            $data['id']     = $id;
-            $routeModel     = new RouteModel();
+            $data['id'] = $id;
+            $routeModel = new RouteModel();
 
             $routeModel->save($data);
             $this->success("禁用成功！");
         }
     }
 
-    
+
     public function open()
     {
         if ($this->request->isPost()) {
-            $id             = $this->request->param("id", 0, 'intval');
-            $data           = [];
+            $id = $this->request->param("id", 0, 'intval');
+            $data = [];
             $data['status'] = 1;
-            $data['id']     = $id;
-            $routeModel     = new RouteModel();
+            $data['id'] = $id;
+            $routeModel = new RouteModel();
 
             $routeModel->save($data);
             $this->success("启用成功！");
         }
     }
 
-    
+
     public function listOrder()
     {
         $routeModel = new RouteModel();
@@ -116,11 +115,11 @@ class RouteController extends AdminBaseController
         $this->success("排序更新成功！");
     }
 
-    
+
     public function select()
     {
         $routeModel = new RouteModel();
-        $urls       = $routeModel->getAppUrls();
+        $urls = $routeModel->getAppUrls();
 
         $this->assign('urls', $urls);
         return $this->fetch();
@@ -152,10 +151,10 @@ class RouteController extends AdminBaseController
 
         if ($actionArr[2] == 'index') {
             $actionArr[1] = cmf_parse_name($actionArr[1]);
-            return empty($params) ? $actionArr[1] . '$' : ($actionArr[1] . '/' . implode('/', $urlDepr1Params) );
+            return empty($params) ? $actionArr[1] . '$' : ($actionArr[1] . '/' . implode('/', $urlDepr1Params));
         } else {
             $actionArr[2] = cmf_parse_name($actionArr[2]);
-            return empty($params) ? $actionArr[2] . '$' : ($actionArr[2] . '/' . implode('/', $urlDepr1Params) );
+            return empty($params) ? $actionArr[2] . '$' : ($actionArr[2] . '/' . implode('/', $urlDepr1Params));
         }
 
     }

@@ -1,13 +1,4 @@
 <?php
-
-
-
-
-
-
-
-
-
 namespace app\admin\controller;
 
 use cmf\controller\AdminBaseController;
@@ -15,7 +6,7 @@ use app\admin\model\SlideItemModel;
 
 class SlideItemController extends AdminBaseController
 {
-    
+
     public function index()
     {
         $content = hook_one('admin_slide_item_index_view');
@@ -24,16 +15,16 @@ class SlideItemController extends AdminBaseController
             return $content;
         }
 
-        $id      = $this->request->param('slide_id', 0, 'intval');
+        $id = $this->request->param('slide_id', 0, 'intval');
         $slideId = !empty($id) ? $id : 1;
-        $result  = SlideItemModel::where('slide_id', $slideId)->select();
+        $result = SlideItemModel::where('slide_id', $slideId)->select();
 
         $this->assign('slide_id', $id);
         $this->assign('result', $result);
         return $this->fetch();
     }
 
-    
+
     public function add()
     {
         $content = hook_one('admin_slide_item_add_view');
@@ -47,7 +38,7 @@ class SlideItemController extends AdminBaseController
         return $this->fetch();
     }
 
-    
+
     public function addPost()
     {
         if ($this->request->isPost()) {
@@ -57,7 +48,7 @@ class SlideItemController extends AdminBaseController
         }
     }
 
-    
+
     public function edit()
     {
         $content = hook_one('admin_slide_item_edit_view');
@@ -66,7 +57,7 @@ class SlideItemController extends AdminBaseController
             return $content;
         }
 
-        $id     = $this->request->param('id', 0, 'intval');
+        $id = $this->request->param('id', 0, 'intval');
         $result = SlideItemModel::where('id', $id)->find();
 
         $this->assign('result', $result);
@@ -74,7 +65,7 @@ class SlideItemController extends AdminBaseController
         return $this->fetch();
     }
 
-    
+
     public function editPost()
     {
         if ($this->request->isPost()) {
@@ -88,7 +79,7 @@ class SlideItemController extends AdminBaseController
         }
     }
 
-    
+
     public function delete()
     {
         if ($this->request->isPost()) {
@@ -109,7 +100,7 @@ class SlideItemController extends AdminBaseController
 
     }
 
-    
+
     public function ban()
     {
         if ($this->request->isPost()) {
@@ -127,7 +118,7 @@ class SlideItemController extends AdminBaseController
         }
     }
 
-    
+
     public function cancelBan()
     {
         if ($this->request->isPost()) {
@@ -145,10 +136,10 @@ class SlideItemController extends AdminBaseController
         }
     }
 
-    
+
     public function listOrder()
     {
-        $slideItemModel = new  SlideItemModel();
+        $slideItemModel = new SlideItemModel();
         parent::listOrders($slideItemModel);
         $this->success("排序更新成功！");
     }

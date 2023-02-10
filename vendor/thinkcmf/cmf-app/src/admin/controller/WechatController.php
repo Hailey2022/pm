@@ -45,12 +45,16 @@ class WeChatController extends RestBaseController
     {
         $uid = $this->request->param('uid');
         $username = $this->request->param('username');
-        Db::name("wechat_user")
+        $c = Db::name("wechat_user")
             ->where('uid', $uid)
             ->update([
                 'username' => $username
             ]);
-        $this->success("updated");
+        if ($c > 0) {
+            $this->success("updated");
+        } else {
+            $this->error("非法访问");
+        }
     }
 
     public function uploadPicAndPunch()
@@ -102,9 +106,9 @@ class WeChatController extends RestBaseController
     public function getUsername()
     {
         $uid = $this->request->param('uid');
-        $u = Db::name('wechat_punch_in_location')->where('uid', $uid)->find();
+        $u = Db::name('wechat_user')->where('uid', $uid)->find();
         if ($u == null) {
-            $this->error("loc not found");
+            $this->error("user not found");
         } else {
             $this->success('成功', $u['username']);
         }

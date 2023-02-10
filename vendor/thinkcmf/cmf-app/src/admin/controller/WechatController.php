@@ -9,8 +9,8 @@ class WeChatController extends RestBaseController
 {
     public function getUid()
     {
-        $appId = "wx83e965d02ff3d258";
-        $appSecret = "7c3321c41c3ccfe4459a240fe2fae66b";
+        $appId = "wx1833ec6c1e5a474e";
+        $appSecret = "6c402cca92ff4f7942b6bbe7324e2027";
         $code = $this->request->param('code');
         $response = cmf_curl_get("https://api.weixin.qq.com/sns/jscode2session?appid=$appId&secret=$appSecret&js_code=$code&grant_type=authorization_code");
         $response = json_decode($response, true);
@@ -113,7 +113,7 @@ class WeChatController extends RestBaseController
             $this->error("not allowed");
         }
 
-        //TODO: 区分用户
+        //TODO: 区分用户all
         $records = Db::name('wechat_punch_in_record')
             // ->where('uid', $uid)
             ->where(function (Query $query) use ($date, $uid) {
@@ -126,7 +126,7 @@ class WeChatController extends RestBaseController
                     $query->where('uid', $uid);
                 }
             })
-            // ->whereTime('time', 'today')
+                // ->whereTime('time', 'today')
             ->select();
 
         $this->success("ok", ['records' => $records]);

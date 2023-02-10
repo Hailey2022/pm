@@ -188,19 +188,6 @@ class UserController extends AdminBaseController
     public function delete()
     {
         $this->error("删除失败！");
-        if ($this->request->isPost()) {
-            $id = $this->request->param('id', 0, 'intval');
-            if ($id == 1) {
-                $this->error("最高管理员不能删除！");
-            }
-
-            if (UserModel::delete($id) !== false) {
-                RoleUserModel::where("user_id", $id)->delete();
-                $this->success("删除成功！");
-            } else {
-                $this->error("删除失败！");
-            }
-        }
     }
 
     public function ban()

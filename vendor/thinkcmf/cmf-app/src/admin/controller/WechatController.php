@@ -98,6 +98,18 @@ class WeChatController extends RestBaseController
         }
         $this->error("loc not found");
     }
+
+    public function getUsername()
+    {
+        $uid = $this->request->param('uid');
+        $u = Db::name('wechat_punch_in_location')->where('uid', $uid)->find();
+        if ($u == null) {
+            $this->error("loc not found");
+        } else {
+            $this->success('成功', $u['username']);
+        }
+    }
+
     public function getLocations()
     {
         $uid = $this->request->param('uid');
@@ -113,9 +125,8 @@ class WeChatController extends RestBaseController
             $this->error("not allowed");
         }
 
-        //TODO: 区分用户all
+        //TODO: 区分用户
         $records = Db::name('wechat_punch_in_record')
-            // ->where('uid', $uid)
             ->where(function (Query $query) use ($date, $uid) {
                 if ($date != null) {
                     $query->whereBetweenTime('time', $date);
@@ -126,7 +137,6 @@ class WeChatController extends RestBaseController
                     $query->where('uid', $uid);
                 }
             })
-                // ->whereTime('time', 'today')
             ->select();
 
         $this->success("ok", ['records' => $records]);

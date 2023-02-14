@@ -2,9 +2,7 @@
  * @author jianqiang3@staff.sina.com.cn
  */
 (function(){
-	
 	var count = 0, timer, callback;
-	
 	var $E = function(id) {
         if (typeof id === 'string') {
             return document.getElementById(id);
@@ -13,7 +11,6 @@
             return id;
         }
     };
-	
 	function trim(str) {
 		if(typeof str !== 'string'){
 			throw 'trim need a string as parameter';
@@ -24,7 +21,6 @@
 			return str.replace(/^(\u3000|\s|\t|\u00A0)*|(\u3000|\s|\t|\u00A0)*$/g, '');
 		}
 	}
-	
 	function addEvent (sNode, sEventType, oFunc) {
         var oElement = $E(sNode);
         if (oElement == null) {
@@ -45,7 +41,6 @@
         }
         return true;
 	}
-	
 	/**
 	 * query to json 
 	 * @param {Object} QS
@@ -66,17 +61,13 @@
 				_hsh = _Qlist[i].split("=");
 				_key = _hsh[0];
 				_value = _hsh[1];
-				
-				
 				if(_hsh.length < 2){
 					_value = _key;
 					_key = '$nullName';
 				}
-				
 				if(!_json[_key]) {
 					_json[_key] = _fData(_value);
 				}
-				
 				else {
 					if($.core.arr.isArray(_json[_key]) != true) {
 						_json[_key] = [_json[_key]];
@@ -87,7 +78,6 @@
 		}
 		return _json;
 	}
-	
 	function jsonToQuery(JSON,isEncode) {
 		var _fdata = function(data,isEncode){
 			data = data == null? '': data;
@@ -98,7 +88,6 @@
 				return data;
 			}
 		};
-		
 		var _Qstring = [];
 		if(typeof JSON == "object"){
 			for(var k in JSON){
@@ -119,7 +108,6 @@
 			return "";
 		}
 	}
-	
 	/**
 	 * 初始化监听程序
 	 */
@@ -130,7 +118,6 @@
 			messagePoll(window, "name");
 	    };
 	};
-	
 	/**
 	 * window.name监听方式
 	 * @param {Object} oWindow
@@ -154,7 +141,6 @@
 		 */
         function getWinName() {
             var name = oWindow[sName]; //=window.name
-
             //如果和上次不一样，则获取新数据
             if (name != hash) {
                 hash = name;
@@ -163,7 +149,6 @@
         }
         timer = setInterval(getWinName, 1000 / 20);
     };
-	
 	/**
 	 * 消息监听函数
 	 * @param {Object} oEvt	监听到的数据对象
@@ -176,10 +161,7 @@
 		callback && callback(args);
     };
 	init();
-	
-	
 	/*---------------------------公开函数------------------------------*/
-	
 	window.XD = {};
 	/**
 	 * 发送跨域消息
@@ -189,18 +171,14 @@
     XD.sendMessage = function(target, oArgs) {
 		if(!target) return;
 		if(typeof target != 'object') return;
-		
 		var data = jsonToQuery(oArgs);
 			data = escape(data);
-			
 		if (window.postMessage) {
-			
 			target.postMessage(data, "*");
 		} else {
 			target.name = (new Date()).getTime() + (count++) + "^" + document.domain + "&" + window.escape(data);
 		}
     };
-	
 	/**
 	 * 接收跨域传递的消息，只需开发者重写即可
 	 * @param {Object} data json数据
@@ -208,5 +186,4 @@
 	XD.receiveMessage = function(oCallback) {
 		callback = oCallback;
 	};
-	
 })();

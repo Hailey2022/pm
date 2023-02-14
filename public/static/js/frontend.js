@@ -8,14 +8,12 @@
             //请求失败处理
         }
     });
-
     if ($.browser && $.browser.msie) {
         //ie 都不缓存
         $.ajaxSetup({
             cache: false
         });
     }
-
     //不支持placeholder浏览器下对placeholder进行处理
     if (document.createElement('input').placeholder !== '') {
         $('[placeholder]').focus(function () {
@@ -39,8 +37,6 @@
             });
         });
     }
-
-
     //所有加了dialog类名的a链接，自动弹出它的href
     if ($('a.js-dialog').length) {
         Wind.use('artDialog', 'iframeTools', function () {
@@ -56,25 +52,20 @@
                     title: _this.prop('title')
                 });
             }).attr('role', 'button');
-
         });
     }
-
     //所有的ajax form提交,由于大多业务逻辑都是一样的，故统一处理
     var ajaxForm_list = $('form.js-ajax-form');
     if (ajaxForm_list.length) {
         Wind.use('ajaxForm', 'noty', 'validate', function () {
-
             //var form = btn.parents('form.js-ajax-form');
             var $btn;
-
             $('button.js-ajax-submit').on('click', function (e) {
                 //e.preventDefault();
                 /*var btn = $(this).find('button.js-ajax-submit'),
                  form = $(this);*/
                 var btn = $(this), form = btn.parents('form.js-ajax-form');
                 $btn    = btn;
-
                 if (btn.data("loading")) {
                     return false;
                 }
@@ -113,7 +104,6 @@
                             btn.data('subcheck', false);
                             btn.click();
                         }
-
                     } else {
                         noty({
                             text: "请至少选择一项",
@@ -123,7 +113,6 @@
                     }
                     return false;
                 }
-
                 //ie处理placeholder提交问题
                 if ($.browser && $.browser.msie) {
                     form.find('[placeholder]').each(function () {
@@ -133,9 +122,7 @@
                         }
                     });
                 }
-
             });
-
             ajaxForm_list.each(function () {
                 $(this).validate({
                     //是否在获取焦点时验证
@@ -153,7 +140,6 @@
                             $element.addClass(errorClass).removeClass(validClass);
                             $element.parent().addClass("has-error");//bootstrap3表单
                             $element.parents('.control-group').addClass("error");//bootstrap2表单
-
                         }
                     },
                     unhighlight: function (element, errorClass, validClass) {
@@ -209,13 +195,11 @@
                                 }
                             },
                             success: function (data, statusText, xhr, $form) {
-
                                 function _refresh() {
                                     if (data.url) {
                                         if (window.parent.art) {
                                             //iframe弹出页
                                             window.parent.location.href = data.url;
-
                                         } else {
                                             window.location.href = data.url;
                                         }
@@ -231,7 +215,6 @@
                                         }
                                     }
                                 }
-
                                 var text = $btn.text();
                                 //按钮文案、状态修改
                                 $btn.removeClass('disabled').prop('disabled', false).text(text.replace('...', '')).parent().find('span').remove();
@@ -258,15 +241,12 @@
                                         window[errorCallback](data, statusText, xhr, $form);
                                         return;
                                     }
-
                                     var $verify_img = $form.find(".verify_img");
                                     if ($verify_img.length) {
                                         $verify_img.attr("src", $verify_img.attr("src") + "&refresh=" + Math.random());
                                     }
-
                                     var $verify_input = $form.find("[name='verify']");
                                     $verify_input.val("");
-
                                     noty({
                                         text: data.msg,
                                         type: 'error',
@@ -278,8 +258,6 @@
                                         }
                                     });
                                 }
-
-
                             },
                             error: function (xhr, e, statusText) {
                                 noty({
@@ -287,14 +265,6 @@
                                     type: 'error',
                                     layout: 'center',
                                     callback: {
-                                        
-                                        
-                                        
-                                        
-                                        
-                                        
-                                        
-                                        
                                     }
                                 });
                             },
@@ -305,10 +275,8 @@
                     }
                 });
             });
-
         });
     }
-
     //dialog弹窗内的关闭方法
     $('#js-dialog-close').on('click', function (e) {
         e.preventDefault();
@@ -321,7 +289,6 @@
         }
         ;
     });
-
     //所有的删除操作，删除数据后刷新页面
     if ($('a.js-ajax-delete').length) {
         Wind.use('noty', function () {
@@ -385,13 +352,9 @@
                         }
                     ]
                 });
-
             });
-
         });
     }
-
-
     if ($('a.js-ajax-dialog-btn').length) {
         Wind.use('noty', function () {
             $('.js-ajax-dialog-btn').on('click', function (e) {
@@ -452,12 +415,9 @@
                         }
                     ]
                 });
-
             });
-
         });
     }
-
     Wind.use('noty', function () {
         $('body').on('click', '.js-ajax-btn', function (e) {
             e.preventDefault();
@@ -468,8 +428,6 @@
             refresh = $this.data('refresh');
             href = href ? href : $this.attr('href');
             refresh = refresh == undefined ? 1 : refresh;
-
-
                 $.ajax({
                     url: href,
                     type: 'POST',
@@ -486,7 +444,6 @@
                                             location.href = data.url;
                                             return;
                                         }
-
                                         if (refresh || refresh == undefined) {
                                             reloadPage(window);
                                         }
@@ -509,11 +466,8 @@
                         }
                     }
                 });
-
         });
-
     });
-
     //所有的请求刷新操作
     var ajax_refresh = $('a.js-ajax-refresh'),
         refresh_lock = false;
@@ -524,10 +478,8 @@
                 return false;
             }
             refresh_lock = true;
-
             $.post(this.href, function (data) {
                 refresh_lock = false;
-
                 if (data.code == 1) {
                     if (data.url) {
                         location.href = data.url;
@@ -540,12 +492,10 @@
             }, 'json');
         });
     }
-
     //短信验证码
     var $js_get_mobile_code = $('.js-get-mobile-code');
     if ($js_get_mobile_code.length > 0) {
         Wind.use('noty', function () {
-
             $js_get_mobile_code.on('click', function () {
                 var $this = $(this);
                 if ($this.data('loading')) return;
@@ -556,24 +506,18 @@
                     $mobile_input.focus();
                     return;
                 }
-
                 var $form           = $this.parents('form');
                 var $captchaInput   = $("input[name='captcha']", $form);
                 var $captchaIdInput = $("input[name='_captcha_id']", $form);
                 var captcha         = $captchaInput.val();
                 var captchaId       = $captchaIdInput.val();
-
                 if (!captcha) {
                     $captchaInput.focus();
                     return;
                 }
-
-
                 $this.data('loading', true);
                 $this.data('sending', true);
-
                 var url = $this.data('url');
-
                 var init_secode_left = parseInt($this.data('init-second-left'));
                 init_secode_left     = init_secode_left > 0 ? init_secode_left : 60;
                 var init_text        = $this.text();
@@ -592,9 +536,7 @@
                                 type: 'success',
                                 layout: 'center'
                             });
-
                             $this.text(wait_msg.replace('[second]', init_secode_left));
-
                             var mtimer = setInterval(function () {
                                 if (init_secode_left > 0) {
                                     init_secode_left--;
@@ -604,7 +546,6 @@
                                     $this.text(init_text);
                                     $this.data('sending', false);
                                 }
-
                             }, 1000);
                         } else {
                             $captchaInput.val('');
@@ -628,15 +569,12 @@
                     }
                 });
             });
-
         });
     }
-
     //邮件验证码
     var $js_get_email_code = $('.js-get-email-code');
     if ($js_get_email_code.length > 0) {
         Wind.use('noty', function () {
-
             $js_get_email_code.on('click', function () {
                 var $this = $(this);
                 if ($this.data('loading')) return;
@@ -647,23 +585,18 @@
                     $email_input.focus();
                     return;
                 }
-
                 var $form           = $this.parents('form');
                 var $captchaInput   = $("input[name='captcha']", $form);
                 var $captchaIdInput = $("input[name='_captcha_id']", $form);
                 var captcha         = $captchaInput.val();
                 var captchaId       = $captchaIdInput.val();
-
                 if (!captcha) {
                     $captchaInput.focus();
                     return;
                 }
-
                 $this.data('loading', true);
                 $this.data('sending', true);
-
                 var url = $this.data('url');
-
                 var init_secode_left = parseInt($this.data('init-second-left'));
                 init_secode_left     = init_secode_left > 0 ? init_secode_left : 60;
                 var init_text        = $this.text();
@@ -682,9 +615,7 @@
                                 type: 'success',
                                 layout: 'center'
                             });
-
                             $this.text(wait_msg.replace('[second]', init_secode_left));
-
                             var mtimer = setInterval(function () {
                                 if (init_secode_left > 0) {
                                     init_secode_left--;
@@ -694,7 +625,6 @@
                                     $this.text(init_text);
                                     $this.data('sending', false);
                                 }
-
                             }, 1000);
                         } else {
                             $captchaInput.val('');
@@ -702,7 +632,6 @@
                             if ($verify_img.length) {
                                 $verify_img.attr("src", $verify_img.attr("src") + "&refresh=" + Math.random());
                             }
-
                             noty({
                                 text: data.msg,
                                 type: 'error',
@@ -719,10 +648,8 @@
                     }
                 });
             });
-
         });
     }
-
     /*复选框全选(支持多个，纵横双控全选)。
      *实例：版块编辑-权限相关（双控），验证机制-验证策略（单控）
      *说明：
@@ -731,66 +658,47 @@
      *	全选框的"data-direction"代表其控制的全选方向(x或y)；
      *	"js-check-wrap"同一块全选操作区域的父标签class，多个调用考虑
      */
-
     if ($('.js-check-wrap').length) {
         var total_check_all = $('input.js-check-all');
-
         //遍历所有全选框
         $.each(total_check_all, function () {
             var check_all = $(this),
                 check_items;
-
             //分组各纵横项
             var check_all_direction = check_all.data('direction');
             check_items             = $('input.js-check[data-' + check_all_direction + 'id="' + check_all.data('checklist') + '"]').not(":disabled");
-
             //点击全选框
             check_all.change(function (e) {
                 var check_wrap = check_all.parents('.js-check-wrap'); //当前操作区域所有复选框的父标签（重用考虑）
-
                 if ($(this).prop('checked')) {
                     //全选状态
                     check_items.prop('checked', true);
-
                     //所有项都被选中
                     if (check_wrap.find('input.js-check').length === check_wrap.find('input.js-check:checked').length) {
                         check_wrap.find(total_check_all).prop('checked', true);
                     }
-
                 } else {
                     //非全选状态
                     check_items.removeProp('checked');
-
                     check_wrap.find(total_check_all).removeProp('checked');
-
                     //另一方向的全选框取消全选状态
                     var direction_invert = check_all_direction === 'x' ? 'y' : 'x';
                     check_wrap.find($('input.js-check-all[data-direction="' + direction_invert + '"]')).removeProp('checked');
                 }
-
             });
-
             //点击非全选时判断是否全部勾选
             check_items.change(function () {
-
                 if ($(this).prop('checked')) {
-
                     if (check_items.filter(':checked').length === check_items.length) {
                         //已选择和未选择的复选框数相等
                         check_all.prop('checked', true);
                     }
-
                 } else {
                     check_all.removeProp('checked');
                 }
-
             });
-
-
         });
-
     }
-
     //日期选择器
     var dateInput = $("input.js-date");
     if (dateInput.length) {
@@ -798,7 +706,6 @@
             dateInput.datePicker();
         });
     }
-
     //日期+时间选择器
     var dateTimeInput = $("input.js-datetime");
     if (dateTimeInput.length) {
@@ -808,8 +715,6 @@
             });
         });
     }
-
-    
     var bootstrapYearInput = $("input.js-bootstrap-year")
     if (bootstrapYearInput.length) {
         Wind.css('bootstrapDatetimePicker');
@@ -824,8 +729,6 @@
             });
         });
     }
-
-    
     var bootstrapYearMonthInput = $("input.js-bootstrap-year-month");
     if (bootstrapYearMonthInput.length) {
         Wind.css('bootstrapDatetimePicker');
@@ -840,8 +743,6 @@
             });
         });
     }
-
-    
     var bootstrapDateInput = $("input.js-bootstrap-date")
     if (bootstrapDateInput.length) {
         Wind.css('bootstrapDatetimePicker');
@@ -855,8 +756,6 @@
             });
         });
     }
-
-    
     var bootstrapDateTimeInput = $("input.js-bootstrap-datetime");
     if (bootstrapDateTimeInput.length) {
         Wind.css('bootstrapDatetimePicker');
@@ -869,7 +768,6 @@
             });
         });
     }
-
     //赞，拍等，有数量操作的按钮
     var $js_count_btn = $('a.js-count-btn');
     if ($js_count_btn.length) {
@@ -878,11 +776,8 @@
                 e.preventDefault();
                 var $this = $(this),
                     href  = $this.prop('href');
-
                 $.post(href, {}, function (data) {
-
                     if (data.code == 1) {
-
                         var $count = $this.find(".count");
                         var count  = parseInt($count.text());
                         $count.text(count + 1);
@@ -900,8 +795,6 @@
                                 }
                             });
                         }
-
-
                     } else if (data.code == 0) {
                         noty({
                             text: data.msg,
@@ -916,15 +809,10 @@
                             }
                         });
                     }
-
-
                 }, "json");
-
             });
-
         });
     }
-
     //地址联动
     var $js_address_select = $('.js-address-select');
     if ($js_address_select.length > 0) {
@@ -939,17 +827,14 @@
             } else {
                 $child_area_select = $this_js_address_select.find('.js-address-district-select');
             }
-
             var empty_option = '<option class="js-address-empty-option" value="">' + $child_area_select.find('.js-address-empty-option').text() + '</option>';
             $child_area_select.html(empty_option);
-
             var child_area_html = $this.data('childarea' + id);
             if (child_area_html) {
                 $child_area_select.show();
                 $child_area_select.html(child_area_html);
                 return;
             }
-
             $.ajax({
                 url: $this_js_address_select.data('url'),
                 type: 'POST',
@@ -959,7 +844,6 @@
                     if (data.code == 1) {
                         if (data.data.areas.length > 0) {
                             var html = [empty_option];
-
                             $.each(data.data.areas, function (i, area) {
                                 var area_html = '<option value="[id]">[name]</option>';
                                 area_html     = area_html.replace('[name]', area.name);
@@ -972,22 +856,17 @@
                             $child_area_select.show();
                         } else {
                             $child_area_select.hide();
-
                         }
                     }
                 },
                 error: function () {
-
                 },
                 complete: function () {
-
                 }
             });
         });
-
     }
     //地址联动end
-
     //
     var $js_action_btn = $('a.js-action-btn');
     if ($js_action_btn.length) {
@@ -996,11 +875,8 @@
                 e.preventDefault();
                 var $this = $(this),
                     href  = $this.prop('href');
-
                 $.post(href, {}, function (data) {
-
                     if (data.code == '1') {
-
                         if (data.msg) {
                             noty({
                                 text: data.msg,
@@ -1015,8 +891,6 @@
                                 }
                             });
                         }
-
-
                     } else if (data.code == 0) {
                         noty({
                             text: data.msg,
@@ -1032,12 +906,9 @@
                         });
                     }
                 }, "json");
-
             });
-
         });
     }
-
     var $js_favorite_btn = $('a.js-favorite-btn');
     if ($js_favorite_btn.length) {
         Wind.use('noty', function () {
@@ -1050,8 +921,6 @@
                     table       = $this.data('table'),
                     title       = $this.data("title"),
                     description = $this.data("description");
-
-
                 $.post(href, {
                     id: id,
                     table: table,
@@ -1059,9 +928,7 @@
                     title: title,
                     description: description
                 }, function (data) {
-
                     if (data.code == 1) {
-
                         if (data.msg) {
                             noty({
                                 text: data.msg,
@@ -1076,8 +943,6 @@
                                 }
                             });
                         }
-
-
                     } else if (data.code == 0) {
                         noty({
                             text: data.msg,
@@ -1092,33 +957,24 @@
                             }
                         });
                     }
-
-
                 }, "json");
-
             });
-
         });
     }
-
 })();
-
 //重新刷新页面，使用location.reload()有可能导致重新提交
 function reloadPage(win) {
     if (win) {
-
     } else {
         win = window;
     }
     var location  = win.location;
     location.href = location.pathname + location.search;
 }
-
 //页面跳转
 function redirect(url) {
     location.href = url;
 }
-
 /**
  * 读取cookie
  * @param name
@@ -1130,7 +986,6 @@ function getCookie(name) {
         var cookies = document.cookie.split(';');
         for (var i = 0; i < cookies.length; i++) {
             var cookie = jQuery.trim(cookies[i]);
-            
             if (cookie.substring(0, name.length + 1) == (name + '=')) {
                 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
                 break;
@@ -1139,7 +994,6 @@ function getCookie(name) {
     }
     return cookieValue;
 }
-
 /**
  * 设置cookie
  */
@@ -1165,7 +1019,6 @@ function setCookie(name, value, options) {
     var secure      = options.secure ? '; secure' : '';
     document.cookie = [name, '=', encodeURIComponent(value), expires, path, domain, secure].join('');
 }
-
 function openIframeDialog(url, title, options) {
     var params = {
         title: title,
@@ -1178,7 +1031,6 @@ function openIframeDialog(url, title, options) {
         art.dialog.open(url, params);
     });
 }
-
 /**
  * 打开地图对话框
  *
@@ -1214,7 +1066,6 @@ function openMapDialog(url, title, options, callback) {
         art.dialog.open(url, params);
     });
 }
-
 /**
  * 打开文件上传对话框
  * @param dialog_title 对话框标题
@@ -1250,14 +1101,12 @@ function openUploadDialog(dialog_title, callback, extra_params, multi, filetype,
                     } else {
                         return false;
                     }
-
                 }
             },
             cancel: true
         });
     });
 }
-
 /**
  * 单个文件上传
  * @param dialog_title 上传对话框标题
@@ -1271,14 +1120,10 @@ function uploadOne(dialog_title, input_selector, filetype, extra_params, app) {
     openUploadDialog(dialog_title, function (dialog, files) {
         $(input_selector).val(files[0].filepath);
         $(input_selector + '-preview').attr('href', files[0].preview_url);
-
         $(input_selector + '-name').val(files[0].name);
         $(input_selector + '-name-text').text(files[0].name);
-
-
     }, extra_params, 0, filetype, app);
 }
-
 /**
  * 单个图片上传
  * @param dialog_title 上传对话框标题
@@ -1290,13 +1135,10 @@ function uploadOneImage(dialog_title, input_selector, extra_params, app) {
     openUploadDialog(dialog_title, function (dialog, files) {
         $(input_selector).val(files[0].filepath);
         $(input_selector + '-preview').attr('src', files[0].preview_url);
-
         $(input_selector + '-name').val(files[0].name);
         $(input_selector + '-name-text').text(files[0].name);
-
     }, extra_params, 0, 'image', app);
 }
-
 /**
  * 多图上传
  * @param dialog_title 上传对话框标题
@@ -1319,10 +1161,8 @@ function uploadMultiImage(dialog_title, container_selector, item_tpl_wrapper_id,
             html += itemtpl;
         });
         $(container_selector).append(html);
-
     }, extra_params, 1, 'image', app);
 }
-
 /**
  * 多文件上传
  * @param dialog_title 上传对话框标题
@@ -1347,17 +1187,13 @@ function uploadMultiFile(dialog_title, container_selector, item_tpl_wrapper_id, 
             html += itemtpl;
         });
         $(container_selector).append(html);
-
     }, extra_params, 1, filetype, app);
 }
-
 function openIframeLayer(url, title, options) {
-
     var params = {
         type: 2,
         title: title,
         shadeClose: true,
-        
         shade: [0.001, '#000000'],
         shadeClose: true,
         area: ['95%', '90%'],
@@ -1369,11 +1205,8 @@ function openIframeLayer(url, title, options) {
         }
     };
     params     = options ? $.extend(params, options) : params;
-
     Wind.css('layer');
-
     Wind.use("layer", function () {
         layer.open(params);
     });
-
 }

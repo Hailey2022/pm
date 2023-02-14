@@ -145,4 +145,8 @@ class WeChatController extends RestBaseController
 
         $this->success("ok", ['records' => $records]);
     }
+
+    public function getCurrect(){
+
+    }
 }

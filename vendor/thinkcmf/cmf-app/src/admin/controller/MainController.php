@@ -88,9 +88,13 @@ class MainController extends AdminBaseController
             ->where('r.reportTypeId', '<>', '1')
             ->count();
 
+        $picCount = Db::name('contract c, pm_pics r')
+            ->where('c.clientId', $userid)
+            ->where('c.contractId = r.contractId')
+            ->count();
         $this->assign('dailyReportCount', $dailyReportCount);
         $this->assign('monthlyReportCount', $monthlyReportCount);
-
+        $this->assign('picCount', $picCount);
         $res = Db::name('contract c, pm_report r')
             ->where('c.clientId', $userid)
             ->where('c.contractId = r.contractId')

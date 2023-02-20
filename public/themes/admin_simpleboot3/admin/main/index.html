@@ -1,13 +1,103 @@
 <if condition="cmf_auth_check(cmf_get_current_admin_id(),'admin/manager/view')">
     <meta http-equiv="refresh" content="0;url={:url('manager/view')}">
+    <else />
+    <!doctype html>
+    <html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+
+        <link href="__STATIC__/css/newbootstrap.min.css" rel="stylesheet">
+
+        <style>
+            .bd-placeholder-img {
+                font-size: 1.125rem;
+                text-anchor: middle;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                user-select: none;
+            }
+
+            @media (min-width: 768px) {
+                .bd-placeholder-img-lg {
+                    font-size: 2.5rem;
+                }
+            }
+
+            .container {
+                max-width: 960px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="container py-2">
+
+            <div class="row row-cols-1 row-cols-md-2 mb-2 text-center">
+                <div class="col">
+                    <div class="card mb-4 rounded-2 shadow-sm">
+                        <div class="card-header py-2">
+                            <h4 class="my-0 fw-normal">用户信息</h4>
+                        </div>
+                        <div class="card-body">
+
+                            <ul class="list-unstyled mt-2 mb-4">
+                                <li>{$username|default="hacker"}</li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card mb-4 rounded-2 shadow-sm">
+                        <div class="card-header py-2">
+                            <h4 class="my-0 fw-normal">服务类型</h4>
+                        </div>
+                        <div class="card-body">
+
+                            <ul class="list-unstyled mt-2 mb-4">
+                                <li>{$type|default="hacker"}</li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card mb-4 rounded-2 shadow-sm">
+                        <div class="card-header py-2">
+                            <h4 class="my-0 fw-normal">日常报表</h4>
+                        </div>
+                        <div class="card-body">
+
+                            <ul class="list-unstyled mt-2 mb-4">
+                                <li>当前已上传{$dailyReportCount|default="0"}份日报, {$monthlyReportCount|default="0"}份月报</li>
+                                <li>{$reportTime|default=""}</li>
+                            </ul>
+                            <button href="" type="button" class="w-100 btn btn-lg btn-outline-primary">点击查看</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card mb-4 rounded-2 shadow-sm">
+                        <div class="card-header py-2">
+                            <h4 class="my-0 fw-normal">工程图片</h4>
+                        </div>
+                        <div class="card-body">
+
+                            <ul class="list-unstyled mt-2 mb-4">
+                                <li>当前已上传{$picCount|default="0"}份工程图片</li>
+
+                                <li>{$picTime|default=""}</li>
+                            </ul>
+                            <button type="button" class="w-100 btn btn-lg btn-outline-primary">点击查看</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+
+    </html>
 </if>
-<!-- <h2>{$admin.user_login|default=''}</h2> -->
-<!-- <script>
-    (function () {
-        setTimeout(() => {
-            $('.dropdown-toggle').each(function () {
-                $(this).click()
-            })
-        }, 2500)
-    })()
-</script> -->

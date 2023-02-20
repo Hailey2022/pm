@@ -70,12 +70,12 @@
                             <h4 class="my-0 fw-normal">日常报表</h4>
                         </div>
                         <div class="card-body">
-
                             <ul class="list-unstyled mt-2 mb-4">
                                 <li>当前已上传{$dailyReportCount|default="0"}份日报, {$monthlyReportCount|default="0"}份月报</li>
                                 <li>{$reportTime|default=""}</li>
                             </ul>
-                            <button href="" type="button" class="w-100 btn btn-lg btn-outline-primary">点击查看</button>
+                            <button onclick="toReports()" type="button"
+                                class="w-100 btn btn-lg btn-outline-primary">点击查看</button>
                         </div>
                     </div>
                 </div>
@@ -91,13 +91,22 @@
 
                                 <li>{$picTime|default=""}</li>
                             </ul>
-                            <button type="button" class="w-100 btn btn-lg btn-outline-primary">点击查看</button>
+                            <button onclick="toPics()" type="button"
+                                class="w-100 btn btn-lg btn-outline-primary">点击查看</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </body>
+    <script>
+        function toReports() {
+            window.location = "{:url('report/reports')}"
+        }
+        function toPics() {
+            window.location = "{:url('report/pics')}"
+        }
+    </script>
 
     </html>
 </if>

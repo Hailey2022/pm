@@ -87,8 +87,10 @@ class MainController extends AdminBaseController
             ->where('c.contractId = r.contractId')
             ->where('r.reportTypeId', '<>', '1')
             ->count();
+
         $this->assign('dailyReportCount', $dailyReportCount);
         $this->assign('monthlyReportCount', $monthlyReportCount);
+
         $res = Db::name('contract c, pm_report r')
             ->where('c.clientId', $userid)
             ->where('c.contractId = r.contractId')
@@ -97,14 +99,16 @@ class MainController extends AdminBaseController
         if ($res != null) {
             $this->assign('reportTime', "最后上传时间：" . $res['reportTime']);
         }
+
         $res = Db::name('contract c, pm_pics r')
             ->where('c.clientId', $userid)
             ->where('c.contractId = r.contractId')
             ->order('picTime', 'desc')
-            ->column('picTime');
+            ->find('picTime');
         if ($res != null) {
             $this->assign('picTime', "最后上传时间：" . $res['picTime']);
         }
+
         return $this->fetch();
     }
 

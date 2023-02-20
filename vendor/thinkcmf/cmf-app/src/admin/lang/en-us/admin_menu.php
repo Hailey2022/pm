@@ -127,7 +127,7 @@ return [
     'ADMIN_SLIDECAT_ADD'                 => '添加分类',
     'ADMIN_SLIDECAT_DELETE'              => '删除分类',
     'ADMIN_SLIDECAT_EDIT'                => '编辑分类',
-    'ADMIN_USER_ADD'                     => '管理员添加',
+    'ADMIN_USER_ADD'                     => '服务商添加',
     'ADMIN_USER_DELETE'                  => '删除管理员',
     'ADMIN_USER_EDIT'                    => '管理员编辑',
 ];

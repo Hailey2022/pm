@@ -62,7 +62,6 @@
                 var url = "http://maps.googleapis.com/maps/api/staticmap?center=" + center.lat() + ',' + center.lng() + "&zoom=" + map.zoom + "&size=520x340&maptype=" + map.getMapTypeId() + "&markers=" + point.lat() + ',' + point.lng() + "&sensor=false";
                 editor.execCommand('inserthtml', '<img width="520" height="340" src="' + url + '"' + (imgcss ? ' style="' + imgcss + '"' :'') + '/>');
             };
-
             function getPars(str,par){
                 var reg = new RegExp(par+"=((\\d+|[.,])*)","g");
                 return reg.exec(str)[1];
@@ -83,7 +82,6 @@
                 },30)
             }
     });
-
 </script>
 </body>
 </html>

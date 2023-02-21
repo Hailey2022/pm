@@ -21,31 +21,23 @@
                 $defaultConfig   = $plugin->getDefaultConfig();
                 $pluginThemeRoot = $plugin->getThemeRoot();
                 $pluginFetchContent = $plugin->testFetch();
-
                 echo "<b>\$plugin->getConfig():</b>";
                 dump($config);
-
                 echo "<b>\$plugin->getName():</b>";
                 dump($pluginName);
-
                 echo "<b>\$plugin->checkInfo():</b>";
                 dump($pluginInfo);
-
                 echo "<b>\$plugin->getConfigFilePath():</b>";
                 dump($configFilePath);
-
                 echo "<b>\$plugin->getDefaultConfig():</b>";
                 dump($defaultConfig);
-
                 echo "<b>\$plugin->getThemeRoot():</b>";
                 dump($pluginThemeRoot);
-
                 echo "<b>\$plugin->testFetch():</b>";
                 dump($pluginFetchContent);
             </php>
         </div>
         <div class="well">
-
             <p>
                 <b>当前登录管理员id:</b>{$admin_id|default='管理员未登录'}
             </p>
@@ -67,7 +59,6 @@
             <p>
                 <b>public/static目录:</b>__STATIC__
             </p>
-
         </div>
         <form method="post" class="js-ajax-form" action="#">
             <div class="table_list">

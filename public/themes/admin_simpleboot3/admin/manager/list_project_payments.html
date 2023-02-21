@@ -1,7 +1,6 @@
 <include file="public@header" />
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,37 +10,15 @@
 <style>
     .btns {
         float: left;
-
     }
-
     * {
         user-select: none;
         font-size: 2px;
     }
 </style>
-
 <body>
     <h2 style="text-align: center;padding: 15px;">{$projectName}
     </h2>
-    <!-- <div class="btns">
-            <a class="btn" id='showAll' style="color: #1880bc;" onclick="showAll()">展开全部</a>
-            <a class="btn" id='hideAll' style="color: #1880bc; display: none;" onclick="hideAll()">收合全部</a>
-        </div> -->
-    <!-- <div class="btns">
-            <a class="btn" id='원' style="color: #1880bc;" onclick="unit(10000)">转换成万</a>
-            <a class="btn" id='만원' style="color: #1880bc; display: none;" onclick="unit(1)">转换成元</a>
-        </div> -->
-
-    <!-- <div class="row">
-        <label class="control-label col-sm-1">单笔支付:</label>
-        <div class='col-sm-1 col-md-1'>
-            <select class="form-select" aria-label="功能">
-                <option selected></option>
-                <option>展开全部</option>
-                <option>收合全部</option>
-            </select>
-        </div>
-    </div> -->
     <br>
     <table class="table table-hover table-bordered">
         <thead>
@@ -243,7 +220,6 @@
             area: ['1200px', '600px']
         })
     }
-
     function showOrHide(tag) {
         if ($("." + tag).is(":hidden")) {
             $("." + tag).show()
@@ -251,7 +227,6 @@
             $("." + tag).hide()
         }
     }
-
     function unit(u) {
         if (u == 10000) {
             $('#unit').text("合计（单位：万元）")
@@ -269,43 +244,34 @@
             })
         }
     }
-
     function showAll() {
         $(".payments").show();
         $("#showAll").hide();
         $("#hideAll").show();
     }
-
     function hideAll() {
         $(".payments").hide();
         $("#hideAll").hide();
         $("#showAll").show();
-
     }
-
     const digits = ['零', '一', '二', '三', '四', '五', '六', '七', '八', '九'];
     const units = ['', '十', '百', '千', '万', '十', '百', '千', '亿', '十', '百', '千', '兆', '十', '百', '千', '京', '十', '百', '千', '垓'];
     const point = "点";
     const minus = "负";
-
     function intToChinese(num) {
         let str = '';
         let n = Math.floor(Math.abs(num));
         if (n < 1) return ((num < 0) ? minus : "") + digits[0];
-
         let uc = units.slice();
         while (n > 0) {
             let u = uc.shift();
             let d = n % 10;
             str = digits[d] + u + str;
-
             n = Math.floor(n / 10);
         }
-
         const smallUnit = units[1] + units[2] + units[3];
         const bigUnit = units[4] + units[8] + units[12] + units[16] + units[20];
         const zero = digits[0];
-
         str = str
             .replace(new RegExp("(" + zero + ")[" + smallUnit + "]", 'g'), "$1")
             .replace(new RegExp("([" + bigUnit + "])[^" + smallUnit + "]+([" + bigUnit + "])", 'g'), '$1' + zero)
@@ -315,7 +281,6 @@
         str = str.replace(new RegExp("^" + digits[1] + units[1]), units[1])
         return ((num < 0) ? minus : "") + str;
     }
-
     function floatToChinese(num) {
         if (num % 1 == 0) return "";
         let str = '';
@@ -327,14 +292,12 @@
         }
         return point + str.replace(new RegExp("^" + digits[1], "i"), "");
     }
-
     function toChineseNumber(n) {
         if (n == "") {
             return n;
         }
         return intToChinese(n) + floatToChinese(n);
     }
-
     function deleteContract(id) {
         var url = "{:url('manager/deleteContract')}";
         Wind.use("layer", function () {
@@ -346,7 +309,6 @@
             });
         });
     }
-
     function deletePayment(id) {
         var url = "{:url('manager/postPaymentDelete')}";
         Wind.use("layer", function () {
@@ -358,7 +320,6 @@
             });
         });
     }
-
     (function () {
         $(".contracts").each(function (id, el) {
             $(this).text(toChineseNumber(id + 1))
@@ -369,12 +330,10 @@
                 $(this).text(id + 1)
             });
         }
-
         $(".multilines").each(function () {
             var m = $(this).html().replaceAll('\r\n', '<br>').replaceAll('\n', '<br>').replaceAll('\r', '<br>');
             $(this).html(m)
         })
     })()
 </script>
-
 </html>

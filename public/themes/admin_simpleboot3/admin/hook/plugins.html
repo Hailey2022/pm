@@ -45,13 +45,11 @@
                                 <else/>
                                 <a class="btn btn-xs btn-primary disabled" href="javascript:;" style="color: #ccc;">设置</a>
                             </if>
-
                             <if condition="!empty($vo['has_admin'])">
                                 <a class="btn btn-xs btn-info" href="javascript:parent.openIframeLayer('{:cmf_plugin_url($vo['name'].'://AdminIndex/index')}','{$vo.title}')">管理</a>
                                 <else/>
                                 <a class="btn btn-xs btn-info disabled" href="javascript:;" style="color: #ccc;">管理</a>
                             </if>
-
                         </if>
                     </td>
                 </tr>

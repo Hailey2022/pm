@@ -1,5 +1,4 @@
 <include file="public@header" />
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,7 +15,6 @@
         </li>
     </script>
 </head>
-
 <body>
     <div class="wrap js-check-wrap">
         <ul class="nav nav-tabs">
@@ -26,7 +24,6 @@
         </ul>
         <form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('report/postPicUpdate')}">
             <input name="picId" style="display: none;" value="{$pics.picId}">
-
             <div class="form-group">
                 <label for="input-picName" class="col-sm-2 control-label">图片主题</label>
                 <div class="col-sm-3">
@@ -35,7 +32,6 @@
                     </input>
                 </div>
             </div>
-
             <div class="form-group">
                 <label for="input-projectId" class="col-sm-2 control-label">工程名称</label>
                 <div class="col-sm-3">
@@ -53,7 +49,6 @@
                     </select>
                 </div>
             </div>
-
             <div class="form-group">
                 <label for="input-contractName" class="col-sm-2 control-label">合同名称</label>
                 <div class="col-sm-7">
@@ -65,15 +60,12 @@
                     </select>
                 </div>
             </div>
-
             <div class="form-group">
                 <label for="input-picTime" class="col-sm-2 control-label">时间</label>
                 <div class="col-md-3 col-sm-5">
                     <input class="form-control" id="input-picTime" name="picTime" type="date" value="{$pics.picTime}">
                 </div>
             </div>
-
-
             <div class="form-group">
                 <label for="input-files" class="col-sm-2 control-label">附件</label>
                 <div class="col-md-6 col-sm-10">
@@ -114,11 +106,9 @@
                     <button type="submit" class="btn btn-primary js-ajax-submit">提交</button>
                 </div>
             </div>
-
         </form>
     </div>
 </body>
-
 <script>
     function updateContractList(contractId = undefined) {
         var contracts = {$contracts};
@@ -140,5 +130,4 @@
         updateContractList("{$pics.contractId}")
     })()
 </script>
-
 <script src="__STATIC__/js/admin.js"></script>

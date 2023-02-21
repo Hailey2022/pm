@@ -29,7 +29,6 @@
         </tr>
     </table>
     <div style="width:100%;height:340px;margin:5px auto;border:1px solid gray" id="container"></div>
-
 </div>
 <script type="text/javascript">
     var map = new BMap.Map("container"),marker,point,styleStr;
@@ -80,7 +79,6 @@
                 url = mapNode.getAttribute("src");
                 styleStr = mapNode.style.cssText;
             }
-
             centerPos = getPars(url,"center").split(",");
             markerPos = getPars(url, "markers").split(",");
             point = new BMap.Point(Number(centerPos[0]),Number(centerPos[1]));
@@ -110,7 +108,6 @@
         var mapWidth = size.width;
         var mapHeight = size.height;
         var point = marker.getPoint();
-
         if($G('is_dynamic').checked) {
             var URL = editor.options.UEDITOR_HOME_URL,
                 url = [URL + (/\/$/.test(URL) ? '':'/') + "dialogs/map/show.html" +
@@ -129,7 +126,5 @@
     };
     document.getElementById("address").focus();
 </script>
-
-
 </body>
 </html>

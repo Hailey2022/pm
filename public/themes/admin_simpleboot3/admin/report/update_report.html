@@ -1,5 +1,4 @@
 <include file="public@header" />
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,7 +14,6 @@
         </li>
     </script>
 </head>
-
 <body>
     <div class="wrap js-check-wrap">
         <ul class="nav nav-tabs">
@@ -43,7 +41,6 @@
                     </select>
                 </div>
             </div>
-
             <div class="form-group">
                 <label for="input-reportName" class="col-sm-2 control-label">报告名字</label>
                 <div class="col-sm-3">
@@ -52,7 +49,6 @@
                     </input>
                 </div>
             </div>
-
             <div class="form-group">
                 <label for="input-projectId" class="col-sm-2 control-label">工程名称</label>
                 <div class="col-sm-3">
@@ -70,7 +66,6 @@
                     </select>
                 </div>
             </div>
-
             <div class="form-group">
                 <label for="input-contractName" class="col-sm-2 control-label">合同名称</label>
                 <div class="col-sm-7">
@@ -82,7 +77,6 @@
                     </select>
                 </div>
             </div>
-
             <div class="form-group">
                 <label for="input-reportTime" class="col-sm-2 control-label">时间</label>
                 <div class="col-md-3 col-sm-5">
@@ -90,8 +84,6 @@
                         value="{$report.reportTime}">
                 </div>
             </div>
-
-
             <div class="form-group">
                 <label for="input-files" class="col-sm-2 control-label">附件</label>
                 <div class="col-md-6 col-sm-10">
@@ -128,11 +120,9 @@
                     <button type="submit" class="btn btn-primary js-ajax-submit">提交</button>
                 </div>
             </div>
-
         </form>
     </div>
 </body>
-
 <script>
     function updateContractList(contractId = undefined) {
         var contracts = {$contracts};
@@ -154,5 +144,4 @@
         updateContractList("{$report.contractId}")
     })()
 </script>
-
 <script src="__STATIC__/js/admin.js"></script>

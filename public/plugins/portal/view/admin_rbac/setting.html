@@ -38,11 +38,9 @@
             });
         });
     });
-
     function checknode(obj) {
         var chk = $("input[type='checkbox']");
         var count = chk.length;
-
         var num = chk.index(obj);
         var level_top = level_bottom = chk.eq(num).attr('level');
         for (var i = num; i >= 0; i--) {
@@ -55,7 +53,6 @@
         for (var j = num + 1; j < count; j++) {
             var le = chk.eq(j).attr('level');
             if (chk.eq(num).prop("checked")) {
-
                 if (le > level_bottom){
                     chk.eq(j).prop("checked", true);
                 }

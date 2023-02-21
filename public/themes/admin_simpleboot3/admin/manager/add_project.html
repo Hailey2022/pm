@@ -1,7 +1,6 @@
 <include file="public@header" />
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -18,7 +17,6 @@
             <a href="javascript:(function(){$('#saved-image{id}').remove();})();">移除</a>
         </li>
     </script>
-
     <script type="text/html" id="files-item-tpl">
         <li id="saved-file{id}">
             <input id="file-{id}" type="hidden" name="file_urls[]" value="{filepath}">
@@ -29,7 +27,6 @@
             <a href="javascript:(function(){$('#saved-file{id}').remove();})();">移除</a>
         </li>
     </script>
-
     <link href="__STATIC__/js/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css" rel="stylesheet"
         media="screen">
     <link src="__STATIC__/js/wind.js">
@@ -39,28 +36,23 @@
             width: 96%;
             margin-top: 50px;
         }
-
         .信息框标题 {
             width: 200px;
             height: 22px;
             line-height: 20px;
             text-align: center;
         }
-
         .信息框标题 span {
             padding: 1px 1px;
             margin-top: auto;
             margin-right: 10px;
         }
-
         .信息框标题 a.工程加号 a.工程减号 {
             cursor: pointer;
         }
-
         a:hover {
             text-decoration: none;
         }
-
         .信息框边框 {
             border: 1px solid #333;
             padding: 5px;
@@ -68,11 +60,9 @@
             border-color: #18BC9C;
             border-style: none;
         }
-
         ul {
             list-style-type: none;
         }
-
         .上下宽度 {
             padding: 1%;
             border-style: dashed dashed dashed dashed;
@@ -80,17 +70,14 @@
             border-radius: 16px;
             border-color: #18BC9C;
         }
-
         .btn-primary {
             color: #333333;
             background-color: #c2fbd7;
             border-color: #c2fbd7;
         }
-
         * {
             user-select: none;
         }
-
         .button-s {
             --color: #18BC9C;
             font-family: inherit;
@@ -110,7 +97,6 @@
             color: var(--color);
             margin-left: 100px !important;
         }
-
         .button-s:before {
             content: "";
             position: absolute;
@@ -120,55 +106,43 @@
             width: 200px !important;
             border-radius: 80% !important;
         }
-
         .button-s:hover {
             color: #fff;
         }
-
         .button-s:before {
             top: 100% !important;
             left: 100% !important;
             transition: all .7s !important;
         }
-
         .button-s:hover:before {
             top: -30px !important;
             left: -30px !important;
         }
-
         .button-s:active:before {
             background: #18BC9C !important;
             transition: background 0s !important;
         }
-
         .左 {
             margin-right: 30px;
         }
-
         .右 {
             margin-left: 30px;
         }
-
         label {
             font-size: 10px;
         }
-
         input[type="text"] {
             font-size: 10px;
         }
-
         input[type="number"] {
             font-size: 10px;
         }
-
         select {
             font-size: 10px;
         }
-
         textarea[type="text"] {
             font-size: 10px;
         }
-
         @media screen and (min-width: 768px) {
             .uploadfiles {
                 padding-left: 26%;
@@ -199,7 +173,6 @@
         })
     </script>
 </head>
-
 <body>
     <form method="post" class="form-horizontal js-ajax-form" action="{:url('manager/postProjectAdd')}">
         <div class="信息框大框" style="min-width: 920px">
@@ -229,7 +202,6 @@
                     </div>
                 </div>
                 <br>
-
                 <div class="form-group">
                     <div class="右 左">
                         <label for="file-1-name" class="col-sm-1 control-label">可研报告</label>
@@ -286,7 +258,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="form-group">
                     <div class="右 左">
                         <label for="file-5-name" class="col-sm-1 control-label">预算上报文件</label>
@@ -314,7 +285,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="form-group">
                     <div class="右 左">
                         <label for="file_name_6" class="col-sm-1 control-label">施工图</label>
@@ -339,7 +309,6 @@
                             </select>
                         </div>
                     </div>
-
                     <div class="右 左">
                         <label for="projectStatus" class="col-sm-1 control-label">实施阶段</label>
                         <div class="col-sm-3" style="padding-bottom: 10px;">
@@ -357,7 +326,6 @@
             </div>
         </div>
         </div>
-
         <div class="信息框大框" style="min-width: 920px">
             <div class="信息框标题">
                 <a style="font-size: 140%;">服务商基本信息</a>
@@ -397,7 +365,6 @@
                                 </div>
                                 <a class="btn" style="display: none;color: #0000ff">提交时自动添加</a>
                             </div>
-
                             <div>
                                 <label for="input-contractName" class="col-sm-2 control-label">合同名称</label>
                                 <div class="col-sm-5" style="padding-bottom: 10px;">
@@ -405,13 +372,11 @@
                                         type="text" placeholder="合同名称">
                                 </div>
                                 <label for="input-contractNumber" class="col-sm-1 control-label">合同编号</label>
-
                                 <div class="col-sm-3" style="padding-bottom: 10px;">
                                     <input class="form-control" id="input-contractNumber" name="contractNumber[]"
                                         type="text" placeholder="合同编号">
                                 </div>
                             </div>
-
                             <div>
                                 <label for="input-contractAmount" class="col-sm-2 control-label">合同金额</label>
                                 <div class="col-sm-3" style="padding-bottom: 10px;">
@@ -442,7 +407,6 @@
                                         placeholder="备注(可选)">
                                 </div>
                             </div>
-
                             <div class="col-sm-8">
                                 <div class="uploadfiles">
                                     <tr>
@@ -497,7 +461,6 @@
         var link = '/upload/' + url 
         handlePreview(link)
     });
-
     $('#add_project_submit').on("click", function () {
         $('xfli').each(function () {
             var str0 = '';
@@ -505,7 +468,6 @@
                 str0 += $(this).val() + '|'
             });
             $(this).find("input:hidden[name='uploadfiles[]']").val(str0.substring(0, str0.lastIndexOf('|')));
-
             var str1 = '';
             $(this).find("input:text[name='file_names[]']").each(function () {
                 str1 += $(this).val() + '|'
@@ -525,21 +487,17 @@
         var num = convertCurrency(Math.abs($("#input-approximatePrice").val()))
         $("#chinese-approximatePrice").val(num);
     }
-
     function updateReportedBudgetChineseNum() {
         var num = convertCurrency(Math.abs($("#input-reportedBudget").val()))
         $("#chinese-reportedBudget").val(num);
     }
-
     function updateApprovedBudgetChineseNum() {
         var num = convertCurrency(Math.abs($("#input-approvedBudget").val()))
         $("#chinese-approvedBudget").val(num);
     }
-
     function ask() {
         if (confirm("确定返回？")) { window.location.href = "{:url('manager/view')}" } else { return false }
     }
-
 </script>
 <script type="text/javascript" src="__STATIC__/js/admin.js"></script>
 <script type="text/javascript" src="__STATIC__/js/frontend.js"></script>

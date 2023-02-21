@@ -84,7 +84,6 @@
                 </table>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-
                         <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
                         <a class="btn btn-default" href="{:url('AdminPage/index')}">{:lang('BACK')}</a>
                     </div>
@@ -155,14 +154,12 @@
 <script type="text/javascript" src="__STATIC__/js/ueditor/ueditor.all.min.js"></script>
 <script type="text/javascript">
     $(function () {
-
         editorcontent = new baidu.editor.ui.Editor();
         editorcontent.render('content');
         try {
             editorcontent.sync();
         } catch (err) {
         }
-
         $('#more-template-select').val('page');
     });
 </script>

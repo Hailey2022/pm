@@ -105,7 +105,6 @@
                                 <a id="file-audio-preview" href="{:cmf_get_file_download_url($post.more.audio)}"
                                    target="_blank">下载</a>
                             </notempty>
-
                             <a href="javascript:uploadOne('文件上传','#file-audio','audio');">上传</a>
                         </td>
                     </tr>
@@ -157,7 +156,6 @@
                                    value="{:date('Y-m-d H:i:s',time())}">
                         </td>
                     </tr>
-
                     <tr>
                         <th>文章模板</th>
                     </tr>
@@ -173,7 +171,6 @@
                         </td>
                     </tr>
                 </table>
-
                 <hook name="portal_admin_article_edit_view_right_sidebar"/>
             </div>
         </div>
@@ -188,21 +185,17 @@
 <script type="text/javascript" src="__STATIC__/js/ueditor/ueditor.all.min.js"></script>
 <script type="text/javascript">
     $(function () {
-
         editorcontent = new baidu.editor.ui.Editor();
         editorcontent.render('content');
         try {
             editorcontent.sync();
         } catch (err) {
         }
-
         $('.btn-cancel-thumbnail').click(function () {
             $('#thumbnail-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
             $('#thumbnail').val('');
         });
-
     });
-
     function doSelectCategory() {
         var selectedCategoriesId = $('#js-categories-id-input').val();
         openIframeLayer("{:url('AdminCategory/select')}?ids=" + selectedCategoriesId, '请选择分类', {
@@ -210,7 +203,6 @@
             btn: ['确定', '取消'],
             yes: function (index, layero) {
                 //do something
-
                 var iframeWin          = window[layero.find('iframe')[0]['name']];
                 var selectedCategories = iframeWin.confirm();
                 if (selectedCategories.selectedCategoriesId.length == 0) {

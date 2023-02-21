@@ -1,14 +1,12 @@
 <include file="public@header" />
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>合同</title>
 </head>
-
 <body>
     <h3 style="text-align: center;">{$projectName}</h3>
     <a class="btn btn-primary" href="javascript:history.go(-1)">返回</a>
@@ -38,7 +36,6 @@
                 <td style="text-align: center;">{$d.contractName}</td>
                 <td style="text-align: center;">{$d.contractAmount}</td>
                 <td style="text-align: center;">{$d.paid}</td>
-
                 <td style="text-align: center;"><a class="btn "
                         href="javascript:handlePreview('{:url('manager/viewContracts',array('contractId'=>$d['contractId']))}')">查看</a>
                 </td>
@@ -55,5 +52,4 @@
         parent.openIframeLayer(url, '附件');
     }
 </script>
-
 </html>

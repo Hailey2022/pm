@@ -1,7 +1,6 @@
 <include file="public@header" />
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -30,7 +29,6 @@
         </li>
     </script>
 </head>
-
 <body>
     <form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('manager/postPaymentAdd')}">
         <div class="form-group">
@@ -39,70 +37,60 @@
                 <input class="form-control" type="text" disabled value={$data.contractName}>
             </div>
         </div>
-
         <div class="form-group">
             <label for="input-installment" class="col-sm-2 control-label">进度款（期数）</label>
             <div class="col-md-6 col-sm-10">
                 <input class="form-control" id="input-installment" name="installment" type="text">
             </div>
         </div>
-
         <div class="form-group">
             <label for="input-sum" class="col-sm-2 control-label">合计</label>
             <div class="col-md-6 col-sm-10">
                 <input class="form-control" id="input-sum" type="number" readonly value=0>
             </div>
         </div>
-
         <div class="form-group">
             <label for="input-ccp" class="col-sm-2 control-label">中央</label>
             <div class="col-md-6 col-sm-10">
                 <input class="form-control" id="input-ccp" name="ccp" type="number" required value=0>
             </div>
         </div>
-
         <div class="form-group">
             <label for="input-province" class="col-sm-2 control-label">省</label>
             <div class="col-md-6 col-sm-10">
                 <input class="form-control" id="input-province" name="province" type="number" value=0 required>
             </div>
         </div>
-
         <div class="form-group">
             <label for="input-city" class="col-sm-2 control-label">市</label>
             <div class="col-md-6 col-sm-10">
                 <input class="form-control" id="input-city" name="city" type="number" value=0 required>
             </div>
         </div>
-
         <div class="form-group">
             <label for="input-bond" class="col-sm-2 control-label">专项债(区)</label>
             <div class="col-md-6 col-sm-10">
                 <input class="form-control" id="input-bond" name="bond" type="number" value=0 required>
             </div>
         </div>
-
         <div class="form-group">
             <label for="input-budget" class="col-sm-2 control-label">预算(区)</label>
             <div class="col-md-6 col-sm-10">
                 <input class="form-control" id="input-budget" name="budget" type="number" value=0 required>
             </div>
         </div>
-
         <div class="form-group">
             <label for="input-others" class="col-sm-2 control-label">其他</label>
             <div class="col-md-6 col-sm-10">
                 <input class="form-control" id="input-others" name="others" type="number" value=0 required>
             </div>
         </div>
-
         <div class="form-group">
             <label for="input-comment" class="col-sm-2 control-label">备注</label>
             <div class="col-md-6 col-sm-10">
                 <textarea class="form-control" id="input-comment" name="comment" type="text"></textarea>
             </div>
         </div>
-
         <div class="form-group">
             <label for="input-contractNumber" class="col-sm-2 control-label">支付凭证附件</label>
             <div class="col-md-6 col-sm-10">
@@ -130,7 +118,6 @@
         <div class="form-group">
             <input name="contractId" hidden value={$data.contractId}>
         </div>
-
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <button type="submit" class="btn btn-primary js-ajax-submit">提交</button>
@@ -138,9 +125,7 @@
             </div>
         </div>
     </form>
-
 </html>
-
 <script type="text/javascript" src="__STATIC__/js/admin.js"></script>
 <script type="text/javascript" src="__STATIC__/js/frontend.js"></script>
 <script>

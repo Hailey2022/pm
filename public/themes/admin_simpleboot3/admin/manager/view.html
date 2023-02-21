@@ -1,7 +1,6 @@
 <include file="public@header" />
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,32 +12,25 @@
         float: right;
         padding: 10px;
     }
-
     .title {
         text-align: center
     }
-
     .deleteBtn {
         color: #ff0000 !important;
     }
-
     .deleteBtn:hover {
         color: #ff0000;
     }
-
     .funcBtn {
         padding: 1.5px;
     }
-
     * {
         user-select: none;
     }
-
     table {
         border-collapse: collapse !important;
         width: 100%;
     }
-
     th,
     td {
         padding: 8px;
@@ -49,7 +41,6 @@
         border-right: 1px solid rgb(223, 230, 236) !important;
     }
 </style>
-
 <body>
     <h1 class="title">工程管理
         <div class="btns">
@@ -89,7 +80,6 @@
                 <td style="text-align: center;">{$d.method}</td>
                 <td style="text-align: center;">{$d.estimatedPrice}</td>
                 <td style="text-align: center;">{$d.approximatePrice}</td>
-
                 <td style="text-align: center;">{$d.total}</td>
                 <td style="text-align: center;">{$d.paid}</td>
                 <egt name="$d.total - $d.paid" value="0">
@@ -97,9 +87,7 @@
                     <else />
                     <td style="text-align: center; color: #ff0000;">{:round(($d.total - $d.paid), 2)} (请检查)</td>
                 </egt>
-
                 <td style="text-align: center;">{$d.projectStatus}</td>
-
                 <td style="text-align: center;">
                     <a class="funcBtn" href="{:url('report/reports',array('projectId'=>$d['projectId']))}">日常报表</a>
                     <a class="funcBtn"
@@ -110,7 +98,6 @@
                         href="{:url('manager/deleteProject',array('projectId'=>$d['projectId']))}"
                         onclick="return handleDelete()">删除工程</a>
                 </td>
-
                 </tr>
             </foreach>
         </tbody>
@@ -128,5 +115,4 @@
         return false
     }
 </script>
-
 </html>

@@ -38,7 +38,6 @@
     </form>
 </div>
 <script type="text/javascript" src="__STATIC__/js/admin.js"></script>
-
 <script>
     function doSelectUrl() {
         var selectedCategoriesId = $('#js-categories-id-input').val();
@@ -46,10 +45,8 @@
             area: ['95%', '90%'],
             btn: ['确定', '取消'],
             yes: function (index, layero) {
-
                 var iframeWin   = window[layero.find('iframe')[0]['name']];
                 var selectedUrl = iframeWin.confirm();
-
                 if (selectedUrl) {
                     $('#input-full_url').val(selectedUrl.action);
                     $('#input-url').val(selectedUrl.url);

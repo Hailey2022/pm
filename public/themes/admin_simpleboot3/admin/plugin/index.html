@@ -57,18 +57,15 @@
                                 <else/>
                                 <a class="btn btn-xs btn-primary disabled" href="javascript:;">设置</a>
                             </if>
-
                             <if condition="!empty($vo['has_admin'])">
                                 <a class="btn btn-xs btn-info"
                                    href="javascript:parent.openapp('{:cmf_plugin_url($vo['name'].'://AdminIndex/index')}','plugin_{$vo.name}','{$vo.title}')">管理</a>
                                 <else/>
                                 <a class="btn btn-xs btn-info disabled" href="javascript:;">管理</a>
                             </if>
-
                             <a class="btn btn-xs btn-success js-ajax-dialog-btn"
                                href="{:url('plugin/update',array('name'=>$vo['name']))}"
                                data-msg="确定更新该插件吗？">更新</a>
-
                             <if condition="$vo['status']==0">
                                 <a class="btn btn-xs btn-success js-ajax-dialog-btn"
                                    href="{:url('plugin/toggle',array('id'=>$vo['id'],'enable'=>1))}"
@@ -78,7 +75,6 @@
                                    href="{:url('plugin/toggle',array('id'=>$vo['id'],'disable'=>1))}"
                                    data-msg="确定禁用该插件吗？">禁用</a>
                             </if>
-
                             <a class="btn btn-xs btn-danger js-ajax-dialog-btn"
                                href="{:url('plugin/uninstall',array('id'=>$vo['id']))}"
                                data-msg="确定卸载该插件吗？">卸载</a>

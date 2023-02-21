@@ -67,7 +67,6 @@
                 </div>
             </div>
         </fieldset>
-
         <div class="col-sm-offset-2 col-sm-10">
             <input type="hidden" name="id" value="{$id}">
             <input type="hidden" name="nav_id" value="{$nav_id}">
@@ -75,7 +74,6 @@
             <a class="btn btn-default" href="{:url('NavMenu/index',['nav_id'=>$nav_id])}">返回</a>
         </div>
     </form>
-
 </div>
 <script src="__STATIC__/js/admin.js"></script>
 <script>
@@ -83,17 +81,14 @@
         $("#select-href,#select-href-radio").click(function () {
             checkChange(2);
         });
-
         $("#select-href").change(function () {
             var $this = $(this);
             var label = $this.find("option[value='" + $this.val() + "']").data('name');
             $('#name-input').val(label);
         });
-
         $("#external-link-input,#external-link-radio").click(function () {
             checkChange(1);
         });
-
         var opt = $("#select-href option[value='" + '{$href}' + "']");
         if (opt.length > 0) {
             opt.prop('selected', true);
@@ -102,7 +97,6 @@
             checkChange(1);
             $('#external-link-input').val('{$href}');
         }
-
         function checkChange(i) {
             if (i == 1) {
                 //自动输入url

@@ -19,7 +19,6 @@
 			<else/>
 			<input type="checkbox"  name="only_self_articles" value="1" checked/>
 		</empty>
-
 		<empty name="keyword">
 			<table class="table table-hover table-bordered table-list" id="menus-table">
 				<thead>
@@ -112,7 +111,6 @@
 				</tfoot>
 			</table>
 		</empty>
-
 		<div class="form-actions">
 			<input type="hidden" name="role_id" value="{$role_id}" />
 			<button class="btn btn-primary js-ajax-submit" type="submit">{:lang('SAVE')}</button>
@@ -130,11 +128,9 @@
 			});
 		});
 	});
-
 	function checknode(obj) {
 		var chk = $("input[type='checkbox']");
 		var count = chk.length;
-
 		var num = chk.index(obj);
 		var level_top = level_bottom = chk.eq(num).attr('level');
 		for (var i = num; i >= 0; i--) {
@@ -147,7 +143,6 @@
 		for (var j = num + 1; j < count; j++) {
 			var le = chk.eq(j).attr('level');
 			if (chk.eq(num).prop("checked")) {
-
 				if (le > level_bottom){
 					chk.eq(j).prop("checked", true);
 				}

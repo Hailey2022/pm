@@ -210,14 +210,12 @@
 <script type="text/javascript" src="__STATIC__/js/ueditor/ueditor.all.min.js"></script>
 <script type="text/javascript">
     $(function () {
-
         editorcontent = new baidu.editor.ui.Editor();
         editorcontent.render('content');
         try {
             editorcontent.sync();
         } catch (err) {
         }
-
         $('#more-template-select').val("{$post.more.template|default=''}");
     });
 </script>

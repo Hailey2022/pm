@@ -50,17 +50,13 @@
         $(function () {
             install(0);
         });
-
         Wind.use("noty", function () {
-
         });
-
         var $installMsgPanel = $('#install-msg-panel');
         var $log             = $("#log");
         var execSuccessTpl   = $('#exec-success-msg-tpl').html();
         var execFailTpl      = $('#exec-fail-msg-tpl').html();
         var sqlExecResult;
-
         function install(sqlIndex) {
             $.ajax({
                 url: "{:url('install/index/install')}",
@@ -68,22 +64,17 @@
                 dataType: 'json',
                 type: 'post',
                 success: function (data) {
-
                     console.log(data);
                     var line = sqlIndex + 1;
                     if (data.code == 1) {
-
                         if (!(data.data && data.data.done)) {
                             var tpl = execSuccessTpl;
                             tpl     = tpl.replace(/\{message\}/g, line + '.' + data.msg);
                             tpl     = tpl.replace(/\{sql\}/g, data.data.sql);
                             $installMsgPanel.append(tpl);
-
                         } else {
                             $installMsgPanel.append('<li><i class="fa fa-check correct"></i>数据库安装完成!</li>');
-
                             sqlExecResult = data.data;
-
                             if (data.data.error) {
                                 noty({
                                     text: "安装过程,共" + data.data.error + "个SQL执行错误,可能您在此数据库下已经安装过 CMF,请查看问题后重新安装,或者<br>"
@@ -98,9 +89,7 @@
                                             text: '确定',
                                             onClick: function ($noty) {
                                                 $noty.close();
-
                                                 //setDbConfig();
-
                                             }
                                         },
                                         {
@@ -108,7 +97,6 @@
                                             text: '取消',
                                             onClick: function ($noty) {
                                                 $noty.close();
-
                                             }
                                         }
                                     ]
@@ -117,34 +105,25 @@
                                 stepAction(0)
                             }
                         }
-
                     } else if (data.code == 0) {
-
                         var tpl = execFailTpl;
                         tpl     = tpl.replace(/\{message\}/g, line + '.' + data.msg);
                         tpl     = tpl.replace(/\{sql\}/g, data.data.sql);
                         tpl     = tpl.replace(/\{exception\}/g, data.data.exception);
                         $installMsgPanel.append(tpl);
                     }
-
                     $log.scrollTop(1000000000);
-
                     if (!(data.data && data.data.done)) {
                         sqlIndex++;
                         install(sqlIndex);
                     }
-
-
                 },
                 error: function () {
-
                 },
                 complete: function () {
-
                 }
             });
         }
-
         var stepUrls = [
             "{:url('install/index/setDbConfig')}",
             "{:url('install/index/setSite')}",
@@ -153,8 +132,6 @@
             "{:url('install/index/installAppHooks')}",
             "{:url('install/index/installAppUserActions')}",
         ];
-
-
         function stepAction(index) {
             $.ajax({
                 url: stepUrls[index],
@@ -162,7 +139,6 @@
                 data: {_hithinkcmf: 1},
                 type: 'post',
                 success: function (data) {
-
                     if (data.code == 1) {
                         $installMsgPanel.append('<li><i class="fa fa-check correct"></i>' + data.msg + '</li>');
                         $log.scrollTop(1000000000);
@@ -202,10 +178,8 @@
                             ]
                         });
                     }
-
                 },
                 error: function () {
-
                 }
             });
         }

@@ -43,13 +43,11 @@
             var $this = $(this);
             selectedCategoriesId.push($this.val());
             selectedCategoriesName.push($this.data('name'));
-
             selectedCategories.push({
                 id: $this.val(),
                 name: $this.data('name')
             });
         });
-
         return {
             selectedCategories: selectedCategories,
             selectedCategoriesId: selectedCategoriesId,

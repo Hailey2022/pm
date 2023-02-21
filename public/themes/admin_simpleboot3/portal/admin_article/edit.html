@@ -154,7 +154,6 @@
                                 <a id="file-audio-preview" href="{:cmf_get_file_download_url($post.more.audio)}"
                                    target="_blank">下载</a>
                             </notempty>
-
                             <a href="javascript:uploadOne('文件上传','#file-audio','audio');">上传</a>
                         </td>
                     </tr>
@@ -171,7 +170,6 @@
                         </td>
                     </tr>
                 </table>
-
                 <hook name="portal_admin_article_edit_view_main"/>
             </div>
             <div class="col-md-3">
@@ -273,7 +271,6 @@
                         </td>
                     </tr>
                 </table>
-
                 <hook name="portal_admin_article_edit_view_right_sidebar"/>
             </div>
         </div>
@@ -294,22 +291,18 @@
 <script type="text/javascript" src="__STATIC__/js/ueditor/ueditor.all.min.js"></script>
 <script type="text/javascript">
     $(function () {
-
         editorcontent = new baidu.editor.ui.Editor();
         editorcontent.render('content');
         try {
             editorcontent.sync();
         } catch (err) {
         }
-
         $('.btn-cancel-thumbnail').click(function () {
             $('#thumbnail-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
             $('#thumbnail').val('');
         });
-
         $('#more-template-select').val("{$post.more.template|default=''}");
     });
-
     function doSelectCategory() {
         var selectedCategoriesId = $('#js-categories-id-input').val();
         openIframeLayer("{:url('AdminCategory/select')}?ids=" + selectedCategoriesId, '请选择分类', {
@@ -317,7 +310,6 @@
             btn: ['确定', '取消'],
             yes: function (index, layero) {
                 //do something
-
                 var iframeWin          = window[layero.find('iframe')[0]['name']];
                 var selectedCategories = iframeWin.confirm();
                 if (selectedCategories.selectedCategoriesId.length == 0) {
@@ -332,18 +324,14 @@
         });
     }
 </script>
-
 <script>
-
     var publishYesUrl   = "{:url('AdminArticle/publish',array('yes'=>1))}";
     var publishNoUrl    = "{:url('AdminArticle/publish',array('no'=>1))}";
     var topYesUrl       = "{:url('AdminArticle/top',array('yes'=>1))}";
     var topNoUrl        = "{:url('AdminArticle/top',array('no'=>1))}";
     var recommendYesUrl = "{:url('AdminArticle/recommend',array('yes'=>1))}";
     var recommendNoUrl  = "{:url('AdminArticle/recommend',array('no'=>1))}";
-
     var postId = $('#post-id').val();
-
     //发布操作
     $("#post-status-checkbox").change(function () {
         if ($('#post-status-checkbox').is(':checked')) {
@@ -353,7 +341,6 @@
                     if (data.code != 1) {
                         $('#post-status-checkbox').removeAttr("checked");
                         $('#post-status-error').html(data.msg).show();
-
                     } else {
                         $('#post-status-error').hide();
                     }
@@ -373,7 +360,6 @@
             });
         }
     });
-
     //置顶操作
     $("#is-top-checkbox").change(function () {
         if ($('#is-top-checkbox').is(':checked')) {
@@ -383,7 +369,6 @@
                     if (data.code != 1) {
                         $('#is-top-checkbox').removeAttr("checked");
                         $('#is-top-error').html(data.msg).show();
-
                     } else {
                         $('#is-top-error').hide();
                     }
@@ -412,7 +397,6 @@
                     if (data.code != 1) {
                         $('#recommended-checkbox').removeAttr("checked");
                         $('#recommended-error').html(data.msg).show();
-
                     } else {
                         $('#recommended-error').hide();
                     }
@@ -432,10 +416,6 @@
             });
         }
     });
-
-
 </script>
-
-
 </body>
 </html>

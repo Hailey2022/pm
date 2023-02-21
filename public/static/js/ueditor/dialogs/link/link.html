@@ -45,7 +45,6 @@
     link = domUtils.findParentByTagName( link, "a", true );
     if(link){
         url = utils.html(link.getAttribute( '_href' ) || link.getAttribute( 'href', 2 ));
-
         if(rangeLink === link && !link.getElementsByTagName('img').length){
             text.removeAttribute('disabled');
             orgText = text.value = link[browser.ie ? 'innerText':'textContent'];
@@ -53,7 +52,6 @@
             text.setAttribute('disabled','true');
             text.value = lang.validLink;
         }
-
     }else{
         if(range.collapsed){
             text.removeAttribute('disabled');
@@ -62,13 +60,11 @@
             text.setAttribute('disabled','true');
             text.value = lang.validLink;
         }
-
     }
     $G("title").value = url ? link.title : "";
     $G("href").value = url ? url: '';
     $G("target").checked = url && link.target == "_blank" ? true :  false;
     $focus($G("href"));
-
     function handleDialogOk(){
         var href =$G('href').value.replace(/^\s+|\s+$/g, '');
         if(href){
@@ -109,7 +105,6 @@
             $G("msg").innerHTML = "";
         }
     };
-
     function hrefStartWith(href,arr){
         href = href.replace(/^\s+|\s+$/g, '');
         for(var i=0,ai;ai=arr[i++];){
@@ -119,8 +114,6 @@
         }
         return false;
     }
-
-
 </script>
 </body>
 </html>

@@ -26,7 +26,6 @@
 </div>
 <script src="__STATIC__/js/admin.js"></script>
 <script>
-
     Wind.use('colorpicker',function(){
         $('.js-color').each(function () {
             var $this=$(this);
@@ -40,15 +39,12 @@
                 }
             });
         });
-
     });
-
     function doSelectLocation(obj) {
         var $obj       = $(obj);
         var title      = $obj.data('title');
         var $realInput = $obj;
         var location   = $realInput.val();
-
         parent.openIframeLayer(
             "{:url('dialog/map')}?location=" + location,
             title,

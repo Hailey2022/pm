@@ -69,7 +69,6 @@
     </div>
 </div>
 <div id="J_maskLayer" class="maskLayerNull"></div>
-
 <script type="text/javascript" src="scrawl.js"></script>
 <script type="text/javascript">
     var settings = {
@@ -79,10 +78,8 @@
             '000000', 'eeece1', '1f497d', '4f81bd', 'c0504d', '9bbb59', '8064a2', '4bacc6', 'f79646'], //画笔选择颜色
         saveNum:10  //撤销次数
     };
-
     var scrawlObj = new scrawl( settings );
     scrawlObj.isCancelScrawl = false;
-
     dialog.onok = function () {
         exec( scrawlObj );
         return false;

@@ -10,7 +10,6 @@
             overflow: hidden;
             margin: 0;
         }
-
         #suggestId {
             position: absolute;
             z-index: 9999;
@@ -20,9 +19,7 @@
             padding: 0 10px;
             width: 300px;
             border: 1px solid #e4e6e7;
-
         }
-
         #suggestId:focus {
             outline: none;
         }
@@ -37,68 +34,52 @@
 <input id="city_input" type="hidden"/>
 <input id="province_input" type="hidden"/>
 <input id="district_input" type="hidden"/>
-
 <input id="suggestId" type="text" placeholder="请输入地址"/>
 <div id="allmap"></div>
 <script type="text/javascript">
-
-    
     var center = new BMap.Point({$lng}, {$lat});
-
     var map = new BMap.Map("allmap");
     map.centerAndZoom(new BMap.Point(116.404, 39.915), 8);
     map.enableScrollWheelZoom();    //启用滚轮放大缩小，默认禁用
     map.enableContinuousZoom();
-
     var map_ac = new BMap.Autocomplete(    //建立一个自动完成的对象
         {
             "input": "suggestId",
             "location": map
         });
-
     var marker = new BMap.Marker(center);  
     map.addOverlay(marker);              
     marker.enableDragging();    //可拖拽
     //marker.setAnimation(BMAP_ANIMATION_BOUNCE);
-
     map_ac.addEventListener("onconfirm", function (e) {    //鼠标点击下拉列表后的事件
         var _value = e.item.value;
-
         function myFun() {
             var pp = local.getResults().getPoi(0).point;    //获取第一个智能搜索的结果
             map.centerAndZoom(pp, 8);
             marker.setPosition(pp);
             mgetLocation(pp);
         }
-
         myValue   = _value.province + _value.city + _value.district + _value.street + _value.business;
         var local = new BMap.LocalSearch(map, { //智能搜索
             onSearchComplete: myFun
         });
         local.search(myValue);
     });
-
-
     var opts       = {
         width: 200,     
         height: 30,     
         title: "", 
         enableMessage: false,//设置允许信息窗发送短息
-
     };
     var infoWindow = new BMap.InfoWindow("拖动我设置你的位置", opts);  
     marker.openInfoWindow(infoWindow);
-
     var gc = new BMap.Geocoder();
-
     function msetpoint(e) {
         document.getElementById("lng_input").value = e.point.lng;
         document.getElementById("lat_input").value = e.point.lat;
         marker.setPosition(new BMap.Point(e.point.lng, e.point.lat));
-
         mgetLocation(e.point);
     }
-
     function mgetLocation(point) {
         document.getElementById("lng_input").value = point.lng;
         document.getElementById("lat_input").value = point.lat;
@@ -112,22 +93,14 @@
             //alert(addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber);
         });
     }
-
     marker.addEventListener("dragend", msetpoint);
-
     map.addEventListener("click", msetpoint);
-
-
     function tilesloaded() {
         map.setCenter(center);   //设置地图中心点。center除了可以为坐标点以外，还支持城市名
         mgetLocation(center);
-        
         map.removeEventListener("tilesloaded", tilesloaded);
     }
-
     map.addEventListener("tilesloaded", tilesloaded);
-
-
     function confirm() {
         var data      = {};
         data.lng      = document.getElementById("lng_input").value;
@@ -136,10 +109,8 @@
         data.city     = document.getElementById("city_input").value;
         data.province = document.getElementById("province_input").value;
         data.district = document.getElementById("district_input").value;
-
         return data;
     }
 </script>
-
 </body>
 </html>

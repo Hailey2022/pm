@@ -3,12 +3,10 @@
     .deleteBtn {
         color: #ff0000;
     }
-
     .deleteBtn:hover {
         color: #ff0000;
     }
 </style>
-
 <body id="container">
     <div class="wrap js-check-wrap">
         <ul class="nav nav-tabs">
@@ -58,7 +56,6 @@
         </table>
     </div>
 </body>
-
 <script src="__STATIC__/js/admin.js"></script>
 <script>
     function display(url, picName, projectName, contractName, clientName, time) {
@@ -76,12 +73,6 @@
             title += "时"
         }
         title += "上传的图片"
-        
-        
-        
-
-        
-        
         var clientWidth = $(window).width();
         var clientHeight = $(window).height();
         parent.openIframeLayer(url, title, {
@@ -91,7 +82,6 @@
             area: [0.9 * clientWidth + 'px', 0.9 * clientHeight + 'px']
         })
     }
-
     function handleDelete() {
         var tmp = "{:cmf_random_string($len = 8)}";
         var input = prompt("正在删除图片，删除后不可还原，请输入 " + tmp + " 删除");

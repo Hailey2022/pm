@@ -1,7 +1,6 @@
 <include file="public@header" />
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -22,27 +21,21 @@
     label {
         font-size: 10px;
     }
-
     input[type="text"] {
         font-size: 10px;
     }
-
     input[type="number"] {
         font-size: 10px;
     }
-
     select {
         font-size: 10px;
     }
-
     textarea[type="text"] {
         font-size: 10px;
     }
-
     * {
         user-select: none;
     }
-
     .button-s {
         --color: #18BC9C;
         font-family: inherit;
@@ -62,7 +55,6 @@
         color: var(--color);
         margin-left: 100px !important;
     }
-
     .button-s:before {
         content: "";
         position: absolute;
@@ -72,22 +64,18 @@
         width: 200px !important;
         border-radius: 80% !important;
     }
-
     .button-s:hover {
         color: #fff;
     }
-
     .button-s:before {
         top: 100% !important;
         left: 100% !important;
         transition: all .7s !important;
     }
-
     .button-s:hover:before {
         top: -30px !important;
         left: -30px !important;
     }
-
     .button-s:active:before {
         background: #18BC9C !important;
         transition: background 0s !important;
@@ -119,7 +107,6 @@
         </div>
     </div>
     <br>
-
     <div class="form-group">
         <div class="右 左">
             <label for="file-1-name" class="col-sm-1 control-label">可研报告</label>
@@ -184,7 +171,6 @@
             </div>
         </div>
     </div>
-
     <div class="form-group">
         <div class="右 左">
             <label for="file-5-name" class="col-sm-1 control-label">预算上报文件</label>
@@ -214,7 +200,6 @@
             </div>
         </div>
     </div>
-
     <div class="form-group">
         <div class="右 左">
             <label for="file_name_6" class="col-sm-1 control-label">施工图</label>
@@ -262,13 +247,10 @@
             </div>
         </div>
     </div>
-
     <button id="update_project_submit" style="display: none;">
         提交
     </button>
-
 </form>
-
 <div class="form-group">
     <div class="">
         <div class="col-md-3">
@@ -283,7 +265,6 @@
         </div>
     </div>
 </div>
-
 <script type="text/javascript" src="__STATIC__/js/admin.js"></script>
 <script type="text/javascript" src="__STATIC__/js/frontend.js"></script>
 <script>
@@ -309,7 +290,6 @@
             $("#chinese-approximatePrice").hide();
         }
     }
-
     function updateReportedBudgetChineseNum() {
         var num = convertCurrency(Math.abs($("#input-reportedBudget").val()))
         if (num != "") {
@@ -319,7 +299,6 @@
             $("#chinese-reportedBudget").hide();
         }
     }
-
     function updateApprovedBudgetChineseNum() {
         var num = convertCurrency(Math.abs($("#input-approvedBudget").val()))
         if (num != "") {

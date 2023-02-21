@@ -1,7 +1,9 @@
 <?php
 namespace app\admin\controller;
+
 use cmf\controller\AdminBaseController;
 use think\facade\Db;
+
 class MainController extends AdminBaseController
 {
     public function index()

@@ -1,7 +1,9 @@
 <?php
 namespace app\admin\controller;
+
 use cmf\controller\AdminBaseController;
 use think\Db;
+
 class ManagerController extends AdminBaseController
 {
     public function ip()

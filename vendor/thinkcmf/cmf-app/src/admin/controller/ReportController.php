@@ -1,8 +1,10 @@
 <?php
 namespace app\admin\controller;
+
 use cmf\controller\AdminBaseController;
 use think\Db;
 use think\db\Query;
+
 class ReportController extends AdminBaseController
 {
     function isAdmin($uid)

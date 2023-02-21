@@ -40,7 +40,7 @@
                     <td style="text-align: center;">{$p.user_login}</td>
                     <td style="text-align: center;">{$p.picTime}</td>
                     <td style="text-align: center;">
-                        <if condition="$p.file_urls != 'null'">
+                        <if condition="$p.file_urls != 'null' && $p.file_urls != NULL">
                             <a
                                 href="javascript:display('{:url('report/listPicFiles', ['picId'=>$p['picId']])}', '{$p.picName}', '{$p.projectName}', '{$p.contractName}', '{$p.user_login}', '{$p.picTime}')">查看</a>
                         </if>

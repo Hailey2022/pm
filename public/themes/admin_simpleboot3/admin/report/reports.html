@@ -56,7 +56,7 @@
                     <td style="text-align: center;">{$r.user_login}</td>
                     <td style="text-align: center;">{$r.reportTime}</td>
                     <td style="text-align: center;">
-                        <if condition="$r.file_urls != 'null'">
+                        <if condition="$r.file_urls != 'null' && $r.file_urls != NULL">
                             <a
                                 href="javascript:display('{:url('report/listReportFiles', ['reportId'=>$r['reportId']])}', '{$r.user_login}', '{$r.contractName}', '{$r.reportTime}', '{$r.reportType}')">查看</a>
                         </if>

@@ -78,7 +78,8 @@
             <div class="form-group">
                 <label for="input-reportTime" class="col-sm-2 control-label">报表时间</label>
                 <div class="col-md-3 col-sm-5">
-                    <input class="form-control" id="input-reportTime" name="reportTime" type="date">
+                    <input class="form-control" id="input-reportTime" name="reportTime" type="date"
+                        value="<?php echo date('Y-m-d'); ?>" />
                 </div>
             </div>
 
@@ -126,7 +127,7 @@
 
 <script>
     function updateContractList() {
-        var contracts = {$contracts};
+        var contracts = { $contracts };
         $(".contractName").each(function () {
             $(this).remove();
         })

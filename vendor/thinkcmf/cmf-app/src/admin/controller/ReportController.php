@@ -367,9 +367,4 @@ class ReportController extends AdminBaseController
         }
         return $this->fetch();
     }
-
-    public function test()
-    {
-        var_dump(cmf_get_root());
-    }
 }

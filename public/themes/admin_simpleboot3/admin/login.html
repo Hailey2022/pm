@@ -1,6 +1,4 @@
 <!DOCTYPE html>
-
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,18 +8,15 @@
             margin: 0;
             padding: 0;
         }
-
         a {
             text-decoration: none;
         }
-
         input,
         button {
             background: transparent;
             border: 0;
             outline: none;
         }
-
         body {
             height: 100vh;
             background: linear-gradient(#141e30, #243b55);
@@ -38,7 +33,6 @@
             -khtml-user-select: none;
             user-select: none;
         }
-
         .loginBox {
             width: 500px;
             height: 360px;
@@ -49,14 +43,12 @@
             padding: 40px;
             box-sizing: border-box;
         }
-
         h2 {
             text-align: center;
             color: aliceblue;
             margin-bottom: 30px;
             font-family: 'Times New Roman', Times, serif;
         }
-
         .item {
             height: 45px;
             border-bottom: 1px solid #fff;
@@ -64,7 +56,6 @@
             position: relative;
             font-family: 'Times New Roman', Times, serif;
         }
-
         .item input {
             width: 100%;
             height: 100%;
@@ -72,13 +63,11 @@
             padding-top: 20px;
             box-sizing: border-box;
         }
-
         .item input:focus+label,
         .item input:valid+label {
             top: 0px;
             font-size: 2px;
         }
-
         .item label {
             position: absolute;
             left: 0;
@@ -87,7 +76,6 @@
             font-family: 'Times New Roman', Times, serif;
             font-weight: bold;
         }
-
         .btn {
             margin-top: 5px;
             position: relative;
@@ -101,7 +89,6 @@
             font-size: 2em;
             font-weight: bold;
         }
-
         input:-webkit-autofill,
         input:-webkit-autofill:focus {
             transition: background-color 600000s 0s, color 600000s 0s;
@@ -116,14 +103,11 @@
             }, 0);
         }
     </script>
-    <!-- <script type="text/javascript" src="__STATIC__/js/snow.js"></script> -->
 </head>
 <html>
-
 <body>
     <div class="loginBox">
         <h2 style="color: var(--bs-btn-active-color)">工程项目综合管理系统</h2>
-
         <form class="js-ajax-form" action="{:url('public/doLogin')}" method="post">
             <div class="item">
                 <input id="username" name="username" type="text" required autocomplete="off">
@@ -137,7 +121,6 @@
         </form>
     </div>
 </body>
-
 </html>
 <script type="text/javascript">
     var GV = {

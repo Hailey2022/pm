@@ -1,15 +1,19 @@
-<include file="public@header"/>
+<include file="public@header" />
 <style>
-    html, body {
+    html,
+    body {
         padding: 0;
         height: 100%;
         margin: 0;
         overflow: hidden;
     }
-    #simulator, #setting-iframe {
+
+    #simulator,
+    #setting-iframe {
         width: 100%;
         height: 100%;
     }
+
     .setting-panel-wrap {
         position: fixed;
         left: 0;
@@ -20,6 +24,7 @@
         display: none;
         background: #fff;
     }
+
     #setting-iframe-wrap {
         position: absolute;
         top: 0;
@@ -27,8 +32,9 @@
         right: 0;
         left: 0;
     }
-    .setting-panel-wrap .panel {
-    }
+
+    .setting-panel-wrap .panel {}
+
     .setting-panel-wrap .footer {
         position: absolute;
         bottom: 0;
@@ -37,6 +43,7 @@
         border-top: 1px solid #eee;
         padding: 8px;
     }
+
     #close-setting-panel {
         position: absolute;
         top: 10px;
@@ -44,6 +51,7 @@
         z-index: 99;
         font-size: 18px;
     }
+
     #show-setting-panel {
         position: fixed;
         top: 30px;
@@ -58,6 +66,7 @@
         cursor: pointer;
         background: #fff;
     }
+
     #update-theme-btn {
         position: fixed;
         top: 30px;
@@ -72,16 +81,20 @@
         cursor: pointer;
         background: #fff;
     }
+
     #update-theme-btn:focus {
         outline: none;
     }
+
     #show-setting-panel:hover {
         background: #eee;
         border-color: #ddd;
     }
+
     #think_page_trace {
         display: none !important;
     }
+
     #think_page_trace_open {
         display: none !important;
     }
@@ -92,78 +105,80 @@
             url: "{:url('Theme/design')}?theme={:input('param.theme')}&status=1",
             type: 'post'
         });
-    },2000);
+    }, 2000);
 </script>
 </head>
+
 <body>
-<a id="show-setting-panel" title="编辑当前页" data-toggle="tooltip"><i class="fa fa-pencil"></i></a>
-<a id="update-theme-btn" title="刷新当前页" data-toggle="tooltip"><i class="fa fa-refresh"></i></a>
-<div class="setting-panel-wrap">
-    <a href="javascript:;" id="close-setting-panel"><i class="fa fa-close"></i></a>
-    <div id="setting-iframe-wrap">
-        <iframe frameborder="0" id="setting-iframe"></iframe>
+    <a id="show-setting-panel" title="编辑当前页" data-toggle="tooltip"><i class="fa fa-pencil"></i></a>
+    <a id="update-theme-btn" title="刷新当前页" data-toggle="tooltip"><i class="fa fa-refresh"></i></a>
+    <div class="setting-panel-wrap">
+        <a href="javascript:;" id="close-setting-panel"><i class="fa fa-close"></i></a>
+        <div id="setting-iframe-wrap">
+            <iframe frameborder="0" id="setting-iframe"></iframe>
+        </div>
+        <div class="footer text-center">
+            <a id="save-btn" class="btn btn-primary">保存</a>
+        </div>
     </div>
-    <div class="footer text-center">
-        <a id="save-btn" class="btn btn-primary">保存</a>
-    </div>
-</div>
-<iframe src="__ROOT__/?_design_theme={:input('param.theme')}" frameborder="0" id="simulator"></iframe>
-<script src="__STATIC__/js/admin.js"></script>
-<script>
-    var simulator            = $('#simulator').get(0).contentWindow;
-    var $simulator           = $(simulator);
-    var $settingIframe       = $('#setting-iframe');
-    var simulatorNeedRefresh = true;
-    $('#update-theme-btn').click(function () {
-        simulator.location.reload(true);
-    });
-    $('#save-btn').click(function () {
-        $settingIframe.get(0).contentWindow.confirm();
-    });
-    $('#close-setting-panel').click(function () {
-        hideSettingPanel();
-    });
-    $('#show-setting-panel').click(function () {
-        showSettingPanel();
-    });
-    function hideSettingPanel() {
-        $('.setting-panel-wrap').fadeOut(function () {
-            $('#show-setting-panel').show();
+    <iframe src="__ROOT__/?_design_theme={:input('param.theme')}" frameborder="0" id="simulator"></iframe>
+    <script src="__STATIC__/js/admin.js"></script>
+    <script>
+        var simulator = $('#simulator').get(0).contentWindow;
+        var $simulator = $(simulator);
+        var $settingIframe = $('#setting-iframe');
+        var simulatorNeedRefresh = true;
+        $('#update-theme-btn').click(function () {
+            simulator.location.reload(true);
         });
-    }
-    function showSettingPanel() {
-        $('.setting-panel-wrap').fadeIn();
-        $('#show-setting-panel').hide();
-    }
-    function showDesignBtn() {
-        if (!$('.setting-panel-wrap').is(':visible')) {
-            $('#show-setting-panel').show();
-        }
-    }
-    function hideDesignBtn() {
-        $('.setting-panel-wrap').hide();
-        $('#show-setting-panel').hide();
-    }
-    function simulatorRefresh() {
-        if (simulatorNeedRefresh) {
-            $settingIframe.attr('src', "{:url('Theme/fileSetting')}?theme={:input('param.theme')}&file=" + simulator._themeFile);
-            $simulator.load(function () {
-                $(simulator.document).on('click', 'a', function () {
-                    var target = $(this).attr('target');
-                    var href   = $(this).attr('href');
-                    if (target == '_blank' && href.indexOf('http') < 0) {
-                        simulator.location.href = href;
-                        return false;
-                    }
-                });
+        $('#save-btn').click(function () {
+            $settingIframe.get(0).contentWindow.confirm();
+        });
+        $('#close-setting-panel').click(function () {
+            hideSettingPanel();
+        });
+        $('#show-setting-panel').click(function () {
+            showSettingPanel();
+        });
+        function hideSettingPanel() {
+            $('.setting-panel-wrap').fadeOut(function () {
+                $('#show-setting-panel').show();
             });
         }
-        simulatorNeedRefresh = true;
-    }
-    function afterSaveSetting() {
-        simulatorNeedRefresh = false;
-        simulator.location.reload();
-    }
-</script>
+        function showSettingPanel() {
+            $('.setting-panel-wrap').fadeIn();
+            $('#show-setting-panel').hide();
+        }
+        function showDesignBtn() {
+            if (!$('.setting-panel-wrap').is(':visible')) {
+                $('#show-setting-panel').show();
+            }
+        }
+        function hideDesignBtn() {
+            $('.setting-panel-wrap').hide();
+            $('#show-setting-panel').hide();
+        }
+        function simulatorRefresh() {
+            if (simulatorNeedRefresh) {
+                $settingIframe.attr('src', "{:url('Theme/fileSetting')}?theme={:input('param.theme')}&file=" + simulator._themeFile);
+                $simulator.load(function () {
+                    $(simulator.document).on('click', 'a', function () {
+                        var target = $(this).attr('target');
+                        var href = $(this).attr('href');
+                        if (target == '_blank' && href.indexOf('http') < 0) {
+                            simulator.location.href = href;
+                            return false;
+                        }
+                    });
+                });
+            }
+            simulatorNeedRefresh = true;
+        }
+        function afterSaveSetting() {
+            simulatorNeedRefresh = false;
+            simulator.location.reload();
+        }
+    </script>
 </body>
+
 </html>

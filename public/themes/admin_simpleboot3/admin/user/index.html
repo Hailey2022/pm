@@ -7,9 +7,7 @@
 			<li><a href="{:url('user/add')}">添加服务商</a></li>
 		</ul>
 		<form class="form-inline margin-top-20" method="get" action="{:url('User/index')}">
-			<!-- <> -->
 			<div class="col-sm-2">
-				<!-- <label class="control-label col-sm-2">类别</label> -->
 				<select class="form-control col-sm-2" list="users" id="input-clientType" name='roleId'>
 					<datalist>
 						<option value="">全部</option>
@@ -24,7 +22,6 @@
 				</select>
 			</div>
 			<div class="col-sm-5">
-				<!-- <label class="control-label">公司名:</label> -->
 				<input type="text" class="form-control" name="user_login" style="width: 400px;" id="keyword"
 					value="{:input('request.user_login/s','')}" placeholder="请输入服务商名字的关键字">
 				<input type="submit" class="btn btn-primary" value="搜索" />

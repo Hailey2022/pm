@@ -1,17 +1,12 @@
 <?php
-
 $fallback = false;
-
 $messages = array(
-
     'HTMLPurifier' => 'HTML Purifier',
-
     'LanguageFactoryTest: Pizza' => 'Pizza',
     'LanguageTest: List' => '$1',
     'LanguageTest: Hash' => '$1.Keys; $1.Values',
     'Item separator' => ', ',
     'Item separator last' => ' and ', 
-
     'ErrorCollector: No errors' => 'No errors detected. However, because error reporting is still incomplete, there may have been errors that the error collector was not notified of; please inspect the output HTML carefully.',
     'ErrorCollector: At line' => ' at line $line',
     'ErrorCollector: Incidental errors' => 'Incidental errors',
@@ -45,11 +40,8 @@ $messages = array(
     'AttrValidator: Attributes transformed' => 'Attributes on $CurrentToken.Compact transformed from $1.Keys to $2.Keys',
     'AttrValidator: Attribute removed' => '$CurrentAttr.Name attribute on $CurrentToken.Compact removed',
 );
-
 $errorNames = array(
     E_ERROR => 'Error',
     E_WARNING => 'Warning',
     E_NOTICE => 'Notice'
 );
-
-

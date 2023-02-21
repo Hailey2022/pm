@@ -1,16 +1,10 @@
 <?php
-
-
 class HTMLPurifier_HTMLModule_Tables extends HTMLPurifier_HTMLModule
 {
-    
     public $name = 'Tables';
-
-    
     public function setup($config)
     {
         $this->addElement('caption', false, 'Inline', 'Common');
-
         $this->addElement(
             'table',
             'Block',
@@ -26,30 +20,23 @@ class HTMLPurifier_HTMLModule_Tables extends HTMLPurifier_HTMLModule
                 'width' => 'Length'
             )
         );
-
-        
         $cell_align = array(
             'align' => 'Enum#left,center,right,justify,char',
             'charoff' => 'Length',
             'valign' => 'Enum#top,middle,bottom,baseline',
         );
-
         $cell_t = array_merge(
             array(
                 'abbr' => 'Text',
                 'colspan' => 'Number',
                 'rowspan' => 'Number',
-                
-                
                 'scope' => 'Enum#row,col,rowgroup,colgroup',
             ),
             $cell_align
         );
         $this->addElement('td', false, 'Flow', 'Common', $cell_t);
         $this->addElement('th', false, 'Flow', 'Common', $cell_t);
-
         $this->addElement('tr', false, 'Required: td | th', 'Common', $cell_align);
-
         $cell_col = array_merge(
             array(
                 'span' => 'Number',
@@ -59,11 +46,8 @@ class HTMLPurifier_HTMLModule_Tables extends HTMLPurifier_HTMLModule
         );
         $this->addElement('col', false, 'Empty', 'Common', $cell_col);
         $this->addElement('colgroup', false, 'Optional: col', 'Common', $cell_col);
-
         $this->addElement('tbody', false, 'Required: tr', 'Common', $cell_align);
         $this->addElement('thead', false, 'Required: tr', 'Common', $cell_align);
         $this->addElement('tfoot', false, 'Required: tr', 'Common', $cell_align);
     }
 }
-
-

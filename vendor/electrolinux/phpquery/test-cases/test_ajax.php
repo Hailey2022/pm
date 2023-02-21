@@ -4,14 +4,12 @@ set_include_path(
 	get_include_path().PATH_SEPARATOR
 	.'zend-framework/'
 );
-
 require_once('../phpQuery/phpQuery.php');
 phpQuery::$debug = true;
 phpQuery::$ajaxAllowedHosts[] = 'wikipedia.org';
 phpQuery::$ajaxAllowedHosts[] = 'google.com';
 phpQuery::$ajaxAllowedHosts[] = 'code.google.com';
 phpQuery::$ajaxAllowedHosts[] = 'www.google.com';
-
 //$pq = phpQuery::ajax(array(
 //	'url' => 'http://wikipedia.org/',
 //	'success' => 'v87shs79d8fhs9d'
@@ -29,8 +27,6 @@ phpQuery::$ajaxAllowedHosts[] = 'www.google.com';
 //	}
 //	print "\n";
 //}
-
-
 $testName = 'Load';
 $test = phpQuery::newDocumentFile('test.html')
 	->find('div:first')
@@ -43,9 +39,6 @@ else {
 	print "</pre>\n";
 }
 print "\n";
-
-
-
 $pq = phpQuery::ajax(array(
 	'url' => 'http://'.$_SERVER['SERVER_NAME'].preg_replace('@/[^/]+$@', '/test_ajax_data_1', $_SERVER['REQUEST_URI']),
 	'success' => 'a789fhasdui3124',
@@ -60,13 +53,10 @@ function a789fhasdui3124($html) {
 	}
 	print "\n";
 }
-
 function jhdbg786213u8dsfg7y() {
 	$testName = 'AJAX request text node';
 	print "Test '$testName' <strong>FAILED</strong> !!! ";
 }
-
-
 //$testName = 'gdata plugin';
 //phpQuery::extend('gdata');
 //$xhr = phpQuery::$plugins->gdata('tobiasz.cudnik@gmail.com', 'XXX');

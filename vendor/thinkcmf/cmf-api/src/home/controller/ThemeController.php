@@ -1,26 +1,15 @@
 <?php
-
-
-
-
-
-
-
 namespace api\home\controller;
-
 use api\home\model\ThemeFileModel;
 use cmf\controller\RestBaseController;
-
 class ThemeController extends RestBaseController
 {
-    
     public function more()
     {
         $theme          = $this->request->param('theme');
         $themeFileModel = new ThemeFileModel();
         $file           = $this->request->param('file');
         $file           = $themeFileModel->where('theme', $theme)->where('file', $file)->find();
-
         $vars    = [];
         $widgets = [];
         $oldMore = $file['more'];
@@ -35,7 +24,6 @@ class ThemeController extends RestBaseController
                         break;
                     case 'array':
                         foreach ($var['value'] as $varKey => $varValue) {
-
                             foreach ($varValue as $varValueKey => $varValueValue) {
                                 switch ($var['item'][$varValueKey]['type']) {
                                     case 'image':
@@ -46,7 +34,6 @@ class ThemeController extends RestBaseController
                                         break;
                                     default:
                                         $var['value'][$varKey][$varValueKey] = $varValueValue;
-
                                 }
                             }
                         }
@@ -55,17 +42,13 @@ class ThemeController extends RestBaseController
                     default:
                         $vars[$varName] = $var['value'];
                 }
-
             }
         }
-
         if (!empty($oldMore['widgets'])) {
             foreach ($oldMore['widgets'] as $widgetName => $widget) {
-
                 $widgetVars = [];
                 if (!empty($widget['vars'])) {
                     foreach ($widget['vars'] as $varName => $var) {
-
                         switch ($var['type']) {
                             case 'image':
                                 $widgetVars[$varName] = cmf_get_image_url($var['value']);
@@ -75,7 +58,6 @@ class ThemeController extends RestBaseController
                                 break;
                             case 'array':
                                 foreach ($var['value'] as $varKey => $varValue) {
-
                                     foreach ($varValue as $varValueKey => $varValueValue) {
                                         switch ($var['item'][$varValueKey]['type']) {
                                             case 'image':
@@ -86,7 +68,6 @@ class ThemeController extends RestBaseController
                                                 break;
                                             default:
                                                 $var['value'][$varKey][$varValueKey] = $varValueValue;
-
                                         }
                                     }
                                 }
@@ -97,16 +78,13 @@ class ThemeController extends RestBaseController
                         }
                     }
                 }
-
                 $widget['vars']       = $widgetVars;
                 $widgets[$widgetName] = $widget;
             }
         }
-
         $this->success('success', [
             'vars'    => $vars,
             'widgets' => $widgets
         ]);
     }
-
 }

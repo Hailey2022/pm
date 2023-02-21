@@ -2,17 +2,13 @@
 require_once('../phpQuery/phpQuery.php');
 phpQuery::$debug = true;
 phpQuery::extend('WebBrowser');
-
 phpQuery::$ajaxAllowedHosts[] = 'gmail.com';
 phpQuery::$ajaxAllowedHosts[] = 'google.com';
 phpQuery::$ajaxAllowedHosts[] = 'www.google.com';
 phpQuery::$ajaxAllowedHosts[] = 'www.google.pl';
 phpQuery::$ajaxAllowedHosts[] = 'mail.google.com';
-
-
 if (0) {
 	phpQuery::$plugins->browserGet('http://google.com/', 'success1');
-	
 	function success1($pq) {
 		print 'success1 callback';
 		$pq
@@ -23,15 +19,12 @@ if (0) {
 					->submit()
 		;
 	}
-	
 	function success2($pq) {
 		print 'success2 callback';
 		print $pq
 			->find('script')->remove()->end();
 	}
 }
-
-
 if (0) {
 	phpQuery::plugin("Scripts");
 	phpQuery::newDocument('<div/>')
@@ -42,8 +35,6 @@ if (0) {
 		print $pq->script('print_websafe');
 	}
 }
-
-
 if (0) {
 	$browser = null;
 	$browserCallback = new CallbackReference($browser);
@@ -62,7 +53,6 @@ if (0) {
 		}
 	}
 }
-
 //	if ( $result->whois() == $testResult )
 //		print "Test '$testName' PASSED :)";
 //	else {

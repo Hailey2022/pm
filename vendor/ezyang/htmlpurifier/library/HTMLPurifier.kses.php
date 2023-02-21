@@ -1,9 +1,5 @@
 <?php
-
-
-
 require_once dirname(__FILE__) . '/HTMLPurifier.auto.php';
-
 function kses($string, $allowed_html, $allowed_protocols = null)
 {
     $config = HTMLPurifier_Config::createDefault();
@@ -23,5 +19,3 @@ function kses($string, $allowed_html, $allowed_protocols = null)
     $purifier = new HTMLPurifier($config);
     return $purifier->purify($string);
 }
-
-

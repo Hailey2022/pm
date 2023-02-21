@@ -1,20 +1,6 @@
 <?php
-
-
-
-
-
-
-
-
-
-
-
-
 namespace cmf\queue\connector;
-
 use think\queue\connector\Database as DataBaseConnector;
-
 class Database extends DataBaseConnector
 {
     protected $options = [
@@ -23,8 +9,6 @@ class Database extends DataBaseConnector
         'table'   => 'queue_jobs',
         'dsn'     => []
     ];
-
-    
     protected function pushToDatabase($delay, $queue, $payload, $attempts = 0)
     {
         return $this->db->name($this->options['table'])->insert([
@@ -37,12 +21,9 @@ class Database extends DataBaseConnector
             'create_time'    => time()
         ]);
     }
-
-    
     protected function getNextAvailableJob($queue)
     {
         $this->db->startTrans();
-
         $job = $this->db->name($this->options['table'])
             ->lock(true)
             ->where('queue', $this->getQueue($queue))
@@ -50,11 +31,8 @@ class Database extends DataBaseConnector
             ->where('available_time', '<=', time())
             ->order('id', 'asc')
             ->find();
-
         return $job ? (object)$job : null;
     }
-
-    
     protected function markJobAsReserved($id)
     {
         $this->db->name($this->options['table'])->where('id', $id)->update([
@@ -62,12 +40,9 @@ class Database extends DataBaseConnector
             'reserve_time' => time()
         ]);
     }
-
-    
     protected function releaseJobsThatHaveBeenReservedTooLong($queue)
     {
         $expired = time() - $this->options['expire'];
-
         $this->db->name($this->options['table'])
             ->where('queue', $this->getQueue($queue))
             ->where('reserved', 1)
@@ -78,6 +53,4 @@ class Database extends DataBaseConnector
                 'attempts'     => $this->db->raw('attempts + 1')
             ]);
     }
-
-
 }

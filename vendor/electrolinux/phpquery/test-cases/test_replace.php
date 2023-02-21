@@ -1,7 +1,6 @@
 <?php
 require_once('../phpQuery/phpQuery.php');
 phpQuery::$debug = true;
-
 $testName = 'ReplaceWith';
 phpQuery::newDocumentFile('test.html')
 	->find('p:eq(1)')
@@ -15,9 +14,6 @@ else
 	print "Test '{$testName}' <strong>FAILED</strong> !!! ";
 $result->dump();
 print "\n";
-
-
-
 $testName = 'ReplaceAll';
 $testResult = 3;
 phpQuery::newDocumentFile('test.html');

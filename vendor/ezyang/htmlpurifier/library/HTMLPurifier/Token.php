@@ -1,27 +1,12 @@
 <?php
-
-
 abstract class HTMLPurifier_Token
 {
-    
     public $line;
-
-    
     public $col;
-
-    
     public $armor = array();
-
-    
     public $skip;
-
-    
     public $rewind;
-
-    
     public $carryover;
-
-    
     public function __get($n)
     {
         if ($n === 'type') {
@@ -42,15 +27,11 @@ abstract class HTMLPurifier_Token
             }
         }
     }
-
-    
     public function position($l = null, $c = null)
     {
         $this->line = $l;
         $this->col = $c;
     }
-
-    
     public function rawPosition($l, $c)
     {
         if ($c === -1) {
@@ -59,9 +40,5 @@ abstract class HTMLPurifier_Token
         $this->line = $l;
         $this->col = $c;
     }
-
-    
     abstract public function toNode();
 }
-
-

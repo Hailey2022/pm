@@ -1,17 +1,14 @@
 <?php
 namespace app\admin\controller;
-
 use cmf\controller\AdminBaseController;
 use think\Db;
 use think\db\Query;
-
 class ReportController extends AdminBaseController
 {
     function isAdmin($uid)
     {
         return ($uid == 1 || $uid == 9);
     }
-
     public function reports()
     {
         $projectId = $this->request->param('projectId');
@@ -34,7 +31,6 @@ class ReportController extends AdminBaseController
         $this->assign('reports', $reports);
         return $this->fetch();
     }
-
     public function updatePic()
     {
         $uid = cmf_get_current_admin_id();
@@ -83,7 +79,6 @@ class ReportController extends AdminBaseController
         $this->assign('contracts', $contracts);
         return $this->fetch();
     }
-
     public function updateReport()
     {
         $uid = cmf_get_current_admin_id();
@@ -131,7 +126,6 @@ class ReportController extends AdminBaseController
         $this->assign('contracts', $contracts);
         return $this->fetch();
     }
-
     public function addReport()
     {
         $uid = cmf_get_current_admin_id();
@@ -162,7 +156,6 @@ class ReportController extends AdminBaseController
         $this->assign("reportTypes", $reportTypes);
         return $this->fetch();
     }
-
     public function pics()
     {
         $uid = cmf_get_current_admin_id();
@@ -184,7 +177,6 @@ class ReportController extends AdminBaseController
         $this->assign('pics', $pics);
         return $this->fetch();
     }
-
     public function addPic()
     {
         $uid = cmf_get_current_admin_id();
@@ -199,7 +191,6 @@ class ReportController extends AdminBaseController
             ->order('p.updateTime', 'desc')
             ->select();
         $this->assign('projects', $projects);
-
         $contracts = Db::name('contract c, pm_user u, pm_type t')
             ->where('t.id=c.clientType')
             ->where('u.id = c.clientId')
@@ -212,7 +203,6 @@ class ReportController extends AdminBaseController
         $this->assign('contracts', $contracts);
         return $this->fetch();
     }
-
     public function postReportAdd()
     {
         if ($this->request->isPost()) {
@@ -238,7 +228,6 @@ class ReportController extends AdminBaseController
             $this->error("非法访问");
         }
     }
-
     public function postPicAdd()
     {
         if ($this->request->isPost()) {
@@ -263,8 +252,6 @@ class ReportController extends AdminBaseController
             $this->error("非法访问");
         }
     }
-
-
     public function postPicUpdate()
     {
         if ($this->request->isPost()) {
@@ -291,7 +278,6 @@ class ReportController extends AdminBaseController
             $this->error("非法访问");
         }
     }
-
     public function postReportUpdate()
     {
         if ($this->request->isPost()) {
@@ -319,7 +305,6 @@ class ReportController extends AdminBaseController
             $this->error("非法访问");
         }
     }
-
     public function deleteReport()
     {
         $reportId = $this->request->param('reportId');
@@ -330,7 +315,6 @@ class ReportController extends AdminBaseController
             $this->error("出现了错误");
         }
     }
-
     public function deletePic()
     {
         $picId = $this->request->param('picId');
@@ -341,7 +325,6 @@ class ReportController extends AdminBaseController
             $this->error("出现了错误");
         }
     }
-
     public function listReportFiles()
     {
         $rid = $this->request->param("reportId");
@@ -354,7 +337,6 @@ class ReportController extends AdminBaseController
         }
         return $this->fetch();
     }
-
     public function listPicFiles()
     {
         $rid = $this->request->param("picId");

@@ -1,13 +1,7 @@
 <?php
-
-
 class HTMLPurifier_Context
 {
-
-    
     private $_storage = array();
-
-    
     public function register($name, &$ref)
     {
         if (array_key_exists($name, $this->_storage)) {
@@ -19,8 +13,6 @@ class HTMLPurifier_Context
         }
         $this->_storage[$name] =& $ref;
     }
-
-    
     public function &get($name, $ignore_error = false)
     {
         if (!array_key_exists($name, $this->_storage)) {
@@ -35,8 +27,6 @@ class HTMLPurifier_Context
         }
         return $this->_storage[$name];
     }
-
-    
     public function destroy($name)
     {
         if (!array_key_exists($name, $this->_storage)) {
@@ -48,14 +38,10 @@ class HTMLPurifier_Context
         }
         unset($this->_storage[$name]);
     }
-
-    
     public function exists($name)
     {
         return array_key_exists($name, $this->_storage);
     }
-
-    
     public function loadArray($context_array)
     {
         foreach ($context_array as $key => $discard) {
@@ -63,5 +49,3 @@ class HTMLPurifier_Context
         }
     }
 }
-
-

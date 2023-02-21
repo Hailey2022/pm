@@ -1,42 +1,17 @@
 <?php
-
-
-
-
-
-
-
-
-
-
 namespace think;
-
 use think\exception\ClassNotFoundException;
-
 class Loader
 {
-    
     protected static $classMap = [];
-
-    
     protected static $classAlias = [];
-
-    
     private static $prefixLengthsPsr4 = [];
     private static $prefixDirsPsr4    = [];
     private static $fallbackDirsPsr4  = [];
-
-    
     private static $prefixesPsr0     = [];
     private static $fallbackDirsPsr0 = [];
-
-    
     private static $files = [];
-
-    
     private static $composerPath;
-
-    
     public static function getRootPath()
     {
         if ('cli' == PHP_SAPI) {
@@ -44,34 +19,22 @@ class Loader
         } else {
             $scriptName = $_SERVER['SCRIPT_FILENAME'];
         }
-
         $path = realpath(dirname($scriptName));
-
         if (!is_file($path . DIRECTORY_SEPARATOR . 'think')) {
             $path = dirname($path);
         }
-
         return $path . DIRECTORY_SEPARATOR;
     }
-
-    
     public static function register($autoload = '')
     {
-        
         spl_autoload_register($autoload ?: 'think\\Loader::autoload', true, true);
-
         $rootPath = self::getRootPath();
-
         self::$composerPath = $rootPath . 'vendor' . DIRECTORY_SEPARATOR . 'composer' . DIRECTORY_SEPARATOR;
-
-        
         if (is_dir(self::$composerPath)) {
             if (is_file(self::$composerPath . 'autoload_static.php')) {
                 require self::$composerPath . 'autoload_static.php';
-
                 $declaredClass = get_declared_classes();
                 $composerClass = array_pop($declaredClass);
-
                 foreach (['prefixLengthsPsr4', 'prefixDirsPsr4', 'fallbackDirsPsr4', 'prefixesPsr0', 'fallbackDirsPsr0', 'classMap', 'files'] as $attr) {
                     if (property_exists($composerClass, $attr)) {
                         self::${$attr} = $composerClass::${$attr};
@@ -81,52 +44,34 @@ class Loader
                 self::registerComposerLoader(self::$composerPath);
             }
         }
-
-        
         self::addNamespace([
             'think'  => __DIR__,
             'traits' => dirname(__DIR__) . DIRECTORY_SEPARATOR . 'traits',
         ]);
-
-        
         if (is_file($rootPath . 'runtime' . DIRECTORY_SEPARATOR . 'classmap.php')) {
             self::addClassMap(__include_file($rootPath . 'runtime' . DIRECTORY_SEPARATOR . 'classmap.php'));
         }
-
-        
         self::addAutoLoadDir($rootPath . 'extend');
     }
-
-    
     public static function autoload($class)
     {
         if (isset(self::$classAlias[$class])) {
             return class_alias(self::$classAlias[$class], $class);
         }
-
         if ($file = self::findFile($class)) {
-
-            
             if (strpos(PHP_OS, 'WIN') !== false && pathinfo($file, PATHINFO_FILENAME) != pathinfo(realpath($file), PATHINFO_FILENAME)) {
                 return false;
             }
-
             __include_file($file);
             return true;
         }
     }
-
-    
     private static function findFile($class)
     {
         if (!empty(self::$classMap[$class])) {
-            
             return self::$classMap[$class];
         }
-
-        
         $logicalPathPsr4 = strtr($class, '\\', DIRECTORY_SEPARATOR) . '.php';
-
         $first = $class[0];
         if (isset(self::$prefixLengthsPsr4[$first])) {
             foreach (self::$prefixLengthsPsr4[$first] as $prefix => $length) {
@@ -139,24 +84,17 @@ class Loader
                 }
             }
         }
-
-        
         foreach (self::$fallbackDirsPsr4 as $dir) {
             if (is_file($file = $dir . DIRECTORY_SEPARATOR . $logicalPathPsr4)) {
                 return $file;
             }
         }
-
-        
         if (false !== $pos = strrpos($class, '\\')) {
-            
             $logicalPathPsr0 = substr($logicalPathPsr4, 0, $pos + 1)
             . strtr(substr($logicalPathPsr4, $pos + 1), '_', DIRECTORY_SEPARATOR);
         } else {
-            
             $logicalPathPsr0 = strtr($class, '_', DIRECTORY_SEPARATOR) . '.php';
         }
-
         if (isset(self::$prefixesPsr0[$first])) {
             foreach (self::$prefixesPsr0[$first] as $prefix => $dirs) {
                 if (0 === strpos($class, $prefix)) {
@@ -168,18 +106,13 @@ class Loader
                 }
             }
         }
-
-        
         foreach (self::$fallbackDirsPsr0 as $dir) {
             if (is_file($file = $dir . DIRECTORY_SEPARATOR . $logicalPathPsr0)) {
                 return $file;
             }
         }
-
         return self::$classMap[$class] = false;
     }
-
-    
     public static function addClassMap($class, $map = '')
     {
         if (is_array($class)) {
@@ -188,8 +121,6 @@ class Loader
             self::$classMap[$class] = $map;
         }
     }
-
-    
     public static function addNamespace($namespace, $path = '')
     {
         if (is_array($namespace)) {
@@ -200,8 +131,6 @@ class Loader
             self::addPsr4($namespace . '\\', rtrim($path, DIRECTORY_SEPARATOR), true);
         }
     }
-
-    
     private static function addPsr0($prefix, $paths, $prepend = false)
     {
         if (!$prefix) {
@@ -216,17 +145,13 @@ class Loader
                     (array) $paths
                 );
             }
-
             return;
         }
-
         $first = $prefix[0];
         if (!isset(self::$prefixesPsr0[$first][$prefix])) {
             self::$prefixesPsr0[$first][$prefix] = (array) $paths;
-
             return;
         }
-
         if ($prepend) {
             self::$prefixesPsr0[$first][$prefix] = array_merge(
                 (array) $paths,
@@ -239,12 +164,9 @@ class Loader
             );
         }
     }
-
-    
     private static function addPsr4($prefix, $paths, $prepend = false)
     {
         if (!$prefix) {
-            
             if ($prepend) {
                 self::$fallbackDirsPsr4 = array_merge(
                     (array) $paths,
@@ -257,36 +179,28 @@ class Loader
                 );
             }
         } elseif (!isset(self::$prefixDirsPsr4[$prefix])) {
-            
             $length = strlen($prefix);
             if ('\\' !== $prefix[$length - 1]) {
                 throw new \InvalidArgumentException("A non-empty PSR-4 prefix must end with a namespace separator.");
             }
-
             self::$prefixLengthsPsr4[$prefix[0]][$prefix] = $length;
             self::$prefixDirsPsr4[$prefix]                = (array) $paths;
         } elseif ($prepend) {
-            
             self::$prefixDirsPsr4[$prefix] = array_merge(
                 (array) $paths,
                 self::$prefixDirsPsr4[$prefix]
             );
         } else {
-            
             self::$prefixDirsPsr4[$prefix] = array_merge(
                 self::$prefixDirsPsr4[$prefix],
                 (array) $paths
             );
         }
     }
-
-    
     public static function addAutoLoadDir($path)
     {
         self::$fallbackDirsPsr4[] = $path;
     }
-
-    
     public static function addClassAlias($alias, $class = null)
     {
         if (is_array($alias)) {
@@ -295,8 +209,6 @@ class Loader
             self::$classAlias[$alias] = $class;
         }
     }
-
-    
     public static function registerComposerLoader($composerPath)
     {
         if (is_file($composerPath . 'autoload_namespaces.php')) {
@@ -305,39 +217,31 @@ class Loader
                 self::addPsr0($namespace, $path);
             }
         }
-
         if (is_file($composerPath . 'autoload_psr4.php')) {
             $map = require $composerPath . 'autoload_psr4.php';
             foreach ($map as $namespace => $path) {
                 self::addPsr4($namespace, $path);
             }
         }
-
         if (is_file($composerPath . 'autoload_classmap.php')) {
             $classMap = require $composerPath . 'autoload_classmap.php';
             if ($classMap) {
                 self::addClassMap($classMap);
             }
         }
-
         if (is_file($composerPath . 'autoload_files.php')) {
             self::$files = require $composerPath . 'autoload_files.php';
         }
     }
-
-    
     public static function loadComposerAutoloadFiles()
     {
         foreach (self::$files as $fileIdentifier => $file) {
             if (empty($GLOBALS['__composer_autoload_files'][$fileIdentifier])) {
                 __require_file($file);
-
                 $GLOBALS['__composer_autoload_files'][$fileIdentifier] = true;
             }
         }
     }
-
-    
     public static function parseName($name, $type = 0, $ucfirst = true)
     {
         if ($type) {
@@ -346,15 +250,11 @@ class Loader
             }, $name);
             return $ucfirst ? ucfirst($name) : lcfirst($name);
         }
-
         return strtolower(trim(preg_replace("/[A-Z]/", "_\\0", $name), "_"));
     }
-
-    
     public static function factory($name, $namespace = '', ...$args)
     {
         $class = false !== strpos($name, '\\') ? $name : $namespace . ucwords($name);
-
         if (class_exists($class)) {
             return Container::getInstance()->invokeClass($class, $args);
         } else {
@@ -362,13 +262,10 @@ class Loader
         }
     }
 }
-
-
 function __include_file($file)
 {
     return include $file;
 }
-
 function __require_file($file)
 {
     return require $file;

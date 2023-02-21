@@ -1,16 +1,11 @@
 <?php
-
 class phpQueryObjectPlugin_WebBrowser {
-	
 	public static $phpQueryMethods = null;
-	
 	public static function WebBrowser($self, $callback = null, $location = null) {
 		$self = $self->_clone()->toRoot();
 		$location = $location
 			? $location
-			
 			: $self->document->xhr->getUri(true);
-		
 		$self->document->WebBrowserCallback = $callback;
 		if (! $location)
 			throw new Exception('Location needed to activate WebBrowser plugin !');
@@ -32,7 +27,6 @@ class phpQueryObjectPlugin_WebBrowser {
 			$url = resolve_url($self->document->location, $url);
 			if (! $dir)
 				$dir = getcwd();
-			
 			if (! $filename) {
 				$matches = null;
 				preg_match('@/([^/]+)$@', $url, $matches);
@@ -41,14 +35,11 @@ class phpQueryObjectPlugin_WebBrowser {
 			//print $url;
 			$path = rtrim($dir, '/').'/'.$filename;
 			phpQuery::debug("Requesting download of $url\n");
-			
 			file_put_contents($path, file_get_contents($url));
 		}
 		return $self;
 	}
-	
 	public static function location($self, $url = null) {
-		
 		$xhr = isset($self->document->xhr)
 			? $self->document->xhr
 			: null;
@@ -66,8 +57,6 @@ class phpQueryObjectPlugin_WebBrowser {
 		}
 		return $return;
 	}
-        
-        
         public static function download($self, $url = null) {
             $xhr = isset($self->document->xhr)
 			? $self->document->xhr
@@ -88,7 +77,6 @@ class phpQueryObjectPlugin_WebBrowser {
         }
 }
 class phpQueryPlugin_WebBrowser {
-	
 	public static function browserGet($url, $callback,
 		$param1 = null, $param2 = null, $param3 = null) {
 		phpQuery::debug("[WebBrowser] GET: $url");
@@ -117,7 +105,6 @@ class phpQueryPlugin_WebBrowser {
 			return false;
 		}
 	}
-	
 	public static function browserPost($url, $data, $callback,
 		$param1 = null, $param2 = null, $param3 = null) {
 		self::authorizeHost($url);
@@ -144,7 +131,6 @@ class phpQueryPlugin_WebBrowser {
 		} else
 			return false;
 	}
-	
 	public static function browser($ajaxSettings, $callback,
 		$param1 = null, $param2 = null, $param3 = null) {
 		self::authorizeHost($ajaxSettings['url']);
@@ -178,13 +164,9 @@ class phpQueryPlugin_WebBrowser {
 		unset($settings['error']);
 		return $settings;
 	}
-	
 	public static function browserReceive($xhr) {
 		phpQuery::debug("[WebBrowser] Received from ".$xhr->getUri(true));
-		
 		$body = $xhr->getLastResponse()->getBody();
-
-		
 		if (strpos($body, '<!doctype html>') !== false) {
 			$body = '<html>'
 				.str_replace('<!doctype html>', '', $body)
@@ -199,21 +181,17 @@ class phpQueryPlugin_WebBrowser {
 //			print htmlspecialchars(var_export($xhr->getCookieJar()->getAllCookies(), true));
 //			print htmlspecialchars(var_export($xhr->getLastResponse()->getHeader('Set-Cookie'), true));
 			phpQuery::debug("Meta redirect... '{$refresh->attr('content')}'\n");
-			
 			$content = $refresh->attr('content');
 			$urlRefresh = substr($content, strpos($content, '=')+1);
 			$urlRefresh = trim($urlRefresh, '\'"');
-			
 			phpQuery::ajaxAllowURL($urlRefresh);
 //			$urlRefresh = urldecode($urlRefresh);
-			
 			$xhr = phpQuery::ajax(array(
 				'type' => 'GET',
 				'url' => $urlRefresh,
 				'dataType' => 'html',
 			), $xhr);
 			if ($xhr->getLastResponse()->isSuccessful()) {
-				
 				return call_user_func_array(
 					array('phpQueryPlugin_WebBrowser', 'browserReceive'), array($xhr)
 				);
@@ -221,21 +199,15 @@ class phpQueryPlugin_WebBrowser {
 		} else
 			return $pq;
 	}
-        
-        
 	public static function browserDownload($xhr) {
 		phpQuery::debug("[WebBrowser] Received from ".$xhr->getUri(true));
-		
 		$body = $xhr->getLastResponse()->getBody();
-
 		return $body;
 	}
-	
 	public static function hadleClick($e, $callback = null) {
 		$node = phpQuery::pq($e->target);
 		$type = null;
 		if ($node->is('a[href]')) {
-			
 			$xhr = isset($node->document->xhr)
 				? $node->document->xhr
 				: null;
@@ -252,23 +224,19 @@ class phpQueryPlugin_WebBrowser {
 		} else if ($node->is(':submit') && $node->parents('form')->size())
 			$node->parents('form')->trigger('submit', array($e));
 	}
-	
 	public static function handleSubmit($e, $callback = null) {
 		$node = phpQuery::pq($e->target);
 		if (!$node->is('form') || !$node->is('[action]'))
 			return;
-		
 		$xhr = isset($node->document->xhr)
 			? $node->document->xhr
 			: null;
 		$submit = pq($e->relatedTarget)->is(':submit')
 			? $e->relatedTarget
-				
 //			: $node->find(':submit:first')->get(0);
 			: $node->find('*:submit:first')->get(0);
 		$data = array();
 		foreach($node->serializeArray($submit) as $r)
-		
 //		foreach($node->serializeArray($submit) as $r)
 			$data[ $r['name'] ] = $r['value'];
 		$options = array(
@@ -291,7 +259,6 @@ class phpQueryPlugin_WebBrowser {
 			));
 	}
 }
-
 function glue_url($parsed)
     {
     if (! is_array($parsed)) return false;
@@ -307,49 +274,37 @@ function glue_url($parsed)
     $uri .= isset($parsed['fragment']) ? '#'.$parsed['fragment'] : '';
     return $uri;
     }
-
 function resolve_url($base, $url) {
         if (!strlen($base)) return $url;
-        
         if (!strlen($url)) return $base;
-        
         if (preg_match('!^[a-z]+:!i', $url)) return $url;
         $base = parse_url($base);
         if ($url{0} == "#") {
-                
                 $base['fragment'] = substr($url, 1);
                 return unparse_url($base);
         }
         unset($base['fragment']);
         unset($base['query']);
         if (substr($url, 0, 2) == "//") {
-                
                 return unparse_url(array(
                         'scheme'=>$base['scheme'],
                         'path'=>substr($url,2),
                 ));
         } else if ($url{0} == "/") {
-                
                 $base['path'] = $url;
         } else {
-                
                 $path = explode('/', $base['path']);
                 $url_path = explode('/', $url);
-                
                 array_pop($path);
-                
-                
                 $end = array_pop($url_path);
                 foreach ($url_path as $segment) {
                         if ($segment == '.') {
-                                
                         } else if ($segment == '..' && $path && $path[sizeof($path)-1] != '..') {
                                 array_pop($path);
                         } else {
                                 $path[] = $segment;
                         }
                 }
-                
                 if ($end == '.') {
                         $path[] = '';
                 } else if ($end == '..' && $path && $path[sizeof($path)-1] != '..') {
@@ -357,10 +312,7 @@ function resolve_url($base, $url) {
                 } else {
                         $path[] = $end;
                 }
-                
                 $base['path'] = join('/', $path);
-
         }
-        
         return glue_url($base);
 }

@@ -1,7 +1,4 @@
 <?php
-
-
-
 $PHPMAILER_LANG['authenticate']         = 'Ошибка SMTP: ошибка авторизации.';
 $PHPMAILER_LANG['connect_host']         = 'Ошибка SMTP: не удается подключиться к SMTP-серверу.';
 $PHPMAILER_LANG['data_not_accepted']    = 'Ошибка SMTP: данные не приняты.';

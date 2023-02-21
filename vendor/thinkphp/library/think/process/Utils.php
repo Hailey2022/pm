@@ -1,21 +1,9 @@
 <?php
-
-
-
-
-
-
-
-
 namespace think\process;
-
 class Utils
 {
-
-    
     public static function escapeArgument($argument)
     {
-
         if ('' === $argument) {
             return escapeshellarg($argument);
         }
@@ -25,10 +13,8 @@ class Utils
             if ('"' === $part) {
                 $escapedArgument .= '\\"';
             } elseif (self::isSurroundedBy($part, '%')) {
-                
                 $escapedArgument .= '^%"' . substr($part, 1, -1) . '"^%';
             } else {
-                
                 if ('\\' === substr($part, -1)) {
                     $part .= '\\';
                 }
@@ -41,8 +27,6 @@ class Utils
         }
         return $escapedArgument;
     }
-
-    
     public static function validateInput($caller, $input)
     {
         if (null !== $input) {
@@ -56,10 +40,8 @@ class Utils
         }
         return $input;
     }
-
     private static function isSurroundedBy($arg, $char)
     {
         return 2 < strlen($arg) && $char === $arg[0] && $char === $arg[strlen($arg) - 1];
     }
-
 }

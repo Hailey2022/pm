@@ -1,7 +1,4 @@
 <?php
-
-
-
 $PHPMAILER_LANG['authenticate']         = 'خطأ SMTP : لا يمكن تأكيد الهوية.';
 $PHPMAILER_LANG['connect_host']         = 'خطأ SMTP: لا يمكن الاتصال بالخادم SMTP.';
 $PHPMAILER_LANG['data_not_accepted']    = 'خطأ SMTP: لم يتم قبول المعلومات .';

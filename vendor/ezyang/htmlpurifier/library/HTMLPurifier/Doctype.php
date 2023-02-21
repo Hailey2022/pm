@@ -1,29 +1,13 @@
 <?php
-
-
 class HTMLPurifier_Doctype
 {
-    
     public $name;
-
-    
     public $modules = array();
-
-    
     public $tidyModules = array();
-
-    
     public $xml = true;
-
-    
     public $aliases = array();
-
-    
     public $dtdPublic;
-
-    
     public $dtdSystem;
-
     public function __construct(
         $name = null,
         $xml = true,
@@ -42,5 +26,3 @@ class HTMLPurifier_Doctype
         $this->dtdSystem    = $dtd_system;
     }
 }
-
-

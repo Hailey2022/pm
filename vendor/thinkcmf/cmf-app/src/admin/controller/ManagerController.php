@@ -1,16 +1,13 @@
 <?php
 namespace app\admin\controller;
-
 use cmf\controller\AdminBaseController;
 use think\Db;
-
 class ManagerController extends AdminBaseController
 {
     public function ip()
     {
         return $this->request->ip();
     }
-
     public function addProject()
     {
         $users = Db::name('user')
@@ -27,7 +24,6 @@ class ManagerController extends AdminBaseController
         $this->assign("theProjectStatus", $theProjectStatus);
         return $this->fetch();
     }
-
     public function getProjectIdByContractId($contractId = null)
     {
         if ($contractId != null) {
@@ -40,7 +36,6 @@ class ManagerController extends AdminBaseController
         }
         return null;
     }
-
     public function getClientIdByClientName($clientName = null)
     {
         if ($clientName != null) {
@@ -77,7 +72,6 @@ class ManagerController extends AdminBaseController
             return 0;
         }
     }
-
     public function getContractNameByContractId($contractId = null)
     {
         if ($contractId != null) {
@@ -90,7 +84,6 @@ class ManagerController extends AdminBaseController
         }
         return null;
     }
-
     public function getContractIdByPaymentId($paymentId = null)
     {
         if ($paymentId != null) {
@@ -103,12 +96,10 @@ class ManagerController extends AdminBaseController
         }
         return null;
     }
-
     public function getProjectIdByPaymentId($paymentId = null)
     {
         return $this->getProjectIdByContractId($this->getContractIdByPaymentId($paymentId));
     }
-
     public function getProjectNameByProjectId($projectId = null)
     {
         if ($projectId != null) {
@@ -121,7 +112,6 @@ class ManagerController extends AdminBaseController
         }
         return null;
     }
-
     public function getApproximatePriceByProjectId($projectId = null)
     {
         $result = "未填写";
@@ -135,7 +125,6 @@ class ManagerController extends AdminBaseController
         }
         return $result;
     }
-
     public function getUsernameByUserId($userId = null)
     {
         $usersInfo = Db::name("user")
@@ -146,7 +135,6 @@ class ManagerController extends AdminBaseController
         }
         return $usersInfo["user_login"];
     }
-
     public function calculateProjectAmount($projectId = null)
     {
         if ($projectId != null) {
@@ -209,7 +197,6 @@ class ManagerController extends AdminBaseController
                 ]);
         }
     }
-
     public function calculateContractAmount($contractId = null)
     {
         if ($contractId != null) {
@@ -265,10 +252,8 @@ class ManagerController extends AdminBaseController
                     'othersSum' => $others
                 ]);
             $this->calculateProjectAmount($this->getProjectIdByContractId($contractId));
-
         }
     }
-
     public function viewContracts()
     {
         $cid = $this->request->param("contractId");
@@ -284,7 +269,6 @@ class ManagerController extends AdminBaseController
         }
         return $this->fetch();
     }
-
     public function view()
     {
         $all = Db::name('project p, pm_tenderingmethod t, pm_implementation_phase i')
@@ -295,7 +279,6 @@ class ManagerController extends AdminBaseController
         $this->assign("data", $all);
         return $this->fetch();
     }
-
     public function listContracts()
     {
         $all = Db::name('project p, pm_type t, pm_contract c, pm_user u')
@@ -306,7 +289,6 @@ class ManagerController extends AdminBaseController
         $this->assign("data", $all);
         return $this->fetch();
     }
-
     public function listContract()
     {
         $projectId = $this->request->param("projectId");
@@ -320,7 +302,6 @@ class ManagerController extends AdminBaseController
         $this->assign("projectName", $this->getProjectNameByProjectId($projectId));
         return $this->fetch();
     }
-
     public function updateContract()
     {
         $cid = $this->request->param("contractId");
@@ -337,7 +318,6 @@ class ManagerController extends AdminBaseController
         }
         return $this->fetch();
     }
-
     public function postContractUpdate()
     {
         $request = $this->request->param();
@@ -353,14 +333,12 @@ class ManagerController extends AdminBaseController
             $this->error("出错了！");
         }
     }
-
     public function postProjectAdd()
     {
         if ($this->request->isPost()) {
             $request = $this->request->param();
             $projectName = $request['project-name'];
             $projects = Db::name("project")->select();
-
             foreach ($projects as $project) {
                 if (array_key_exists('projectName', $project)) {
                     if ($project['projectName'] == $projectName) {
@@ -430,7 +408,6 @@ class ManagerController extends AdminBaseController
             $this->error("非法访问");
         }
     }
-
     public function pay()
     {
         $contractId = $this->request->param("contractId");
@@ -440,7 +417,6 @@ class ManagerController extends AdminBaseController
         $this->assign("data", $data);
         return $this->fetch();
     }
-
     public function postPaymentAdd()
     {
         $request = $this->request->param();
@@ -477,7 +453,6 @@ class ManagerController extends AdminBaseController
         }
         $this->error("非法支付请求");
     }
-
     public function postPaymentUpdate()
     {
         $request = $this->request->param();
@@ -518,7 +493,6 @@ class ManagerController extends AdminBaseController
         }
         $this->error("非法支付请求");
     }
-
     public function listPayments()
     {
         $data = Db::name("payment p, pm_contract c, pm_project")
@@ -528,7 +502,6 @@ class ManagerController extends AdminBaseController
         $this->assign("data", $data);
         return $this->fetch();
     }
-
     public function updatePayment()
     {
         $paymentId = $this->request->param("paymentId");
@@ -552,7 +525,6 @@ class ManagerController extends AdminBaseController
         }
         return $this->fetch();
     }
-
     public function listPayment()
     {
         $request = $this->request->param();
@@ -564,7 +536,6 @@ class ManagerController extends AdminBaseController
         $this->assign("contractName", $this->getContractNameByContractId($request["contractId"]));
         return $this->fetch();
     }
-
     public function viewPaymentFiles()
     {
         $cid = $this->request->param("paymentId");
@@ -589,7 +560,6 @@ class ManagerController extends AdminBaseController
         }
         return $this->fetch();
     }
-
     public function deleteProject()
     {
         $projectId = $this->request->param("projectId");
@@ -613,7 +583,6 @@ class ManagerController extends AdminBaseController
             $this->success("成功删除了{$contractCount}个合同，{$paymentCount}个支付记录");
         }
     }
-
     public function postClientAdd()
     {
         $user_login = $this->request->param('user_login');
@@ -625,7 +594,6 @@ class ManagerController extends AdminBaseController
         }
         Db::name("user")->insert(['user_login' => $user_login]);
     }
-
     public function postPaymentDelete()
     {
         $paymentId = $this->request->param("paymentId");
@@ -633,14 +601,12 @@ class ManagerController extends AdminBaseController
         $res = Db::name("payment")
             ->where("paymentId", $paymentId)
             ->delete();
-
         if ($res > 0) {
             $this->calculateContractAmount($contractId);
             $this->success("已删除");
         }
         $this->error("出错了");
     }
-
     public function listProjectPayments()
     {
         $projectId = $this->request->param("projectId");
@@ -677,7 +643,6 @@ class ManagerController extends AdminBaseController
         $this->assign("types", $types);
         return $this->fetch();
     }
-
     public function postContractAdd()
     {
         if ($this->request->isPost()) {
@@ -712,7 +677,6 @@ class ManagerController extends AdminBaseController
             $this->error("非法访问");
         }
     }
-
     public function deleteContract()
     {
         $contractId = $this->request->param("contractId");
@@ -732,7 +696,6 @@ class ManagerController extends AdminBaseController
             }
         }
     }
-
     public function postProjectUpdate()
     {
         if ($this->request->isPost()) {
@@ -776,7 +739,6 @@ class ManagerController extends AdminBaseController
             $this->error("非法访问");
         }
     }
-
     public function updateProject()
     {
         $projectId = $this->request->param("projectId");

@@ -1,29 +1,16 @@
 <?php
-
-
-
-
-
-
-
-
 namespace api\user\controller;
-
 use cmf\controller\RestUserBaseController;
 use cmf\lib\Upload;
-
 class UploadController extends RestUserBaseController
 {
-    
     public function one()
     {
         if ($this->request->isPost()) {
             $uploader = new Upload();
             $fileType = $this->request->param('filetype','image');
             $uploader->setFileType($fileType);
-
             $result = $uploader->upload();
-
             if ($result === false) {
                 $this->error($uploader->getError());
             } else {

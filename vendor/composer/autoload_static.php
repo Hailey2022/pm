@@ -1,9 +1,5 @@
 <?php
-
-
-
 namespace Composer\Autoload;
-
 class ComposerStaticInit5bfecc6fb5e853e2f790c7db297fb8ee
 {
     public static $files = array (
@@ -12,7 +8,6 @@ class ComposerStaticInit5bfecc6fb5e853e2f790c7db297fb8ee
         '22ae91e0a0181f0ca9a02b9dde87e558' => __DIR__ . '/..' . '/thinkcmf/cmf/src/common.php',
         '9b552a3cc426e3287cc811caefa3cf53' => __DIR__ . '/..' . '/topthink/think-helper/src/helper.php',
     );
-
     public static $prefixLengthsPsr4 = array (
         'w' => 
         array (
@@ -49,7 +44,6 @@ class ComposerStaticInit5bfecc6fb5e853e2f790c7db297fb8ee
             'PHPMailer\\PHPMailer\\' => 20,
         ),
     );
-
     public static $prefixDirsPsr4 = array (
         'wxapp\\' => 
         array (
@@ -104,7 +98,6 @@ class ComposerStaticInit5bfecc6fb5e853e2f790c7db297fb8ee
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
         ),
     );
-
     public static $prefixesPsr0 = array (
         'H' => 
         array (
@@ -114,7 +107,6 @@ class ComposerStaticInit5bfecc6fb5e853e2f790c7db297fb8ee
             ),
         ),
     );
-
     public static $classMap = array (
         'Callback' => __DIR__ . '/..' . '/electrolinux/phpquery/phpQuery/phpQuery/Callback.php',
         'CallbackBody' => __DIR__ . '/..' . '/electrolinux/phpquery/phpQuery/phpQuery/Callback.php',
@@ -141,7 +133,6 @@ class ComposerStaticInit5bfecc6fb5e853e2f790c7db297fb8ee
         'think\\facade\\Db' => __DIR__ . '/..' . '/thinkcmf/cmf/src/facade/Db.php',
         'think\\route\\dispatch\\Module' => __DIR__ . '/..' . '/thinkcmf/cmf/src/route/dispatch/Module.php',
     );
-
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
@@ -149,7 +140,6 @@ class ComposerStaticInit5bfecc6fb5e853e2f790c7db297fb8ee
             $loader->prefixDirsPsr4 = ComposerStaticInit5bfecc6fb5e853e2f790c7db297fb8ee::$prefixDirsPsr4;
             $loader->prefixesPsr0 = ComposerStaticInit5bfecc6fb5e853e2f790c7db297fb8ee::$prefixesPsr0;
             $loader->classMap = ComposerStaticInit5bfecc6fb5e853e2f790c7db297fb8ee::$classMap;
-
         }, null, ClassLoader::class);
     }
 }

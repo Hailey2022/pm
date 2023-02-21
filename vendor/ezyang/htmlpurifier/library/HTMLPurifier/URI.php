@@ -1,30 +1,13 @@
 <?php
-
-
 class HTMLPurifier_URI
 {
-    
     public $scheme;
-
-    
     public $userinfo;
-
-    
     public $host;
-
-    
     public $port;
-
-    
     public $path;
-
-    
     public $query;
-
-    
     public $fragment;
-
-    
     public function __construct($scheme, $userinfo, $host, $port, $path, $query, $fragment)
     {
         $this->scheme = is_null($scheme) || ctype_lower($scheme) ? $scheme : strtolower($scheme);
@@ -35,8 +18,6 @@ class HTMLPurifier_URI
         $this->query = $query;
         $this->fragment = $fragment;
     }
-
-    
     public function getSchemeObj($config, $context)
     {
         $registry = HTMLPurifier_URISchemeRegistry::instance();
@@ -46,12 +27,10 @@ class HTMLPurifier_URI
                 return false;
             } 
         } else {
-            
             $def = $config->getDefinition('URI');
             $scheme_obj = $def->getDefaultScheme($config, $context);
             if (!$scheme_obj) {
                 if ($def->defaultScheme !== null) {
-                    
                     trigger_error(
                         'Default scheme object "' . $def->defaultScheme . '" was not readable',
                         E_USER_WARNING
@@ -62,16 +41,11 @@ class HTMLPurifier_URI
         }
         return $scheme_obj;
     }
-
-    
     public function validate($config, $context)
     {
-        
         $chars_sub_delims = '!$&\'()*+,;=';
         $chars_gen_delims = ':/?#[]@';
         $chars_pchar = $chars_sub_delims . ':@';
-
-        
         if (!is_null($this->host)) {
             $host_def = new HTMLPurifier_AttrDef_URI_Host();
             $this->host = $host_def->validate($this->host, $config, $context);
@@ -79,70 +53,34 @@ class HTMLPurifier_URI
                 $this->host = null;
             }
         }
-
-        
-        
-        
-        
-        
-        
         if (!is_null($this->scheme) && is_null($this->host) || $this->host === '') {
-            
-            
             $def = $config->getDefinition('URI');
             if ($def->defaultScheme === $this->scheme) {
                 $this->scheme = null;
             }
         }
-
-        
         if (!is_null($this->userinfo)) {
             $encoder = new HTMLPurifier_PercentEncoder($chars_sub_delims . ':');
             $this->userinfo = $encoder->encode($this->userinfo);
         }
-
-        
         if (!is_null($this->port)) {
             if ($this->port < 1 || $this->port > 65535) {
                 $this->port = null;
             }
         }
-
-        
         $segments_encoder = new HTMLPurifier_PercentEncoder($chars_pchar . '/');
         if (!is_null($this->host)) { 
-            
-            
-            
-            
-            
-            
-            
-            
             $this->path = $segments_encoder->encode($this->path);
         } elseif ($this->path !== '') {
             if ($this->path[0] === '/') {
-                
-                
-                
                 if (strlen($this->path) >= 2 && $this->path[1] === '/') {
-                    
-                    
-                    
-                    
                     $this->path = '';
                 } else {
                     $this->path = $segments_encoder->encode($this->path);
                 }
             } elseif (!is_null($this->scheme)) {
-                
-                
-                
                 $this->path = $segments_encoder->encode($this->path);
             } else {
-                
-                
-                
                 $segment_nc_encoder = new HTMLPurifier_PercentEncoder($chars_sub_delims . '@');
                 $c = strpos($this->path, '/');
                 if ($c !== false) {
@@ -154,31 +92,20 @@ class HTMLPurifier_URI
                 }
             }
         } else {
-            
             $this->path = ''; 
         }
-
-        
         $qf_encoder = new HTMLPurifier_PercentEncoder($chars_pchar . '/?');
-
         if (!is_null($this->query)) {
             $this->query = $qf_encoder->encode($this->query);
         }
-
         if (!is_null($this->fragment)) {
             $this->fragment = $qf_encoder->encode($this->fragment);
         }
         return true;
     }
-
-    
     public function toString()
     {
-        
         $authority = null;
-        
-        
-        
         if (!is_null($this->host)) {
             $authority = '';
             if (!is_null($this->userinfo)) {
@@ -189,13 +116,6 @@ class HTMLPurifier_URI
                 $authority .= ':' . $this->port;
             }
         }
-
-        
-        
-        
-        
-        
-        
         $result = '';
         if (!is_null($this->scheme)) {
             $result .= $this->scheme . ':';
@@ -210,11 +130,8 @@ class HTMLPurifier_URI
         if (!is_null($this->fragment)) {
             $result .= '#' . $this->fragment;
         }
-
         return $result;
     }
-
-    
     public function isLocal($config, $context)
     {
         if ($this->host === null) {
@@ -226,19 +143,15 @@ class HTMLPurifier_URI
         }
         return false;
     }
-
-    
     public function isBenign($config, $context)
     {
         if (!$this->isLocal($config, $context)) {
             return false;
         }
-
         $scheme_obj = $this->getSchemeObj($config, $context);
         if (!$scheme_obj) {
             return false;
         } 
-
         $current_scheme_obj = $config->getDefinition('URI')->getDefaultScheme($config, $context);
         if ($current_scheme_obj->secure) {
             if (!$scheme_obj->secure) {
@@ -248,5 +161,3 @@ class HTMLPurifier_URI
         return true;
     }
 }
-
-

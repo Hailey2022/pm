@@ -1,8 +1,4 @@
 <?php
-
-
-
-
 function HTMLPurifier($html, $config = null)
 {
     static $purifier = false;
@@ -11,5 +7,3 @@ function HTMLPurifier($html, $config = null)
     }
     return $purifier->purify($html, $config);
 }
-
-

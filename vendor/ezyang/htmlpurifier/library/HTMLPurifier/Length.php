@@ -1,34 +1,20 @@
 <?php
-
-
 class HTMLPurifier_Length
 {
-
-    
     protected $n;
-
-    
     protected $unit;
-
-    
     protected $isValid;
-
-    
     protected static $allowedUnits = array(
         'em' => true, 'ex' => true, 'px' => true, 'in' => true,
         'cm' => true, 'mm' => true, 'pt' => true, 'pc' => true,
         'ch' => true, 'rem' => true, 'vw' => true, 'vh' => true,
         'vmin' => true, 'vmax' => true
     );
-
-    
     public function __construct($n = '0', $u = false)
     {
         $this->n = (string) $n;
         $this->unit = $u !== false ? (string) $u : false;
     }
-
-    
     public static function make($s)
     {
         if ($s instanceof HTMLPurifier_Length) {
@@ -42,11 +28,8 @@ class HTMLPurifier_Length
         }
         return new HTMLPurifier_Length($n, $unit);
     }
-
-    
     protected function validate()
     {
-        
         if ($this->n === '+0' || $this->n === '-0') {
             $this->n = '0';
         }
@@ -59,7 +42,6 @@ class HTMLPurifier_Length
         if (!isset(HTMLPurifier_Length::$allowedUnits[$this->unit])) {
             return false;
         }
-        
         $def = new HTMLPurifier_AttrDef_CSS_Number();
         $result = $def->validate($this->n, false, false);
         if ($result === false) {
@@ -68,8 +50,6 @@ class HTMLPurifier_Length
         $this->n = $result;
         return true;
     }
-
-    
     public function toString()
     {
         if (!$this->isValid()) {
@@ -77,20 +57,14 @@ class HTMLPurifier_Length
         }
         return $this->n . $this->unit;
     }
-
-    
     public function getN()
     {
         return $this->n;
     }
-
-    
     public function getUnit()
     {
         return $this->unit;
     }
-
-    
     public function isValid()
     {
         if ($this->isValid === null) {
@@ -98,8 +72,6 @@ class HTMLPurifier_Length
         }
         return $this->isValid;
     }
-
-    
     public function compareTo($l)
     {
         if ($l === false) {
@@ -115,5 +87,3 @@ class HTMLPurifier_Length
         return $this->n - $l->n;
     }
 }
-
-

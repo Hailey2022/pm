@@ -1,28 +1,16 @@
 <?php
-
-
 class HTMLPurifier_AttrTransform_SafeParam extends HTMLPurifier_AttrTransform
 {
-    
     public $name = "SafeParam";
-
-    
     private $uri;
-
     public function __construct()
     {
         $this->uri = new HTMLPurifier_AttrDef_URI(true); 
         $this->wmode = new HTMLPurifier_AttrDef_Enum(array('window', 'opaque', 'transparent'));
     }
-
-    
     public function transform($attr, $config, $context)
     {
-        
-        
         switch ($attr['name']) {
-            
-            
             case 'allowScriptAccess':
                 $attr['value'] = 'never';
                 break;
@@ -45,15 +33,10 @@ class HTMLPurifier_AttrTransform_SafeParam extends HTMLPurifier_AttrTransform
                 $attr['value'] = $this->uri->validate($attr['value'], $config, $context);
                 break;
             case 'flashvars':
-                
-                
                 break;
-            
             default:
                 $attr['name'] = $attr['value'] = null;
         }
         return $attr;
     }
 }
-
-

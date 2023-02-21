@@ -1,20 +1,8 @@
 <?php
-
-
-
-
-
-
-
-
-
 namespace api\home\service;
-
 use api\home\model\SlideModel;
-
 class SlideService
 {
-    
     public function SlideList($map)
     {
         $slideModel = new SlideModel();

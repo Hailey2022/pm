@@ -1,14 +1,8 @@
 <?php
-
-
 class HTMLPurifier_AttrDef_URI_Email_SimpleCheck extends HTMLPurifier_AttrDef_URI_Email
 {
-
-    
     public function validate($string, $config, $context)
     {
-        
-        
         if ($string == '') {
             return false;
         }
@@ -17,5 +11,3 @@ class HTMLPurifier_AttrDef_URI_Email_SimpleCheck extends HTMLPurifier_AttrDef_UR
         return $result ? $string : false;
     }
 }
-
-

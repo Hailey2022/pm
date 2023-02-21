@@ -1,79 +1,39 @@
 <?php
-
-
-
 class HTMLPurifier_HTMLModule
 {
-
-    
-
-    
     public $name;
-
-    
     public $elements = array();
-
-    
     public $info = array();
-
-    
     public $content_sets = array();
-
-    
     public $attr_collections = array();
-
-    
     public $info_tag_transform = array();
-
-    
     public $info_attr_transform_pre = array();
-
-    
     public $info_attr_transform_post = array();
-
-    
     public $info_injector = array();
-
-    
     public $defines_child_def = false;
-
-    
     public $safe = true;
-
-    
     public function getChildDef($def)
     {
         return false;
     }
-
-    
-
-    
     public function addElement($element, $type, $contents, $attr_includes = array(), $attr = array())
     {
         $this->elements[] = $element;
-        
         list($content_model_type, $content_model) = $this->parseContents($contents);
-        
         $this->mergeInAttrIncludes($attr, $attr_includes);
-        
         if ($type) {
             $this->addElementToContentSet($element, $type);
         }
-        
         $this->info[$element] = HTMLPurifier_ElementDef::create(
             $content_model,
             $content_model_type,
             $attr
         );
-        
         if (!is_string($contents)) {
             $this->info[$element]->child = $contents;
         }
         return $this->info[$element];
     }
-
-    
     public function addBlankElement($element)
     {
         if (!isset($this->info[$element])) {
@@ -85,8 +45,6 @@ class HTMLPurifier_HTMLModule
         }
         return $this->info[$element];
     }
-
-    
     public function addElementToContentSet($element, $type)
     {
         if (!isset($this->content_sets[$type])) {
@@ -96,15 +54,12 @@ class HTMLPurifier_HTMLModule
         }
         $this->content_sets[$type] .= $element;
     }
-
-    
     public function parseContents($contents)
     {
         if (!is_string($contents)) {
             return array(null, null);
         } 
         switch ($contents) {
-            
             case 'Empty':
                 return array('empty', '');
             case 'Inline':
@@ -117,8 +72,6 @@ class HTMLPurifier_HTMLModule
         $content_model = trim($content_model);
         return array($content_model_type, $content_model);
     }
-
-    
     public function mergeInAttrIncludes(&$attr, $attr_includes)
     {
         if (!is_array($attr_includes)) {
@@ -130,8 +83,6 @@ class HTMLPurifier_HTMLModule
         }
         $attr[0] = $attr_includes;
     }
-
-    
     public function makeLookup($list)
     {
         if (is_string($list)) {
@@ -146,11 +97,7 @@ class HTMLPurifier_HTMLModule
         }
         return $ret;
     }
-
-    
     public function setup($config)
     {
     }
 }
-
-

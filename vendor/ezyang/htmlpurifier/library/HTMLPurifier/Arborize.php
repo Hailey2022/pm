@@ -1,6 +1,4 @@
 <?php
-
-
 class HTMLPurifier_Arborize
 {
     public static function arborize($tokens, $config, $context) {
@@ -29,7 +27,6 @@ class HTMLPurifier_Arborize
         //assert(count($stack) == 1);
         return $stack[0];
     }
-
     public static function flatten($node, $config, $context) {
         $level = 0;
         $nodes = array($level => new HTMLPurifier_Queue(array($node)));

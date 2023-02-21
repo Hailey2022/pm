@@ -1,5 +1,4 @@
 <?php
-
 class HTMLPurifier_ConfigSchema_Interchange
 {
     public $name;
@@ -17,5 +16,3 @@ class HTMLPurifier_ConfigSchema_Interchange
         return $validator->validate($this);
     }
 }
-
-

@@ -1,7 +1,4 @@
 <?php
-
-
-
 $PHPMAILER_LANG['authenticate']         = 'Hadisoana SMTP: Tsy nahomby ny fanamarinana.';
 $PHPMAILER_LANG['connect_host']         = 'SMTP Error: Tsy afaka mampifandray amin\'ny mpampiantrano SMTP.';
 $PHPMAILER_LANG['data_not_accepted']    = 'SMTP diso: tsy voarakitra ny angona.';

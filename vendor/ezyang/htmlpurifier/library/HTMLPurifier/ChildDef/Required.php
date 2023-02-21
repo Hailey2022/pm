@@ -1,15 +1,8 @@
 <?php
-
-
 class HTMLPurifier_ChildDef_Required extends HTMLPurifier_ChildDef
 {
-    
     public $elements = array();
-
-    
     protected $whitespace = false;
-
-    
     public function __construct($elements)
     {
         if (is_string($elements)) {
@@ -28,35 +21,17 @@ class HTMLPurifier_ChildDef_Required extends HTMLPurifier_ChildDef
         }
         $this->elements = $elements;
     }
-
-    
     public $allow_empty = false;
-
-    
     public $type = 'required';
-
-    
     public function validateChildren($children, $config, $context)
     {
-        
         $this->whitespace = false;
-
-        
         if (empty($children)) {
             return false;
         }
-
-        
         $result = array();
-
-        
-        
-        
         $pcdata_allowed = isset($this->elements['#PCDATA']);
-
-        
         $all_whitespace = true;
-
         $stack = array_reverse($children);
         while (!empty($stack)) {
             $node = array_pop($stack);
@@ -65,16 +40,11 @@ class HTMLPurifier_ChildDef_Required extends HTMLPurifier_ChildDef
                 continue;
             }
             $all_whitespace = false; 
-
             if (!isset($this->elements[$node->name])) {
-                
-                
                 if ($pcdata_allowed && $node instanceof HTMLPurifier_Node_Text) {
                     $result[] = $node;
                     continue;
                 }
-                
-                
                 if ($node instanceof HTMLPurifier_Node_Element) {
                     for ($i = count($node->children) - 1; $i >= 0; $i--) {
                         $stack[] = $node->children[$i];
@@ -95,5 +65,3 @@ class HTMLPurifier_ChildDef_Required extends HTMLPurifier_ChildDef
         return $result;
     }
 }
-
-

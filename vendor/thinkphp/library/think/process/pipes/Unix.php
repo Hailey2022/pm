@@ -1,59 +1,36 @@
 <?php
-
-
-
-
-
-
-
-
-
-
 namespace think\process\pipes;
-
 use think\Process;
-
 class Unix extends Pipes
 {
-
-    
     private $ttyMode;
-    
     private $ptyMode;
-    
     private $disableOutput;
-
     public function __construct($ttyMode, $ptyMode, $input, $disableOutput)
     {
         $this->ttyMode       = (bool) $ttyMode;
         $this->ptyMode       = (bool) $ptyMode;
         $this->disableOutput = (bool) $disableOutput;
-
         if (is_resource($input)) {
             $this->input = $input;
         } else {
             $this->inputBuffer = (string) $input;
         }
     }
-
     public function __destruct()
     {
         $this->close();
     }
-
-    
     public function getDescriptors()
     {
         if ($this->disableOutput) {
             $nullstream = fopen('/dev/null', 'c');
-
             return [
                 ['pipe', 'r'],
                 $nullstream,
                 $nullstream,
             ];
         }
-
         if ($this->ttyMode) {
             return [
                 ['file', '/dev/tty', 'r'],
@@ -61,7 +38,6 @@ class Unix extends Pipes
                 ['file', '/dev/tty', 'w'],
             ];
         }
-
         if ($this->ptyMode && Process::isPtySupported()) {
             return [
                 ['pty'],
@@ -69,69 +45,50 @@ class Unix extends Pipes
                 ['pty'],
             ];
         }
-
         return [
             ['pipe', 'r'],
             ['pipe', 'w'], 
             ['pipe', 'w'], 
         ];
     }
-
-    
     public function getFiles()
     {
         return [];
     }
-
-    
     public function readAndWrite($blocking, $close = false)
     {
-
         if (1 === count($this->pipes) && [0] === array_keys($this->pipes)) {
             fclose($this->pipes[0]);
             unset($this->pipes[0]);
         }
-
         if (empty($this->pipes)) {
             return [];
         }
-
         $this->unblock();
-
         $read = [];
-
         if (null !== $this->input) {
             $r = array_merge($this->pipes, ['input' => $this->input]);
         } else {
             $r = $this->pipes;
         }
-
         unset($r[0]);
-
         $w = isset($this->pipes[0]) ? [$this->pipes[0]] : null;
         $e = null;
-
         if (false === $n = @stream_select($r, $w, $e, 0, $blocking ? Process::TIMEOUT_PRECISION * 1E6 : 0)) {
-
             if (!$this->hasSystemCallBeenInterrupted()) {
                 $this->pipes = [];
             }
-
             return $read;
         }
-
         if (0 === $n) {
             return $read;
         }
-
         foreach ($r as $pipe) {
-
             $type = (false !== $found = array_search($pipe, $this->pipes)) ? $found : 'input';
             $data = '';
             while ('' !== $dataread = (string) fread($pipe, self::CHUNK_SIZE)) {
                 $data .= $dataread;
             }
-
             if ('' !== $data) {
                 if ('input' === $type) {
                     $this->inputBuffer .= $data;
@@ -139,7 +96,6 @@ class Unix extends Pipes
                     $read[$type] = $data;
                 }
             }
-
             if (false === $data || (true === $close && feof($pipe) && '' === $data)) {
                 if ('input' === $type) {
                     $this->input = null;
@@ -149,7 +105,6 @@ class Unix extends Pipes
                 }
             }
         }
-
         if (null !== $w && 0 < count($w)) {
             while (strlen($this->inputBuffer)) {
                 $written = fwrite($w[0], $this->inputBuffer, 2 << 18); 
@@ -160,22 +115,16 @@ class Unix extends Pipes
                 }
             }
         }
-
         if ('' === $this->inputBuffer && null === $this->input && isset($this->pipes[0])) {
             fclose($this->pipes[0]);
             unset($this->pipes[0]);
         }
-
         return $read;
     }
-
-    
     public function areOpen()
     {
         return (bool) $this->pipes;
     }
-
-    
     public static function create(Process $process, $input)
     {
         return new static($process->isTty(), $process->isPty(), $input, $process->isOutputDisabled());

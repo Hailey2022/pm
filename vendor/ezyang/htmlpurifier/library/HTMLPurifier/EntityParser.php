@@ -1,65 +1,28 @@
 <?php
-
-
-
-
-
-
 class HTMLPurifier_EntityParser
 {
-
-    
     protected $_entity_lookup;
-
-    
     protected $_textEntitiesRegex;
-
-    
     protected $_attrEntitiesRegex;
-
-    
     protected $_semiOptionalPrefixRegex;
-
     public function __construct() {
-        
-        
         $semi_optional = "quot|QUOT|lt|LT|gt|GT|amp|AMP|AElig|Aacute|Acirc|Agrave|Aring|Atilde|Auml|COPY|Ccedil|ETH|Eacute|Ecirc|Egrave|Euml|Iacute|Icirc|Igrave|Iuml|Ntilde|Oacute|Ocirc|Ograve|Oslash|Otilde|Ouml|REG|THORN|Uacute|Ucirc|Ugrave|Uuml|Yacute|aacute|acirc|acute|aelig|agrave|aring|atilde|auml|brvbar|ccedil|cedil|cent|copy|curren|deg|divide|eacute|ecirc|egrave|eth|euml|frac12|frac14|frac34|iacute|icirc|iexcl|igrave|iquest|iuml|laquo|macr|micro|middot|nbsp|not|ntilde|oacute|ocirc|ograve|ordf|ordm|oslash|otilde|ouml|para|plusmn|pound|raquo|reg|sect|shy|sup1|sup2|sup3|szlig|thorn|times|uacute|ucirc|ugrave|uml|uuml|yacute|yen|yuml";
-
-        
-        
         $this->_semiOptionalPrefixRegex = "/&()()()($semi_optional)/";
-
         $this->_textEntitiesRegex =
             '/&(?:'.
-            
             '[#]x([a-fA-F0-9]+);?|'.
-            
             '[#]0*(\d+);?|'.
-            
-            
             '([A-Za-z_:][A-Za-z0-9.\-_:]*);|'.
-            
             "($semi_optional)".
             ')/';
-
         $this->_attrEntitiesRegex =
             '/&(?:'.
-            
             '[#]x([a-fA-F0-9]+);?|'.
-            
             '[#]0*(\d+);?|'.
-            
-            
             '([A-Za-z_:][A-Za-z0-9.\-_:]*);|'.
-            
-            
-            
             "($semi_optional)(?![=;A-Za-z0-9])".
             ')/';
-
     }
-
-    
     public function substituteTextEntities($string)
     {
         return preg_replace_callback(
@@ -68,8 +31,6 @@ class HTMLPurifier_EntityParser
             $string
         );
     }
-
-    
     public function substituteAttrEntities($string)
     {
         return preg_replace_callback(
@@ -78,9 +39,6 @@ class HTMLPurifier_EntityParser
             $string
         );
     }
-
-    
-
     protected function entityCallback($matches)
     {
         $entity = $matches[0];
@@ -98,10 +56,6 @@ class HTMLPurifier_EntityParser
             if (isset($this->_entity_lookup->table[$named_part])) {
                 return $this->_entity_lookup->table[$named_part];
             } else {
-                
-                
-                
-                
                 if (!empty($matches[3])) {
                     return preg_replace_callback(
                         $this->_semiOptionalPrefixRegex,
@@ -113,15 +67,8 @@ class HTMLPurifier_EntityParser
             }
         }
     }
-
-    
-
-    
     protected $_substituteEntitiesRegex =
         '/&(?:[#]x([a-fA-F0-9]+)|[#]0*(\d+)|([A-Za-z_:][A-Za-z0-9.\-_:]*));?/';
-        
-
-    
     protected $_special_dec2str =
             array(
                     34 => '"',
@@ -130,8 +77,6 @@ class HTMLPurifier_EntityParser
                     60 => '<',
                     62 => '>'
             );
-
-    
     protected $_special_ent2dec =
             array(
                     'quot' => 34,
@@ -139,29 +84,21 @@ class HTMLPurifier_EntityParser
                     'lt'   => 60,
                     'gt'   => 62
             );
-
-    
     public function substituteNonSpecialEntities($string)
     {
-        
         return preg_replace_callback(
             $this->_substituteEntitiesRegex,
             array($this, 'nonSpecialEntityCallback'),
             $string
         );
     }
-
-    
-
     protected function nonSpecialEntityCallback($matches)
     {
-        
         $entity = $matches[0];
         $is_num = (@$matches[0][1] === '#');
         if ($is_num) {
             $is_hex = (@$entity[2] === 'x');
             $code = $is_hex ? hexdec($matches[1]) : (int) $matches[2];
-            
             if (isset($this->_special_dec2str[$code])) {
                 return $entity;
             }
@@ -180,8 +117,6 @@ class HTMLPurifier_EntityParser
             }
         }
     }
-
-    
     public function substituteSpecialEntities($string)
     {
         return preg_replace_callback(
@@ -190,8 +125,6 @@ class HTMLPurifier_EntityParser
             $string
         );
     }
-
-    
     protected function specialEntityCallback($matches)
     {
         $entity = $matches[0];
@@ -209,5 +142,3 @@ class HTMLPurifier_EntityParser
         }
     }
 }
-
-

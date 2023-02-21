@@ -1,17 +1,6 @@
 <?php
-
-
-
-
-
-
-
-
 namespace api\demo\controller;
-
 use cmf\controller\RestBaseController;
-
-
 class IndexController extends RestBaseController
 {
     public function index()

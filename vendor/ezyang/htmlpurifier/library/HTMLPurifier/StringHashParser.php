@@ -1,13 +1,7 @@
 <?php
-
-
 class HTMLPurifier_StringHashParser
 {
-
-    
     public $default = 'ID';
-
-    
     public function parseFile($file)
     {
         if (!file_exists($file)) {
@@ -21,8 +15,6 @@ class HTMLPurifier_StringHashParser
         fclose($fh);
         return $ret;
     }
-
-    
     public function parseMultiFile($file)
     {
         if (!file_exists($file)) {
@@ -39,8 +31,6 @@ class HTMLPurifier_StringHashParser
         fclose($fh);
         return $ret;
     }
-
-    
     protected function parseHandle($fh)
     {
         $state   = false;
@@ -59,10 +49,8 @@ class HTMLPurifier_StringHashParser
                 break;
             }
             if (strncmp('--#', $line, 3) === 0) {
-                
                 continue;
             } elseif (strncmp('--', $line, 2) === 0) {
-                
                 $state = trim($line, '- ');
                 if (!isset($ret[$state])) {
                     $ret[$state] = '';
@@ -71,11 +59,9 @@ class HTMLPurifier_StringHashParser
             } elseif (!$state) {
                 $single = true;
                 if (strpos($line, ':') !== false) {
-                    
                     list($state, $line) = explode(':', $line, 2);
                     $line = trim($line);
                 } else {
-                    
                     $state  = $this->default;
                 }
             }
@@ -90,5 +76,3 @@ class HTMLPurifier_StringHashParser
         return $ret;
     }
 }
-
-

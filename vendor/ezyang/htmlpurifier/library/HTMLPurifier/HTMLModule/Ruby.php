@@ -1,13 +1,7 @@
 <?php
-
-
 class HTMLPurifier_HTMLModule_Ruby extends HTMLPurifier_HTMLModule
 {
-
-    
     public $name = 'Ruby';
-
-    
     public function setup($config)
     {
         $this->addElement(
@@ -25,5 +19,3 @@ class HTMLPurifier_HTMLModule_Ruby extends HTMLPurifier_HTMLModule
         $this->addElement('rp', false, 'Optional: #PCDATA', 'Common');
     }
 }
-
-

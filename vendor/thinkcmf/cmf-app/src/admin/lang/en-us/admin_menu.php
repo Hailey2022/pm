@@ -1,5 +1,4 @@
 <?php
-
 return [
     //admin_menu
     'ADMIN_AD_ADD_POST'                  => '提交添加',
@@ -131,4 +130,3 @@ return [
     'ADMIN_USER_DELETE'                  => '删除管理员',
     'ADMIN_USER_EDIT'                    => '管理员编辑',
 ];
-

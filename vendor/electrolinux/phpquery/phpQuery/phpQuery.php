@@ -11,9 +11,6 @@
  * @license http://www.opensource.org/licenses/mit-license.php MIT License
  * @package phpQuery
  */
-
-
-
 define('DOMDOCUMENT', 'DOMDocument');
 define('DOMELEMENT', 'DOMElement');
 define('DOMNODELIST', 'DOMNodeList');
@@ -180,7 +177,6 @@ abstract class phpQuery {
 			if ($arg1->getDocumentID() == $domId)
 				return $arg1;
 			$class = get_class($arg1);
-			
 			$phpQuery = $class != 'phpQuery'
 				? new $class($arg1, $domId)
 				: new phpQueryObject($domId);
@@ -320,7 +316,6 @@ abstract class phpQuery {
 	 * @return phpQueryObject|QueryTemplatesSource|QueryTemplatesParse|QueryTemplatesSourceQuery
 	 */
 	public static function newDocumentPHP($markup = null, $contentType = "text/html") {
-		
 		$markup = phpQuery::phpToMarkup($markup, self::$defaultCharset);
 		return self::newDocument($markup, $contentType);
 	}
@@ -366,7 +361,6 @@ abstract class phpQuery {
 	public static function markupToPHP($content) {
 		if ($content instanceof phpQueryObject)
 			$content = $content->markupOuter();
-		
 		$content = preg_replace_callback(
 			'@<php>\s*<!--(.*?)-->\s*</php>@s',
 //			create_function('$m',
@@ -375,7 +369,6 @@ abstract class phpQuery {
 			array('phpQuery', '_markupToPHPCallback'),
 			$content
 		);
-		
 		$regexes = array(
 			'@(<(?!\\?)(?:[^>]|\\?>)+\\w+\\s*=\\s*)(\')([^\']*)(?:&lt;|%3C)\\?(?:php)?(.*?)(?:\\?(?:&gt;|%3E))([^\']*)\'@s',
 			'@(<(?!\\?)(?:[^>]|\\?>)+\\w+\\s*=\\s*)(")([^"]*)(?:&lt;|%3C)\\?(?:php)?(.*?)(?:\\?(?:&gt;|%3E))([^"]*)"@s',
@@ -468,7 +461,6 @@ abstract class phpQuery {
 	 * @TODO support DOMDocument
 	 */
 	public static function loadDocument($document) {
-		
 		die('TODO loadDocument');
 	}
 	/**
@@ -489,19 +481,15 @@ abstract class phpQuery {
 		$document = null;
 		if ($html instanceof DOMDOCUMENT) {
 			if (self::getDocumentID($html)) {
-				
 				$document = clone $html;
 			} else {
-				
 				$wrapper = new DOMDocumentWrapper($html, $contentType, $documentID);
 			}
 		} else {
 			$wrapper = new DOMDocumentWrapper($html, $contentType, $documentID);
 		}
 //		$wrapper->id = $id;
-		
 		phpQuery::$documents[$wrapper->id] = $wrapper;
-		
 		phpQuery::selectDocument($wrapper->id);
 		return $wrapper->id;
 	}
@@ -551,7 +539,6 @@ abstract class phpQuery {
 	 * @param string $file Filename to include. Defaults to "{$class}.php".
 	 */
 	public static function plugin($class, $file = null) {
-		
 //		if (strpos($class, 'phpQuery') === 0)
 //			$class = substr($class, 8);
 		if (in_array($class, self::$pluginsLoaded))
@@ -563,7 +550,6 @@ abstract class phpQuery {
 		if (! $objectClassExists && ! $staticClassExists)
 			require_once($file);
 		self::$pluginsLoaded[] = $class;
-		
 		if (class_exists('phpQueryPlugin_'.$class)) {
 			$realClass = 'phpQueryPlugin_'.$class;
 			$vars = get_class_vars($realClass);
@@ -585,7 +571,6 @@ abstract class phpQuery {
 			if (method_exists($realClass, '__initialize'))
 				call_user_func_array(array($realClass, '__initialize'), array());
 		}
-		
 		if (class_exists('phpQueryObjectPlugin_'.$class)) {
 			$realClass = 'phpQueryObjectPlugin_'.$class;
 			$vars = get_class_vars($realClass);
@@ -678,7 +663,6 @@ abstract class phpQuery {
 			? self::getDocumentID($options['document'])
 			: null;
 		if ($xhr) {
-			
 			$client = $xhr;
 //			$client->setParameterPost(null);
 //			$client->setParameterGet(null);
@@ -687,7 +671,6 @@ abstract class phpQuery {
 			$client->setHeaders("Referer", null);
 			$client->resetParameters();
 		} else {
-			
 			require_once('Zend/Http/Client.php');
 			$client = new Zend_Http_Client();
 			$client->setCookieJar();
@@ -705,7 +688,6 @@ abstract class phpQuery {
 			throw new Exception("Request not permitted, host '$host' not present in "
 				."phpQuery::\$ajaxAllowedHosts");
 		}
-		
 		$jsre = "/=\\?(&|$)/";
 		if (isset($options['dataType']) && $options['dataType'] == 'jsonp') {
 			$jsonpCallbackParam = $options['jsonp']
@@ -740,7 +722,6 @@ abstract class phpQuery {
 			if (preg_match($jsre, $options['url']))
 				$jsonpUrl = true;
 			if ($jsonpData !== false || $jsonpUrl) {
-				
 				$options['_jsonp'] = $jsonpCallback;
 				if ($jsonpData !== false)
 					$options['data'][$jsonpData] = $jsonpCallback;
@@ -756,10 +737,7 @@ abstract class phpQuery {
 //			'content-type' => $options['contentType'],
 			'User-Agent' => 'Mozilla/5.0 (X11; U; Linux x86; en-US; rv:1.9.0.5) Gecko'
 				 .'/2008122010 Firefox/3.0.5',
-	 		
 			'Accept-Charset' => 'ISO-8859-1,utf-8;q=0.7,*;q=0.7',
-
-
 	 		'Accept-Language' => 'en-us,en;q=0.5',
 		));
 		if ($options['username'])
@@ -776,7 +754,6 @@ abstract class phpQuery {
 				? self::$ajaxSettings['accepts'][ $options['dataType'] ].", */*"
 				: self::$ajaxSettings['accepts']['_default']
 		);
-		
 		if ($options['data'] instanceof phpQueryObject) {
 			$serialized = $options['data']->serializeArray($options['data']);
 			$options['data'] = array();
@@ -792,10 +769,8 @@ abstract class phpQuery {
 		if (self::$active == 0 && $options['global'])
 			phpQueryEvents::trigger($documentID, 'ajaxStart');
 		self::$active++;
-		
 		if (isset($options['beforeSend']) && $options['beforeSend'])
 			phpQuery::callbackRun($options['beforeSend'], array($client));
-		
 		if ($options['global'])
 			phpQueryEvents::trigger($documentID, 'ajaxSend', array($client, $options));
 		if (phpQuery::$debug) {
@@ -804,7 +779,6 @@ abstract class phpQuery {
 //			if ($client->getCookieJar())
 //				self::debug("Cookies: <pre>".var_export($client->getCookieJar()->getMatchingCookies($options['url']), true)."</pre>\n");
 		}
-		
 		$response = $client->request();
 		if (phpQuery::$debug) {
 			self::debug('Status: '.$response->getStatus().' / '.$response->getMessage());
@@ -812,7 +786,6 @@ abstract class phpQuery {
 			self::debug($response->getHeaders());
 		}
 		if ($response->isSuccessful()) {
-			
 			self::$lastModified = $response->getHeader('Last-Modified');
 			$data = self::httpData($response->getBody(), $options['dataType'], $options);
 			if (isset($options['success']) && $options['success'])
@@ -863,7 +836,6 @@ abstract class phpQuery {
 			$callback = $data;
 			$data = null;
 		}
-		
 		return phpQuery::ajax(array(
 			'type' => 'GET',
 			'url' => $url,
@@ -890,7 +862,6 @@ abstract class phpQuery {
 			$callback = $data;
 			$data = null;
 		}
-		
 		return phpQuery::ajax(array(
 			'type' => 'GET',
 			'url' => $url,
@@ -945,7 +916,6 @@ abstract class phpQuery {
 	public static function parseJSON($json) {
 		if (function_exists('json_decode')) {
 			$return = json_decode(trim($json), true);
-			
 			if (isset($return))
 				return $return;
 		}
@@ -989,10 +959,6 @@ abstract class phpQuery {
 			? self::$documents[$id]['document']
 			: null;
 	}
-
-	
-	
-
 	/**
 	 *
 	 * @return unknown_type
@@ -1076,7 +1042,6 @@ abstract class phpQuery {
 		if (! $callback)
 			return;
 		if ($callback instanceof CallbackParameterToReference) {
-			
 			if (isset($params[0]))
 				$callback->callback = $params[0];
 			return true;
@@ -1151,7 +1116,6 @@ abstract class phpQuery {
 	public static function trim($str) {
 		return trim($str);
 	}
-	
 	/**
 	 *
 	 * @param $url
@@ -1221,7 +1185,6 @@ abstract class phpQuery {
 	public static function code($type, $code) {
 		return "<$type><!-- ".trim($code)." --></$type>";
 	}
-
 	public static function __callStatic($method, $params) {
 		return call_user_func_array(
 			array(phpQuery::$plugins, $method),
@@ -1229,17 +1192,14 @@ abstract class phpQuery {
 		);
 	}
 	protected static function dataSetupNode($node, $documentID) {
-		
 		foreach(phpQuery::$documents[$documentID]->dataNodes as $dataNode) {
 			if ($node->isSameNode($dataNode))
 				return $dataNode;
 		}
-		
 		phpQuery::$documents[$documentID]->dataNodes[] = $node;
 		return $node;
 	}
 	protected static function dataRemoveNode($node, $documentID) {
-		
 		foreach(phpQuery::$documents[$documentID]->dataNodes as $k => $dataNode) {
 			if ($node->isSameNode($dataNode)) {
 				unset(self::$documents[$documentID]->dataNodes[$k]);
@@ -1249,7 +1209,6 @@ abstract class phpQuery {
 	}
 	public static function data($node, $name, $data, $documentID = null) {
 		if (! $documentID)
-			
 			$documentID = self::getDocumentID($node);
 		$document = phpQuery::$documents[$documentID];
 		$node = self::dataSetupNode($node, $documentID);
@@ -1268,7 +1227,6 @@ abstract class phpQuery {
 	}
 	public static function removeData($node, $name, $documentID) {
 		if (! $documentID)
-			
 			$documentID = self::getDocumentID($node);
 		$document = phpQuery::$documents[$documentID];
 		$node = self::dataSetupNode($node, $documentID);
@@ -1330,15 +1288,11 @@ function pq($arg1, $context = null) {
 		$args
 	);
 }
-
 set_include_path(
 	get_include_path()
 		.PATH_SEPARATOR.dirname(__FILE__).'/phpQuery/'
 		.PATH_SEPARATOR.dirname(__FILE__).'/phpQuery/plugins/'
 );
-
-
 phpQuery::$plugins = new phpQueryPlugins();
-
 if (file_exists(dirname(__FILE__).'/phpQuery/bootstrap.php'))
 	require_once dirname(__FILE__).'/phpQuery/bootstrap.php';

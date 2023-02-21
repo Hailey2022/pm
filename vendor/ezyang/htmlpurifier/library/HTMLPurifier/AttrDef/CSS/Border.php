@@ -1,13 +1,7 @@
 <?php
-
-
 class HTMLPurifier_AttrDef_CSS_Border extends HTMLPurifier_AttrDef
 {
-
-    
     protected $info = array();
-
-    
     public function __construct($config)
     {
         $def = $config->getCSSDefinition();
@@ -15,8 +9,6 @@ class HTMLPurifier_AttrDef_CSS_Border extends HTMLPurifier_AttrDef
         $this->info['border-style'] = $def->info['border-style'];
         $this->info['border-top-color'] = $def->info['border-top-color'];
     }
-
-    
     public function validate($string, $config, $context)
     {
         $string = $this->parseCDATA($string);
@@ -40,5 +32,3 @@ class HTMLPurifier_AttrDef_CSS_Border extends HTMLPurifier_AttrDef
         return rtrim($ret);
     }
 }
-
-

@@ -1,7 +1,4 @@
 <?php
-
-
-
 $PHPMAILER_LANG['authenticate']         = 'SMTP kļūda: Autorizācija neizdevās.';
 $PHPMAILER_LANG['connect_host']         = 'SMTP Kļūda: Nevar izveidot savienojumu ar SMTP serveri.';
 $PHPMAILER_LANG['data_not_accepted']    = 'SMTP Kļūda: Nepieņem informāciju.';

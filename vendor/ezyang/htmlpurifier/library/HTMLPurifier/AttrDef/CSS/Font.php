@@ -1,13 +1,7 @@
 <?php
-
-
 class HTMLPurifier_AttrDef_CSS_Font extends HTMLPurifier_AttrDef
 {
-
-    
     protected $info = array();
-
-    
     public function __construct($config)
     {
         $def = $config->getCSSDefinition();
@@ -18,8 +12,6 @@ class HTMLPurifier_AttrDef_CSS_Font extends HTMLPurifier_AttrDef
         $this->info['line-height'] = $def->info['line-height'];
         $this->info['font-family'] = $def->info['font-family'];
     }
-
-    
     public function validate($string, $config, $context)
     {
         static $system_fonts = array(
@@ -30,25 +22,19 @@ class HTMLPurifier_AttrDef_CSS_Font extends HTMLPurifier_AttrDef
             'small-caption' => true,
             'status-bar' => true
         );
-
-        
         $string = $this->parseCDATA($string);
         if ($string === '') {
             return false;
         }
-
-        
         $lowercase_string = strtolower($string);
         if (isset($system_fonts[$lowercase_string])) {
             return $lowercase_string;
         }
-
         $bits = explode(' ', $string); 
         $stage = 0; 
         $caught = array(); 
         $stage_1 = array('font-style', 'font-variant', 'font-weight');
         $final = ''; 
-
         for ($i = 0, $size = count($bits); $i < $size; $i++) {
             if ($bits[$i] === '') {
                 continue;
@@ -70,7 +56,6 @@ class HTMLPurifier_AttrDef_CSS_Font extends HTMLPurifier_AttrDef
                             break;
                         }
                     }
-                    
                     if (count($caught) >= 3) {
                         $stage = 1;
                     }
@@ -83,7 +68,6 @@ class HTMLPurifier_AttrDef_CSS_Font extends HTMLPurifier_AttrDef
                         list($font_size, $line_height) =
                             explode('/', $bits[$i]);
                         if ($line_height === '') {
-                            
                             $line_height = false;
                             $found_slash = true;
                         }
@@ -98,9 +82,7 @@ class HTMLPurifier_AttrDef_CSS_Font extends HTMLPurifier_AttrDef
                     );
                     if ($r !== false) {
                         $final .= $r;
-                        
                         if ($line_height === false) {
-                            
                             for ($j = $i + 1; $j < $size; $j++) {
                                 if ($bits[$j] === '') {
                                     continue;
@@ -117,7 +99,6 @@ class HTMLPurifier_AttrDef_CSS_Font extends HTMLPurifier_AttrDef
                                 break;
                             }
                         } else {
-                            
                             $found_slash = true;
                             $j = $i;
                         }
@@ -147,7 +128,6 @@ class HTMLPurifier_AttrDef_CSS_Font extends HTMLPurifier_AttrDef
                     );
                     if ($r !== false) {
                         $final .= $r . ' ';
-                        
                         return rtrim($final);
                     }
                     return false;
@@ -156,5 +136,3 @@ class HTMLPurifier_AttrDef_CSS_Font extends HTMLPurifier_AttrDef
         return false;
     }
 }
-
-

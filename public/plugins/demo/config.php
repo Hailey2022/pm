@@ -1,11 +1,4 @@
 <?php
-
-
-
-
-
-
-
 return [
     'custom_config' => [
         'title' => '自定义配置处理', 

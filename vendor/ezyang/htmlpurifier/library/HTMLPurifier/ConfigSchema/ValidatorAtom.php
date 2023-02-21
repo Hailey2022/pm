@@ -1,20 +1,10 @@
 <?php
-
-
 class HTMLPurifier_ConfigSchema_ValidatorAtom
 {
-    
     protected $context;
-
-    
     protected $obj;
-
-    
     protected $member;
-
-    
     protected $contents;
-
     public function __construct($context, $obj, $member)
     {
         $this->context = $context;
@@ -22,8 +12,6 @@ class HTMLPurifier_ConfigSchema_ValidatorAtom
         $this->member = $member;
         $this->contents =& $obj->$member;
     }
-
-    
     public function assertIsString()
     {
         if (!is_string($this->contents)) {
@@ -31,8 +19,6 @@ class HTMLPurifier_ConfigSchema_ValidatorAtom
         }
         return $this;
     }
-
-    
     public function assertIsBool()
     {
         if (!is_bool($this->contents)) {
@@ -40,8 +26,6 @@ class HTMLPurifier_ConfigSchema_ValidatorAtom
         }
         return $this;
     }
-
-    
     public function assertIsArray()
     {
         if (!is_array($this->contents)) {
@@ -49,8 +33,6 @@ class HTMLPurifier_ConfigSchema_ValidatorAtom
         }
         return $this;
     }
-
-    
     public function assertNotNull()
     {
         if ($this->contents === null) {
@@ -58,8 +40,6 @@ class HTMLPurifier_ConfigSchema_ValidatorAtom
         }
         return $this;
     }
-
-    
     public function assertAlnum()
     {
         $this->assertIsString();
@@ -68,8 +48,6 @@ class HTMLPurifier_ConfigSchema_ValidatorAtom
         }
         return $this;
     }
-
-    
     public function assertNotEmpty()
     {
         if (empty($this->contents)) {
@@ -77,8 +55,6 @@ class HTMLPurifier_ConfigSchema_ValidatorAtom
         }
         return $this;
     }
-
-    
     public function assertIsLookup()
     {
         $this->assertIsArray();
@@ -89,12 +65,8 @@ class HTMLPurifier_ConfigSchema_ValidatorAtom
         }
         return $this;
     }
-
-    
     protected function error($msg)
     {
         throw new HTMLPurifier_ConfigSchema_Exception(ucfirst($this->member) . ' in ' . $this->context . ' ' . $msg);
     }
 }
-
-

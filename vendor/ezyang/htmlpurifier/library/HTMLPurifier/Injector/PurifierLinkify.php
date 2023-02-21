@@ -1,25 +1,14 @@
 <?php
-
-
 class HTMLPurifier_Injector_PurifierLinkify extends HTMLPurifier_Injector
 {
-    
     public $name = 'PurifierLinkify';
-
-    
     public $docURL;
-
-    
     public $needed = array('a' => array('href'));
-
-    
     public function prepare($config, $context)
     {
         $this->docURL = $config->get('AutoFormat.PurifierLinkify.DocURL');
         return parent::prepare($config, $context);
     }
-
-    
     public function handleText(&$token)
     {
         if (!$this->allowsElement('a')) {
@@ -28,13 +17,8 @@ class HTMLPurifier_Injector_PurifierLinkify extends HTMLPurifier_Injector
         if (strpos($token->data, '%') === false) {
             return;
         }
-
         $bits = preg_split('#%([a-z0-9]+\.[a-z0-9]+)#Si', $token->data, -1, PREG_SPLIT_DELIM_CAPTURE);
         $token = array();
-
-        
-        
-        
         for ($i = 0, $c = count($bits), $l = false; $i < $c; $i++, $l = !$l) {
             if (!$l) {
                 if ($bits[$i] === '') {
@@ -52,5 +36,3 @@ class HTMLPurifier_Injector_PurifierLinkify extends HTMLPurifier_Injector
         }
     }
 }
-
-

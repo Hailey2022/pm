@@ -1,9 +1,6 @@
 <?php
-
-
 class HTMLPurifier_VarParser
 {
-
     const C_STRING = 1;
     const ISTRING = 2;
     const TEXT = 3;
@@ -15,8 +12,6 @@ class HTMLPurifier_VarParser
     const ALIST = 9;
     const HASH = 10;
     const C_MIXED = 11;
-
-    
     public static $types = array(
         'string' => self::C_STRING,
         'istring' => self::ISTRING,
@@ -30,16 +25,12 @@ class HTMLPurifier_VarParser
         'hash' => self::HASH,
         'mixed' => self::C_MIXED
     );
-
-    
     public static $stringTypes = array(
         self::C_STRING => true,
         self::ISTRING => true,
         self::TEXT => true,
         self::ITEXT => true,
     );
-
-    
     final public function parse($var, $type, $allow_null = false)
     {
         if (is_string($type)) {
@@ -53,8 +44,6 @@ class HTMLPurifier_VarParser
         if ($allow_null && $var === null) {
             return null;
         }
-        
-        
         switch ($type) {
             case (self::C_STRING):
             case (self::ISTRING):
@@ -108,20 +97,14 @@ class HTMLPurifier_VarParser
         }
         $this->errorGeneric($var, $type);
     }
-
-    
     protected function parseImplementation($var, $type, $allow_null)
     {
         return $var;
     }
-
-    
     protected function error($msg)
     {
         throw new HTMLPurifier_VarParserException($msg);
     }
-
-    
     protected function errorInconsistent($class, $type)
     {
         throw new HTMLPurifier_Exception(
@@ -129,20 +112,15 @@ class HTMLPurifier_VarParser
             " not implemented"
         );
     }
-
-    
     protected function errorGeneric($var, $type)
     {
         $vtype = gettype($var);
         $this->error("Expected type " . HTMLPurifier_VarParser::getTypeName($type) . ", got $vtype");
     }
-
-    
     public static function getTypeName($type)
     {
         static $lookup;
         if (!$lookup) {
-            
             $lookup = array_flip(HTMLPurifier_VarParser::$types);
         }
         if (!isset($lookup[$type])) {
@@ -151,5 +129,3 @@ class HTMLPurifier_VarParser
         return $lookup[$type];
     }
 }
-
-

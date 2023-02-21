@@ -1,74 +1,47 @@
 <?php
-
-
-
-
 class HTMLPurifier_Printer
 {
-
-    
     protected $generator;
-
-    
     protected $config;
-
-    
     public function __construct()
     {
     }
-
-    
     public function prepareGenerator($config)
     {
         $all = $config->getAll();
         $context = new HTMLPurifier_Context();
         $this->generator = new HTMLPurifier_Generator($config, $context);
     }
-
-    
-    
-
-    
     protected function start($tag, $attr = array())
     {
         return $this->generator->generateFromToken(
             new HTMLPurifier_Token_Start($tag, $attr ? $attr : array())
         );
     }
-
-    
     protected function end($tag)
     {
         return $this->generator->generateFromToken(
             new HTMLPurifier_Token_End($tag)
         );
     }
-
-    
     protected function element($tag, $contents, $attr = array(), $escape = true)
     {
         return $this->start($tag, $attr) .
             ($escape ? $this->escape($contents) : $contents) .
             $this->end($tag);
     }
-
-    
     protected function elementEmpty($tag, $attr = array())
     {
         return $this->generator->generateFromToken(
             new HTMLPurifier_Token_Empty($tag, $attr)
         );
     }
-
-    
     protected function text($text)
     {
         return $this->generator->generateFromToken(
             new HTMLPurifier_Token_Text($text)
         );
     }
-
-    
     protected function row($name, $value)
     {
         if (is_bool($value)) {
@@ -80,16 +53,12 @@ class HTMLPurifier_Printer
             $this->element('td', $value) . "\n" .
             $this->end('tr');
     }
-
-    
     protected function escape($string)
     {
         $string = HTMLPurifier_Encoder::cleanUTF8($string);
         $string = htmlspecialchars($string, ENT_COMPAT, 'UTF-8');
         return $string;
     }
-
-    
     protected function listify($array, $polite = false)
     {
         if (empty($array)) {
@@ -109,8 +78,6 @@ class HTMLPurifier_Printer
         }
         return $ret;
     }
-
-    
     protected function getClass($obj, $sec_prefix = '')
     {
         static $five = null;
@@ -158,5 +125,3 @@ class HTMLPurifier_Printer
         return $class;
     }
 }
-
-

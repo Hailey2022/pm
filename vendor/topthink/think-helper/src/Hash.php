@@ -1,31 +1,16 @@
 <?php
-
-
-
-
-
-
-
-
-
-
 namespace think\helper;
-
-
 class Hash
 {
     protected static $handle = [];
-
     public static function make($value, $type = null, array $options = [])
     {
         return self::handle($type)->make($value, $options);
     }
-
     public static function check($value, $hashedValue, $type = null, array $options = [])
     {
         return self::handle($type)->check($value, $hashedValue, $options);
     }
-
     public static function handle($type)
     {
         if (is_null($type)) {
@@ -44,5 +29,4 @@ class Hash
         }
         return self::$handle[$type];
     }
-
 }

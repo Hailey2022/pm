@@ -1,5 +1,4 @@
 <?php
-
 return [
     'admin_index_index_view'         => [
         "type"        => 2,//钩子类型(默认为应用钩子;2:应用钩子;3:模板钩子;4:后台模板钩子)
@@ -121,5 +120,4 @@ return [
         "description" => "后台自定义登录是否开启钩子", //钩子描述
         "once"        => 1 
     ],
-
 ];

@@ -1,19 +1,7 @@
 <?php
-
-
-
-
-
-
-
-
-
-
 namespace think\route\dispatch;
-
 use think\Response;
 use think\route\Dispatch;
-
 class Redirect extends Dispatch
 {
     public function exec()

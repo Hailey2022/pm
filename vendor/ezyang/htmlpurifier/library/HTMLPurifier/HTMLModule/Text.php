@@ -1,20 +1,12 @@
 <?php
-
-
 class HTMLPurifier_HTMLModule_Text extends HTMLPurifier_HTMLModule
 {
-    
     public $name = 'Text';
-
-    
     public $content_sets = array(
         'Flow' => 'Heading | Block | Inline'
     );
-
-    
     public function setup($config)
     {
-        
         $this->addElement('abbr', 'Inline', 'Inline', 'Common');
         $this->addElement('acronym', 'Inline', 'Inline', 'Common');
         $this->addElement('cite', 'Inline', 'Inline', 'Common');
@@ -23,21 +15,14 @@ class HTMLPurifier_HTMLModule_Text extends HTMLPurifier_HTMLModule
         $this->addElement('q', 'Inline', 'Inline', 'Common', array('cite' => 'URI'));
         $this->addElement('samp', 'Inline', 'Inline', 'Common');
         $this->addElement('var', 'Inline', 'Inline', 'Common');
-
         $em = $this->addElement('em', 'Inline', 'Inline', 'Common');
         $em->formatting = true;
-
         $strong = $this->addElement('strong', 'Inline', 'Inline', 'Common');
         $strong->formatting = true;
-
         $code = $this->addElement('code', 'Inline', 'Inline', 'Common');
         $code->formatting = true;
-
-        
         $this->addElement('span', 'Inline', 'Inline', 'Common');
         $this->addElement('br', 'Inline', 'Empty', 'Core');
-
-        
         $this->addElement('address', 'Block', 'Inline', 'Common');
         $this->addElement('blockquote', 'Block', 'Optional: Heading | Block | List', 'Common', array('cite' => 'URI'));
         $pre = $this->addElement('pre', 'Block', 'Inline', 'Common');
@@ -56,15 +41,10 @@ class HTMLPurifier_HTMLModule_Text extends HTMLPurifier_HTMLModule
         $this->addElement('h4', 'Heading', 'Inline', 'Common');
         $this->addElement('h5', 'Heading', 'Inline', 'Common');
         $this->addElement('h6', 'Heading', 'Inline', 'Common');
-
-        
         $p = $this->addElement('p', 'Block', 'Inline', 'Common');
         $p->autoclose = array_flip(
             array("address", "blockquote", "center", "dir", "div", "dl", "fieldset", "ol", "p", "ul")
         );
-
         $this->addElement('div', 'Block', 'Flow', 'Common');
     }
 }
-
-

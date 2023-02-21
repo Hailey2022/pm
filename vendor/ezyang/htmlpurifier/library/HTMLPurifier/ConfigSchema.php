@@ -1,26 +1,14 @@
 <?php
-
-
 class HTMLPurifier_ConfigSchema
 {
-    
     public $defaults = array();
-
-    
     public $defaultPlist;
-
-    
     public $info = array();
-
-    
     protected static $singleton;
-
     public function __construct()
     {
         $this->defaultPlist = new HTMLPurifier_PropertyList();
     }
-
-    
     public static function makeFromSerial()
     {
         $contents = file_get_contents(HTMLPURIFIER_PREFIX . '/HTMLPurifier/ConfigSchema/schema.ser');
@@ -31,8 +19,6 @@ class HTMLPurifier_ConfigSchema
         }
         return $r;
     }
-
-    
     public static function instance($prototype = null)
     {
         if ($prototype !== null) {
@@ -42,8 +28,6 @@ class HTMLPurifier_ConfigSchema
         }
         return HTMLPurifier_ConfigSchema::$singleton;
     }
-
-    
     public function add($key, $default, $type, $allow_null)
     {
         $obj = new stdClass();
@@ -55,8 +39,6 @@ class HTMLPurifier_ConfigSchema
         $this->defaults[$key] = $default;
         $this->defaultPlist->set($key, $default);
     }
-
-    
     public function addValueAliases($key, $aliases)
     {
         if (!isset($this->info[$key]->aliases)) {
@@ -66,14 +48,10 @@ class HTMLPurifier_ConfigSchema
             $this->info[$key]->aliases[$alias] = $real;
         }
     }
-
-    
     public function addAllowedValues($key, $allowed)
     {
         $this->info[$key]->allowed = $allowed;
     }
-
-    
     public function addAlias($key, $new_key)
     {
         $obj = new stdClass;
@@ -81,8 +59,6 @@ class HTMLPurifier_ConfigSchema
         $obj->isAlias = true;
         $this->info[$key] = $obj;
     }
-
-    
     public function postProcess()
     {
         foreach ($this->info as $key => $v) {
@@ -94,5 +70,3 @@ class HTMLPurifier_ConfigSchema
         }
     }
 }
-
-

@@ -1,16 +1,10 @@
 <?php
-
-
 class HTMLPurifier_VarParser_Native extends HTMLPurifier_VarParser
 {
-
-    
     protected function parseImplementation($var, $type, $allow_null)
     {
         return $this->evalExpression($var);
     }
-
-    
     protected function evalExpression($expr)
     {
         $var = null;
@@ -21,5 +15,3 @@ class HTMLPurifier_VarParser_Native extends HTMLPurifier_VarParser
         return $var;
     }
 }
-
-

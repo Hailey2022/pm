@@ -1,13 +1,7 @@
 <?php
-
-
 class HTMLPurifier_AttrDef_HTML_LinkTypes extends HTMLPurifier_AttrDef
 {
-
-    
     protected $name;
-
-    
     public function __construct($name)
     {
         $configLookup = array(
@@ -24,19 +18,14 @@ class HTMLPurifier_AttrDef_HTML_LinkTypes extends HTMLPurifier_AttrDef
         }
         $this->name = $configLookup[$name];
     }
-
-    
     public function validate($string, $config, $context)
     {
         $allowed = $config->get('Attr.' . $this->name);
         if (empty($allowed)) {
             return false;
         }
-
         $string = $this->parseCDATA($string);
         $parts = explode(' ', $string);
-
-        
         $ret_lookup = array();
         foreach ($parts as $part) {
             $part = strtolower(trim($part));
@@ -45,7 +34,6 @@ class HTMLPurifier_AttrDef_HTML_LinkTypes extends HTMLPurifier_AttrDef
             }
             $ret_lookup[$part] = true;
         }
-
         if (empty($ret_lookup)) {
             return false;
         }
@@ -53,5 +41,3 @@ class HTMLPurifier_AttrDef_HTML_LinkTypes extends HTMLPurifier_AttrDef
         return $string;
     }
 }
-
-

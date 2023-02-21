@@ -1,26 +1,14 @@
 <?php
-
-
 class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
 {
-    
     public $tracksLineNumbers = true;
-
-    
     protected $_whitespace = "\x20\x09\x0D\x0A";
-
-    
     protected function scriptCallback($matches)
     {
         return $matches[1] . htmlspecialchars($matches[2], ENT_COMPAT, 'UTF-8') . $matches[3];
     }
-
-    
     public function tokenizeHTML($html, $config, $context)
     {
-        
-        
-        
         if ($config->get('HTML.Trusted')) {
             $html = preg_replace_callback(
                 '#(<script[^>]*>)(\s*[^<].+?)(</script>)#si',
@@ -28,22 +16,14 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
                 $html
             );
         }
-
         $html = $this->normalize($html, $config, $context);
-
         $cursor = 0; 
         $inside_tag = false; 
         $array = array(); 
-
-        
         $maintain_line_numbers = $config->get('Core.MaintainLineNumbers');
-
         if ($maintain_line_numbers === null) {
-            
-            
             $maintain_line_numbers = $config->get('Core.CollectErrors');
         }
-
         if ($maintain_line_numbers) {
             $current_line = 1;
             $current_col = 0;
@@ -56,54 +36,30 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
         $context->register('CurrentLine', $current_line);
         $context->register('CurrentCol', $current_col);
         $nl = "\n";
-        
-        
         $synchronize_interval = $config->get('Core.DirectLexLineNumberSyncInterval');
-
         $e = false;
         if ($config->get('Core.CollectErrors')) {
             $e =& $context->get('ErrorCollector');
         }
-
-        
         $loops = 0;
-
         while (++$loops) {
-            
-            
-            
-
             if ($maintain_line_numbers) {
-                
                 $rcursor = $cursor - (int)$inside_tag;
-
-                
-                
-                
-                
                 $nl_pos = strrpos($html, $nl, $rcursor - $length);
                 $current_col = $rcursor - (is_bool($nl_pos) ? 0 : $nl_pos + 1);
-
-                
                 if ($synchronize_interval && 
                     $cursor > 0 && 
                     $loops % $synchronize_interval === 0) { 
                     $current_line = 1 + $this->substrCount($html, $nl, 0, $cursor);
                 }
             }
-
             $position_next_lt = strpos($html, '<', $cursor);
             $position_next_gt = strpos($html, '>', $cursor);
-
-            
-            
             if ($position_next_lt === $cursor) {
                 $inside_tag = true;
                 $cursor++;
             }
-
             if (!$inside_tag && $position_next_lt !== false) {
-                
                 $token = new
                 HTMLPurifier_Token_Text(
                     $this->parseText(
@@ -123,12 +79,9 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
                 $inside_tag = true;
                 continue;
             } elseif (!$inside_tag) {
-                
-                
                 if ($cursor === strlen($html)) {
                     break;
                 }
-                
                 $token = new
                 HTMLPurifier_Token_Text(
                     $this->parseText(
@@ -144,33 +97,19 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
                 $array[] = $token;
                 break;
             } elseif ($inside_tag && $position_next_gt !== false) {
-                
-                
                 $strlen_segment = $position_next_gt - $cursor;
-
                 if ($strlen_segment < 1) {
-                    
                     $token = new HTMLPurifier_Token_Text('<');
                     $cursor++;
                     continue;
                 }
-
                 $segment = substr($html, $cursor, $strlen_segment);
-
                 if ($segment === false) {
-                    
-                    
                     break;
                 }
-
-                
                 if (substr($segment, 0, 3) === '!--') {
-                    
                     $position_comment_end = strpos($html, '-->', $cursor);
                     if ($position_comment_end === false) {
-                        
-                        
-                        
                         if ($e) {
                             $e->send(E_WARNING, 'Lexer: Unclosed comment');
                         }
@@ -198,8 +137,6 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
                     $inside_tag = false;
                     continue;
                 }
-
-                
                 $is_end_tag = (strpos($segment, '/') === 0);
                 if ($is_end_tag) {
                     $type = substr($segment, 1);
@@ -213,12 +150,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
                     $cursor = $position_next_gt + 1;
                     continue;
                 }
-
-                
-                
-                
                 if (!ctype_alpha($segment[0])) {
-                    
                     if ($e) {
                         $e->send(E_NOTICE, 'Lexer: Unescaped lt');
                     }
@@ -231,20 +163,12 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
                     $inside_tag = false;
                     continue;
                 }
-
-                
-                
-                
-                
                 $is_self_closing = (strrpos($segment, '/') === $strlen_segment - 1);
                 if ($is_self_closing) {
                     $strlen_segment--;
                     $segment = substr($segment, 0, $strlen_segment);
                 }
-
-                
                 $position_first_space = strcspn($segment, $this->_whitespace);
-
                 if ($position_first_space >= $strlen_segment) {
                     if ($is_self_closing) {
                         $token = new HTMLPurifier_Token_Empty($segment);
@@ -260,8 +184,6 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
                     $cursor = $position_next_gt + 1;
                     continue;
                 }
-
-                
                 $type = substr($segment, 0, $position_first_space);
                 $attribute_string =
                     trim(
@@ -279,7 +201,6 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
                 } else {
                     $attr = array();
                 }
-
                 if ($is_self_closing) {
                     $token = new HTMLPurifier_Token_Empty($type, $attr);
                 } else {
@@ -294,7 +215,6 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
                 $inside_tag = false;
                 continue;
             } else {
-                
                 if ($e) {
                     $e->send(E_WARNING, 'Lexer: Missing gt');
                 }
@@ -308,19 +228,15 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
                 if ($maintain_line_numbers) {
                     $token->rawPosition($current_line, $current_col);
                 }
-                
                 $array[] = $token;
                 break;
             }
             break;
         }
-
         $context->destroy('CurrentLine');
         $context->destroy('CurrentCol');
         return $array;
     }
-
-    
     protected function substrCount($haystack, $needle, $offset, $length)
     {
         static $oldVersion;
@@ -334,30 +250,21 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
             return substr_count($haystack, $needle, $offset, $length);
         }
     }
-
-    
     public function parseAttributeString($string, $config, $context)
     {
         $string = (string)$string; 
-
         if ($string == '') {
             return array();
         } 
-
         $e = false;
         if ($config->get('Core.CollectErrors')) {
             $e =& $context->get('ErrorCollector');
         }
-
-        
-        
         $num_equal = substr_count($string, '=');
         $has_space = strpos($string, ' ');
         if ($num_equal === 0 && !$has_space) {
-            
             return array($string => $string);
         } elseif ($num_equal === 1 && !$has_space) {
-            
             list($key, $quoted_value) = explode('=', $string);
             $quoted_value = trim($quoted_value);
             if (!$key) {
@@ -371,15 +278,11 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
             }
             $first_char = @$quoted_value[0];
             $last_char = @$quoted_value[strlen($quoted_value) - 1];
-
             $same_quote = ($first_char == $last_char);
             $open_quote = ($first_char == '"' || $first_char == "'");
-
             if ($same_quote && $open_quote) {
-                
                 $value = substr($quoted_value, 1, strlen($quoted_value) - 2);
             } else {
-                
                 if ($open_quote) {
                     if ($e) {
                         $e->send(E_ERROR, 'Lexer: Missing end quote');
@@ -394,35 +297,21 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
             }
             return array($key => $this->parseAttr($value, $config));
         }
-
-        
         $array = array(); 
         $cursor = 0; 
         $size = strlen($string); 
-
-        
-        
         $string .= ' ';
-
         $old_cursor = -1;
         while ($cursor < $size) {
             if ($old_cursor >= $cursor) {
                 throw new Exception("Infinite loop detected");
             }
             $old_cursor = $cursor;
-
             $cursor += ($value = strspn($string, $this->_whitespace, $cursor));
-            
-
             $key_begin = $cursor; //we're currently at the start of the key
-
-            
             $cursor += strcspn($string, $this->_whitespace . '=', $cursor);
-
             $key_end = $cursor; 
-
             $key = substr($string, $key_begin, $key_end - $key_begin);
-
             if (!$key) {
                 if ($e) {
                     $e->send(E_ERROR, 'Lexer: Missing attribute key');
@@ -430,53 +319,34 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
                 $cursor += 1 + strcspn($string, $this->_whitespace, $cursor + 1); 
                 continue; 
             }
-
-            
             $cursor += strspn($string, $this->_whitespace, $cursor);
-
             if ($cursor >= $size) {
                 $array[$key] = $key;
                 break;
             }
-
-            
-            
             $first_char = @$string[$cursor];
-
             if ($first_char == '=') {
-                
-
                 $cursor++;
                 $cursor += strspn($string, $this->_whitespace, $cursor);
-
                 if ($cursor === false) {
                     $array[$key] = '';
                     break;
                 }
-
-                
-
                 $char = @$string[$cursor];
-
                 if ($char == '"' || $char == "'") {
-                    
                     $cursor++;
                     $value_begin = $cursor;
                     $cursor = strpos($string, $char, $cursor);
                     $value_end = $cursor;
                 } else {
-                    
                     $value_begin = $cursor;
                     $cursor += strcspn($string, $this->_whitespace, $cursor);
                     $value_end = $cursor;
                 }
-
-                
                 if ($cursor === false) {
                     $cursor = $size;
                     $value_end = $cursor;
                 }
-
                 $value = substr($string, $value_begin, $value_end - $value_begin);
                 if ($value === false) {
                     $value = '';
@@ -484,11 +354,9 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
                 $array[$key] = $this->parseAttr($value, $config);
                 $cursor++;
             } else {
-                
                 if ($key !== '') {
                     $array[$key] = $key;
                 } else {
-                    
                     if ($e) {
                         $e->send(E_ERROR, 'Lexer: Missing attribute key');
                     }
@@ -498,5 +366,3 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
         return $array;
     }
 }
-
-

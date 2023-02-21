@@ -1,19 +1,11 @@
 <?php
-
-
 class HTMLPurifier_AttrDef_CSS_Composite extends HTMLPurifier_AttrDef
 {
-
-    
     public $defs;
-
-    
     public function __construct($defs)
     {
         $this->defs = $defs;
     }
-
-    
     public function validate($string, $config, $context)
     {
         foreach ($this->defs as $i => $def) {
@@ -25,5 +17,3 @@ class HTMLPurifier_AttrDef_CSS_Composite extends HTMLPurifier_AttrDef
         return false;
     }
 }
-
-

@@ -1,12 +1,7 @@
 <?php
-
-
 class HTMLPurifier_HTMLModule_Proprietary extends HTMLPurifier_HTMLModule
 {
-    
     public $name = 'Proprietary';
-
-    
     public function setup($config)
     {
         $this->addElement(
@@ -29,5 +24,3 @@ class HTMLPurifier_HTMLModule_Proprietary extends HTMLPurifier_HTMLModule
         );
     }
 }
-
-

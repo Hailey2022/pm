@@ -1,9 +1,6 @@
 <?php
-
 namespace api\demo\controller;
-
 use cmf\controller\RestBaseController;
-
 class ArticlesController extends RestBaseController
 {
     public function index()
@@ -14,19 +11,15 @@ class ArticlesController extends RestBaseController
         ];
         $this->success('请求成功!', ['articles' => $articles]);
     }
-
     public function save()
     {
     }
-
     public function read($id)
     {
     }
-
     public function update($id)
     {
     }
-
     public function delete($id)
     {
     }

@@ -1,13 +1,4 @@
 <?php
-
-
-
-
-
-
-
-
-
 return [
     "SAVE"                     => '保存',
     "CLOSE"                    => '关闭',
@@ -61,6 +52,4 @@ return [
     "EMAIL_SUBJECT"            => '邮件标题',
     "EMAIL_TEMPLATE"           => '邮件模版',
     "EMAIL_TEMPLATE_HELP_TEXT" => '请用{$link}代替激活链接，{$username}代替公司名'
-
-
 ];

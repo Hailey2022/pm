@@ -1,9 +1,6 @@
 <?php
-
 class HTMLPurifier_DefinitionCache_Serializer extends HTMLPurifier_DefinitionCache
 {
-
-    
     public function add($def, $config)
     {
         if (!$this->checkDefType($def)) {
@@ -18,8 +15,6 @@ class HTMLPurifier_DefinitionCache_Serializer extends HTMLPurifier_DefinitionCac
         }
         return $this->_write($file, serialize($def), $config);
     }
-
-    
     public function set($def, $config)
     {
         if (!$this->checkDefType($def)) {
@@ -31,8 +26,6 @@ class HTMLPurifier_DefinitionCache_Serializer extends HTMLPurifier_DefinitionCac
         }
         return $this->_write($file, serialize($def), $config);
     }
-
-    
     public function replace($def, $config)
     {
         if (!$this->checkDefType($def)) {
@@ -47,8 +40,6 @@ class HTMLPurifier_DefinitionCache_Serializer extends HTMLPurifier_DefinitionCac
         }
         return $this->_write($file, serialize($def), $config);
     }
-
-    
     public function get($config)
     {
         $file = $this->generateFilePath($config);
@@ -57,8 +48,6 @@ class HTMLPurifier_DefinitionCache_Serializer extends HTMLPurifier_DefinitionCac
         }
         return unserialize(file_get_contents($file));
     }
-
-    
     public function remove($config)
     {
         $file = $this->generateFilePath($config);
@@ -67,8 +56,6 @@ class HTMLPurifier_DefinitionCache_Serializer extends HTMLPurifier_DefinitionCac
         }
         return unlink($file);
     }
-
-    
     public function flush($config)
     {
         if (!$this->_prepareDir($config)) {
@@ -76,9 +63,6 @@ class HTMLPurifier_DefinitionCache_Serializer extends HTMLPurifier_DefinitionCac
         }
         $dir = $this->generateDirectoryPath($config);
         $dh = opendir($dir);
-        
-        
-        
         if (false === $dh) {
             return false;
         }
@@ -94,8 +78,6 @@ class HTMLPurifier_DefinitionCache_Serializer extends HTMLPurifier_DefinitionCac
         closedir($dh);
         return true;
     }
-
-    
     public function cleanup($config)
     {
         if (!$this->_prepareDir($config)) {
@@ -103,7 +85,6 @@ class HTMLPurifier_DefinitionCache_Serializer extends HTMLPurifier_DefinitionCac
         }
         $dir = $this->generateDirectoryPath($config);
         $dh = opendir($dir);
-        
         if (false === $dh) {
             return false;
         }
@@ -122,35 +103,26 @@ class HTMLPurifier_DefinitionCache_Serializer extends HTMLPurifier_DefinitionCac
         closedir($dh);
         return true;
     }
-
-    
     public function generateFilePath($config)
     {
         $key = $this->generateKey($config);
         return $this->generateDirectoryPath($config) . '/' . $key . '.ser';
     }
-
-    
     public function generateDirectoryPath($config)
     {
         $base = $this->generateBaseDirectoryPath($config);
         return $base . '/' . $this->type;
     }
-
-    
     public function generateBaseDirectoryPath($config)
     {
         $base = $config->get('Cache.SerializerPath');
         $base = is_null($base) ? HTMLPURIFIER_PREFIX . '/HTMLPurifier/DefinitionCache/Serializer' : $base;
         return $base;
     }
-
-    
     private function _write($file, $data, $config)
     {
         $result = file_put_contents($file, $data);
         if ($result !== false) {
-            
             $chmod = $config->get('Cache.SerializerPermissions');
             if ($chmod !== null) {
                 chmod($file, $chmod & 0666);
@@ -158,8 +130,6 @@ class HTMLPurifier_DefinitionCache_Serializer extends HTMLPurifier_DefinitionCac
         }
         return $result;
     }
-
-    
     private function _prepareDir($config)
     {
         $directory = $this->generateDirectoryPath($config);
@@ -201,17 +171,12 @@ class HTMLPurifier_DefinitionCache_Serializer extends HTMLPurifier_DefinitionCac
         }
         return true;
     }
-
-    
     private function _testPermissions($dir, $chmod)
     {
-        
         if (is_writable($dir)) {
             return true;
         }
         if (!is_dir($dir)) {
-            
-            
             trigger_error(
                 'Directory ' . $dir . ' does not exist',
                 E_USER_WARNING
@@ -219,9 +184,7 @@ class HTMLPurifier_DefinitionCache_Serializer extends HTMLPurifier_DefinitionCac
             return false;
         }
         if (function_exists('posix_getuid') && $chmod !== null) {
-            
             if (fileowner($dir) === posix_getuid()) {
-                
                 $chmod = $chmod | 0700;
                 if (chmod($dir, $chmod)) {
                     return true;
@@ -229,8 +192,6 @@ class HTMLPurifier_DefinitionCache_Serializer extends HTMLPurifier_DefinitionCac
             } elseif (filegroup($dir) === posix_getgid()) {
                 $chmod = $chmod | 0070;
             } else {
-                
-                
                 $chmod = $chmod | 0777;
             }
             trigger_error(
@@ -239,7 +200,6 @@ class HTMLPurifier_DefinitionCache_Serializer extends HTMLPurifier_DefinitionCac
                 E_USER_WARNING
             );
         } else {
-            
             trigger_error(
                 'Directory ' . $dir . ' not writable, ' .
                 'please alter file permissions',
@@ -249,5 +209,3 @@ class HTMLPurifier_DefinitionCache_Serializer extends HTMLPurifier_DefinitionCac
         return false;
     }
 }
-
-

@@ -1,41 +1,19 @@
 <?php
-
-
 class HTMLPurifier_Language
 {
-
-    
     public $code = 'en';
-
-    
     public $fallback = false;
-
-    
     public $messages = array();
-
-    
     public $errorNames = array();
-
-    
     public $error = false;
-
-    
     public $_loaded = false;
-
-    
     protected $config;
-
-    
     protected $context;
-
-    
     public function __construct($config, $context)
     {
         $this->config  = $config;
         $this->context = $context;
     }
-
-    
     public function load()
     {
         if ($this->_loaded) {
@@ -48,8 +26,6 @@ class HTMLPurifier_Language
         }
         $this->_loaded = true;
     }
-
-    
     public function getMessage($key)
     {
         if (!$this->_loaded) {
@@ -60,8 +36,6 @@ class HTMLPurifier_Language
         }
         return $this->messages[$key];
     }
-
-    
     public function getErrorName($int)
     {
         if (!$this->_loaded) {
@@ -72,8 +46,6 @@ class HTMLPurifier_Language
         }
         return $this->errorNames[$int];
     }
-
-    
     public function listify($array)
     {
         $sep      = $this->getMessage('Item separator');
@@ -90,8 +62,6 @@ class HTMLPurifier_Language
         }
         return $ret;
     }
-
-    
     public function formatMessage($key, $args = array())
     {
         if (!$this->_loaded) {
@@ -106,7 +76,6 @@ class HTMLPurifier_Language
         foreach ($args as $i => $value) {
             if (is_object($value)) {
                 if ($value instanceof HTMLPurifier_Token) {
-                    
                     if (!$generator) {
                         $generator = $this->context->get('Generator');
                     }
@@ -118,9 +87,6 @@ class HTMLPurifier_Language
                     }
                     $subst['$'.$i.'.Compact'] =
                     $subst['$'.$i.'.Serialized'] = $generator->generateFromToken($value);
-                    
-                    
-                    
                     if (!empty($value->attr)) {
                         $stripped_token = clone $value;
                         $stripped_token->attr = array();
@@ -132,11 +98,8 @@ class HTMLPurifier_Language
             } elseif (is_array($value)) {
                 $keys = array_keys($value);
                 if (array_keys($keys) === $keys) {
-                    
                     $subst['$'.$i] = $this->listify($value);
                 } else {
-                    
-                    
                     $subst['$'.$i.'.Keys'] = $this->listify($keys);
                     $subst['$'.$i.'.Values'] = $this->listify(array_values($value));
                 }
@@ -147,5 +110,3 @@ class HTMLPurifier_Language
         return strtr($raw, $subst);
     }
 }
-
-

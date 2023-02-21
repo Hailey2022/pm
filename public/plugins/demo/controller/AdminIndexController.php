@@ -1,11 +1,7 @@
 <?php
-
 namespace plugins\demo\controller;
-
 use app\user\model\UserModel;
 use cmf\controller\PluginAdminBaseController;
-
-
 class AdminIndexController extends PluginAdminBaseController
 {
     protected function initialize()
@@ -16,7 +12,6 @@ class AdminIndexController extends PluginAdminBaseController
             $this->assign('admin_id', $adminId);
         }
     }
-
     public function index()
     {
         $users = UserModel::limit(0, 5)->select();
@@ -24,7 +19,6 @@ class AdminIndexController extends PluginAdminBaseController
         $this->assign('users', $users);
         return $this->fetch('/admin_index');
     }
-
     public function setting()
     {
         $users = UserModel::limit(0, 5)->select();

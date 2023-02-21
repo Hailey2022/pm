@@ -1,21 +1,9 @@
 <?php
-
-
-
-
-
-
-
-
-
-
 namespace think\exception;
-
 class ThrowableError extends \ErrorException
 {
     public function __construct(\Throwable $e)
     {
-
         if ($e instanceof \ParseError) {
             $message  = 'Parse error: ' . $e->getMessage();
             $severity = E_PARSE;
@@ -26,7 +14,6 @@ class ThrowableError extends \ErrorException
             $message  = 'Fatal error: ' . $e->getMessage();
             $severity = E_ERROR;
         }
-
         parent::__construct(
             $message,
             $e->getCode(),
@@ -34,10 +21,8 @@ class ThrowableError extends \ErrorException
             $e->getFile(),
             $e->getLine()
         );
-
         $this->setTrace($e->getTrace());
     }
-
     protected function setTrace($trace)
     {
         $traceReflector = new \ReflectionProperty('Exception', 'trace');

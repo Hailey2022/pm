@@ -1,10 +1,6 @@
 <?php
-
-
 class HTMLPurifier_AttrDef_CSS_TextDecoration extends HTMLPurifier_AttrDef
 {
-
-    
     public function validate($string, $config, $context)
     {
         static $allowed_values = array(
@@ -12,13 +8,10 @@ class HTMLPurifier_AttrDef_CSS_TextDecoration extends HTMLPurifier_AttrDef
             'overline' => true,
             'underline' => true,
         );
-
         $string = strtolower($this->parseCDATA($string));
-
         if ($string === 'none') {
             return $string;
         }
-
         $parts = explode(' ', $string);
         $final = '';
         foreach ($parts as $part) {
@@ -33,5 +26,3 @@ class HTMLPurifier_AttrDef_CSS_TextDecoration extends HTMLPurifier_AttrDef
         return $final;
     }
 }
-
-

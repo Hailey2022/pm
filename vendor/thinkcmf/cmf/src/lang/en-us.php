@@ -1,13 +1,4 @@
 <?php
-
-
-
-
-
-
-
-
-
 return [
     "SAVE"                    => 'Save',
     "CLOSE"                   => 'Close',
@@ -52,6 +43,4 @@ return [
     "EDIT_FAILED"             => 'Save failed！',
     "NO_DATA"                 => 'No data!',
     "MOBILE"                  => 'Mobile'
-
-
 ];

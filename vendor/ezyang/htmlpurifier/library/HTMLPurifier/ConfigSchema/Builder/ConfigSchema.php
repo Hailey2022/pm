@@ -1,10 +1,6 @@
 <?php
-
-
 class HTMLPurifier_ConfigSchema_Builder_ConfigSchema
 {
-
-    
     public function build($interchange)
     {
         $schema = new HTMLPurifier_ConfigSchema();
@@ -38,5 +34,3 @@ class HTMLPurifier_ConfigSchema_Builder_ConfigSchema
         return $schema;
     }
 }
-
-

@@ -1,41 +1,16 @@
 <?php
-
-
-
-
 class HTMLPurifier_HTMLModule_Scripting extends HTMLPurifier_HTMLModule
 {
-    
     public $name = 'Scripting';
-
-    
     public $elements = array('script', 'noscript');
-
-    
     public $content_sets = array('Block' => 'script | noscript', 'Inline' => 'script | noscript');
-
-    
     public $safe = false;
-
-    
     public function setup($config)
     {
-        
-        
-        
-        
-        
-
-        
-        
-
-        
-        
         $this->info['noscript'] = new HTMLPurifier_ElementDef();
         $this->info['noscript']->attr = array(0 => array('Common'));
         $this->info['noscript']->content_model = 'Heading | List | Block';
         $this->info['noscript']->content_model_type = 'required';
-
         $this->info['script'] = new HTMLPurifier_ElementDef();
         $this->info['script']->attr = array(
             'defer' => new HTMLPurifier_AttrDef_Enum(array('defer')),
@@ -49,5 +24,3 @@ class HTMLPurifier_HTMLModule_Scripting extends HTMLPurifier_HTMLModule
             new HTMLPurifier_AttrTransform_ScriptRequired();
     }
 }
-
-

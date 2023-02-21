@@ -1,7 +1,4 @@
 <?php
-
-
-
 $PHPMAILER_LANG['authenticate']         = 'SMTP-fout: kon nie geverifieer word nie.';
 $PHPMAILER_LANG['connect_host']         = 'SMTP-fout: kon nie aan SMTP-verbind nie.';
 $PHPMAILER_LANG['data_not_accepted']    = 'SMTP-fout: data nie aanvaar nie.';

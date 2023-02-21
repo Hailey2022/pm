@@ -1,21 +1,17 @@
 <?php
 namespace cmf\controller;
-
 use cmf\controller\HomeBaseController;
-
 class ImgController extends HomeBaseController
 {
     private $src;
     private $image;
     private $imageinfo;
     private $percent = 1;
-
     public function __construct($src, $percent = 1)
     {
         $this->src = $src;
         $this->percent = $percent;
     }
-
     public function compressImg($saveName = '')
     {
         $this->_openImage();
@@ -24,7 +20,6 @@ class ImgController extends HomeBaseController
         else
             $this->_showImage();
     }
-
     private function _openImage()
     {
         list($width, $height, $type, $attr) = getimagesize($this->src);
@@ -38,11 +33,8 @@ class ImgController extends HomeBaseController
         $this->image = $fun($this->src);
         $this->_thumpImage();
     }
-
     private function _thumpImage()
     {
-        
-        
         $new_width = 400;
         $new_height = 300;
         $image_thump = imagecreatetruecolor($new_width, $new_height);
@@ -50,14 +42,12 @@ class ImgController extends HomeBaseController
         imagedestroy($this->image);
         $this->image = $image_thump;
     }
-
     private function _showImage()
     {
         header('Content-Type: image/' . $this->imageinfo['type']);
         $funcs = "image" . $this->imageinfo['type'];
         $funcs($this->image);
     }
-
     private function _saveImage($dstImgName)
     {
         if (empty($dstImgName))
@@ -69,7 +59,6 @@ class ImgController extends HomeBaseController
             $dstExt = strtolower($dstExt);
         if (!empty($sourseExt))
             $sourseExt = strtolower($sourseExt);
-
         if (!empty($dstExt) && in_array($dstExt, $allowImgs)) {
             $dstName = $dstImgName;
         } elseif (!empty($sourseExt) && in_array($sourseExt, $allowImgs)) {
@@ -80,7 +69,6 @@ class ImgController extends HomeBaseController
         $funcs = "image" . $this->imageinfo['type'];
         $funcs($this->image, $dstName);
     }
-
     public function __destruct()
     {
         imagedestroy($this->image);

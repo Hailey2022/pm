@@ -1,22 +1,9 @@
 <?php
-
-
-
-
-
-
-
-
-
 namespace api\user\service;
-
-
 use api\user\model\CommentModel;
 use think\db\Query;
-
 class CommentService
 {
-    
     public function userComments($filter)
     {
         $page    = empty($filter['page']) ? '1' : $filter['page'];

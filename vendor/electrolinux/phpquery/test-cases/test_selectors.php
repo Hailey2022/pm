@@ -107,7 +107,6 @@ $tests = array(
 			'li',
 		)
 	),
-	
 	array(
 		'li:only-child',
 		array(
@@ -251,8 +250,6 @@ $tests = array(
 			'li.nested',
 		)
 	),
-
-
 //	array(
 //		'',
 //		array(
@@ -272,7 +269,6 @@ $tests = array(
 //		)
 //	),
 );
-
 phpQuery::newDocumentFile('test.html');
 foreach( $tests as $k => $test ) {
 	$tests[ $k ][2] = pq( $test[0] )->whois();
@@ -286,7 +282,6 @@ foreach( $tests as $test ) {
 	}
 	print "<br /><br />";
 }
-
 //
 $testName = 'Complicated selector 1';
 phpQuery::newDocumentFile('test.html');

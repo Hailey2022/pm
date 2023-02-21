@@ -1,12 +1,7 @@
 <?php
-
-
 class HTMLPurifier_HTMLModule_Target extends HTMLPurifier_HTMLModule
 {
-    
     public $name = 'Target';
-
-    
     public function setup($config)
     {
         $elements = array('a');
@@ -18,5 +13,3 @@ class HTMLPurifier_HTMLModule_Target extends HTMLPurifier_HTMLModule
         }
     }
 }
-
-

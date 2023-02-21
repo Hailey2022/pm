@@ -1,7 +1,4 @@
 <?php
-
-
-
 $PHPMAILER_LANG['authenticate']         = 'خطای SMTP: احراز هویت با شکست مواجه شد.';
 $PHPMAILER_LANG['connect_host']         = 'خطای SMTP: اتصال به سرور SMTP برقرار نشد.';
 $PHPMAILER_LANG['data_not_accepted']    = 'خطای SMTP: داده‌ها نا‌درست هستند.';

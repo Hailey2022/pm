@@ -1,8 +1,6 @@
 <?php
 require_once('../phpQuery/phpQuery.php');
 phpQuery::$debug = true;
-
-
 $testName = 'Filter with pseudoclass';
 $testResult = array(
 	'p.body',
@@ -16,8 +14,6 @@ else
 	print "Test '{$testName}' <strong>FAILED</strong> !!! ";
 print_r($result->whois());
 print "\n";
-
-
 $testName = 'Filter with multiplie selectors';
 $testResult = array(
 	'p.body',
@@ -39,8 +35,6 @@ print_r($single->whois());
 print "\n";
 print_r($double->whois());
 print "\n";
-
-
 $testName = 'Attributes in HTML element';
 $validResult = 'testValue';
 $result = phpQuery::newDocumentFile('test.html')->find('html')

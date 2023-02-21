@@ -1,18 +1,8 @@
 <?php
-
-
-
-
-
-
-
 namespace api\portal\controller;
-
 use cmf\controller\RestBaseController;
-
 class IndexController extends RestBaseController
 {
-    
     public function index()
     {
         $this->success("恭喜您,API访问成功!", [
@@ -20,5 +10,4 @@ class IndexController extends RestBaseController
             'doc'     => 'http://www.thinkcmf.com/cmf5api.html'
         ]);
     }
-
 }

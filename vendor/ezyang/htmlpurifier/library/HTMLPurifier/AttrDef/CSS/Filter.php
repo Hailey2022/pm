@@ -1,24 +1,17 @@
 <?php
-
-
 class HTMLPurifier_AttrDef_CSS_Filter extends HTMLPurifier_AttrDef
 {
-    
     protected $intValidator;
-
     public function __construct()
     {
         $this->intValidator = new HTMLPurifier_AttrDef_Integer();
     }
-
-    
     public function validate($value, $config, $context)
     {
         $value = $this->parseCDATA($value);
         if ($value === 'none') {
             return $value;
         }
-        
         $function_length = strcspn($value, '(');
         $function = trim(substr($value, 0, $function_length));
         if ($function !== 'alpha' &&
@@ -62,5 +55,3 @@ class HTMLPurifier_AttrDef_CSS_Filter extends HTMLPurifier_AttrDef
         return $ret_function;
     }
 }
-
-

@@ -1,17 +1,5 @@
 <?php
-
-
-
-
-
-
-
-
-
-
 namespace think\image\gif;
-
-
 class Decoder
 {
     public $GIF_buffer = [];
@@ -26,8 +14,6 @@ class Decoder
     public $GIF_colorS;
     public $GIF_colorC;
     public $GIF_colorF;
-
-    
     public function __construct($GIF_pointer)
     {
         $this->GIF_stream = $GIF_pointer;
@@ -42,7 +28,6 @@ class Decoder
             $this->getByte(3 * $this->GIF_colorS);
             $this->GIF_global = $this->GIF_buffer;
         }
-
         for ($cycle = 1; $cycle;) {
             if ($this->getByte(1)) {
                 switch ($this->GIF_buffer[0]) {
@@ -61,8 +46,6 @@ class Decoder
             }
         }
     }
-
-    
     public function readExtensions()
     {
         $this->getByte(1);
@@ -72,14 +55,11 @@ class Decoder
                 break;
             }
             $this->getByte($u);
-            
             if (4 == $u) {
                 $this->GIF_delays[] = ($this->GIF_buffer[1] | $this->GIF_buffer[2] << 8);
             }
         }
     }
-
-    
     public function readDescriptor()
     {
         $this->getByte(9);
@@ -122,11 +102,8 @@ class Decoder
             $this->putByte($this->GIF_buffer);
         }
         $this->GIF_string .= chr(0x3B);
-        
         $this->GIF_arrays[] = $this->GIF_string;
     }
-
-    
     public function getByte($len)
     {
         $this->GIF_buffer = [];
@@ -138,22 +115,16 @@ class Decoder
         }
         return 1;
     }
-
-    
     public function putByte($bytes)
     {
         for ($i = 0; $i < count($bytes); $i++) {
             $this->GIF_string .= chr($bytes[$i]);
         }
     }
-
-    
     public function getFrames()
     {
         return ($this->GIF_arrays);
     }
-
-    
     public function getDelays()
     {
         return ($this->GIF_delays);

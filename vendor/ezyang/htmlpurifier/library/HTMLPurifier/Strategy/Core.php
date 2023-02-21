@@ -1,6 +1,4 @@
 <?php
-
-
 class HTMLPurifier_Strategy_Core extends HTMLPurifier_Strategy_Composite
 {
     public function __construct()
@@ -11,5 +9,3 @@ class HTMLPurifier_Strategy_Core extends HTMLPurifier_Strategy_Composite
         $this->strategies[] = new HTMLPurifier_Strategy_ValidateAttributes();
     }
 }
-
-

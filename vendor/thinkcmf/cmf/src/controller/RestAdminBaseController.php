@@ -1,15 +1,5 @@
 <?php
-
-
-
-
-
-
-
-
-
 namespace cmf\controller;
-
 class RestAdminBaseController extends RestBaseController
 {
     public function initialize()
@@ -20,6 +10,4 @@ class RestAdminBaseController extends RestBaseController
             $this->error(['code' => 10001, 'msg' => '登录已失效!']);
         }
     }
-
-
 }

@@ -1,10 +1,6 @@
 <?php
-
-
-
 $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
-
 return array(
     'wxapp\\' => array($vendorDir . '/thinkcmf/cmf-extend/src/wxapp'),
     'tree\\' => array($vendorDir . '/thinkcmf/cmf-extend/src/tree'),

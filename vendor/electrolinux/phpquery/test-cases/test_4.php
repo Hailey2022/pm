@@ -1,8 +1,6 @@
 <?php
 require_once('../phpQuery/phpQuery.php');
 phpQuery::$debug = true;
-
-
 $testResult = array(
 	'li#testID',
 );
@@ -18,8 +16,6 @@ else {
 	print "</pre>\n";
 }
 print "\n";
-
-
 $testResult = array(
 	'li#testID',
 	'li',
@@ -38,8 +34,6 @@ else {
 	print "</pre>\n";
 }
 print "\n";
-
-
 $result = phpQuery::newDocument('<li><span class="field1"></span><span class="field1"></span></li>')
 	->find('.field1')
 		->php('longlongtest');
@@ -54,8 +48,6 @@ else {
 	print "</pre>\n";
 }
 print "\n";
-
-
 $testResult = 1;
 $result = phpQuery::newDocumentFile('test.html')
 	->find('p')
@@ -66,8 +58,6 @@ else {
 	print "Test 'Index' <strong>FAILED</strong> !!! ";
 }
 print "\n";
-
-
 $testName = 'Clone';
 $testResult = 3;
 $document;
@@ -86,8 +76,6 @@ else {
 	print "Test '$testName' <strong>FAILED</strong> !!! ";
 }
 print "\n";
-
-
 $testName = 'Next';
 $testResult = 3;
 $document;
@@ -104,6 +92,4 @@ else {
 }
 print "\n";
 ?>
-
-
 <?php die();

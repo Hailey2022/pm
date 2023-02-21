@@ -1,22 +1,11 @@
 <?php
-
-
 class HTMLPurifier_Node_Element extends HTMLPurifier_Node
 {
-    
     public $name;
-
-    
     public $attr = array();
-
-    
     public $children = array();
-
-    
     public $empty = false;
-
     public $endCol = null, $endLine = null, $endArmor = array();
-
     public function __construct($name, $attr = array(), $line = null, $col = null, $armor = array()) {
         $this->name = $name;
         $this->attr = $attr;
@@ -24,9 +13,7 @@ class HTMLPurifier_Node_Element extends HTMLPurifier_Node
         $this->col = $col;
         $this->armor = $armor;
     }
-
     public function toTokenPair() {
-        
         if ($this->empty) {
             return array(new HTMLPurifier_Token_Empty($this->name, $this->attr, $this->line, $this->col, $this->armor), null);
         } else {
@@ -37,4 +24,3 @@ class HTMLPurifier_Node_Element extends HTMLPurifier_Node
         }
     }
 }
-

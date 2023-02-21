@@ -1,13 +1,7 @@
 <?php
-
-
 class HTMLPurifier_HTMLModule_Image extends HTMLPurifier_HTMLModule
 {
-
-    
     public $name = 'Image';
-
-    
     public function setup($config)
     {
         $max = $config->get('HTML.MaxImgLength');
@@ -18,8 +12,6 @@ class HTMLPurifier_HTMLModule_Image extends HTMLPurifier_HTMLModule
             'Common',
             array(
                 'alt*' => 'Text',
-                
-                
                 'height' => 'Pixels#' . $max,
                 'width' => 'Pixels#' . $max,
                 'longdesc' => 'URI',
@@ -30,12 +22,8 @@ class HTMLPurifier_HTMLModule_Image extends HTMLPurifier_HTMLModule
             $img->attr['height'] =
             $img->attr['width'] = 'Length';
         }
-
-        
         $img->attr_transform_pre[] =
         $img->attr_transform_post[] =
             new HTMLPurifier_AttrTransform_ImgRequired();
     }
 }
-
-

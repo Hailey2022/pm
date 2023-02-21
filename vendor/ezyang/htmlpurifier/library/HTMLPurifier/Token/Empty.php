@@ -1,6 +1,4 @@
 <?php
-
-
 class HTMLPurifier_Token_Empty extends HTMLPurifier_Token_Tag
 {
     public function toNode() {
@@ -9,5 +7,3 @@ class HTMLPurifier_Token_Empty extends HTMLPurifier_Token_Tag
         return $n;
     }
 }
-
-

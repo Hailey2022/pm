@@ -1,13 +1,10 @@
 <?php
-
 namespace plugins\demo\command;
-
 use think\console\Command;
 use think\console\Input;
 use think\console\input\Argument;
 use think\console\input\Option;
 use think\console\Output;
-
 class Hello extends Command
 {
     protected function configure()
@@ -17,7 +14,6 @@ class Hello extends Command
             ->addOption('city', '-c', Option::VALUE_REQUIRED, 'city name')
             ->setDescription('Say Plugin Hello');
     }
-
     protected function execute(Input $input, Output $output)
     {
         $name = trim($input->getArgument('name'));
@@ -26,6 +22,4 @@ class Hello extends Command
         $name = $name ? $name : 'ThinkCMF';
         $output->writeln("Hello, My name is " . $name . '! I\'m from ' . $city);
     }
-
-
 }

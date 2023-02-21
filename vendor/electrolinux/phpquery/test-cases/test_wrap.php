@@ -1,7 +1,6 @@
 <?php
 require_once('../phpQuery/phpQuery.php');
 phpQuery::$debug = true;
-
 $testName = 'Wrap';
 $p = phpQuery::newDocumentFile('test.html')
 	->find('p')
@@ -18,9 +17,6 @@ else
 	print "Test '{$testName}' <strong>FAILED</strong> !!! ";
 $p->dump();
 print "\n";
-
-
-
 $testName = 'WrapAll';
 $testResult = 1;
 phpQuery::newDocumentFile('test.html')
@@ -34,9 +30,6 @@ else
 	print "Test '{$testName}' <strong>FAILED</strong> !!! ";
 $result->dump();
 print "\n";
-
-
-
 $testName = 'WrapInner';
 $testResult = 3;
 phpQuery::newDocumentFile('test.html')
@@ -49,11 +42,7 @@ else
 	print "Test '{$testName}' <strong>FAILED</strong> !!! ";
 print $result->dump();
 print "\n";
-
-
-
 $testName = 'WrapAllTest';
-
 //$testResult = 3;
 //phpQuery::newDocumentFile('test.html')
 //	->find('li:first')

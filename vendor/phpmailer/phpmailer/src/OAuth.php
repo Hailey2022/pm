@@ -1,35 +1,16 @@
 <?php
-
-
-
 namespace PHPMailer\PHPMailer;
-
 use League\OAuth2\Client\Grant\RefreshToken;
 use League\OAuth2\Client\Provider\AbstractProvider;
 use League\OAuth2\Client\Token\AccessToken;
-
-
 class OAuth
 {
-    
     protected $provider;
-
-    
     protected $oauthToken;
-
-    
     protected $oauthUserEmail = '';
-
-    
     protected $oauthClientSecret = '';
-
-    
     protected $oauthClientId = '';
-
-    
     protected $oauthRefreshToken = '';
-
-    
     public function __construct($options)
     {
         $this->provider = $options['provider'];
@@ -38,14 +19,10 @@ class OAuth
         $this->oauthClientId = $options['clientId'];
         $this->oauthRefreshToken = $options['refreshToken'];
     }
-
-    
     protected function getGrant()
     {
         return new RefreshToken();
     }
-
-    
     protected function getToken()
     {
         return $this->provider->getAccessToken(
@@ -53,15 +30,11 @@ class OAuth
             ['refresh_token' => $this->oauthRefreshToken]
         );
     }
-
-    
     public function getOauth64()
     {
-        
         if (null === $this->oauthToken || $this->oauthToken->hasExpired()) {
             $this->oauthToken = $this->getToken();
         }
-
         return base64_encode(
             'user=' .
             $this->oauthUserEmail .

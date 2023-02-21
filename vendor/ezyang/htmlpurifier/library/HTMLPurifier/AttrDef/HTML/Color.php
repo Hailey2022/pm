@@ -1,19 +1,13 @@
 <?php
-
-
 class HTMLPurifier_AttrDef_HTML_Color extends HTMLPurifier_AttrDef
 {
-
-    
     public function validate($string, $config, $context)
     {
         static $colors = null;
         if ($colors === null) {
             $colors = $config->get('Core.ColorKeywords');
         }
-
         $string = trim($string);
-
         if (empty($string)) {
             return false;
         }
@@ -26,7 +20,6 @@ class HTMLPurifier_AttrDef_HTML_Color extends HTMLPurifier_AttrDef
         } else {
             $hex = $string;
         }
-
         $length = strlen($hex);
         if ($length !== 3 && $length !== 6) {
             return false;
@@ -40,5 +33,3 @@ class HTMLPurifier_AttrDef_HTML_Color extends HTMLPurifier_AttrDef
         return "#$hex";
     }
 }
-
-

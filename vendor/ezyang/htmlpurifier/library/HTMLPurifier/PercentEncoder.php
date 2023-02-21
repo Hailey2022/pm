@@ -1,16 +1,9 @@
 <?php
-
-
 class HTMLPurifier_PercentEncoder
 {
-
-    
     protected $preserve = array();
-
-    
     public function __construct($preserve = false)
     {
-        
         for ($i = 48; $i <= 57; $i++) { 
             $this->preserve[$i] = true;
         }
@@ -24,16 +17,12 @@ class HTMLPurifier_PercentEncoder
         $this->preserve[46] = true; 
         $this->preserve[95] = true; 
         $this->preserve[126]= true; 
-
-        
         if ($preserve !== false) {
             for ($i = 0, $c = strlen($preserve); $i < $c; $i++) {
                 $this->preserve[ord($preserve[$i])] = true;
             }
         }
     }
-
-    
     public function encode($string)
     {
         $ret = '';
@@ -46,8 +35,6 @@ class HTMLPurifier_PercentEncoder
         }
         return $ret;
     }
-
-    
     public function normalize($string)
     {
         if ($string == '') {
@@ -78,5 +65,3 @@ class HTMLPurifier_PercentEncoder
         return $ret;
     }
 }
-
-

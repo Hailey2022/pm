@@ -3,8 +3,6 @@
 require_once('../phpQuery/phpQuery.php');
 phpQuery::$debug = true;
 phpQuery::plugin('Scripts');
-
-
 $testName = 'Scripts/example';
 $doc = phpQuery::newDocumentFile('test.html');
 $testResult = 10;
@@ -17,8 +15,6 @@ else {
 	print "</pre>\n";
 }
 print "\n";
-
-
 $testName = 'Scripts/gmail_login';
 $testResult = 1;
 $url = 'http://code.google.com/p/phpquery/w/edit/MultiDocumentSupport';

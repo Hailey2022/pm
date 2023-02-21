@@ -1,31 +1,15 @@
 <?php
-
-
-
-
-
-
-
-
-
 namespace app\user\model;
-
 use think\Model;
-
 class UserModel extends Model
 {
-    
     protected $name = 'user';
-
     protected $type = [
         'more' => 'array',
     ];
-
     public function doMobile($user)
     {
         $result = $this->where('mobile', $user['mobile'])->find();
-
-
         if (!empty($result)) {
             $comparePasswordResult = cmf_compare_password($user['user_pass'], $result['user_pass']);
             $hookParam             = [
@@ -59,7 +43,6 @@ class UserModel extends Model
         hook_one("user_login_start", $hookParam);
         return 2;
     }
-
     public function doName($user)
     {
         $result = $this->where('user_login', $user['user_login'])->find();
@@ -96,12 +79,9 @@ class UserModel extends Model
         hook_one("user_login_start", $hookParam);
         return 2;
     }
-
     public function doEmail($user)
     {
-
         $result = $this->where('user_email', $user['user_email'])->find();
-
         if (!empty($result)) {
             $comparePasswordResult = cmf_compare_password($user['user_pass'], $result['user_pass']);
             $hookParam             = [
@@ -110,7 +90,6 @@ class UserModel extends Model
             ];
             hook_one("user_login_start", $hookParam);
             if ($comparePasswordResult) {
-
                 //拉黑判断。
                 if ($result['user_status'] == 0) {
                     return 3;
@@ -136,7 +115,6 @@ class UserModel extends Model
         hook_one("user_login_start", $hookParam);
         return 2;
     }
-
     public function register($user, $type)
     {
         switch ($type) {
@@ -152,13 +130,10 @@ class UserModel extends Model
             default:
                 $result = 0;
         }
-
         $userStatus = 1;
-
         if (cmf_is_open_registration()) {
             $userStatus = 2;
         }
-
         if (empty($result)) {
             $data   = [
                 'user_login'      => empty($user['user_login']) ? '' : $user['user_login'],
@@ -183,8 +158,6 @@ class UserModel extends Model
         }
         return 1;
     }
-
-    
     public function emailPasswordReset($email, $password)
     {
         $result = $this->where('user_email', $email)->find();
@@ -197,8 +170,6 @@ class UserModel extends Model
         }
         return 1;
     }
-
-    
     public function mobilePasswordReset($mobile, $password)
     {
         $result = UserModel::where('mobile', $mobile)->find();
@@ -211,17 +182,13 @@ class UserModel extends Model
         }
         return 1;
     }
-
     public function editData($user)
     {
         $userId = cmf_get_current_user_id();
-
         if (isset($user['birthday'])) {
             $user['birthday'] = strtotime($user['birthday']);
         }
-
         $field = 'user_nickname,sex,birthday,user_url,signature,more';
-
         if ($this->where('id', $userId)->update($user)) {
             $userInfo = $this->where('id', $userId)->find();
             cmf_update_current_user($userInfo->toArray());
@@ -229,8 +196,6 @@ class UserModel extends Model
         }
         return 0;
     }
-
-    
     public function editPassword($user)
     {
         $userId = cmf_get_current_user_id();
@@ -245,7 +210,6 @@ class UserModel extends Model
         UserModel::where('id', $userId)->update($data);
         return 0;
     }
-
     public function comments()
     {
         $where                = [];
@@ -257,7 +221,6 @@ class UserModel extends Model
         $data['lists']        = $comments->items();
         return $data;
     }
-
     public function deleteComment($id)
     {
         $where            = [];
@@ -267,8 +230,6 @@ class UserModel extends Model
         CommentModel::where($where)->update(['delete_time' => time()]);
         return $data;
     }
-
-    
     public function bindingMobile($user)
     {
         $userId = cmf_get_current_user_id();
@@ -277,8 +238,6 @@ class UserModel extends Model
         cmf_update_current_user($userInfo);
         return 0;
     }
-
-    
     public function bindingEmail($user)
     {
         $userId = cmf_get_current_user_id();

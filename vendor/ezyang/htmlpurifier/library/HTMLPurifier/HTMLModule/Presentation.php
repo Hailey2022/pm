@@ -1,13 +1,7 @@
 <?php
-
-
 class HTMLPurifier_HTMLModule_Presentation extends HTMLPurifier_HTMLModule
 {
-
-    
     public $name = 'Presentation';
-
-    
     public function setup($config)
     {
         $this->addElement('hr', 'Block', 'Empty', 'Common');
@@ -25,5 +19,3 @@ class HTMLPurifier_HTMLModule_Presentation extends HTMLPurifier_HTMLModule
         $tt->formatting = true;
     }
 }
-
-

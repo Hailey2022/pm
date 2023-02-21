@@ -1,11 +1,7 @@
 <?php
-
-
 class HTMLPurifier_AttrDef_CSS_FontFamily extends HTMLPurifier_AttrDef
 {
-
     protected $mask = null;
-
     public function __construct()
     {
         $this->mask = '_- ';
@@ -18,19 +14,10 @@ class HTMLPurifier_AttrDef_CSS_FontFamily extends HTMLPurifier_AttrDef
         for ($c = '0'; $c <= '9'; $c++) {
             $this->mask .= $c;
         } 
-        
         for ($i = 0x80; $i <= 0xFF; $i++) {
-            
-            
-            
             $this->mask .= chr($i);
         }
-
-        
-        
     }
-
-    
     public function validate($string, $config, $context)
     {
         static $generic_names = array(
@@ -41,8 +28,6 @@ class HTMLPurifier_AttrDef_CSS_FontFamily extends HTMLPurifier_AttrDef
             'cursive' => true
         );
         $allowed_fonts = $config->get('CSS.AllowedFonts');
-
-        
         $fonts = explode(',', $string);
         $final = '';
         foreach ($fonts as $font) {
@@ -50,14 +35,12 @@ class HTMLPurifier_AttrDef_CSS_FontFamily extends HTMLPurifier_AttrDef
             if ($font === '') {
                 continue;
             }
-            
             if (isset($generic_names[$font])) {
                 if ($allowed_fonts === null || isset($allowed_fonts[$font])) {
                     $final .= $font . ', ';
                 }
                 continue;
             }
-            
             if ($font[0] === '"' || $font[0] === "'") {
                 $length = strlen($font);
                 if ($length <= 2) {
@@ -69,121 +52,19 @@ class HTMLPurifier_AttrDef_CSS_FontFamily extends HTMLPurifier_AttrDef
                 }
                 $font = substr($font, 1, $length - 2);
             }
-
             $font = $this->expandCSSEscape($font);
-
-            
-
             if ($allowed_fonts !== null && !isset($allowed_fonts[$font])) {
                 continue;
             }
-
             if (ctype_alnum($font) && $font !== '') {
-                
                 $final .= $font . ', ';
                 continue;
             }
-
-            
-            
             $font = str_replace(array("\n", "\t", "\r", "\x0C"), ' ', $font);
-
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
             //
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-
-            
-            
-            
             if (strspn($font, $this->mask) !== strlen($font)) {
                 continue;
             }
-
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-
-            
             $final .= "'$font', ";
         }
         $final = rtrim($final, ', ');
@@ -192,7 +73,4 @@ class HTMLPurifier_AttrDef_CSS_FontFamily extends HTMLPurifier_AttrDef
         }
         return $final;
     }
-
 }
-
-

@@ -1,9 +1,6 @@
 <?php
-
 abstract class phpQueryEvents {
-	
 	public static function trigger($document, $type, $data = array(), $node = null) {
-		
 		$documentID = phpQuery::getDocumentID($document);
 		$namespace = null;
 		if (strpos($type, '.') !== false)
@@ -13,7 +10,6 @@ abstract class phpQueryEvents {
 		if (! $node) {
 			if (self::issetGlobal($documentID, $type)) {
 				$pq = phpQuery::getDocument($documentID);
-				
 				$pq->find('*')->add($pq->document)
 					->trigger($type, $data);
 			}
@@ -32,7 +28,6 @@ abstract class phpQueryEvents {
 			}
 			$i = 0;
 			while($node) {
-				
 				phpQuery::debug("Triggering ".($i?"bubbled ":'')."event '{$type}' on "
 					."node \n");//.phpQueryObject::whois($node)."\n");
 				$event->currentTarget = $node;
@@ -61,7 +56,6 @@ abstract class phpQueryEvents {
 						}
 					}
 				}
-				
 				if (! $event->bubbles)
 					break;
 				$node = $node->parentNode;
@@ -69,7 +63,6 @@ abstract class phpQueryEvents {
 			}
 		}
 	}
-	
 	public static function add($document, $node, $type, $data, $callback = null) {
 		phpQuery::debug("Binding '$type' event");
 		$documentID = phpQuery::getDocumentID($document);
@@ -87,7 +80,6 @@ abstract class phpQueryEvents {
 			'data' => $data,
 		);
 	}
-	
 	public static function remove($document, $node, $type = null, $callback = null) {
 		$documentID = phpQuery::getDocumentID($document);
 		$eventNode = self::getNode($documentID, $node);

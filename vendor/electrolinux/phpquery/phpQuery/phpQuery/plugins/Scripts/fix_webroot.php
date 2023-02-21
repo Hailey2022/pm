@@ -7,10 +7,8 @@ $filter = ':not([href^=<?php])'
 		.':not([src^=/])';
 foreach($self[$selector]->filter($filter) as $el) {
 	$el = pq($el, $self->getDocumentID());
-	
 	if ( $el->is('img') || $el->is('script') )
 		$el->attr('src', $params[0].$el->attr('src'));
-	
 	if ( $el->is('link') )
 		$el->attr('href', $params[0].$el->attr('href'));
 }

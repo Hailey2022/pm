@@ -1,11 +1,8 @@
 <?php
 namespace cmf\controller;
-
 use cmf\model\UserModel;
-
 class AdminBaseController extends BaseController
 {
-
     public function endsWith($haystack, $needle)
     {
         $length = strlen($needle);
@@ -14,7 +11,6 @@ class AdminBaseController extends BaseController
         }
         return substr($haystack, -$length) === $needle;
     }
-
     protected function initialize()
     {
         hook('admin_init');
@@ -22,7 +18,6 @@ class AdminBaseController extends BaseController
         $sessionAdminId = session('ADMIN_ID');
         if (!empty($sessionAdminId)) {
             $user = UserModel::where('id', $sessionAdminId)->find();
-
             if (!$this->checkAccess($sessionAdminId)) {
                 $this->error("您没有访问权限！");
             }
@@ -34,7 +29,6 @@ class AdminBaseController extends BaseController
                 $this->redirect(url("admin/Public/login"));
             }
         }
-
         $data = input();
         $allowExts = ['.jpg', '.jpeg', '.png', '.bmp', '.wbmp', '.gif'];
         if (isset($data['file_urls'])) {
@@ -61,10 +55,7 @@ class AdminBaseController extends BaseController
                 }
             }
         }
-
-
     }
-
     public function _initializeView()
     {
         $cmfAdminThemePath = config('template.cmf_admin_theme_path');
@@ -88,15 +79,12 @@ class AdminBaseController extends BaseController
                 '__WEB_ROOT__' => $cdnStaticRoot
             ];
         }
-
         config('template.view_base', WEB_ROOT . "$themePath/");
         config('template.tpl_replace_string', $viewReplaceStr);
     }
-
     public function initMenu()
     {
     }
-
     private function checkAccess($userId)
     {
         if ($userId == 1) {
@@ -106,7 +94,6 @@ class AdminBaseController extends BaseController
         $controller = $this->request->controller();
         $action = $this->request->action();
         $rule = $app . $controller . $action;
-
         $notRequire = ["adminIndexindex", "adminMainindex"];
         if (!in_array($rule, $notRequire)) {
             return cmf_auth_check($userId);
@@ -114,5 +101,4 @@ class AdminBaseController extends BaseController
             return true;
         }
     }
-
 }

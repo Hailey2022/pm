@@ -1,26 +1,12 @@
 <?php
-
 class HTMLPurifier_Injector_RemoveEmpty extends HTMLPurifier_Injector
 {
-    
     private $context;
-
-    
     private $config;
-
-    
     private $attrValidator;
-
-    
     private $removeNbsp;
-
-    
     private $removeNbspExceptions;
-
-    
     private $exclude;
-
-    
     public function prepare($config, $context)
     {
         parent::prepare($config, $context);
@@ -31,14 +17,11 @@ class HTMLPurifier_Injector_RemoveEmpty extends HTMLPurifier_Injector
         $this->exclude = $config->get('AutoFormat.RemoveEmpty.Predicate');
         foreach ($this->exclude as $key => $attrs) {
             if (!is_array($attrs)) {
-                
                 $this->exclude[$key] = explode(';', $attrs);
             }
         }
         $this->attrValidator = new HTMLPurifier_AttrValidator();
     }
-
-    
     public function handleElement(&$token)
     {
         if (!$token instanceof HTMLPurifier_Token_Start) {
@@ -83,11 +66,8 @@ class HTMLPurifier_Injector_RemoveEmpty extends HTMLPurifier_Injector
                 }
                 break;
             }
-            
             $this->rewindOffset($b+$deleted);
             return;
         }
     }
 }
-
-

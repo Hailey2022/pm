@@ -1,24 +1,13 @@
 <?php
-
-
 class HTMLPurifier_DefinitionCacheFactory
 {
-    
     protected $caches = array('Serializer' => array());
-
-    
     protected $implementations = array();
-
-    
     protected $decorators = array();
-
-    
     public function setup()
     {
         $this->addDecorator('Cleanup');
     }
-
-    
     public static function instance($prototype = null)
     {
         static $instance;
@@ -30,14 +19,10 @@ class HTMLPurifier_DefinitionCacheFactory
         }
         return $instance;
     }
-
-    
     public function register($short, $long)
     {
         $this->implementations[$short] = $long;
     }
-
-    
     public function create($type, $config)
     {
         $method = $config->get('Cache.DefinitionImpl');
@@ -58,15 +43,12 @@ class HTMLPurifier_DefinitionCacheFactory
         }
         foreach ($this->decorators as $decorator) {
             $new_cache = $decorator->decorate($cache);
-            
             unset($cache);
             $cache = $new_cache;
         }
         $this->caches[$method][$type] = $cache;
         return $this->caches[$method][$type];
     }
-
-    
     public function addDecorator($decorator)
     {
         if (is_string($decorator)) {
@@ -76,5 +58,3 @@ class HTMLPurifier_DefinitionCacheFactory
         $this->decorators[$decorator->name] = $decorator;
     }
 }
-
-

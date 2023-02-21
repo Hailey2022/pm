@@ -1,51 +1,26 @@
 <?php
-
-
 abstract class HTMLPurifier_Injector
 {
-
-    
     public $name;
-
-    
     protected $htmlDefinition;
-
-    
     protected $currentNesting;
-
-    
     protected $currentToken;
-
-    
     protected $inputZipper;
-
-    
     public $needed = array();
-
-    
     protected $rewindOffset = false;
-
-    
     public function rewindOffset($offset)
     {
         $this->rewindOffset = $offset;
     }
-
-    
     public function getRewindOffset()
     {
         $r = $this->rewindOffset;
         $this->rewindOffset = false;
         return $r;
     }
-
-    
     public function prepare($config, $context)
     {
         $this->htmlDefinition = $config->getHTMLDefinition();
-        
-        
-        
         $result = $this->checkNeeded($config);
         if ($result !== false) {
             return $result;
@@ -55,8 +30,6 @@ abstract class HTMLPurifier_Injector
         $this->inputZipper    =& $context->get('InputZipper');
         return false;
     }
-
-    
     public function checkNeeded($config)
     {
         $def = $config->getHTMLDefinition();
@@ -78,8 +51,6 @@ abstract class HTMLPurifier_Injector
         }
         return false;
     }
-
-    
     public function allowsElement($name)
     {
         if (!empty($this->currentNesting)) {
@@ -92,7 +63,6 @@ abstract class HTMLPurifier_Injector
         if (!isset($parent->child->elements[$name]) || isset($parent->excludes[$name])) {
             return false;
         }
-        
         if (!empty($this->currentNesting)) {
             for ($i = count($this->currentNesting) - 2; $i >= 0; $i--) {
                 $node = $this->currentNesting[$i];
@@ -104,8 +74,6 @@ abstract class HTMLPurifier_Injector
         }
         return true;
     }
-
-    
     protected function forward(&$i, &$current)
     {
         if ($i === null) {
@@ -119,8 +87,6 @@ abstract class HTMLPurifier_Injector
         $current = $this->inputZipper->back[$i];
         return true;
     }
-
-    
     protected function forwardUntilEndToken(&$i, &$current, &$nesting)
     {
         $result = $this->forward($i, $current);
@@ -140,8 +106,6 @@ abstract class HTMLPurifier_Injector
         }
         return true;
     }
-
-    
     protected function backward(&$i, &$current)
     {
         if ($i === null) {
@@ -155,27 +119,17 @@ abstract class HTMLPurifier_Injector
         $current = $this->inputZipper->front[$i];
         return true;
     }
-
-    
     public function handleText(&$token)
     {
     }
-
-    
     public function handleElement(&$token)
     {
     }
-
-    
     public function handleEnd(&$token)
     {
         $this->notifyEnd($token);
     }
-
-    
     public function notifyEnd($token)
     {
     }
 }
-
-

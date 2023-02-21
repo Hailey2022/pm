@@ -1,23 +1,8 @@
 <?php
-
-
-
-
-
-
-
-
-
-
-
 namespace api\user\service;
-
-
 use api\user\model\UserFavoriteModel;
-
 class UserFavoriteService
 {
-    
     public function favorites($filter)
     {
         $favoriteModel = new UserFavoriteModel();

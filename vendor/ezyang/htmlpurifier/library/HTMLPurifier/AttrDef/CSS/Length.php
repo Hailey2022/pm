@@ -1,28 +1,16 @@
 <?php
-
-
 class HTMLPurifier_AttrDef_CSS_Length extends HTMLPurifier_AttrDef
 {
-
-    
     protected $min;
-
-    
     protected $max;
-
-    
     public function __construct($min = null, $max = null)
     {
         $this->min = $min !== null ? HTMLPurifier_Length::make($min) : null;
         $this->max = $max !== null ? HTMLPurifier_Length::make($max) : null;
     }
-
-    
     public function validate($string, $config, $context)
     {
         $string = $this->parseCDATA($string);
-
-        
         if ($string === '') {
             return false;
         }
@@ -32,12 +20,10 @@ class HTMLPurifier_AttrDef_CSS_Length extends HTMLPurifier_AttrDef
         if (strlen($string) === 1) {
             return false;
         }
-
         $length = HTMLPurifier_Length::make($string);
         if (!$length->isValid()) {
             return false;
         }
-
         if ($this->min) {
             $c = $length->compareTo($this->min);
             if ($c === false) {
@@ -59,5 +45,3 @@ class HTMLPurifier_AttrDef_CSS_Length extends HTMLPurifier_AttrDef
         return $length->toString();
     }
 }
-
-

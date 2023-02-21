@@ -1,16 +1,12 @@
 <?php
-
 namespace app\admin\controller;
-
 use app\admin\logic\HookLogic;
 use cmf\controller\AdminBaseController;
 use app\admin\model\HookModel;
 use app\admin\model\PluginModel;
 use app\admin\model\HookPluginModel;
-
 class HookController extends AdminBaseController
 {
-
     public function index()
     {
         $hookModel = new HookModel();
@@ -18,8 +14,6 @@ class HookController extends AdminBaseController
         $this->assign('hooks', $hooks);
         return $this->fetch();
     }
-
-
     public function plugins()
     {
         $hook = $this->request->param('hook');
@@ -34,30 +28,19 @@ class HookController extends AdminBaseController
         $this->assign('plugins', $plugins);
         return $this->fetch();
     }
-
-
     public function pluginListOrder()
     {
         $hookPluginModel = new HookPluginModel();
         parent::listOrders($hookPluginModel);
-
         $this->success("排序更新成功！");
     }
-
-
     public function sync()
     {
-
         $apps = cmf_scan_dir(APP_PATH . '*', GLOB_ONLYDIR);
-
         array_push($apps, 'cmf', 'admin', 'user', 'swoole');
-
         foreach ($apps as $app) {
             HookLogic::importHooks($app);
         }
-
         return $this->fetch();
     }
-
-
 }

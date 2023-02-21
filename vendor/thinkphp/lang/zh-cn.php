@@ -1,17 +1,5 @@
 <?php
-
-
-
-
-
-
-
-
-
-
-
 return [
-    
     'Undefined variable'                                        => '未定义变量',
     'Undefined index'                                           => '未定义数组索引',
     'Undefined offset'                                          => '未定义数组下标',
@@ -19,8 +7,6 @@ return [
     'Type error'                                                => '类型错误',
     'Fatal error'                                               => '致命错误',
     'syntax error'                                              => '语法错误',
-
-    
     'dispatch type not support'                                 => '不支持的调度类型',
     'method param miss'                                         => '方法参数错误',
     'method not exists'                                         => '方法不存在',
@@ -73,8 +59,6 @@ return [
     'route pattern error'                                       => '路由变量规则定义错误',
     'route behavior will not support'                           => '路由行为废弃（使用中间件替代）',
     'closure not support cache(true)'                           => '使用闭包查询不支持cache(true)，请指定缓存Key',
-
-    
     'unknown upload error'                                      => '未知上传错误！',
     'file write error'                                          => '文件写入失败！',
     'upload temp dir not found'                                 => '找不到临时文件夹！',
@@ -89,10 +73,8 @@ return [
     'mimetype to upload is not allowed'                         => '上传文件MIME类型不允许！',
     'filesize not match'                                        => '上传文件大小不符！',
     'directory {:path} creation failed'                         => '目录 {:path} 创建失败！',
-
     'The middleware must return Response instance'              => '中间件方法必须返回Response对象实例',
     'The queue was exhausted, with no response returned'        => '中间件队列为空',
-    
     ':attribute require'                                        => ':attribute不能为空',
     ':attribute must'                                           => ':attribute必须',
     ':attribute must be numeric'                                => ':attribute必须是数字',

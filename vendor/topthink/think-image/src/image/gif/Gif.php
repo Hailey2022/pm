@@ -1,31 +1,15 @@
 <?php
-
-
-
-
-
-
-
-
-
-
 namespace think\image\gif;
-
 class Gif
 {
-    
     private $frames = [];
-    
     private $delays = [];
-
-    
     public function __construct($src = null, $mod = 'url')
     {
         if (!is_null($src)) {
             if ('url' == $mod && is_file($src)) {
                 $src = file_get_contents($src);
             }
-            
             try {
                 $de           = new Decoder($src);
                 $this->frames = $de->getFrames();
@@ -35,8 +19,6 @@ class Gif
             }
         }
     }
-
-    
     public function image($stream = null)
     {
         if (is_null($stream)) {
@@ -45,14 +27,10 @@ class Gif
         }
         $this->frames[key($this->frames)] = $stream;
     }
-
-    
     public function nextImage()
     {
         return next($this->frames);
     }
-
-    
     public function save($pathname)
     {
         $gif = new Encoder($this->frames, $this->delays, 0, 2, 0, 0, 0, 'bin');

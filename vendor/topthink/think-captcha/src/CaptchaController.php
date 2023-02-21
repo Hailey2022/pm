@@ -1,18 +1,6 @@
 <?php
-
-
-
-
-
-
-
-
-
-
 namespace think\captcha;
-
 use think\facade\Config;
-
 class CaptchaController
 {
     public function index($id = "")

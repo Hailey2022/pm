@@ -1,11 +1,7 @@
 <?php
-
 class HTMLPurifier_AttrTransform_SafeEmbed extends HTMLPurifier_AttrTransform
 {
-    
     public $name = "SafeEmbed";
-
-    
     public function transform($attr, $config, $context)
     {
         $attr['allowscriptaccess'] = 'never';
@@ -14,5 +10,3 @@ class HTMLPurifier_AttrTransform_SafeEmbed extends HTMLPurifier_AttrTransform
         return $attr;
     }
 }
-
-

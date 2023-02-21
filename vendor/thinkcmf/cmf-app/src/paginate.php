@@ -1,5 +1,4 @@
 <?php
-
 return [
     //分页配置
     'type'      => '\\cmf\\paginator\\Bootstrap',

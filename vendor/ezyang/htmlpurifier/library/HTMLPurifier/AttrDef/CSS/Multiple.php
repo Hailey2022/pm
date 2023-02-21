@@ -1,22 +1,13 @@
 <?php
-
-
 class HTMLPurifier_AttrDef_CSS_Multiple extends HTMLPurifier_AttrDef
 {
-    
     public $single;
-
-    
     public $max;
-
-    
     public function __construct($single, $max = 4)
     {
         $this->single = $single;
         $this->max = $max;
     }
-
-    
     public function validate($string, $config, $context)
     {
         $string = $this->mungeRgb($this->parseCDATA($string));
@@ -42,5 +33,3 @@ class HTMLPurifier_AttrDef_CSS_Multiple extends HTMLPurifier_AttrDef
         return rtrim($final);
     }
 }
-
-

@@ -1,12 +1,7 @@
 <?php
-
-
 class HTMLPurifier_AttrTransform_SafeObject extends HTMLPurifier_AttrTransform
 {
-    
     public $name = "SafeObject";
-
-    
     public function transform($attr, $config, $context)
     {
         if (!isset($attr['type'])) {
@@ -15,5 +10,3 @@ class HTMLPurifier_AttrTransform_SafeObject extends HTMLPurifier_AttrTransform
         return $attr;
     }
 }
-
-

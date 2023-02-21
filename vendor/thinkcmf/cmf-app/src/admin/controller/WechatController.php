@@ -1,10 +1,8 @@
 <?php
 namespace app\admin\controller;
-
 use cmf\controller\RestBaseController;
 use think\facade\Db;
 use think\db\Query;
-
 class WeChatController extends RestBaseController
 {
     public function getUid()
@@ -22,7 +20,6 @@ class WeChatController extends RestBaseController
         if ($openid == null || $sessionKey == null) {
             $this->error("登入失败!!");
         }
-
         $findWechatUser = Db::name("wechat_user")
             ->where('openid', $openid)
             ->find();
@@ -40,7 +37,6 @@ class WeChatController extends RestBaseController
         }
         $this->success("登入成功", ["uid" => $uid, "username" => $username]);
     }
-
     public function updateUsername()
     {
         $uid = $this->request->param('uid');
@@ -56,7 +52,6 @@ class WeChatController extends RestBaseController
             $this->error("非法访问");
         }
     }
-
     public function uploadPicAndPunch()
     {
         $uid = $this->request->param('uid');
@@ -75,7 +70,6 @@ class WeChatController extends RestBaseController
             $this->error("err");
         }
     }
-
     public function hasPunched()
     {
         $uid = $this->request->param('uid');
@@ -89,7 +83,6 @@ class WeChatController extends RestBaseController
         // TODO: 区分时间 date('x-x-x xx:xx:xx')
         $this->success('yes', ['status' => false]);
     }
-
     public function getLocation()
     {
         $longitude = $this->request->param('longitude');
@@ -102,7 +95,6 @@ class WeChatController extends RestBaseController
         }
         $this->error("loc not found");
     }
-
     public function getUsername()
     {
         $uid = $this->request->param('uid');
@@ -113,7 +105,6 @@ class WeChatController extends RestBaseController
             $this->success('成功', $u['username']);
         }
     }
-
     public function getLocations()
     {
         $uid = $this->request->param('uid');
@@ -128,7 +119,6 @@ class WeChatController extends RestBaseController
         if ($uid == null) {
             $this->error("not allowed");
         }
-
         //TODO: 区分用户
         $records = Db::name('wechat_punch_in_record')
             ->where(function (Query $query) use ($date, $uid) {
@@ -142,11 +132,8 @@ class WeChatController extends RestBaseController
                 }
             })
             ->select();
-
         $this->success("ok", ['records' => $records]);
     }
-
     public function getCurrect(){
-
     }
 }

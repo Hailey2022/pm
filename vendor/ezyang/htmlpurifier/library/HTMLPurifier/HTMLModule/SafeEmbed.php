@@ -1,12 +1,7 @@
 <?php
-
-
 class HTMLPurifier_HTMLModule_SafeEmbed extends HTMLPurifier_HTMLModule
 {
-    
     public $name = 'SafeEmbed';
-
-    
     public function setup($config)
     {
         $max = $config->get('HTML.MaxImgLength');
@@ -30,5 +25,3 @@ class HTMLPurifier_HTMLModule_SafeEmbed extends HTMLPurifier_HTMLModule
         $embed->attr_transform_post[] = new HTMLPurifier_AttrTransform_SafeEmbed();
     }
 }
-
-

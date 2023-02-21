@@ -1,27 +1,13 @@
 <?php
-
-
 class HTMLPurifier_ErrorStruct
 {
-
-    
     const TOKEN     = 0;
     const ATTR      = 1;
     const CSSPROP   = 2;
-
-    
     public $type;
-
-    
     public $value;
-
-    
     public $errors = array();
-
-    
     public $children = array();
-
-    
     public function getChild($type, $id)
     {
         if (!isset($this->children[$type][$id])) {
@@ -30,12 +16,8 @@ class HTMLPurifier_ErrorStruct
         }
         return $this->children[$type][$id];
     }
-
-    
     public function addError($severity, $message)
     {
         $this->errors[] = array($severity, $message);
     }
 }
-
-

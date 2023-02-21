@@ -1,9 +1,5 @@
 <?php
-
-
-
 $__dir = dirname(__FILE__);
-
 require_once $__dir . '/HTMLPurifier.php';
 require_once $__dir . '/HTMLPurifier/Arborize.php';
 require_once $__dir . '/HTMLPurifier/AttrCollections.php';

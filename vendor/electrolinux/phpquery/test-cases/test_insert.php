@@ -1,8 +1,6 @@
 <?php
 require_once('../phpQuery/phpQuery.php');
 phpQuery::$debug = 2;
-
-
 $testName = 'HTML insertion';
 $doc = phpQuery::newDocumentFile('document-types/document-utf8.xhtml');
 //$doc = phpQuery::newDocumentFile('document-types/document-utf8.html');

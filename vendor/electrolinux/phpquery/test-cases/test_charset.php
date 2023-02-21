@@ -1,8 +1,6 @@
 <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 <?php
 require_once('../phpQuery/phpQuery.php');
-
-
 $testName = 'Text node append';
 $result = phpQuery::newDocumentFile('test.html')
 	->find('li:first')
@@ -13,7 +11,6 @@ if (trim($result->html()) == 'żźć')
 else
 	print "Test '{$testName}' <strong>FAILED</strong> !!!<br />\n";
 print "\n";
-
 $testName = 'Text node HTML entite append';
 $result = phpQuery::newDocumentFile('test.html')
 	->find('li:first')
@@ -27,7 +24,6 @@ else {
 	print $result->html();
 }
 print "\n";
-
 $testName = 'DOMElement node HTML entite append';
 $result = phpQuery::newDocumentFile('test.html')
 	->find('li:first')
@@ -41,7 +37,6 @@ else {
 	print $result->html();
 }
 print "\n";
-
 $testName = 'Append and move';
 $result = phpQuery::newDocumentFile('test.html');
 $li = $result->find('li:first');
@@ -60,7 +55,6 @@ else {
 	print "'".trim($result->html())."'";
 }
 print "\n";
-
 $testName = 'Attr charset';
 $result = phpQuery::newDocumentFile('test.html')
 	->find('li:first')
@@ -72,8 +66,6 @@ else {
 	print $result->attr('test');
 }
 print "\n";
-
-
 //$testName = 'Loading document without meta charset';
 //$result = phpQuery::newDocumentFile('test.html')
 //	->_empty();

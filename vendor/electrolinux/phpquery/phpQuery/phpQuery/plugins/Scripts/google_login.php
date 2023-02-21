@@ -1,5 +1,4 @@
 <?php
-
 phpQuery::ajaxAllowHost(
 	'code.google.com',
 	'google.com', 'www.google.com',

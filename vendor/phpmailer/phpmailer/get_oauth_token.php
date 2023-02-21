@@ -1,19 +1,8 @@
 <?php
-
-
-
-
-
 namespace PHPMailer\PHPMailer;
-
-
-
 use League\OAuth2\Client\Provider\Google;
-
 use Hayageek\OAuth2\Client\Provider\Yahoo;
-
 use Stevenmaguire\OAuth2\Client\Provider\Microsoft;
-
 if (!isset($_GET['code']) && !isset($_GET['provider'])) {
     ?>
 <html>
@@ -26,13 +15,9 @@ if (!isset($_GET['code']) && !isset($_GET['provider'])) {
     <?php
     exit;
 }
-
 require 'vendor/autoload.php';
-
 session_start();
-
 $providerName = '';
-
 if (array_key_exists('provider', $_GET)) {
     $providerName = $_GET['provider'];
     $_SESSION['provider'] = $providerName;
@@ -42,26 +27,21 @@ if (array_key_exists('provider', $_GET)) {
 if (!in_array($providerName, ['Google', 'Microsoft', 'Yahoo'])) {
     exit('Only Google, Microsoft and Yahoo OAuth2 providers are currently supported in this script.');
 }
-
 //These details are obtained by setting up an app in the Google developer console,
 //or whichever provider you're using.
 $clientId = 'RANDOMCHARS-----duv1n2.apps.googleusercontent.com';
 $clientSecret = 'RANDOMCHARS-----lGyjPcRtvP';
-
 //If this automatic URL doesn't work, set it yourself manually to the URL of this script
 $redirectUri = (isset($_SERVER['HTTPS']) ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
 //$redirectUri = 'http://localhost/PHPMailer/redirect';
-
 $params = [
     'clientId' => $clientId,
     'clientSecret' => $clientSecret,
     'redirectUri' => $redirectUri,
     'accessType' => 'offline'
 ];
-
 $options = [];
 $provider = null;
-
 switch ($providerName) {
     case 'Google':
         $provider = new Google($params);
@@ -84,32 +64,25 @@ switch ($providerName) {
         ];
         break;
 }
-
 if (null === $provider) {
     exit('Provider missing');
 }
-
 if (!isset($_GET['code'])) {
-    
     $authUrl = $provider->getAuthorizationUrl($options);
     $_SESSION['oauth2state'] = $provider->getState();
     header('Location: ' . $authUrl);
     exit;
-
 } elseif (empty($_GET['state']) || ($_GET['state'] !== $_SESSION['oauth2state'])) {
     unset($_SESSION['oauth2state']);
     unset($_SESSION['provider']);
     exit('Invalid state');
 } else {
     unset($_SESSION['provider']);
-    
     $token = $provider->getAccessToken(
         'authorization_code',
         [
             'code' => $_GET['code']
         ]
     );
-    
-    
     echo 'Refresh Token: ', $token->getRefreshToken();
 }

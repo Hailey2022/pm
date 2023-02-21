@@ -1,10 +1,7 @@
 <?php
-
 use wxapp\aes\WXBizDataCrypt;
-
 $appid      = 'wx4f4bc4dec97d474b';
 $sessionKey = 'tiihtNczf5v6AKRyjwEUhQ==';
-
 $encryptedData = "CiyLU1Aw2KjvrjMdj8YKliAjtP4gsMZM
                 QmRzooG2xrDcvSnxIMXFufNstNGTyaGS
                 9uT5geRa0W4oTOb1WT7fJlAC+oNPdbB+
@@ -22,12 +19,9 @@ $encryptedData = "CiyLU1Aw2KjvrjMdj8YKliAjtP4gsMZM
                 oKlaRv85IfVunYzO0IKXsyl7JCUjCpoG
                 20f0a04COwfneQAGGwd5oa+T8yO5hzuy
                 Db/XcxxmK01EpqOyuxINew==";
-
 $iv = 'r7BXXKkLb8qrSNn05n0qiA==';
-
 $pc      = new WXBizDataCrypt($appid, $sessionKey);
 $errCode = $pc->decryptData($encryptedData, $iv, $data);
-
 if ($errCode == 0) {
     print($data . "\n");
 } else {

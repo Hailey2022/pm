@@ -1,32 +1,18 @@
 <?php
-
-
-
-
-
-
-
-
-
 namespace tests;
-
 use think\Image;
-
 class InfoTest extends TestCase
 {
-
     public function testOpen()
     {
         $this->setExpectedException("\\think\\image\\Exception");
         Image::open('');
     }
-
     public function testIllegal()
     {
         $this->setExpectedException("\\think\\image\\Exception", 'Illegal image file');
         Image::open(TEST_PATH . 'images/test.bmp');
     }
-
     public function testJpeg()
     {
         $image = Image::open($this->getJpeg());
@@ -36,8 +22,6 @@ class InfoTest extends TestCase
         $this->assertEquals('image/jpeg', $image->mime());
         $this->assertEquals([800, 600], $image->size());
     }
-
-
     public function testPng()
     {
         $image = Image::open($this->getPng());
@@ -47,7 +31,6 @@ class InfoTest extends TestCase
         $this->assertEquals('image/png', $image->mime());
         $this->assertEquals([800, 600], $image->size());
     }
-
     public function testGif()
     {
         $image = Image::open($this->getGif());

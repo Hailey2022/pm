@@ -1,9 +1,7 @@
 <?php
 namespace app\admin\controller;
-
 use cmf\controller\AdminBaseController;
 use think\Db;
-
 class ConstructionController extends AdminBaseController
 {
     public function index()
@@ -25,7 +23,6 @@ class ConstructionController extends AdminBaseController
         $this->assign('records', $records);
         return $this->fetch();
     }
-
     public function showSites()
     {
         $locations = Db::name("wechat_punch_in_location")

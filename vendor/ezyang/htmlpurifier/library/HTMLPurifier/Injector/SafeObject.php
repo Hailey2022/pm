@@ -1,27 +1,14 @@
 <?php
-
-
 class HTMLPurifier_Injector_SafeObject extends HTMLPurifier_Injector
 {
-    
     public $name = 'SafeObject';
-
-    
     public $needed = array('object', 'param');
-
-    
     protected $objectStack = array();
-
-    
     protected $paramStack = array();
-
-    
     protected $addParam = array(
         'allowScriptAccess' => 'never',
         'allowNetworking' => 'internal',
     );
-
-    
     protected $allowedParam = array(
         'wmode' => true,
         'movie' => true,
@@ -29,14 +16,10 @@ class HTMLPurifier_Injector_SafeObject extends HTMLPurifier_Injector
         'src' => true,
         'allowfullscreen' => true, 
     );
-
-    
     public function prepare($config, $context)
     {
         parent::prepare($config, $context);
     }
-
-    
     public function handleElement(&$token)
     {
         if ($token->name == 'object') {
@@ -56,46 +39,29 @@ class HTMLPurifier_Injector_SafeObject extends HTMLPurifier_Injector
                     return;
                 }
                 $n = $token->attr['name'];
-                
-                
-                
                 if (!isset($this->objectStack[$i]->attr['data']) &&
                     ($token->attr['name'] == 'movie' || $token->attr['name'] == 'src')
                 ) {
                     $this->objectStack[$i]->attr['data'] = $token->attr['value'];
                 }
-                
-                
                 if (!isset($this->paramStack[$i][$n]) &&
                     isset($this->addParam[$n]) &&
                     $token->attr['name'] === $this->addParam[$n]) {
-                    
                     $this->paramStack[$i][$n] = true;
                 } elseif (isset($this->allowedParam[strtolower($n)])) {
-                    
-                    
-                    
-                    
                 } else {
                     $token = false;
                 }
             } else {
-                
                 $token = false;
             }
         }
     }
-
     public function handleEnd(&$token)
     {
-        
-        
-        
         if ($token->name == 'object') {
             array_pop($this->objectStack);
             array_pop($this->paramStack);
         }
     }
 }
-
-

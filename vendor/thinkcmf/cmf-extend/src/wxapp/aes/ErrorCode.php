@@ -1,8 +1,5 @@
 <?php
-
 namespace wxapp\aes;
-
-
 class ErrorCode
 {
     public static $OK = 0;

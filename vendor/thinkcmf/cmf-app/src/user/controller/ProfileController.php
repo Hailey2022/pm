@@ -1,47 +1,28 @@
 <?php
-
-
-
-
-
-
-
-
-
 namespace app\user\controller;
-
 use cmf\lib\Storage;
 use think\Validate;
 use think\Image;
 use cmf\controller\UserBaseController;
 use app\user\model\UserModel;
-
 class ProfileController extends UserBaseController
 {
-
-    
     public function center()
     {
         $user = cmf_get_current_user();
         $this->assign($user);
-
         $userId = cmf_get_current_user_id();
-
         $userModel = new UserModel();
         $user      = $userModel->where('id', $userId)->find();
         $this->assign('user', $user);
         return $this->fetch();
     }
-
-    
     public function edit()
     {
         $user = cmf_get_current_user();
         $this->assign($user);
         return $this->fetch('edit');
     }
-
-    
     public function editPost()
     {
         if ($this->request->isPost()) {
@@ -62,7 +43,6 @@ class ProfileController extends UserBaseController
                 'user_url.max'        => lang('URL_IS_TO0_LONG'),
                 'signature.max'       => lang('SIGNATURE_IS_TO0_LONG'),
             ]);
-
             $data = $this->request->post();
             if (!$validate->check($data)) {
                 $this->error($validate->getError());
@@ -77,16 +57,12 @@ class ProfileController extends UserBaseController
             $this->error(lang('ERROR'));
         }
     }
-
-    
     public function password()
     {
         $user = cmf_get_current_user();
         $this->assign($user);
         return $this->fetch();
     }
-
-    
     public function passwordPost()
     {
         if ($this->request->isPost()) {
@@ -106,12 +82,10 @@ class ProfileController extends UserBaseController
                 'repassword.max'       => lang('repeat_password_is_too_long'),
                 'repassword.min'       => lang('repeat_password_is_too_short'),
             ]);
-
             $data = $this->request->post();
             if (!$validate->check($data)) {
                 $this->error($validate->getError());
             }
-
             $login = new UserModel();
             $log   = $login->editPassword($data);
             switch ($log) {
@@ -130,18 +104,13 @@ class ProfileController extends UserBaseController
         } else {
             $this->error(lang('ERROR'));
         }
-
     }
-
-    
     public function avatar()
     {
         $user = cmf_get_current_user();
         $this->assign($user);
         return $this->fetch();
     }
-
-    
     public function avatarUpload()
     {
         $file   = $this->request->file('file');
@@ -149,12 +118,10 @@ class ProfileController extends UserBaseController
             'ext'  => 'jpg,jpeg,png',
             'size' => 1024 * 1024
         ])->move(WEB_ROOT . 'upload' . DIRECTORY_SEPARATOR . 'avatar' . DIRECTORY_SEPARATOR);
-
         if ($result) {
             $avatarSaveName = str_replace('//', '/', str_replace('\\', '/', $result->getSaveName()));
             $avatar         = 'avatar/' . $avatarSaveName;
             session('avatar', $avatar);
-
             return json_encode([
                 'code' => 1,
                 "msg"  => "上传成功",
@@ -170,8 +137,6 @@ class ProfileController extends UserBaseController
             ]);
         }
     }
-
-    
     public function avatarUpdate()
     {
         $avatar = session('avatar');
@@ -180,17 +145,13 @@ class ProfileController extends UserBaseController
             $h = $this->request->param('h', 0, 'intval');
             $x = $this->request->param('x', 0, 'intval');
             $y = $this->request->param('y', 0, 'intval');
-
             $avatarPath = WEB_ROOT . "upload/" . $avatar;
-
             $avatarImg = Image::open($avatarPath);
             $avatarImg->crop($w, $h, $x, $y)->save($avatarPath);
-
             $result = true;
             if ($result === true) {
                 $storage = new Storage();
                 $result  = $storage->upload($avatar, $avatarPath, 'image');
-
                 $userId = cmf_get_current_user_id();
                 UserModel::where("id", $userId)->update(["avatar" => $avatar]);
                 session('user.avatar', $avatar);
@@ -198,19 +159,14 @@ class ProfileController extends UserBaseController
             } else {
                 $this->error("头像保存失败！");
             }
-
         }
     }
-
-    
     public function binding()
     {
         $user = cmf_get_current_user();
         $this->assign($user);
         return $this->fetch();
     }
-
-    
     public function bindingMobile()
     {
         if ($this->request->isPost()) {
@@ -224,7 +180,6 @@ class ProfileController extends UserBaseController
                 'username.unique'           => '手机号已存在',
                 'verification_code.require' => '验证码不能为空',
             ]);
-
             $data = $this->request->post();
             if (!$validate->check($data)) {
                 $this->error($validate->getError());
@@ -246,8 +201,6 @@ class ProfileController extends UserBaseController
             $this->error("请求错误");
         }
     }
-
-    
     public function bindingEmail()
     {
         if ($this->request->isPost()) {
@@ -261,7 +214,6 @@ class ProfileController extends UserBaseController
                 'username.unique'           => '邮箱地址已存在',
                 'verification_code.require' => '验证码不能为空',
             ]);
-
             $data = $this->request->post();
             if (!$validate->check($data)) {
                 $this->error($validate->getError());
@@ -283,5 +235,4 @@ class ProfileController extends UserBaseController
             $this->error("请求错误");
         }
     }
-
 }

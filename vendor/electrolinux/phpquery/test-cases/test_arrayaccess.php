@@ -4,7 +4,6 @@ set_include_path(
 	get_include_path()
 	.':/home/bob/Sources/PHP/zend-framework/'
 );
-
 require_once('../phpQuery/phpQuery.php');
 phpQuery::$debug = true;
 $testHtml = phpQuery::newDocumentFile('test.html');
@@ -19,7 +18,6 @@ else {
 	print "</pre>\n";
 }
 print "\n";
-
 require_once('../phpQuery/phpQuery.php');
 phpQuery::$debug = true;
 $testHtml = phpQuery::newDocumentFile('test.html');

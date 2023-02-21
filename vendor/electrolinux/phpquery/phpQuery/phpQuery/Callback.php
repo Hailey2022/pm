@@ -3,7 +3,6 @@ interface ICallbackNamed {
 	function hasName();
 	function getName();
 }
-
 class Callback
 	implements ICallbackNamed {
 	public $callback = null;
@@ -14,7 +13,6 @@ class Callback
 		$params = func_get_args();
 		$params = array_slice($params, 1);
 		if ($callback instanceof Callback) {
-			
 		} else {
 			$this->callback = $callback;
 			$this->params = $params;
@@ -30,13 +28,11 @@ class Callback
 		$this->name = $name;
 		return $this;
 	}
-	
 //	public function addParams() {
 //		$params = func_get_args();
 //		return new Callback($this->callback, $this->params+$params);
 //	}
 }
-
 class CallbackBody extends Callback {
 	public function __construct($paramList, $code, $param1 = null, $param2 = null, 
 			$param3 = null) {
@@ -46,7 +42,6 @@ class CallbackBody extends Callback {
 		$this->params = $params;
 	}
 }
-
 class CallbackReturnReference extends Callback
 	implements ICallbackNamed {
 	protected $reference;
@@ -64,7 +59,6 @@ class CallbackReturnReference extends Callback
 		return isset($this->name) && $this->name;
 	}
 }
-
 class CallbackReturnValue extends Callback
 	implements ICallbackNamed {
 	protected $value;
@@ -87,9 +81,7 @@ class CallbackReturnValue extends Callback
 		return isset($this->name) && $this->name;
 	}
 }
-
 class CallbackParameterToReference extends Callback {
-	
 	public function __construct(&$reference){
 		$this->callback =& $reference;
 	}

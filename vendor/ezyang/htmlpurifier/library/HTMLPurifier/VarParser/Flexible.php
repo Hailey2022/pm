@@ -1,18 +1,12 @@
 <?php
-
-
 class HTMLPurifier_VarParser_Flexible extends HTMLPurifier_VarParser
 {
-    
     protected function parseImplementation($var, $type, $allow_null)
     {
         if ($allow_null && $var === null) {
             return null;
         }
         switch ($type) {
-            
-            
-            
             case self::C_MIXED:
             case self::ISTRING:
             case self::C_STRING:
@@ -46,25 +40,18 @@ class HTMLPurifier_VarParser_Flexible extends HTMLPurifier_VarParser
             case self::HASH:
             case self::LOOKUP:
                 if (is_string($var)) {
-                    
-                    
-                    
                     if ($var == '') {
                         return array();
                     }
                     if (strpos($var, "\n") === false && strpos($var, "\r") === false) {
-                        
-                        
                         $var = explode(',', $var);
                     } else {
                         $var = preg_split('/(,|[\n\r]+)/', $var);
                     }
-                    
                     foreach ($var as $i => $j) {
                         $var[$i] = trim($j);
                     }
                     if ($type === self::HASH) {
-                        
                         $nvar = array();
                         foreach ($var as $keypair) {
                             $c = explode(':', $keypair, 2);
@@ -116,5 +103,3 @@ class HTMLPurifier_VarParser_Flexible extends HTMLPurifier_VarParser
         $this->errorGeneric($var, $type);
     }
 }
-
-

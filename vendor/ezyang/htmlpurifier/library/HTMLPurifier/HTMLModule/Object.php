@@ -1,15 +1,8 @@
 <?php
-
-
 class HTMLPurifier_HTMLModule_Object extends HTMLPurifier_HTMLModule
 {
-    
     public $name = 'Object';
-
-    
     public $safe = false;
-
-    
     public function setup($config)
     {
         $this->addElement(
@@ -32,7 +25,6 @@ class HTMLPurifier_HTMLModule_Object extends HTMLPurifier_HTMLModule
                 'width' => 'Length'
             )
         );
-
         $this->addElement(
             'param',
             false,
@@ -48,5 +40,3 @@ class HTMLPurifier_HTMLModule_Object extends HTMLPurifier_HTMLModule
         );
     }
 }
-
-

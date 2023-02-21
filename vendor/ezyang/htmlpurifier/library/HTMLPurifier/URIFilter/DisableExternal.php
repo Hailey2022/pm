@@ -1,14 +1,8 @@
 <?php
-
 class HTMLPurifier_URIFilter_DisableExternal extends HTMLPurifier_URIFilter
 {
-    
     public $name = 'DisableExternal';
-
-    
     protected $ourHostParts = false;
-
-    
     public function prepare($config)
     {
         $our_host = $config->getDefinition('URI')->host;
@@ -16,8 +10,6 @@ class HTMLPurifier_URIFilter_DisableExternal extends HTMLPurifier_URIFilter
             $this->ourHostParts = array_reverse(explode('.', $our_host));
         }
     }
-
-    
     public function filter(&$uri, $config, $context)
     {
         if (is_null($uri->host)) {
@@ -38,5 +30,3 @@ class HTMLPurifier_URIFilter_DisableExternal extends HTMLPurifier_URIFilter
         return true;
     }
 }
-
-

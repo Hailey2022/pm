@@ -2,8 +2,6 @@
 //error_reporting(E_ALL);
 require_once('../phpQuery/phpQuery.php');
 phpQuery::$debug = true;
-
-
 $testName = 'HTML document load';
 $doc = phpQuery::newDocumentFile('test.html');
 print $doc->find('li:first')->html('foo <p>bar</p> foo <b><i>foo</i</b>')->html();

@@ -1,10 +1,6 @@
 <?php
-
-
-
 $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
-
 return array(
     '2cffec82183ee1cea088009cef9a6fc3' => $vendorDir . '/ezyang/htmlpurifier/library/HTMLPurifier.composer.php',
     '1cfd2761b63b0a29ed23657ea394cb2d' => $vendorDir . '/topthink/think-captcha/src/helper.php',

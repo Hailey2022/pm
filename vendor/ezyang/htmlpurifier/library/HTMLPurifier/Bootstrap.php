@@ -1,12 +1,7 @@
 <?php
-
-
 if (!defined('HTMLPURIFIER_PREFIX')) {
     define('HTMLPURIFIER_PREFIX', realpath(dirname(__FILE__) . '/..'));
 }
-
-
-
 if (!defined('PHP_EOL')) {
     switch (strtoupper(substr(PHP_OS, 0, 3))) {
         case 'WIN':
@@ -19,34 +14,22 @@ if (!defined('PHP_EOL')) {
             define('PHP_EOL', "\n");
     }
 }
-
-
 class HTMLPurifier_Bootstrap
 {
-
-    
     public static function autoload($class)
     {
         $file = HTMLPurifier_Bootstrap::getPath($class);
         if (!$file) {
             return false;
         }
-        
-        
-        
-        
-        
         require_once HTMLPURIFIER_PREFIX . '/' . $file;
         return true;
     }
-
-    
     public static function getPath($class)
     {
         if (strncmp('HTMLPurifier', $class, 12) !== 0) {
             return false;
         }
-        
         if (strncmp('HTMLPurifier_Language_', $class, 22) === 0) {
             $code = str_replace('_', '-', substr($class, 22));
             $file = 'HTMLPurifier/Language/classes/' . $code . '.php';
@@ -58,8 +41,6 @@ class HTMLPurifier_Bootstrap
         }
         return $file;
     }
-
-    
     public static function registerAutoload()
     {
         $autoload = array('HTMLPurifier_Bootstrap', 'autoload');
@@ -67,7 +48,6 @@ class HTMLPurifier_Bootstrap
             spl_autoload_register($autoload);
         } elseif (function_exists('spl_autoload_unregister')) {
             if (version_compare(PHP_VERSION, '5.3.0', '>=')) {
-                
                 spl_autoload_register($autoload, true, true);
             } else {
                 $buggy  = version_compare(PHP_VERSION, '5.2.11', '<');
@@ -75,8 +55,6 @@ class HTMLPurifier_Bootstrap
                           version_compare(PHP_VERSION, '5.1.0', '>=');
                 foreach ($funcs as $func) {
                     if ($buggy && is_array($func)) {
-                        
-                        
                         $reflector = new ReflectionMethod($func[0], $func[1]);
                         if (!$reflector->isStatic()) {
                             throw new Exception(
@@ -88,8 +66,6 @@ class HTMLPurifier_Bootstrap
                                 after your own autoloaders.'
                             );
                         }
-                        
-                        
                         if ($compat) {
                             $func = implode('::', $func);
                         }
@@ -104,5 +80,3 @@ class HTMLPurifier_Bootstrap
         }
     }
 }
-
-

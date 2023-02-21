@@ -4,7 +4,6 @@
 require('/home/bob/Sources/php/simpletest/simpletest/trunk/autorun.php');
 require_once('../phpQuery/phpQuery.php');
 phpQuery::$debug = true;
-
 class CallbackTest extends UnitTestCase {
 	public function callback2() {
 		return 'callback2';

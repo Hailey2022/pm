@@ -1,13 +1,7 @@
 <?php
-
-
 abstract class HTMLPurifier_Strategy_Composite extends HTMLPurifier_Strategy
 {
-
-    
     protected $strategies = array();
-
-    
     public function execute($tokens, $config, $context)
     {
         foreach ($this->strategies as $strategy) {
@@ -16,5 +10,3 @@ abstract class HTMLPurifier_Strategy_Composite extends HTMLPurifier_Strategy
         return $tokens;
     }
 }
-
-

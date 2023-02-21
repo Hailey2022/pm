@@ -1,17 +1,9 @@
 <?php
-
-
 class HTMLPurifier_HTMLModule_SafeObject extends HTMLPurifier_HTMLModule
 {
-    
     public $name = 'SafeObject';
-
-    
     public function setup($config)
     {
-        
-        
-
         $max = $config->get('HTML.MaxImgLength');
         $object = $this->addElement(
             'object',
@@ -19,8 +11,6 @@ class HTMLPurifier_HTMLModule_SafeObject extends HTMLPurifier_HTMLModule
             'Optional: param | Flow | #PCDATA',
             'Common',
             array(
-                
-                
                 'type' => 'Enum#application/x-shockwave-flash',
                 'width' => 'Pixels#' . $max,
                 'height' => 'Pixels#' . $max,
@@ -33,7 +23,6 @@ class HTMLPurifier_HTMLModule_SafeObject extends HTMLPurifier_HTMLModule
             )
         );
         $object->attr_transform_post[] = new HTMLPurifier_AttrTransform_SafeObject();
-
         $param = $this->addElement(
             'param',
             false,
@@ -49,5 +38,3 @@ class HTMLPurifier_HTMLModule_SafeObject extends HTMLPurifier_HTMLModule
         $this->info_injector[] = 'SafeObject';
     }
 }
-
-

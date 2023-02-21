@@ -1,49 +1,29 @@
 <?php
-
-
 class HTMLPurifier_HTMLModule_Tidy extends HTMLPurifier_HTMLModule
 {
-    
     public $levels = array(0 => 'none', 'light', 'medium', 'heavy');
-
-    
     public $defaultLevel = null;
-
-    
     public $fixesForLevel = array(
         'light' => array(),
         'medium' => array(),
         'heavy' => array()
     );
-
-    
     public function setup($config)
     {
-        
         $fixes = $this->makeFixes();
         $this->makeFixesForLevel($fixes);
-
-        
         $level = $config->get('HTML.TidyLevel');
         $fixes_lookup = $this->getFixesForLevel($level);
-
-        
         $add_fixes = $config->get('HTML.TidyAdd');
         $remove_fixes = $config->get('HTML.TidyRemove');
-
         foreach ($fixes as $name => $fix) {
-            
             if (isset($remove_fixes[$name]) ||
                 (!isset($add_fixes[$name]) && !isset($fixes_lookup[$name]))) {
                 unset($fixes[$name]);
             }
         }
-
-        
         $this->populate($fixes);
     }
-
-    
     public function getFixesForLevel($level)
     {
         if ($level == $this->levels[0]) {
@@ -71,8 +51,6 @@ class HTMLPurifier_HTMLModule_Tidy extends HTMLPurifier_HTMLModule
         }
         return $ret;
     }
-
-    
     public function makeFixesForLevel($fixes)
     {
         if (!isset($this->defaultLevel)) {
@@ -87,12 +65,9 @@ class HTMLPurifier_HTMLModule_Tidy extends HTMLPurifier_HTMLModule
         }
         $this->fixesForLevel[$this->defaultLevel] = array_keys($fixes);
     }
-
-    
     public function populate($fixes)
     {
         foreach ($fixes as $name => $fix) {
-            
             list($type, $params) = $this->getFixType($name);
             switch ($type) {
                 case 'attr_transform_pre':
@@ -109,8 +84,6 @@ class HTMLPurifier_HTMLModule_Tidy extends HTMLPurifier_HTMLModule
                         $type = "info_$type";
                         $e = $this;
                     }
-                    
-                    
                     $f =& $e->$type;
                     $f[$attr] = $fix;
                     break;
@@ -133,11 +106,8 @@ class HTMLPurifier_HTMLModule_Tidy extends HTMLPurifier_HTMLModule
             }
         }
     }
-
-    
     public function getFixType($name)
     {
-        
         $property = $attr = null;
         if (strpos($name, '#') !== false) {
             list($name, $property) = explode('#', $name);
@@ -145,8 +115,6 @@ class HTMLPurifier_HTMLModule_Tidy extends HTMLPurifier_HTMLModule
         if (strpos($name, '@') !== false) {
             list($name, $attr) = explode('@', $name);
         }
-
-        
         $params = array();
         if ($name !== '') {
             $params['element'] = $name;
@@ -154,8 +122,6 @@ class HTMLPurifier_HTMLModule_Tidy extends HTMLPurifier_HTMLModule
         if (!is_null($attr)) {
             $params['attr'] = $attr;
         }
-
-        
         if (!is_null($attr)) {
             if (is_null($property)) {
                 $property = 'pre';
@@ -163,20 +129,12 @@ class HTMLPurifier_HTMLModule_Tidy extends HTMLPurifier_HTMLModule
             $type = 'attr_transform_' . $property;
             return array($type, $params);
         }
-
-        
         if (is_null($property)) {
             return array('tag_transform', $params);
         }
-
         return array($property, $params);
-
     }
-
-    
     public function makeFixes()
     {
     }
 }
-
-

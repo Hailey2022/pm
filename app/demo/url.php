@@ -1,5 +1,4 @@
 <?php
-
 return [
     'List/index'    => [
         'name'   => '演示应用-文章列表',
@@ -38,7 +37,6 @@ return [
     'Search/index'  => [
         'name'   => '演示应用-搜索页',
         'vars'   => [
-
         ],
         'simple' => false
     ],

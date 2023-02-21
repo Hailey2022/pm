@@ -1,21 +1,10 @@
 <?php
-
-
-
-
-
-
-
-
-
 namespace think\console\command;
-
 use think\console\Command;
 use think\console\Input;
 use think\console\input\Option;
 use think\console\Output;
 use think\facade\App;
-
 class RunServer extends Command
 {
     public function configure()
@@ -29,13 +18,11 @@ class RunServer extends Command
                 'The document root of the application', App::getRootPath() . 'public')
             ->setDescription('PHP Built-in Server for ThinkPHP');
     }
-
     public function execute(Input $input, Output $output)
     {
         $host = $input->getOption('host');
         $port = $input->getOption('port');
         $root = $input->getOption('root');
-
         $command = sprintf(
             'php -S %s:%d -t %s %s',
             $host,
@@ -43,11 +30,9 @@ class RunServer extends Command
             escapeshellarg($root),
             escapeshellarg($root . DIRECTORY_SEPARATOR . 'router.php')
         );
-
         $output->writeln(sprintf('ThinkPHP Development server is started On <http://%s:%s/>', $host, $port));
         $output->writeln(sprintf('You can exit with <info>`CTRL-C`</info>'));
         $output->writeln(sprintf('Document root is: %s', $root));
         passthru($command);
     }
-
 }

@@ -1,23 +1,14 @@
 <?php
-
-
 class HTMLPurifier_PropertyListIterator extends FilterIterator
 {
-
-    
     protected $l;
-    
     protected $filter;
-
-    
     public function __construct(Iterator $iterator, $filter = null)
     {
         parent::__construct($iterator);
         $this->l = strlen($filter);
         $this->filter = $filter;
     }
-
-    
     public function accept()
     {
         $key = $this->getInnerIterator()->key();
@@ -27,5 +18,3 @@ class HTMLPurifier_PropertyListIterator extends FilterIterator
         return true;
     }
 }
-
-

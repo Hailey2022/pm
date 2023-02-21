@@ -1,20 +1,6 @@
 <?php
-
-
-
-
-
-
-
-
-
-
-
 namespace api\user\validate;
-
-
 use think\Validate;
-
 class UserFavoriteValidate extends Validate
 {
     protected $rule    = [
@@ -29,8 +15,6 @@ class UserFavoriteValidate extends Validate
         'url.require'        => '请填写内容url',
         'title.require'      => '请填写内容标题'
     ];
-
     protected $scene = [
-
     ];
 }

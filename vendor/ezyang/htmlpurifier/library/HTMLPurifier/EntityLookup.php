@@ -1,12 +1,7 @@
 <?php
-
-
 class HTMLPurifier_EntityLookup
 {
-    
     public $table;
-
-    
     public function setup($file = false)
     {
         if (!$file) {
@@ -14,11 +9,8 @@ class HTMLPurifier_EntityLookup
         }
         $this->table = unserialize(file_get_contents($file));
     }
-
-    
     public static function instance($prototype = false)
     {
-        
         static $instance = null;
         if ($prototype) {
             $instance = $prototype;
@@ -29,5 +21,3 @@ class HTMLPurifier_EntityLookup
         return $instance;
     }
 }
-
-

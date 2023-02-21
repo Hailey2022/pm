@@ -1,14 +1,11 @@
 <?php
-
 namespace app\admin\controller;
-
 use app\admin\model\RoleModel;
 use app\admin\model\RoleUserModel;
 use app\admin\model\UserModel;
 use cmf\controller\AdminBaseController;
 use think\db\Query;
 use think\db;
-
 class UserController extends AdminBaseController
 {
     public function index()
@@ -26,7 +23,6 @@ class UserController extends AdminBaseController
         $this->assign('currectPage', $currectPage);
         $this->assign('currectRoleId', $currectRoleId);
         $content = hook_one('admin_user_index_view');
-
         if (!empty($content)) {
             return $content;
         }
@@ -46,7 +42,6 @@ class UserController extends AdminBaseController
             ->group('user_login')
             ->paginate(10);
         $page = $users->render();
-
         $rolesSrc = RoleModel::select();
         $roles = [];
         foreach ($rolesSrc as $r) {
@@ -58,20 +53,16 @@ class UserController extends AdminBaseController
         $this->assign("users", $users);
         return $this->fetch();
     }
-
     public function add()
     {
         $content = hook_one('admin_user_add_view');
-
         if (!empty($content)) {
             return $content;
         }
-
         $roles = RoleModel::where('status', 1)->order("id DESC")->select();
         $this->assign("roles", $roles);
         return $this->fetch();
     }
-
     public function addPost()
     {
         if ($this->request->isPost()) {
@@ -99,29 +90,23 @@ class UserController extends AdminBaseController
             } else {
                 $this->error("请为此用户指定角色！");
             }
-
         }
     }
-
     public function edit()
     {
         $content = hook_one('admin_user_edit_view');
-
         if (!empty($content)) {
             return $content;
         }
-
         $id = $this->request->param('id', 0, 'intval');
         $roles = RoleModel::where('status', 1)->order("id DESC")->select();
         $this->assign("roles", $roles);
         $role_ids = RoleUserModel::where("user_id", $id)->column("role_id");
         $this->assign("role_ids", $role_ids);
-
         $user = Db::name("user")->where("id", $id)->find();
         $this->assign($user);
         return $this->fetch();
     }
-
     public function editPost()
     {
         if ($this->request->isPost()) {
@@ -134,7 +119,6 @@ class UserController extends AdminBaseController
                     $data['user_pass'] = cmf_password($data['user_pass']);
                 }
                 $result = $this->validate($data, 'User.edit');
-
                 if ($result !== true) {
                     $this->error($result);
                 } else {
@@ -156,10 +140,8 @@ class UserController extends AdminBaseController
             } else {
                 $this->error("请为此用户指定角色！");
             }
-
         }
     }
-
     public function userInfo()
     {
         $id = cmf_get_current_admin_id();
@@ -167,11 +149,9 @@ class UserController extends AdminBaseController
         $this->assign($user);
         return $this->fetch();
     }
-
     public function userInfoPost()
     {
         if ($this->request->isPost()) {
-
             $data = $this->request->post();
             $data['birthday'] = strtotime($data['birthday']);
             $data['id'] = cmf_get_current_admin_id();
@@ -184,12 +164,10 @@ class UserController extends AdminBaseController
             }
         }
     }
-
     public function delete()
     {
         $this->error("删除失败！");
     }
-
     public function ban()
     {
         if ($this->request->isPost()) {
@@ -206,7 +184,6 @@ class UserController extends AdminBaseController
             }
         }
     }
-
     public function cancelBan()
     {
         if ($this->request->isPost()) {

@@ -1,48 +1,18 @@
 <?php
-
-
 class HTMLPurifier_Config
 {
-
-    
     public $version = '4.13.0';
-
-    
     public $autoFinalize = true;
-
-    
-
-    
     protected $serials = array();
-
-    
     protected $serial;
-
-    
     protected $parser = null;
-
-    
     public $def;
-
-    
     protected $definitions;
-
-    
     protected $finalized = false;
-
-    
     protected $plist;
-
-    
     private $aliasMode;
-
-    
     public $chatty = true;
-
-    
     private $lock;
-
-    
     public function __construct($definition, $parent = null)
     {
         $parent = $parent ? $parent : $definition->defaultPlist;
@@ -50,12 +20,9 @@ class HTMLPurifier_Config
         $this->def = $definition; 
         $this->parser = new HTMLPurifier_VarParser_Flexible();
     }
-
-    
     public static function create($config, $schema = null)
     {
         if ($config instanceof HTMLPurifier_Config) {
-            
             return $config;
         }
         if (!$schema) {
@@ -68,22 +35,16 @@ class HTMLPurifier_Config
         } elseif (is_array($config)) $ret->loadArray($config);
         return $ret;
     }
-
-    
     public static function inherit(HTMLPurifier_Config $config)
     {
         return new HTMLPurifier_Config($config->def, $config->plist);
     }
-
-    
     public static function createDefault()
     {
         $definition = HTMLPurifier_ConfigSchema::instance();
         $config = new HTMLPurifier_Config($definition);
         return $config;
     }
-
-    
     public function get($key, $a = null)
     {
         if ($a !== null) {
@@ -97,7 +58,6 @@ class HTMLPurifier_Config
             $this->autoFinalize();
         }
         if (!isset($this->def->info[$key])) {
-            
             $this->triggerError(
                 'Cannot retrieve value of undefined directive ' . htmlspecialchars($key),
                 E_USER_WARNING
@@ -127,8 +87,6 @@ class HTMLPurifier_Config
         }
         return $this->plist->get($key);
     }
-
-    
     public function getBatch($namespace)
     {
         if (!$this->finalized) {
@@ -145,8 +103,6 @@ class HTMLPurifier_Config
         }
         return $full[$namespace];
     }
-
-    
     public function getBatchSerial($namespace)
     {
         if (empty($this->serials[$namespace])) {
@@ -156,8 +112,6 @@ class HTMLPurifier_Config
         }
         return $this->serials[$namespace];
     }
-
-    
     public function getSerial()
     {
         if (empty($this->serial)) {
@@ -165,8 +119,6 @@ class HTMLPurifier_Config
         }
         return $this->serial;
     }
-
-    
     public function getAll()
     {
         if (!$this->finalized) {
@@ -179,8 +131,6 @@ class HTMLPurifier_Config
         }
         return $ret;
     }
-
-    
     public function set($key, $value, $a = null)
     {
         if (strpos($key, '.') === false) {
@@ -203,7 +153,6 @@ class HTMLPurifier_Config
             return;
         }
         $def = $this->def->info[$key];
-
         if (isset($def->isAlias)) {
             if ($this->aliasMode) {
                 $this->triggerError(
@@ -219,9 +168,6 @@ class HTMLPurifier_Config
             $this->triggerError("$key is an alias, preferred directive name is {$def->key}", E_USER_NOTICE);
             return;
         }
-
-        
-        
         $rtype = is_int($def) ? $def : $def->type;
         if ($rtype < 0) {
             $type = -$rtype;
@@ -230,7 +176,6 @@ class HTMLPurifier_Config
             $type = $rtype;
             $allow_null = isset($def->allow_null);
         }
-
         try {
             $value = $this->parser->parse($value, $type, $allow_null);
         } catch (HTMLPurifier_VarParserException $e) {
@@ -242,11 +187,9 @@ class HTMLPurifier_Config
             return;
         }
         if (is_string($value) && is_object($def)) {
-            
             if (isset($def->aliases[$value])) {
                 $value = $def->aliases[$value];
             }
-            
             if (isset($def->allowed) && !isset($def->allowed[$value])) {
                 $this->triggerError(
                     'Value not supported, valid values are: ' .
@@ -257,18 +200,11 @@ class HTMLPurifier_Config
             }
         }
         $this->plist->set($key, $value);
-
-        
-        
-        
         if ($namespace == 'HTML' || $namespace == 'CSS' || $namespace == 'URI') {
             $this->definitions[$namespace] = null;
         }
-
         $this->serials[$namespace] = false;
     }
-
-    
     private function _listify($lookup)
     {
         $list = array();
@@ -277,26 +213,18 @@ class HTMLPurifier_Config
         }
         return implode(', ', $list);
     }
-
-    
     public function getHTMLDefinition($raw = false, $optimized = false)
     {
         return $this->getDefinition('HTML', $raw, $optimized);
     }
-
-    
     public function getCSSDefinition($raw = false, $optimized = false)
     {
         return $this->getDefinition('CSS', $raw, $optimized);
     }
-
-    
     public function getURIDefinition($raw = false, $optimized = false)
     {
         return $this->getDefinition('URI', $raw, $optimized);
     }
-
-    
     public function getDefinition($type, $raw = false, $optimized = false)
     {
         if ($optimized && !$raw) {
@@ -305,19 +233,14 @@ class HTMLPurifier_Config
         if (!$this->finalized) {
             $this->autoFinalize();
         }
-        
         $lock = $this->lock;
         $this->lock = null;
         $factory = HTMLPurifier_DefinitionCacheFactory::instance();
         $cache = $factory->create($type, $this);
         $this->lock = $lock;
         if (!$raw) {
-            
-            
-            
             if (!empty($this->definitions[$type])) {
                 $def = $this->definitions[$type];
-                
                 if ($def->setup) {
                     return $def;
                 } else {
@@ -328,31 +251,21 @@ class HTMLPurifier_Config
                     return $def;
                 }
             }
-            
             $def = $cache->get($this);
             if ($def) {
-                
                 $this->definitions[$type] = $def;
                 return $def;
             }
-            
             $def = $this->initDefinition($type);
-            
             $this->lock = $type;
             $def->setup($this);
             $this->lock = null;
-            
             $cache->add($def, $this);
-            
             return $def;
         } else {
-            
-            
-            
             $def = null;
             if ($optimized) {
                 if (is_null($this->get($type . '.DefinitionID'))) {
-                    
                     throw new HTMLPurifier_Exception(
                         "Cannot retrieve raw version without specifying %$type.DefinitionID"
                     );
@@ -385,33 +298,20 @@ class HTMLPurifier_Config
                     );
                 }
             }
-            
             if ($def) {
                 if ($def->setup) {
-                    
                     return null;
                 } else {
                     return $def;
                 }
             }
-            
-            
-            
-            
-            
             if ($optimized) {
-                
-                
-                
                 $def = $cache->get($this);
                 if ($def) {
-                    
-                    
                     $this->definitions[$type] = $def;
                     return null;
                 }
             }
-            
             if (!$optimized) {
                 if (!is_null($this->get($type . '.DefinitionID'))) {
                     if ($this->chatty) {
@@ -434,18 +334,14 @@ class HTMLPurifier_Config
                     }
                 }
             }
-            
             $def = $this->initDefinition($type);
             $def->optimized = $optimized;
             return $def;
         }
         throw new HTMLPurifier_Exception("The impossible happened!");
     }
-
-    
     private function initDefinition($type)
     {
-        
         if ($type == 'HTML') {
             $def = new HTMLPurifier_HTMLDefinition();
         } elseif ($type == 'CSS') {
@@ -460,31 +356,22 @@ class HTMLPurifier_Config
         $this->definitions[$type] = $def;
         return $def;
     }
-
     public function maybeGetRawDefinition($name)
     {
         return $this->getDefinition($name, true, true);
     }
-
-    
     public function maybeGetRawHTMLDefinition()
     {
         return $this->getDefinition('HTML', true, true);
     }
-    
-    
     public function maybeGetRawCSSDefinition()
     {
         return $this->getDefinition('CSS', true, true);
     }
-    
-    
     public function maybeGetRawURIDefinition()
     {
         return $this->getDefinition('URI', true, true);
     }
-
-    
     public function loadArray($config_array)
     {
         if ($this->isFinalized('Cannot load directives after finalization')) {
@@ -503,8 +390,6 @@ class HTMLPurifier_Config
             }
         }
     }
-
-    
     public static function getAllowedDirectivesForForm($allowed, $schema = null)
     {
         if (!$schema) {
@@ -519,14 +404,12 @@ class HTMLPurifier_Config
             $blacklisted_directives = array();
             foreach ($allowed as $ns_or_directive) {
                 if (strpos($ns_or_directive, '.') !== false) {
-                    
                     if ($ns_or_directive[0] == '-') {
                         $blacklisted_directives[substr($ns_or_directive, 1)] = true;
                     } else {
                         $allowed_directives[$ns_or_directive] = true;
                     }
                 } else {
-                    
                     $allowed_ns[$ns_or_directive] = true;
                 }
             }
@@ -552,30 +435,23 @@ class HTMLPurifier_Config
         }
         return $ret;
     }
-
-    
     public static function loadArrayFromForm($array, $index = false, $allowed = true, $mq_fix = true, $schema = null)
     {
         $ret = HTMLPurifier_Config::prepareArrayFromForm($array, $index, $allowed, $mq_fix, $schema);
         $config = HTMLPurifier_Config::create($ret, $schema);
         return $config;
     }
-
-    
     public function mergeArrayFromForm($array, $index = false, $allowed = true, $mq_fix = true)
     {
          $ret = HTMLPurifier_Config::prepareArrayFromForm($array, $index, $allowed, $mq_fix, $this->def);
          $this->loadArray($ret);
     }
-
-    
     public static function prepareArrayFromForm($array, $index = false, $allowed = true, $mq_fix = true, $schema = null)
     {
         if ($index !== false) {
             $array = (isset($array[$index]) && is_array($array[$index])) ? $array[$index] : array();
         }
         $mq = $mq_fix && function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc();
-
         $allowed = HTMLPurifier_Config::getAllowedDirectivesForForm($allowed, $schema);
         $ret = array();
         foreach ($allowed as $key) {
@@ -593,8 +469,6 @@ class HTMLPurifier_Config
         }
         return $ret;
     }
-
-    
     public function loadIni($filename)
     {
         if ($this->isFinalized('Cannot load directives after finalization')) {
@@ -603,8 +477,6 @@ class HTMLPurifier_Config
         $array = parse_ini_file($filename, true);
         $this->loadArray($array);
     }
-
-    
     public function isFinalized($error = false)
     {
         if ($this->finalized && $error) {
@@ -612,8 +484,6 @@ class HTMLPurifier_Config
         }
         return $this->finalized;
     }
-
-    
     public function autoFinalize()
     {
         if ($this->autoFinalize) {
@@ -622,24 +492,17 @@ class HTMLPurifier_Config
             $this->plist->squash(true);
         }
     }
-
-    
     public function finalize()
     {
         $this->finalized = true;
         $this->parser = null;
     }
-
-    
     protected function triggerError($msg, $no)
     {
-        
         $extra = '';
         if ($this->chatty) {
             $trace = debug_backtrace();
-            
             for ($i = 0, $c = count($trace); $i < $c - 1; $i++) {
-                
                 if (isset($trace[$i + 1]['class']) && $trace[$i + 1]['class'] === 'HTMLPurifier_Config') {
                     continue;
                 }
@@ -650,8 +513,6 @@ class HTMLPurifier_Config
         }
         trigger_error($msg . $extra, $no);
     }
-
-    
     public function serialize()
     {
         $this->getDefinition('HTML');
@@ -659,7 +520,4 @@ class HTMLPurifier_Config
         $this->getDefinition('URI');
         return serialize($this);
     }
-
 }
-
-

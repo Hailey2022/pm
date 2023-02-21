@@ -1,29 +1,15 @@
 <?php
-
-
-
-
-
-
-
-
-
 namespace plugins\portal\model;
-
 use app\admin\model\RouteModel;
 use think\Db;
 use think\db\Query;
 use think\Model;
 use tree\Tree;
-
 class PortalCategoryModel extends Model
 {
-
     protected $type = [
         'more' => 'array',
     ];
-
-    
     public function adminCategoryTree($selectId = 0, $currentCid = 0)
     {
         $categories = $this->order("list_order ASC")
@@ -34,47 +20,32 @@ class PortalCategoryModel extends Model
                 }
             })
             ->select()->toArray();
-
         $tree       = new Tree();
         $tree->icon = ['&nbsp;&nbsp;│', '&nbsp;&nbsp;├─', '&nbsp;&nbsp;└─'];
         $tree->nbsp = '&nbsp;&nbsp;';
-
         $newCategories = [];
         foreach ($categories as $item) {
             $item['selected'] = $selectId == $item['id'] ? "selected" : "";
-
             array_push($newCategories, $item);
         }
-
         $tree->init($newCategories);
         $str     = '<option value=\"{$id}\" {$selected}>{$spacer}{$name}</option>';
         $treeStr = $tree->getTree(0, $str);
-
         return $treeStr;
     }
-
-    
     public function adminAuthorizeCategoryTableTree($currentIds = 0, $tpl = '', $roleId = 0)
     {
-
-
-
         $categories = $this->order("list_order ASC")->where('delete_time', 0)->select()->toArray();
-
         $tree       = new Tree();
         $tree->icon = ['&nbsp;&nbsp;│', '&nbsp;&nbsp;├─', '&nbsp;&nbsp;└─'];
         $tree->nbsp = '&nbsp;&nbsp;';
-
         if (!is_array($currentIds)) {
             $currentIds = [$currentIds];
         }
-
         $newCategories = [];
-
         foreach ($categories as $m) {
             $newCategories[$m['id']] = $m;
         }
-
         foreach ($categories as $item) {
             $ruleName                                 = "portal/Category/index?id={$item['id']}";
             $findRule                                 = Db::name("auth_access")->where(["role_id" => $roleId, "rule_name" => $ruleName, 'type' => 'portal_category'])->find();
@@ -86,9 +57,7 @@ class PortalCategoryModel extends Model
             $newCategories[$itemId]['level']          = $this->_getLevel($item['id'], $newCategories);
             $newCategories[$itemId]['url']            = cmf_url('portal/List/index', ['id' => $item['id']]);
         }
-
         $tree->init($newCategories);
-
         if (empty($tpl)) {
             $tpl = " <tr id='node-\$id' \$parent_id_node style='\$style' data-parent_id='\$parent_id' data-id='\$id'>
                         <td style='padding-left:20px;'><input type='checkbox' class='js-check' data-yid='js-check-y' data-xid='js-check-x' name='ids[]' value='\$id' data-parent_id='\$parent_id' data-id='\$id' level='\$level' \$checked onclick='javascript:checknode(this);'></td>
@@ -99,11 +68,8 @@ class PortalCategoryModel extends Model
                     </tr>";
         }
         $treeStr = $tree->getTree(0, $tpl);
-
         return $treeStr;
     }
-
-    
     public function addCategory($data)
     {
         $result = true;
@@ -115,19 +81,16 @@ class PortalCategoryModel extends Model
             $this->allowField(true)->save($data);
             $id = $this->id;
             if (empty($data['parent_id'])) {
-
                 $this->where('id', $id)->update(['path' => '0-' . $id]);
             } else {
                 $parentPath = $this->where('id', intval($data['parent_id']))->value('path');
                 $this->where('id', $id)->update(['path' => "$parentPath-$id"]);
-
             }
             self::commit();
         } catch (\Exception $e) {
             self::rollback();
             $result = false;
         }
-
         if ($result != false) {
             //设置别名
             $routeModel = new RouteModel();
@@ -137,18 +100,14 @@ class PortalCategoryModel extends Model
             }
             $routeModel->getRoutes(true);
         }
-
         return $result;
     }
-
     public function editCategory($data)
     {
         $result = true;
-
         $id          = intval($data['id']);
         $parentId    = intval($data['parent_id']);
         $oldCategory = $this->where('id', $id)->find();
-
         if (empty($parentId)) {
             $newPath = '0-' . $id;
         } else {
@@ -159,17 +118,14 @@ class PortalCategoryModel extends Model
                 $newPath = "$parentPath-$id";
             }
         }
-
         if (empty($oldCategory) || empty($newPath)) {
             $result = false;
         } else {
-
             $data['path'] = $newPath;
             if (!empty($data['more']['thumbnail'])) {
                 $data['more']['thumbnail'] = cmf_asset_relative_url($data['more']['thumbnail']);
             }
             $this->isUpdate(true)->allowField(true)->save($data, ['id' => $id]);
-
             $children = $this->field('id,path')->where('path', 'like', $oldCategory['path'] . "-%")->select();
             if (!$children->isEmpty()) {
                 foreach ($children as $child) {
@@ -177,7 +133,6 @@ class PortalCategoryModel extends Model
                     $this->where('id', $child['id'])->update(['path' => $childPath], ['id' => $child['id']]);
                 }
             }
-
             $routeModel = new RouteModel();
             if (!empty($data['alias'])) {
                 $routeModel->setRoute($data['alias'], 'portal/List/index', ['id' => $data['id']], 2, 5000);
@@ -186,15 +141,10 @@ class PortalCategoryModel extends Model
                 $routeModel->deleteRoute('portal/List/index', ['id' => $data['id']]);
                 $routeModel->deleteRoute('portal/Article/index', ['cid' => $data['id']]);
             }
-
             $routeModel->getRoutes(true);
         }
-
-
         return $result;
     }
-
-    
     protected function _getLevel($id, $array = [], $i = 0)
     {
         if ($array[$id]['parent_id'] == 0 || empty($array[$array[$id]['parent_id']]) || $array[$id]['parent_id'] == $id) {
@@ -204,6 +154,4 @@ class PortalCategoryModel extends Model
             return $this->_getLevel($array[$id]['parent_id'], $array, $i);
         }
     }
-
-
 }

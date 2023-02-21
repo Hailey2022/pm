@@ -1,34 +1,15 @@
 <?php
-
-
-
-
-
 function htmlpurifier_filter_extractstyleblocks_muteerrorhandler()
 {
 }
-
-
 class HTMLPurifier_Filter_ExtractStyleBlocks extends HTMLPurifier_Filter
 {
-    
     public $name = 'ExtractStyleBlocks';
-
-    
     private $_styleMatches = array();
-
-    
     private $_tidy;
-
-    
     private $_id_attrdef;
-
-    
     private $_class_attrdef;
-
-    
     private $_enum_attrdef;
-
     public function __construct()
     {
         $this->_tidy = new csstidy();
@@ -46,23 +27,16 @@ class HTMLPurifier_Filter_ExtractStyleBlocks extends HTMLPurifier_Filter
             )
         );
     }
-
-    
     protected function styleCallback($matches)
     {
         $this->_styleMatches[] = $matches[1];
     }
-
-    
     public function preFilter($html, $config, $context)
     {
         $tidy = $config->get('Filter.ExtractStyleBlocks.TidyImpl');
         if ($tidy !== null) {
             $this->_tidy = $tidy;
         }
-        
-        
-        
         $html = preg_replace_callback('#<style(?:\s.*)?>(.*)<\/style>#isU', array($this, 'styleCallback'), $html);
         $style_blocks = $this->_styleMatches;
         $this->_styleMatches = array(); 
@@ -74,18 +48,14 @@ class HTMLPurifier_Filter_ExtractStyleBlocks extends HTMLPurifier_Filter
         }
         return $html;
     }
-
-    
     public function cleanCSS($css, $config, $context)
     {
-        
         $scope = $config->get('Filter.ExtractStyleBlocks.Scope');
         if ($scope !== null) {
             $scopes = array_map('trim', explode(',', $scope));
         } else {
             $scopes = array();
         }
-        
         $css = trim($css);
         if (strncmp('<!--', $css, 4) === 0) {
             $css = substr($css, 4);
@@ -101,96 +71,34 @@ class HTMLPurifier_Filter_ExtractStyleBlocks extends HTMLPurifier_Filter
         $html_definition = $config->getDefinition('HTML');
         $new_css = array();
         foreach ($this->_tidy->css as $k => $decls) {
-            
             $new_decls = array();
             foreach ($decls as $selector => $style) {
                 $selector = trim($selector);
                 if ($selector === '') {
                     continue;
                 } 
-                
-                
                 //
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
                 //
-                
                 //
-                
-                
-                
-                
-                
-                
                 //
-                
                 //
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
                 //
-                
-                
                 //
-                
-                
-                
-                
-                
-                
-                
-                
-
-                
                 $selectors = array_map('trim', explode(',', $selector));
                 $new_selectors = array();
                 foreach ($selectors as $sel) {
-                    
                     $basic_selectors = preg_split('/\s*([+> ])\s*/', $sel, -1, PREG_SPLIT_DELIM_CAPTURE);
-                    
-                    
                     $nsel = null;
                     $delim = null; 
-                    
                     for ($i = 0, $c = count($basic_selectors); $i < $c; $i++) {
                         $x = $basic_selectors[$i];
                         if ($i % 2) {
-                            
                             if ($x === ' ') {
                                 $delim = ' ';
                             } else {
                                 $delim = ' ' . $x . ' ';
                             }
                         } else {
-                            
                             $components = preg_split('/([#.:])/', $x, -1, PREG_SPLIT_DELIM_CAPTURE);
                             $sdelim = null;
                             $nx = null;
@@ -200,14 +108,8 @@ class HTMLPurifier_Filter_ExtractStyleBlocks extends HTMLPurifier_Filter
                                     if ($y === '*' || isset($html_definition->info[$y = strtolower($y)])) {
                                         $nx = $y;
                                     } else {
-                                        
-                                        
-                                        
-                                        
-                                        
                                     }
                                 } elseif ($j % 2) {
-                                    
                                     $sdelim = $y;
                                 } else {
                                     $attrdef = null;
@@ -239,8 +141,6 @@ class HTMLPurifier_Filter_ExtractStyleBlocks extends HTMLPurifier_Filter
                                     $nsel .= $delim . $nx;
                                 }
                             } else {
-                                
-                                
                             }
                         }
                     }
@@ -275,15 +175,11 @@ class HTMLPurifier_Filter_ExtractStyleBlocks extends HTMLPurifier_Filter
             }
             $new_css[$k] = $new_decls;
         }
-        
-        
         $this->_tidy->css = $new_css;
         $this->_tidy->import = array();
         $this->_tidy->charset = null;
         $this->_tidy->namespace = null;
         $css = $this->_tidy->print->plain();
-        
-        
         if ($config->get('Filter.ExtractStyleBlocks.Escaping')) {
             $css = str_replace(
                 array('<', '>', '&'),
@@ -294,5 +190,3 @@ class HTMLPurifier_Filter_ExtractStyleBlocks extends HTMLPurifier_Filter
         return $css;
     }
 }
-
-

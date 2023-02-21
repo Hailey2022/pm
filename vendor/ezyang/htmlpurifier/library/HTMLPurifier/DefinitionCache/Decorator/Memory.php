@@ -1,21 +1,12 @@
 <?php
-
-
 class HTMLPurifier_DefinitionCache_Decorator_Memory extends HTMLPurifier_DefinitionCache_Decorator
 {
-    
     protected $definitions;
-
-    
     public $name = 'Memory';
-
-    
     public function copy()
     {
         return new HTMLPurifier_DefinitionCache_Decorator_Memory();
     }
-
-    
     public function add($def, $config)
     {
         $status = parent::add($def, $config);
@@ -24,8 +15,6 @@ class HTMLPurifier_DefinitionCache_Decorator_Memory extends HTMLPurifier_Definit
         }
         return $status;
     }
-
-    
     public function set($def, $config)
     {
         $status = parent::set($def, $config);
@@ -34,8 +23,6 @@ class HTMLPurifier_DefinitionCache_Decorator_Memory extends HTMLPurifier_Definit
         }
         return $status;
     }
-
-    
     public function replace($def, $config)
     {
         $status = parent::replace($def, $config);
@@ -44,8 +31,6 @@ class HTMLPurifier_DefinitionCache_Decorator_Memory extends HTMLPurifier_Definit
         }
         return $status;
     }
-
-    
     public function get($config)
     {
         $key = $this->generateKey($config);
@@ -56,5 +41,3 @@ class HTMLPurifier_DefinitionCache_Decorator_Memory extends HTMLPurifier_Definit
         return $this->definitions[$key];
     }
 }
-
-

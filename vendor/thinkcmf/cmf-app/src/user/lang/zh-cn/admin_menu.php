@@ -1,5 +1,4 @@
 <?php
-
 return [
     'USER_INDEXADMIN_BAN'       => '拉黑会员',
     'USER_INDEXADMIN_CANCELBAN' => '启用会员',

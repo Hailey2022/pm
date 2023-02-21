@@ -1,25 +1,8 @@
 <?php
-
-
-
-
-
-
-
-
-
 namespace think;
-
-
 require __DIR__ . '/library/think/Loader.php';
-
-
 Loader::register();
-
-
 Error::register();
-
-
 if (interface_exists('Psr\Log\LoggerInterface')) {
     interface LoggerInterface extends \Psr\Log\LoggerInterface
     {}
@@ -27,8 +10,6 @@ if (interface_exists('Psr\Log\LoggerInterface')) {
     interface LoggerInterface
     {}
 }
-
-
 Loader::addClassAlias([
     'App'      => facade\App::class,
     'Build'    => facade\Build::class,

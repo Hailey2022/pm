@@ -1,15 +1,5 @@
 <?php
-
-
-
-
-
-
-
-
-
 namespace think\image\gif;
-
 class Encoder
 {
     public $GIF = "GIF89a"; 
@@ -25,8 +15,6 @@ class Encoder
         'ERR02' => "Unintelligible flag ",
         'ERR03' => "Does not make animation from animated GIF source",
     ];
-
-    
     public function __construct(
         $GIF_src, $GIF_dly, $GIF_lop, $GIF_dis,
         $GIF_red, $GIF_grn, $GIF_blu, $GIF_mod
@@ -73,8 +61,6 @@ class Encoder
         }
         $this->addFooter();
     }
-
-    
     public function addHeader()
     {
         if (ord($this->BUF[0]{10}) & 0x80) {
@@ -84,8 +70,6 @@ class Encoder
             $this->GIF .= "!\377\13NETSCAPE2.0\3\1" . $this->word($this->LOP) . "\0";
         }
     }
-
-    
     public function addFrames($i, $d)
     {
         $Locals_img = '';
@@ -115,7 +99,6 @@ class Encoder
         }
         switch ($Locals_tmp{0}) {
             case "!":
-                
                 $Locals_img = substr($Locals_tmp, 8, 10);
                 $Locals_tmp = substr($Locals_tmp, 18, strlen($Locals_tmp) - 18);
                 break;
@@ -149,14 +132,10 @@ class Encoder
         }
         $this->IMG = 1;
     }
-
-    
     public function addFooter()
     {
         $this->GIF .= ";";
     }
-
-    
     public function blockCompare($GlobalBlock, $LocalBlock, $Len)
     {
         for ($i = 0; $i < $Len; $i++) {
@@ -170,14 +149,10 @@ class Encoder
         }
         return (1);
     }
-
-    
     public function word($int)
     {
         return (chr($int & 0xFF) . chr(($int >> 8) & 0xFF));
     }
-
-    
     public function getAnimation()
     {
         return ($this->GIF);

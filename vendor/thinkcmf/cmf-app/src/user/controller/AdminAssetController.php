@@ -1,29 +1,15 @@
 <?php
-
-
-
-
-
-
-
-
-
 namespace app\user\controller;
-
 use app\user\model\AssetModel;
 use cmf\controller\AdminBaseController;
-
 class AdminAssetController extends AdminBaseController
 {
-    
     public function index()
     {
         $content = hook_one('user_admin_asset_index_view');
-
         if (!empty($content)) {
             return $content;
         }
-
         $result = AssetModel::field('a.*,u.user_login,u.user_email,u.user_nickname')
             ->alias('a')->join('user u', 'a.user_id = u.id')
             ->order('create_time', 'DESC')
@@ -32,8 +18,6 @@ class AdminAssetController extends AdminBaseController
         $this->assign('page', $result->render());
         return $this->fetch();
     }
-
-    
     public function delete()
     {
         if ($this->request->isPost()) {
@@ -52,5 +36,4 @@ class AdminAssetController extends AdminBaseController
             }
         }
     }
-
 }

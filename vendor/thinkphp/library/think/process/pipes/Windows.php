@@ -1,39 +1,19 @@
 <?php
-
-
-
-
-
-
-
-
-
-
 namespace think\process\pipes;
-
 use think\Process;
-
 class Windows extends Pipes
 {
-
-    
     private $files = [];
-    
     private $fileHandles = [];
-    
     private $readBytes = [
         Process::STDOUT => 0,
         Process::STDERR => 0,
     ];
-    
     private $disableOutput;
-
     public function __construct($disableOutput, $input)
     {
         $this->disableOutput = (bool) $disableOutput;
-
         if (!$this->disableOutput) {
-
             $this->files = [
                 Process::STDOUT => tempnam(sys_get_temp_dir(), 'sf_proc_stdout'),
                 Process::STDERR => tempnam(sys_get_temp_dir(), 'sf_proc_stderr'),
@@ -45,51 +25,40 @@ class Windows extends Pipes
                 }
             }
         }
-
         if (is_resource($input)) {
             $this->input = $input;
         } else {
             $this->inputBuffer = $input;
         }
     }
-
     public function __destruct()
     {
         $this->close();
         $this->removeFiles();
     }
-
-    
     public function getDescriptors()
     {
         if ($this->disableOutput) {
             $nullstream = fopen('NUL', 'c');
-
             return [
                 ['pipe', 'r'],
                 $nullstream,
                 $nullstream,
             ];
         }
-
         return [
             ['pipe', 'r'],
             ['file', 'NUL', 'w'],
             ['file', 'NUL', 'w'],
         ];
     }
-
-    
     public function getFiles()
     {
         return $this->files;
     }
-
-    
     public function readAndWrite($blocking, $close = false)
     {
         $this->write($blocking, $close);
-
         $read = [];
         $fh   = $this->fileHandles;
         foreach ($fh as $type => $fileHandle) {
@@ -107,23 +76,17 @@ class Windows extends Pipes
                 $this->readBytes[$type] += $length;
                 $read[$type] = $data;
             }
-
             if (false === $dataread || (true === $close && feof($fileHandle) && '' === $data)) {
                 fclose($this->fileHandles[$type]);
                 unset($this->fileHandles[$type]);
             }
         }
-
         return $read;
     }
-
-    
     public function areOpen()
     {
         return (bool) $this->pipes && (bool) $this->fileHandles;
     }
-
-    
     public function close()
     {
         parent::close();
@@ -132,14 +95,10 @@ class Windows extends Pipes
         }
         $this->fileHandles = [];
     }
-
-    
     public static function create(Process $process, $input)
     {
         return new static($process->isOutputDisabled(), $input);
     }
-
-    
     private function removeFiles()
     {
         foreach ($this->files as $filename) {
@@ -149,45 +108,34 @@ class Windows extends Pipes
         }
         $this->files = [];
     }
-
-    
     private function write($blocking, $close)
     {
         if (empty($this->pipes)) {
             return;
         }
-
         $this->unblock();
-
         $r = null !== $this->input ? ['input' => $this->input] : null;
         $w = isset($this->pipes[0]) ? [$this->pipes[0]] : null;
         $e = null;
-
         if (false === $n = @stream_select($r, $w, $e, 0, $blocking ? Process::TIMEOUT_PRECISION * 1E6 : 0)) {
             if (!$this->hasSystemCallBeenInterrupted()) {
                 $this->pipes = [];
             }
-
             return;
         }
-
         if (0 === $n) {
             return;
         }
-
         if (null !== $r && 0 < count($r)) {
             $data = '';
             while ($dataread = fread($r['input'], self::CHUNK_SIZE)) {
                 $data .= $dataread;
             }
-
             $this->inputBuffer .= $data;
-
             if (false === $data || (true === $close && feof($r['input']) && '' === $data)) {
                 $this->input = null;
             }
         }
-
         if (null !== $w && 0 < count($w)) {
             while (strlen($this->inputBuffer)) {
                 $written = fwrite($w[0], $this->inputBuffer, 2 << 18);
@@ -198,7 +146,6 @@ class Windows extends Pipes
                 }
             }
         }
-
         if ('' === $this->inputBuffer && null === $this->input && isset($this->pipes[0])) {
             fclose($this->pipes[0]);
             unset($this->pipes[0]);

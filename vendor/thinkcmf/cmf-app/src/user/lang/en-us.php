@@ -1,5 +1,4 @@
 <?php
-
 return [
     "USERNAME"                      => 'Username',
     "NICENAME"                      => 'Nicename',
@@ -39,7 +38,6 @@ return [
     'USER_OAUTHADMIN_DELETE'        => '第三方用户解绑',
     'USER_OAUTHADMIN_INDEX'         => 'Third Party Users',
     'USER_INDEXADMIN_DEFAULT'       => 'Users',
-
     'NICKNAME_IS_TO0_LONG'  => 'Nickname is too lang!',
     'SEX_IS_INVALID'        => 'Sex is invalid!',
     'BIRTHDAY_IS_INVALID'   => 'Birthday format is invalid!',
@@ -50,7 +48,6 @@ return [
     'SIGNATURE_IS_TO0_LONG' => 'signature max 128 letters!',
     'NO_NEW_INFORMATION'    => "no new data！",
     'ERROR'                 => "eror",
-
     'old_password_is_required'     => 'The old password is required!',
     'old_password_is_too_long'     => 'The old password is too long!',
     'old_password_is_too_short'    => 'The old password is too short!',
@@ -63,5 +60,4 @@ return [
     'change_success'               => 'Change success!',
     'password_repeat_wrong'=>'password repeat wrong',
     'old_password_is_wrong'        => 'The old password is wrong!',
-
 ];

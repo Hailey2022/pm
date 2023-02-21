@@ -1,22 +1,10 @@
 <?php
-
-
 abstract class HTMLPurifier_Definition
 {
-
-    
     public $setup = false;
-
-    
     public $optimized = null;
-
-    
     public $type;
-
-    
     abstract protected function doSetup($config);
-
-    
     public function setup($config)
     {
         if ($this->setup) {
@@ -26,5 +14,3 @@ abstract class HTMLPurifier_Definition
         $this->doSetup($config);
     }
 }
-
-

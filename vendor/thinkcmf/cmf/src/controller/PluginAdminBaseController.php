@@ -1,22 +1,9 @@
 <?php
-
-
-
-
-
-
-
-
-
 namespace cmf\controller;
-
 class PluginAdminBaseController extends PluginBaseController
 {
-
-    
     protected function initialize()
     {
-        
         $param = ['is_plugin' => true];
         hook('admin_init', $param);
         $adminId = cmf_get_current_admin_id();
@@ -33,23 +20,16 @@ class PluginAdminBaseController extends PluginBaseController
             }
         }
     }
-
-    
     private function checkAccess($userId)
     {
-        
         if ($userId == 1) {
             return true;
         }
-
         $pluginName = $this->request->param('_plugin');
         $pluginName = cmf_parse_name($pluginName, 1);
         $controller = $this->request->param('_controller');
         $controller = cmf_parse_name($controller, 1);
         $action     = $this->request->param('_action');
-
         return cmf_auth_check($userId, "plugin/{$pluginName}/$controller/$action");
     }
-
-
 }

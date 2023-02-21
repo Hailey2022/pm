@@ -1,22 +1,11 @@
 <?php
-
-
 class HTMLPurifier_AttrDef_CSS extends HTMLPurifier_AttrDef
 {
-
-    
     public function validate($css, $config, $context)
     {
         $css = $this->parseCDATA($css);
-
         $definition = $config->getCSSDefinition();
         $allow_duplicates = $config->get("CSS.AllowDuplicates");
-
-
-        
-        
-        
-        
         $len = strlen($css);
         $accum = "";
         $declarations = array();
@@ -43,14 +32,10 @@ class HTMLPurifier_AttrDef_CSS extends HTMLPurifier_AttrDef
             }
         }
         if ($accum != "") $declarations[] = $accum;
-
         $propvalues = array();
         $new_declarations = '';
-
-        
         $property = false;
         $context->register('CurrentCSSProperty', $property);
-
         foreach ($declarations as $declaration) {
             if (!$declaration) {
                 continue;
@@ -79,9 +64,7 @@ class HTMLPurifier_AttrDef_CSS extends HTMLPurifier_AttrDef
             if (!$ok) {
                 continue;
             }
-            
             if (strtolower(trim($value)) !== 'inherit') {
-                
                 $result = $definition->info[$property]->validate(
                     $value,
                     $config,
@@ -99,21 +82,10 @@ class HTMLPurifier_AttrDef_CSS extends HTMLPurifier_AttrDef
                 $propvalues[$property] = $result;
             }
         }
-
         $context->destroy('CurrentCSSProperty');
-
-        
-        
-        
-
         foreach ($propvalues as $prop => $value) {
             $new_declarations .= "$prop:$value;";
         }
-
         return $new_declarations ? $new_declarations : false;
-
     }
-
 }
-
-

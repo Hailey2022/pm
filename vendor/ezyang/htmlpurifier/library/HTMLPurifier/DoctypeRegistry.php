@@ -1,15 +1,8 @@
 <?php
-
 class HTMLPurifier_DoctypeRegistry
 {
-
-    
     protected $doctypes;
-
-    
     protected $aliases;
-
-    
     public function register(
         $doctype,
         $xml = true,
@@ -41,21 +34,17 @@ class HTMLPurifier_DoctypeRegistry
         }
         $this->doctypes[$doctype->name] = $doctype;
         $name = $doctype->name;
-        
         foreach ($doctype->aliases as $alias) {
             if (isset($this->doctypes[$alias])) {
                 continue;
             }
             $this->aliases[$alias] = $name;
         }
-        
         if (isset($this->aliases[$name])) {
             unset($this->aliases[$name]);
         }
         return $doctype;
     }
-
-    
     public function get($doctype)
     {
         if (isset($this->aliases[$doctype])) {
@@ -68,17 +57,12 @@ class HTMLPurifier_DoctypeRegistry
         }
         return $this->doctypes[$doctype];
     }
-
-    
     public function make($config)
     {
         return clone $this->get($this->getDoctypeFromConfig($config));
     }
-
-    
     public function getDoctypeFromConfig($config)
     {
-        
         $doctype = $config->get('HTML.Doctype');
         if (!empty($doctype)) {
             return $doctype;
@@ -87,7 +71,6 @@ class HTMLPurifier_DoctypeRegistry
         if (!empty($doctype)) {
             return $doctype;
         }
-        
         if ($config->get('HTML.XHTML')) {
             $doctype = 'XHTML 1.0';
         } else {
@@ -101,5 +84,3 @@ class HTMLPurifier_DoctypeRegistry
         return $doctype;
     }
 }
-
-

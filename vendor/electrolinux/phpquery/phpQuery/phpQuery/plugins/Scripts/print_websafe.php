@@ -1,6 +1,4 @@
 <?php
-
-
 $self = $self;
 $self
 	->find('script')

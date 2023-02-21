@@ -1,12 +1,6 @@
 <?php
-
-
-
-
 class HTMLPurifier_AttrTransform_BdoDir extends HTMLPurifier_AttrTransform
 {
-
-    
     public function transform($attr, $config, $context)
     {
         if (isset($attr['dir'])) {
@@ -16,5 +10,3 @@ class HTMLPurifier_AttrTransform_BdoDir extends HTMLPurifier_AttrTransform
         return $attr;
     }
 }
-
-

@@ -1,15 +1,10 @@
 <?php
-
-
 class HTMLPurifier_AttrTransform_NameSync extends HTMLPurifier_AttrTransform
 {
-
     public function __construct()
     {
         $this->idDef = new HTMLPurifier_AttrDef_HTML_ID();
     }
-
-    
     public function transform($attr, $config, $context)
     {
         if (!isset($attr['name'])) {
@@ -28,5 +23,3 @@ class HTMLPurifier_AttrTransform_NameSync extends HTMLPurifier_AttrTransform
         return $attr;
     }
 }
-
-

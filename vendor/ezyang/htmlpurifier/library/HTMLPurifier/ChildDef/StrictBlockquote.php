@@ -1,52 +1,32 @@
 <?php
-
-
 class HTMLPurifier_ChildDef_StrictBlockquote extends HTMLPurifier_ChildDef_Required
 {
-    
     protected $real_elements;
-
-    
     protected $fake_elements;
-
-    
     public $allow_empty = true;
-
-    
     public $type = 'strictblockquote';
-
-    
     protected $init = false;
-
-    
     public function getAllowedElements($config)
     {
         $this->init($config);
         return $this->fake_elements;
     }
-
-    
     public function validateChildren($children, $config, $context)
     {
         $this->init($config);
-
-        
         $this->elements = $this->fake_elements;
         $result = parent::validateChildren($children, $config, $context);
         $this->elements = $this->real_elements;
-
         if ($result === false) {
             return array();
         }
         if ($result === true) {
             $result = $children;
         }
-
         $def = $config->getHTMLDefinition();
         $block_wrap_name = $def->info_block_wrapper;
         $block_wrap = false;
         $ret = array();
-
         foreach ($result as $node) {
             if ($block_wrap === false) {
                 if (($node instanceof HTMLPurifier_Node_Text && !$node->is_whitespace) ||
@@ -57,7 +37,6 @@ class HTMLPurifier_ChildDef_StrictBlockquote extends HTMLPurifier_ChildDef_Requi
             } else {
                 if ($node instanceof HTMLPurifier_Node_Element && isset($this->elements[$node->name])) {
                     $block_wrap = false;
-
                 }
             }
             if ($block_wrap) {
@@ -68,13 +47,10 @@ class HTMLPurifier_ChildDef_StrictBlockquote extends HTMLPurifier_ChildDef_Requi
         }
         return $ret;
     }
-
-    
     private function init($config)
     {
         if (!$this->init) {
             $def = $config->getHTMLDefinition();
-            
             $this->real_elements = $this->elements;
             $this->fake_elements = $def->info_content_sets['Flow'];
             $this->fake_elements['#PCDATA'] = true;
@@ -82,5 +58,3 @@ class HTMLPurifier_ChildDef_StrictBlockquote extends HTMLPurifier_ChildDef_Requi
         }
     }
 }
-
-

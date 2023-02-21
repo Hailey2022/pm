@@ -1,22 +1,10 @@
 <?php
-
-
 class HTMLPurifier_Printer_ConfigForm extends HTMLPurifier_Printer
 {
-
-    
     protected $fields = array();
-
-    
     protected $docURL;
-
-    
     protected $name;
-
-    
     protected $compress = false;
-
-    
     public function __construct(
         $name,
         $doc_url = null,
@@ -26,12 +14,9 @@ class HTMLPurifier_Printer_ConfigForm extends HTMLPurifier_Printer
         $this->docURL = $doc_url;
         $this->name = $name;
         $this->compress = $compress;
-        
         $this->fields[0] = new HTMLPurifier_Printer_ConfigForm_default();
         $this->fields[HTMLPurifier_VarParser::C_BOOL] = new HTMLPurifier_Printer_ConfigForm_bool();
     }
-
-    
     public function setTextareaDimensions($cols = null, $rows = null)
     {
         if ($cols) {
@@ -41,20 +26,14 @@ class HTMLPurifier_Printer_ConfigForm extends HTMLPurifier_Printer
             $this->fields['default']->rows = $rows;
         }
     }
-
-    
     public static function getCSS()
     {
         return file_get_contents(HTMLPURIFIER_PREFIX . '/HTMLPurifier/Printer/ConfigForm.css');
     }
-
-    
     public static function getJavaScript()
     {
         return file_get_contents(HTMLPURIFIER_PREFIX . '/HTMLPurifier/Printer/ConfigForm.js');
     }
-
-    
     public function render($config, $allowed = true, $render_controls = true)
     {
         if (is_array($config) && isset($config[0])) {
@@ -63,18 +42,15 @@ class HTMLPurifier_Printer_ConfigForm extends HTMLPurifier_Printer
         } else {
             $gen_config = $config;
         }
-
         $this->config = $config;
         $this->genConfig = $gen_config;
         $this->prepareGenerator($gen_config);
-
         $allowed = HTMLPurifier_Config::getAllowedDirectivesForForm($allowed, $config->def);
         $all = array();
         foreach ($allowed as $key) {
             list($ns, $directive) = $key;
             $all[$ns][$directive] = $config->get($ns . '.' . $directive);
         }
-
         $ret = '';
         $ret .= $this->start('table', array('class' => 'hp-config'));
         $ret .= $this->start('thead');
@@ -99,8 +75,6 @@ class HTMLPurifier_Printer_ConfigForm extends HTMLPurifier_Printer
         $ret .= $this->end('table');
         return $ret;
     }
-
-    
     protected function renderNamespace($ns, $directives)
     {
         $ret = '';
@@ -118,26 +92,21 @@ class HTMLPurifier_Printer_ConfigForm extends HTMLPurifier_Printer
                 $ret .= $this->start('a', array('href' => $url));
             }
             $attr = array('for' => "{$this->name}:$ns.$directive");
-
-            
             if (!$this->compress || (strlen($directive) < $this->compress)) {
                 $directive_disp = $directive;
             } else {
                 $directive_disp = substr($directive, 0, $this->compress - 2) . '...';
                 $attr['title'] = $directive;
             }
-
             $ret .= $this->element(
                 'label',
                 $directive_disp,
-                
                 $attr
             );
             if ($this->docURL) {
                 $ret .= $this->end('a');
             }
             $ret .= $this->end('th');
-
             $ret .= $this->start('td');
             $def = $this->config->def->info["$ns.$directive"];
             if (is_int($def)) {
@@ -161,23 +130,15 @@ class HTMLPurifier_Printer_ConfigForm extends HTMLPurifier_Printer
         $ret .= $this->end('tbody');
         return $ret;
     }
-
 }
-
-
 class HTMLPurifier_Printer_ConfigForm_NullDecorator extends HTMLPurifier_Printer
 {
-    
     protected $obj;
-
-    
     public function __construct($obj)
     {
         parent::__construct();
         $this->obj = $obj;
     }
-
-    
     public function render($ns, $directive, $value, $name, $config)
     {
         if (is_array($config) && isset($config[0])) {
@@ -187,7 +148,6 @@ class HTMLPurifier_Printer_ConfigForm_NullDecorator extends HTMLPurifier_Printer
             $gen_config = $config;
         }
         $this->prepareGenerator($gen_config);
-
         $ret = '';
         $ret .= $this->start('label', array('for' => "$name:Null_$ns.$directive"));
         $ret .= $this->element('span', "$ns.$directive:", array('class' => 'verbose'));
@@ -202,7 +162,6 @@ class HTMLPurifier_Printer_ConfigForm_NullDecorator extends HTMLPurifier_Printer
             'onclick' => "toggleWriteability('$name:$ns.$directive',checked)" 
         );
         if ($this->obj instanceof HTMLPurifier_Printer_ConfigForm_bool) {
-            
             $attr['onclick'] =
                 "toggleWriteability('$name:Yes_$ns.$directive',checked);" .
                 "toggleWriteability('$name:No_$ns.$directive',checked)";
@@ -217,17 +176,10 @@ class HTMLPurifier_Printer_ConfigForm_NullDecorator extends HTMLPurifier_Printer
         return $ret;
     }
 }
-
-
 class HTMLPurifier_Printer_ConfigForm_default extends HTMLPurifier_Printer
 {
-    
     public $cols = 18;
-
-    
     public $rows = 5;
-
-    
     public function render($ns, $directive, $value, $name, $config)
     {
         if (is_array($config) && isset($config[0])) {
@@ -237,7 +189,6 @@ class HTMLPurifier_Printer_ConfigForm_default extends HTMLPurifier_Printer
             $gen_config = $config;
         }
         $this->prepareGenerator($gen_config);
-        
         $ret = '';
         $def = $config->def->info["$ns.$directive"];
         if (is_int($def)) {
@@ -261,7 +212,6 @@ class HTMLPurifier_Printer_ConfigForm_default extends HTMLPurifier_Printer
                     $nvalue = '';
                     foreach ($value as $i => $v) {
                         if (is_array($v)) {
-                            
                             $v = implode(";", $v);
                         }
                         $nvalue .= "$i:$v" . PHP_EOL;
@@ -311,11 +261,8 @@ class HTMLPurifier_Printer_ConfigForm_default extends HTMLPurifier_Printer
         return $ret;
     }
 }
-
-
 class HTMLPurifier_Printer_ConfigForm_bool extends HTMLPurifier_Printer
 {
-    
     public function render($ns, $directive, $value, $name, $config)
     {
         if (is_array($config) && isset($config[0])) {
@@ -327,12 +274,10 @@ class HTMLPurifier_Printer_ConfigForm_bool extends HTMLPurifier_Printer
         $this->prepareGenerator($gen_config);
         $ret = '';
         $ret .= $this->start('div', array('id' => "$name:$ns.$directive"));
-
         $ret .= $this->start('label', array('for' => "$name:Yes_$ns.$directive"));
         $ret .= $this->element('span', "$ns.$directive:", array('class' => 'verbose'));
         $ret .= $this->text(' Yes');
         $ret .= $this->end('label');
-
         $attr = array(
             'type' => 'radio',
             'name' => "$name" . "[$ns.$directive]",
@@ -346,12 +291,10 @@ class HTMLPurifier_Printer_ConfigForm_bool extends HTMLPurifier_Printer
             $attr['disabled'] = 'disabled';
         }
         $ret .= $this->elementEmpty('input', $attr);
-
         $ret .= $this->start('label', array('for' => "$name:No_$ns.$directive"));
         $ret .= $this->element('span', "$ns.$directive:", array('class' => 'verbose'));
         $ret .= $this->text(' No');
         $ret .= $this->end('label');
-
         $attr = array(
             'type' => 'radio',
             'name' => "$name" . "[$ns.$directive]",
@@ -365,11 +308,7 @@ class HTMLPurifier_Printer_ConfigForm_bool extends HTMLPurifier_Printer
             $attr['disabled'] = 'disabled';
         }
         $ret .= $this->elementEmpty('input', $attr);
-
         $ret .= $this->end('div');
-
         return $ret;
     }
 }
-
-

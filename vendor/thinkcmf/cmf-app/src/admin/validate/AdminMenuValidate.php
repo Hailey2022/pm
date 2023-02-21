@@ -1,18 +1,7 @@
 <?php
-
-
-
-
-
-
-
-
-
 namespace app\admin\validate;
-
 use app\admin\model\AdminMenuModel;
 use think\Validate;
-
 class AdminMenuValidate extends Validate
 {
     protected $rule = [
@@ -22,7 +11,6 @@ class AdminMenuValidate extends Validate
         'parent_id'  => 'checkParentId',
         'action'     => 'require|unique:AdminMenu,app^controller^action',
     ];
-
     protected $message = [
         'name.require'       => '名称不能为空',
         'app.require'        => '应用不能为空',
@@ -31,18 +19,13 @@ class AdminMenuValidate extends Validate
         'action.require'     => '名称不能为空',
         'action.unique'      => '同样的记录已经存在!',
     ];
-
     protected $scene = [
         'add'  => ['name', 'app', 'controller', 'action', 'parent_id'],
         'edit' => ['name', 'app', 'controller', 'action', 'id', 'parent_id'],
-
     ];
-
-    
     protected function checkParentId($value)
     {
         $find = AdminMenuModel::where("id", $value)->value('parent_id');
-
         if ($find) {
             $find2 = AdminMenuModel::where("id", $find)->value('parent_id');
             if ($find2) {

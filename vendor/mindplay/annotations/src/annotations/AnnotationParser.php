@@ -1,14 +1,8 @@
 <?php
-
-
-
 namespace mindplay\annotations;
-
 if (!defined('T_TRAIT')) {
     define(__NAMESPACE__ . '\\T_TRAIT', -2);
 }
-
-
 class AnnotationParser
 {
     const CHAR = -1;
@@ -24,24 +18,14 @@ class AnnotationParser
     const TRAIT_USE_BLOCK = 14;
     const TRAIT_USE_AS = 15;
     const TRAIT_USE_INSTEADOF = 16;
-
     const SKIP = 7;
     const NAME = 8;
     const COPY_LINE = 9;
     const COPY_ARRAY = 10;
-
-    
     public $debug = false;
-
-    
     public $autoload = true;
-
-    
     protected $manager;
-    
     protected $isNamespaceCallable;
-
-    
     public function __construct(AnnotationManager $manager)
     {
         $this->manager = $manager;
@@ -55,13 +39,10 @@ class AnnotationParser
             };
         }
     }
-
-    
     public function parse($source, $path)
     {
         $index = array();
         $traitMethodOverrides = array();
-
         $docblocks = array();
         $state = self::SCAN;
         $nesting = 0;
@@ -70,20 +51,14 @@ class AnnotationParser
         $use = '';
         $use_as = '';
         $uses = array();
-
         $VISIBILITY = array(T_PUBLIC, T_PRIVATE, T_PROTECTED, T_VAR);
-
         $line = 0;
-
         if ($this->debug) {
             echo '<table><tr><th>Line</th><th>Type</th><th>String</th><th>State</th><th>Nesting</th></tr>';
         }
-        
         $isNamespace=$this->isNamespaceCallable;
-
         foreach (\token_get_all($source) as $token) {
             list($type, $str, $line) = \is_array($token) ? $token : array(self::CHAR, $token, $line);
-
             switch ($state) {
                 case self::SCAN:
                     if ($type == T_CLASS || $type == T_TRAIT) {
@@ -98,7 +73,6 @@ class AnnotationParser
                         $use = '';
                     }
                     break;
-
                 case self::NAMESPACE_NAME:
                     if ($isNamespace($type)) {
                         $namespace .= $str;
@@ -108,7 +82,6 @@ class AnnotationParser
                         }
                     }
                     break;
-
                 case self::USE_CLAUSE:
                     if ($type == T_AS) {
                         $use_as = '';
@@ -123,7 +96,6 @@ class AnnotationParser
                             else {
                                 $uses[$use] = $use;
                             }
-
                             if ($str === ',') {
                                 $state = self::USE_CLAUSE;
                                 $use = '';
@@ -133,14 +105,12 @@ class AnnotationParser
                         }
                     }
                     break;
-
                 case self::USE_CLAUSE_AS:
                     if ($isNamespace($type)) {
                         $use_as .= $str;
                     } elseif ($type === self::CHAR) {
                         if ($str === ',' || $str === ';') {
                             $uses[$use_as] = $use;
-
                             if ($str === ',') {
                                 $state = self::USE_CLAUSE;
                                 $use = '';
@@ -150,7 +120,6 @@ class AnnotationParser
                         }
                     }
                     break;
-
                 case self::CLASS_NAME:
                     if ($type == T_STRING) {
                         $class = ($namespace ? $namespace . '\\' : '') . $str;
@@ -160,7 +129,6 @@ class AnnotationParser
                         $state = self::SCAN_CLASS;
                     }
                     break;
-
                 case self::SCAN_CLASS:
                     if (in_array($type, $VISIBILITY)) {
                         $state = self::MEMBER;
@@ -173,7 +141,6 @@ class AnnotationParser
                         $use = '';
                     }
                     break;
-
                 case self::TRAIT_USE_CLAUSE:
                     if ($type === self::CHAR) {
                         if ($str === '{') {
@@ -184,7 +151,6 @@ class AnnotationParser
                         }
                     }
                     break;
-
                 case self::TRAIT_USE_BLOCK:
                     if ($isNamespace($type) || $type == T_DOUBLE_COLON) {
                         $use .= $str;
@@ -201,7 +167,6 @@ class AnnotationParser
                         }
                     }
                     break;
-
                 case self::TRAIT_USE_INSTEADOF:
                     if ($type === self::CHAR && $str === ';') {
                         $traitMethodOverrides[$class][\substr($use, \strrpos($use, '::') + 2)] = $use;
@@ -209,12 +174,10 @@ class AnnotationParser
                         $use = '';
                     }
                     break;
-
                 case self::TRAIT_USE_AS:
                     if ($type === T_STRING) {
                         $use_as .= $str;
                     } elseif ($type === self::CHAR && $str === ';') {
-                        
                         if ($use_as !== '') {
                             $traitMethodOverrides[$class][$use_as] = $use;
                         }
@@ -222,7 +185,6 @@ class AnnotationParser
                         $use = '';
                     }
                     break;
-
                 case self::MEMBER:
                     if ($type == T_VARIABLE) {
                         $index[$class . '::' . $str] = $docblocks;
@@ -233,7 +195,6 @@ class AnnotationParser
                         $state = self::METHOD_NAME;
                     }
                     break;
-
                 case self::METHOD_NAME:
                     if ($type == T_STRING) {
                         $index[$class . '::' . $str] = $docblocks;
@@ -242,13 +203,11 @@ class AnnotationParser
                     }
                     break;
             }
-
             if (($state >= self::SCAN_CLASS) && ($type == self::CHAR)) {
                 switch ($str) {
                     case '{':
                         $nesting++;
                         break;
-
                     case '}':
                         $nesting--;
                         if ($nesting == 0) {
@@ -258,32 +217,25 @@ class AnnotationParser
                         break;
                 }
             }
-
             if ($type == T_COMMENT || $type == T_DOC_COMMENT) {
                 $docblocks[] = $str;
             }
-
             if ($type == T_CURLY_OPEN) {
                 $nesting++;
             }
-
             if ($this->debug) {
                 echo "<tr><td>{$line}</td><td>" . \token_name($type) . "</td><td>"
                     . \htmlspecialchars($str) . "</td><td>{$state}</td><td>{$nesting}</td></tr>\n";
             }
         }
-
         if ($this->debug) {
             echo '</table>';
         }
-
         unset($docblocks);
-
         $code = "return array(\n";
         $code .= "  '#namespace' => " . \var_export($namespace, true) . ",\n";
         $code .= "  '#uses' => " . \var_export($uses, true) . ",\n";
         $code .= "  '#traitMethodOverrides' => " . \var_export($traitMethodOverrides, true) . ",\n";
-
         foreach ($index as $key => $docblocks) {
             $array = array();
             foreach ($docblocks as $str) {
@@ -297,32 +249,23 @@ class AnnotationParser
             }
         }
         $code .= ");\n";
-
         return $code;
     }
-
-    
     public function parseFile($path)
     {
         return $this->parse(\file_get_contents($path), $path);
     }
-
-    
     protected function findAnnotations($str)
     {
         $str = \trim(\preg_replace('/^[\/\*\# \t]+/m', '', $str)) . "\n";
         $str = \str_replace("\r\n", "\n", $str);
-
         $state = self::SCAN;
         $nesting = 0;
         $name = '';
         $value = '';
-
         $matches = array();
-
         for ($i = 0; $i < \strlen($str); $i++) {
             $char = \substr($str, $i, 1);
-
             switch ($state) {
                 case self::SCAN:
                     if ($char == '@') {
@@ -333,13 +276,11 @@ class AnnotationParser
                         $state = self::SKIP;
                     }
                     break;
-
                 case self::SKIP:
                     if ($char == "\n") {
                         $state = self::SCAN;
                     }
                     break;
-
                 case self::NAME:
                     if (\preg_match('/[a-zA-Z\-\\\\]/', $char)) {
                         $name .= $char;
@@ -356,7 +297,6 @@ class AnnotationParser
                         $state = self::SKIP;
                     }
                     break;
-
                 case self::COPY_LINE:
                     if ($char == "\n") {
                         $matches[] = array($name, $value);
@@ -365,7 +305,6 @@ class AnnotationParser
                         $value .= $char;
                     }
                     break;
-
                 case self::COPY_ARRAY:
                     if ($char == '(') {
                         $nesting++;
@@ -373,35 +312,26 @@ class AnnotationParser
                     if ($char == ')') {
                         $nesting--;
                     }
-
                     $value .= $char;
-
                     if ($nesting == 0) {
                         $matches[] = array($name, $value);
                         $state = self::SCAN;
                     }
             }
         }
-
         $annotations = array();
-
         foreach ($matches as $match) {
             $name = $match[0];
             $type = $this->manager->resolveName($name);
-
             if ($type === false) {
                 continue;
             }
-
             if (!\class_exists($type, $this->autoload)) {
                 throw new AnnotationException("Annotation type '{$type}' does not exist");
             }
-
             $value = $match[1];
-
             $quoted_name = "'#name' => " . \trim(\var_export($name, true));
             $quoted_type = "'#type' => " . \trim(\var_export($type, true));
-
             if ($value === null) {
                 # value-less annotation:
                 $annotations[] = "array({$quoted_name}, {$quoted_type})";
@@ -413,24 +343,18 @@ class AnnotationParser
                 if (!\array_key_exists(__NAMESPACE__ . '\IAnnotationParser', \class_implements($type, $this->autoload))) {
                     throw new AnnotationException("Annotation type '{$type}' does not support PHP-DOC style syntax (because it does not implement the " . __NAMESPACE__ . "\\IAnnotationParser interface)");
                 }
-
-                
                 $properties = $type::parseAnnotation($value);
-
                 if (!\is_array($properties)) {
                     throw new AnnotationException("Annotation type '{$type}' did not parse correctly");
                 }
-
                 $array = "array({$quoted_name}, {$quoted_type}";
                 foreach ($properties as $name => $value) {
                     $array .= ", '{$name}' => " . \trim(\var_export($value, true));
                 }
                 $array .= ")";
-
                 $annotations[] = $array;
             }
         }
-
         return $annotations;
     }
 }

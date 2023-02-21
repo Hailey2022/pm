@@ -1,27 +1,15 @@
 <?php
-
-
-
-
-
-
-
-
-
 namespace think\console\command;
-
 use think\console\Command;
 use think\console\Input;
 use think\console\input\Option;
 use think\console\Output;
 use think\facade\App;
 use think\facade\Cache;
-
 class Clear extends Command
 {
     protected function configure()
     {
-        
         $this
             ->setName('clear')
             ->addOption('path', 'd', Option::VALUE_OPTIONAL, 'path to clear', null)
@@ -31,7 +19,6 @@ class Clear extends Command
             ->addOption('dir', 'r', Option::VALUE_NONE, 'clear empty dir')
             ->setDescription('Clear runtime file');
     }
-
     protected function execute(Input $input, Output $output)
     {
         if ($input->getOption('route')) {
@@ -44,18 +31,14 @@ class Clear extends Command
             } else {
                 $path = $input->getOption('path') ?: App::getRuntimePath();
             }
-
             $rmdir = $input->getOption('dir') ? true : false;
             $this->clear(rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR, $rmdir);
         }
-
         $output->writeln("<info>Clear Successed</info>");
     }
-
     protected function clear($path, $rmdir)
     {
         $files = is_dir($path) ? scandir($path) : [];
-
         foreach ($files as $file) {
             if ('.' != $file && '..' != $file && is_dir($path . $file)) {
                 array_map('unlink', glob($path . $file . DIRECTORY_SEPARATOR . '*.*'));

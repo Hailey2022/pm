@@ -1,19 +1,11 @@
 <?php
-
-
 class HTMLPurifier_AttrDef_HTML_Pixels extends HTMLPurifier_AttrDef
 {
-
-    
     protected $max;
-
-    
     public function __construct($max = null)
     {
         $this->max = $max;
     }
-
-    
     public function validate($string, $config, $context)
     {
         $string = trim($string);
@@ -31,22 +23,14 @@ class HTMLPurifier_AttrDef_HTML_Pixels extends HTMLPurifier_AttrDef
             return false;
         }
         $int = (int)$string;
-
         if ($int < 0) {
             return '0';
         }
-
-        
-        
-        
-
         if ($this->max !== null && $int > $this->max) {
             return (string)$this->max;
         }
         return (string)$int;
     }
-
-    
     public function make($string)
     {
         if ($string === '') {
@@ -58,5 +42,3 @@ class HTMLPurifier_AttrDef_HTML_Pixels extends HTMLPurifier_AttrDef
         return new $class($max);
     }
 }
-
-

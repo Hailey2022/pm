@@ -1,27 +1,17 @@
 <?php
-
-
 class HTMLPurifier_HTMLModule_Forms extends HTMLPurifier_HTMLModule
 {
-    
     public $name = 'Forms';
-
-    
     public $safe = false;
-
-    
     public $content_sets = array(
         'Block' => 'Form',
         'Inline' => 'Formctrl',
     );
-
-    
     public function setup($config)
     {
         if ($config->get('HTML.Forms')) {
             $this->safe = true;
         }
-
         $form = $this->addElement(
             'form',
             'Form',
@@ -32,12 +22,10 @@ class HTMLPurifier_HTMLModule_Forms extends HTMLPurifier_HTMLModule
                 'accept-charset' => 'Charsets',
                 'action*' => 'URI',
                 'method' => 'Enum#get,post',
-                
                 'enctype' => 'Enum#application/x-www-form-urlencoded,multipart/form-data',
             )
         );
         $form->excludes = array('form' => true);
-
         $input = $this->addElement(
             'input',
             'Formctrl',
@@ -60,7 +48,6 @@ class HTMLPurifier_HTMLModule_Forms extends HTMLPurifier_HTMLModule
             )
         );
         $input->attr_transform_post[] = new HTMLPurifier_AttrTransform_Input();
-
         $this->addElement(
             'select',
             'Formctrl',
@@ -74,7 +61,6 @@ class HTMLPurifier_HTMLModule_Forms extends HTMLPurifier_HTMLModule
                 'tabindex' => 'Number',
             )
         );
-
         $this->addElement(
             'option',
             false,
@@ -87,10 +73,6 @@ class HTMLPurifier_HTMLModule_Forms extends HTMLPurifier_HTMLModule
                 'value' => 'CDATA',
             )
         );
-        
-        
-        
-
         $textarea = $this->addElement(
             'textarea',
             'Formctrl',
@@ -107,7 +89,6 @@ class HTMLPurifier_HTMLModule_Forms extends HTMLPurifier_HTMLModule
             )
         );
         $textarea->attr_transform_pre[] = new HTMLPurifier_AttrTransform_Textarea();
-
         $button = $this->addElement(
             'button',
             'Formctrl',
@@ -122,8 +103,6 @@ class HTMLPurifier_HTMLModule_Forms extends HTMLPurifier_HTMLModule
                 'value' => 'CDATA',
             )
         );
-
-        
         $button->excludes = $this->makeLookup(
             'form',
             'fieldset', 
@@ -136,14 +115,7 @@ class HTMLPurifier_HTMLModule_Forms extends HTMLPurifier_HTMLModule
             'isindex',
             'iframe' 
         );
-
-        
-        
-        
-
-        
         $this->addElement('fieldset', 'Form', 'Custom: (#WS?,legend,(Flow|#PCDATA)*)', 'Common');
-
         $label = $this->addElement(
             'label',
             'Formctrl',
@@ -151,11 +123,9 @@ class HTMLPurifier_HTMLModule_Forms extends HTMLPurifier_HTMLModule
             'Common',
             array(
                 'accesskey' => 'Character',
-                
             )
         );
         $label->excludes = array('label' => true);
-
         $this->addElement(
             'legend',
             false,
@@ -165,7 +135,6 @@ class HTMLPurifier_HTMLModule_Forms extends HTMLPurifier_HTMLModule
                 'accesskey' => 'Character',
             )
         );
-
         $this->addElement(
             'optgroup',
             false,
@@ -176,9 +145,5 @@ class HTMLPurifier_HTMLModule_Forms extends HTMLPurifier_HTMLModule
                 'label*' => 'Text',
             )
         );
-        
-        
     }
 }
-
-

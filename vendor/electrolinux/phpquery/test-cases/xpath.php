@@ -1,7 +1,5 @@
 <?php
-
 $Query = "//*[local-name()='p']";
-
 $DOM = new DOMDocument();
 $DOM->loadHTMLFile('test.html');
 $X = new DOMXPath($DOM);

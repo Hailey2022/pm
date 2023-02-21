@@ -1,7 +1,4 @@
 <?php
-
-
-
 $PHPMAILER_LANG['authenticate']         = 'SMTP hiba: az azonosítás sikertelen.';
 $PHPMAILER_LANG['connect_host']         = 'SMTP hiba: nem lehet kapcsolódni az SMTP-szerverhez.';
 $PHPMAILER_LANG['data_not_accepted']    = 'SMTP hiba: adatok visszautasítva.';

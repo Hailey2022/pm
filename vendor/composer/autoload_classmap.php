@@ -1,10 +1,6 @@
 <?php
-
-
-
 $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
-
 return array(
     'Callback' => $vendorDir . '/electrolinux/phpquery/phpQuery/phpQuery/Callback.php',
     'CallbackBody' => $vendorDir . '/electrolinux/phpquery/phpQuery/phpQuery/Callback.php',

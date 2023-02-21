@@ -1,8 +1,6 @@
 <?php
 require_once('../phpQuery/phpQuery.php');
 phpQuery::$debug = true;
-
-
 class callbackClass {
 	static function staticMethodCallback($node) {
 		pq($node)->addClass('newClass');

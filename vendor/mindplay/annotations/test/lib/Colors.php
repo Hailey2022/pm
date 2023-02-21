@@ -1,7 +1,5 @@
 <?php
 namespace mindplay\test\lib;
-
-
 class Colors
 {
     private $foregroundColors = array(
@@ -22,7 +20,6 @@ class Colors
         'light_gray' => '0;37',
         'white' => '1;37',
     );
-
     private $backgroundColors = array(
         'black' => '40',
         'red' => '41',
@@ -33,25 +30,16 @@ class Colors
         'cyan' => '46',
         'light_gray' => '47',
     );
-
-    
     public function getColoredString($text, $foregroundColor = null, $backgroundColor = null)
     {
         $coloredString = '';
-
-        
         if (isset($this->foregroundColors[$foregroundColor])) {
             $coloredString .= "\033[" . $this->foregroundColors[$foregroundColor] . 'm';
         }
-
-        
         if (isset($this->backgroundColors[$backgroundColor])) {
             $coloredString .= "\033[" . $this->backgroundColors[$backgroundColor] . 'm';
         }
-
-        
         $coloredString .= $text . "\033[0m";
-
         return $coloredString;
     }
 }

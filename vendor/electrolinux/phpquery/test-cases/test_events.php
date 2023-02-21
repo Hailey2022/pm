@@ -1,6 +1,5 @@
 <?php
 require_once('../phpQuery/phpQuery.php');
-
 $form = <<<EOF
 <form>
   <input name='input-example'>
@@ -15,10 +14,6 @@ $form = <<<EOF
 EOF;
 $doc = phpQuery::newDocumentHTML($form);
 $inputs = $doc['form > *'];
-
-
-
-
 $results = array();
 foreach($inputs as $node) {
 	$node = pq($node);

@@ -1,25 +1,13 @@
 <?php
-
-
 class HTMLPurifier_URIScheme_data extends HTMLPurifier_URIScheme
 {
-    
     public $browsable = true;
-
-    
     public $allowed_types = array(
-        
-        
         'image/jpeg' => true,
         'image/gif' => true,
         'image/png' => true,
     );
-    
-    
-    
     public $may_omit_host = true;
-
-    
     public function doValidate(&$uri, $config, $context)
     {
         $result = explode(',', $uri->path, 2);
@@ -28,7 +16,6 @@ class HTMLPurifier_URIScheme_data extends HTMLPurifier_URIScheme
         $content_type = null;
         if (count($result) == 2) {
             list($metadata, $data) = $result;
-            
             $metas = explode(';', $metadata);
             while (!empty($metas)) {
                 $cur = array_shift($metas);
@@ -37,8 +24,6 @@ class HTMLPurifier_URIScheme_data extends HTMLPurifier_URIScheme
                     break;
                 }
                 if (substr($cur, 0, 8) == 'charset=') {
-                    
-                    
                     if ($charset !== null) {
                         continue;
                     } 
@@ -57,7 +42,6 @@ class HTMLPurifier_URIScheme_data extends HTMLPurifier_URIScheme
             return false;
         }
         if ($charset !== null) {
-            
             $charset = null;
         }
         $data = rawurldecode($data);
@@ -67,12 +51,8 @@ class HTMLPurifier_URIScheme_data extends HTMLPurifier_URIScheme
             $raw_data = $data;
         }
         if ( strlen($raw_data) < 12 ) {
-            
-            
             return false;
         }
-        
-        
         if (function_exists('sys_get_temp_dir')) {
             $file = tempnam(sys_get_temp_dir(), "");
         } else {
@@ -96,14 +76,11 @@ class HTMLPurifier_URIScheme_data extends HTMLPurifier_URIScheme
         }
         $real_content_type = image_type_to_mime_type($image_code);
         if ($real_content_type != $content_type) {
-            
-            
             if (empty($this->allowed_types[$real_content_type])) {
                 return false;
             }
             $content_type = $real_content_type;
         }
-        
         $uri->userinfo = null;
         $uri->host = null;
         $uri->port = null;
@@ -112,8 +89,6 @@ class HTMLPurifier_URIScheme_data extends HTMLPurifier_URIScheme
         $uri->path = "$content_type;base64," . base64_encode($raw_data);
         return true;
     }
-
-    
     public function muteErrorHandler($errno, $errstr)
     {
     }

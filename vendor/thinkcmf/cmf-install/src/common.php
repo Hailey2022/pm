@@ -1,5 +1,4 @@
 <?php
-
 function sp_testwrite($d)
 {
     $tfile = "_test.txt";
@@ -14,7 +13,6 @@ function sp_testwrite($d)
     }
     return false;
 }
-
 function sp_dir_create($path, $mode = 0777)
 {
     if (is_dir($path))
@@ -33,7 +31,6 @@ function sp_dir_create($path, $mode = 0777)
     }
     return is_dir($path);
 }
-
 function sp_dir_path($path)
 {
     $path = str_replace('\\', '/', $path);
@@ -41,7 +38,6 @@ function sp_dir_path($path)
         $path = $path . '/';
     return $path;
 }
-
 function sp_execute_sql($db, $sql)
 {
     $sql = trim($sql);
@@ -62,7 +58,6 @@ function sp_execute_sql($db, $sql)
                 'exception' => $e->getTraceAsString()
             ];
         }
-
     } else {
         try {
             $db->execute($sql);
@@ -79,15 +74,12 @@ function sp_execute_sql($db, $sql)
         }
     }
 }
-
-
 function sp_show_msg($msg, $class = '')
 {
     echo "<script type=\"text/javascript\">showmsg(\"{$msg}\", \"{$class}\")</script>";
     flush();
     ob_flush();
 }
-
 function sp_update_site_configs($db, $table_prefix)
 {
     $sitename        = I("post.sitename");
@@ -113,7 +105,6 @@ helllo;
     $db->execute($sql);
     sp_show_msg("网站信息配置成功!");
 }
-
 function sp_create_admin_account($db, $table_prefix, $authcode)
 {
     $username    = I("post.manager");
@@ -129,37 +120,28 @@ hello;
     $db->execute($sql);
     sp_show_msg("管理员账号创建成功!");
 }
-
 function sp_create_db_config($config)
 {
     if (is_array($config)) {
         //读取配置内容
         $conf = file_get_contents(__DIR__ . '/data/config.php');
-
         //替换配置项
         foreach ($config as $key => $value) {
             $conf = str_replace("#{$key}#", $value, $conf);
         }
-
         if (strpos(cmf_version(), '5.0.') === false) {
             $confDir = CMF_DATA . 'config/'; 
         } else {
             $confDir = CMF_DATA . 'conf/'; 
         }
-
         try {
-
             if (!file_exists($confDir)) {
                 mkdir($confDir, 0777, true);
             }
             file_put_contents($confDir . 'database.php', $conf);
         } catch (\Exception $e) {
-
             return false;
-
         }
-
         return true;
-
     }
 }

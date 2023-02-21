@@ -1,26 +1,17 @@
 <?php
-
 class HTMLPurifier_ConfigSchema_InterchangeBuilder
 {
-
-    
     protected $varParser;
-
-    
     public function __construct($varParser = null)
     {
         $this->varParser = $varParser ? $varParser : new HTMLPurifier_VarParser_Native();
     }
-
-    
     public static function buildFromDirectory($dir = null)
     {
         $builder = new HTMLPurifier_ConfigSchema_InterchangeBuilder();
         $interchange = new HTMLPurifier_ConfigSchema_Interchange();
         return $builder->buildDir($interchange, $dir);
     }
-
-    
     public function buildDir($interchange, $dir = null)
     {
         if (!$dir) {
@@ -30,7 +21,6 @@ class HTMLPurifier_ConfigSchema_InterchangeBuilder
             $info = parse_ini_file($dir . '/info.ini');
             $interchange->name = $info['name'];
         }
-
         $files = array();
         $dh = opendir($dir);
         while (false !== ($file = readdir($dh))) {
@@ -40,15 +30,12 @@ class HTMLPurifier_ConfigSchema_InterchangeBuilder
             $files[] = $file;
         }
         closedir($dh);
-
         sort($files);
         foreach ($files as $file) {
             $this->buildFile($interchange, $dir . '/' . $file);
         }
         return $interchange;
     }
-
-    
     public function buildFile($interchange, $file)
     {
         $parser = new HTMLPurifier_StringHashParser();
@@ -57,8 +44,6 @@ class HTMLPurifier_ConfigSchema_InterchangeBuilder
             new HTMLPurifier_StringHash($parser->parseFile($file))
         );
     }
-
-    
     public function build($interchange, $hash)
     {
         if (!$hash instanceof HTMLPurifier_StringHash) {
@@ -78,16 +63,11 @@ class HTMLPurifier_ConfigSchema_InterchangeBuilder
         }
         $this->_findUnused($hash);
     }
-
-    
     public function buildDirective($interchange, $hash)
     {
         $directive = new HTMLPurifier_ConfigSchema_Interchange_Directive();
-
-        
         $directive->id = $this->id($hash->offsetGet('ID'));
         $id = $directive->id->toString(); 
-
         if (isset($hash['TYPE'])) {
             $type = explode('/', $hash->offsetGet('TYPE'));
             if (isset($type[1])) {
@@ -97,7 +77,6 @@ class HTMLPurifier_ConfigSchema_InterchangeBuilder
         } else {
             throw new HTMLPurifier_ConfigSchema_Exception("TYPE in directive hash '$id' not defined");
         }
-
         if (isset($hash['DEFAULT'])) {
             try {
                 $directive->default = $this->varParser->parse(
@@ -109,19 +88,15 @@ class HTMLPurifier_ConfigSchema_InterchangeBuilder
                 throw new HTMLPurifier_ConfigSchema_Exception($e->getMessage() . " in DEFAULT in directive hash '$id'");
             }
         }
-
         if (isset($hash['DESCRIPTION'])) {
             $directive->description = $hash->offsetGet('DESCRIPTION');
         }
-
         if (isset($hash['ALLOWED'])) {
             $directive->allowed = $this->lookup($this->evalArray($hash->offsetGet('ALLOWED')));
         }
-
         if (isset($hash['VALUE-ALIASES'])) {
             $directive->valueAliases = $this->evalArray($hash->offsetGet('VALUE-ALIASES'));
         }
-
         if (isset($hash['ALIASES'])) {
             $raw_aliases = trim($hash->offsetGet('ALIASES'));
             $aliases = preg_split('/\s*,\s*/', $raw_aliases);
@@ -129,33 +104,24 @@ class HTMLPurifier_ConfigSchema_InterchangeBuilder
                 $directive->aliases[] = $this->id($alias);
             }
         }
-
         if (isset($hash['VERSION'])) {
             $directive->version = $hash->offsetGet('VERSION');
         }
-
         if (isset($hash['DEPRECATED-USE'])) {
             $directive->deprecatedUse = $this->id($hash->offsetGet('DEPRECATED-USE'));
         }
-
         if (isset($hash['DEPRECATED-VERSION'])) {
             $directive->deprecatedVersion = $hash->offsetGet('DEPRECATED-VERSION');
         }
-
         if (isset($hash['EXTERNAL'])) {
             $directive->external = preg_split('/\s*,\s*/', trim($hash->offsetGet('EXTERNAL')));
         }
-
         $interchange->addDirective($directive);
     }
-
-    
     protected function evalArray($contents)
     {
         return eval('return array(' . $contents . ');');
     }
-
-    
     protected function lookup($array)
     {
         $ret = array();
@@ -164,14 +130,10 @@ class HTMLPurifier_ConfigSchema_InterchangeBuilder
         }
         return $ret;
     }
-
-    
     protected function id($id)
     {
         return HTMLPurifier_ConfigSchema_Interchange_Id::make($id);
     }
-
-    
     protected function _findUnused($hash)
     {
         $accessed = $hash->getAccessed();
@@ -182,5 +144,3 @@ class HTMLPurifier_ConfigSchema_InterchangeBuilder
         }
     }
 }
-
-

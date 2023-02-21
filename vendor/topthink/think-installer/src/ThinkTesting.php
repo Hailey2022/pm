@@ -1,32 +1,17 @@
 <?php
-
-
-
-
-
-
-
-
-
-
 namespace think\composer;
-
 use Composer\Package\PackageInterface;
 use Composer\Repository\InstalledRepositoryInterface;
 use InvalidArgumentException;
-
 class ThinkTesting extends LibraryInstaller
 {
-    
     public function getInstallPath(PackageInterface $package)
     {
         if ('topthink/think-testing' !== $package->getPrettyName()) {
             throw new InvalidArgumentException('Unable to install this library!');
         }
-
         return parent::getInstallPath($package);
     }
-
     public function install(InstalledRepositoryInterface $repo, PackageInterface $package)
     {
         return parent::install($repo, $package)
@@ -34,7 +19,6 @@ class ThinkTesting extends LibraryInstaller
                 $this->copyTestDir($package);
             });
     }
-
     public function update(InstalledRepositoryInterface $repo, PackageInterface $initial, PackageInterface $target)
     {
         return parent::update($repo, $initial, $target)
@@ -42,7 +26,6 @@ class ThinkTesting extends LibraryInstaller
                 $this->copyTestDir($target);
             });
     }
-
     private function copyTestDir(PackageInterface $package)
     {
         $appDir = dirname($this->vendorDir);
@@ -53,8 +36,6 @@ class ThinkTesting extends LibraryInstaller
             $this->filesystem->removeDirectoryPhp($source);
         }
     }
-
-    
     public function supports($packageType)
     {
         return 'think-testing' === $packageType;

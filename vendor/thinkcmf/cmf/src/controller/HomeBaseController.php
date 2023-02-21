@@ -1,38 +1,22 @@
 <?php
-
-
-
-
-
-
-
-
-
 namespace cmf\controller;
-
 use cmf\model\ThemeFileModel;
 use app\admin\model\ThemeModel;
 use think\facade\View;
-
 class HomeBaseController extends BaseController
 {
-
     protected function initialize()
     {
-        
         hook('home_init');
         parent::initialize();
         $siteInfo = cmf_get_site_info();
         View::share('site_info', $siteInfo);
     }
-
     protected function _initializeView()
     {
         $cmfThemePath    = config('template.cmf_theme_path');
         $cmfDefaultTheme = cmf_get_current_theme();
-
         $themePath = "{$cmfThemePath}{$cmfDefaultTheme}";
-
         $root = cmf_get_root();
         //使cdn设置生效
         $cdnSettings = cmf_get_option('cdn_settings');
@@ -52,24 +36,17 @@ class HomeBaseController extends BaseController
                 '__WEB_ROOT__' => $cdnStaticRoot
             ];
         }
-
         config('template.view_base', WEB_ROOT . "{$themePath}/");
         config('template.tpl_replace_string', $viewReplaceStr);
-
         $themeErrorTmpl = "{$themePath}/error.html";
         if (file_exists_case($themeErrorTmpl)) {
             config('dispatch_error_tmpl', $themeErrorTmpl);
         }
-
         $themeSuccessTmpl = "{$themePath}/success.html";
         if (file_exists_case($themeSuccessTmpl)) {
             config('dispatch_success_tmpl', $themeSuccessTmpl);
         }
-
-
     }
-
-    
     protected function fetch($template = '', $vars = [], $config = [])
     {
         $template = $this->parseTemplate($template);
@@ -77,14 +54,11 @@ class HomeBaseController extends BaseController
         $this->assign('theme_vars', $more['vars']);
         $this->assign('theme_widgets', $more['widgets']);
         $content = $this->view->fetch($template, $vars, $config);
-
         $designingTheme = cookie('cmf_design_theme');
-
         if ($designingTheme) {
             $app        = $this->request->module();
             $controller = $this->request->controller();
             $action     = $this->request->action();
-
             $output = <<<hello
 <script>
 var _themeDesign=true;
@@ -98,7 +72,6 @@ if(parent && parent.simulatorRefresh){
 }
 </script>
 hello;
-
             $pos = strripos($content, '</body>');
             if (false !== $pos) {
                 $content = substr($content, 0, $pos) . $output . substr($content, $pos);
@@ -106,38 +79,27 @@ hello;
                 $content = $content . $output;
             }
         }
-
         return $content;
     }
-
-    
     private function parseTemplate($template)
     {
-        
         $request = $this->request;
-        
         if (strpos($template, '@')) {
-            
             list($module, $template) = explode('@', $template);
         }
-
         $viewBase = config('template.view_base');
-
         if ($viewBase) {
-            
             $module = isset($module) ? $module : $request->module();
             $path   = $viewBase . ($module ? $module . DIRECTORY_SEPARATOR : '');
         } else {
             $path = isset($module) ? APP_PATH . $module . DIRECTORY_SEPARATOR . 'view' . DIRECTORY_SEPARATOR : config('template.view_path');
         }
-
         $depr = config('template.view_depr');
         if (0 !== strpos($template, '/')) {
             $template   = str_replace(['/', ':'], $depr, $template);
             $controller = cmf_parse_name($request->controller());
             if ($controller) {
                 if ('' == $template) {
-                    
                     $template = str_replace('.', DIRECTORY_SEPARATOR, $controller) . $depr . cmf_parse_name($request->action(true));
                 } elseif (false === strpos($template, $depr)) {
                     $template = str_replace('.', DIRECTORY_SEPARATOR, $controller) . $depr . $template;
@@ -148,31 +110,23 @@ hello;
         }
         return $path . ltrim($template, '/') . '.' . ltrim(config('template.view_suffix'), '.');
     }
-
-    
     private function getThemeFileMore($file, $theme = "")
     {
-
         //TODO 增加缓存
         $theme = empty($theme) ? cmf_get_current_theme() : $theme;
-
-        
         if (APP_DEBUG) {
             $themeModel = new ThemeModel();
             $themeModel->updateTheme($theme);
         }
-
         $themePath = config('template.cmf_theme_path');
         $file      = str_replace('\\', '/', $file);
         $file      = str_replace('//', '/', $file);
         $webRoot   = str_replace('\\', '/', WEB_ROOT);
         $themeFile = str_replace(['.html', '.php', $themePath . $theme . "/", $webRoot], '', $file);
-
         $files = ThemeFileModel::field('more')->where('theme', $theme)
             ->where(function ($query) use ($themeFile) {
                 $query->where('is_public', 1)->whereOr('file', $themeFile);
             })->select();
-
         $vars    = [];
         $widgets = [];
         foreach ($files as $file) {
@@ -182,17 +136,14 @@ hello;
                     $vars[$varName] = $var['value'];
                 }
             }
-
             if (!empty($oldMore['widgets'])) {
                 foreach ($oldMore['widgets'] as $widgetName => $widget) {
-
                     $widgetVars = [];
                     if (!empty($widget['vars'])) {
                         foreach ($widget['vars'] as $varName => $var) {
                             $widgetVars[$varName] = $var['value'];
                         }
                     }
-
                     $widget['vars'] = $widgetVars;
                     //如果重名，则合并配置
                     if (empty($widgets[$widgetName])) {
@@ -209,10 +160,8 @@ hello;
                 }
             }
         }
-
         return ['vars' => $vars, 'widgets' => $widgets, 'file' => $themeFile];
     }
-
     public function checkUserLogin()
     {
         $userId = cmf_get_current_user_id();
@@ -224,5 +173,4 @@ hello;
             }
         }
     }
-
 }

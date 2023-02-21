@@ -1,18 +1,6 @@
 <?php
-
-
-
-
-
-
-
-
 namespace plugins\demo;
-
-
 use cmf\lib\Plugin;
-
-
 class DemoPlugin extends Plugin
 {
     public $info = [
@@ -25,21 +13,15 @@ class DemoPlugin extends Plugin
         'demo_url'    => 'http://demo.thinkcmf.com',
         'author_url'  => 'http://www.thinkcmf.com',
     ];
-
     public $hasAdmin = 1; //插件是否有后台管理界面
-
-    
     public function install()
     {
         return true; //安装成功返回true，失败false
     }
-
-    
     public function uninstall()
     {
         return true; //卸载成功返回true，失败false
     }
-
     //实现的footer_start钩子方法
     public function footerStart($param)
     {
@@ -47,7 +29,6 @@ class DemoPlugin extends Plugin
         $this->assign($config);
         echo $this->fetch('widget');
     }
-
     public function testFetch()
     {
         $config = $this->getConfig();

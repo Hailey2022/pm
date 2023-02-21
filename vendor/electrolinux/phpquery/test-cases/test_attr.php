@@ -1,7 +1,6 @@
 <?php
 require_once('../phpQuery/phpQuery.php');
 phpQuery::$debug = true;
-
 $testName = 'Attribute change';
 $expected = 'new attr value';
 $result = phpQuery::newDocumentFile('test.html')
@@ -12,8 +11,6 @@ if ($result->attr('rel') == $expected)
 else
 	print "Test '{$testName}' <strong>FAILED</strong> !!!";
 print "\n";
-
-
 $testName = 'Attribute change in iteration';
 $expected = 'new attr value';
 $doc = phpQuery::newDocumentFile('test.html');

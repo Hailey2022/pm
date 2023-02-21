@@ -1,7 +1,4 @@
 <?php
-
-
-
 require 'HTMLPurifier.php';
 require 'HTMLPurifier/Arborize.php';
 require 'HTMLPurifier/AttrCollections.php';

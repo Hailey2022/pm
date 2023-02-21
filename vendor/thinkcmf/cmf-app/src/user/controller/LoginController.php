@@ -1,23 +1,10 @@
 <?php
-
-
-
-
-
-
-
-
-
 namespace app\user\controller;
-
 use think\facade\Validate;
 use cmf\controller\HomeBaseController;
 use app\user\model\UserModel;
-
 class LoginController extends HomeBaseController
 {
-
-    
     public function index()
     {
         $redirect = $this->request->param("redirect");
@@ -38,8 +25,6 @@ class LoginController extends HomeBaseController
             return $this->fetch(":login");
         }
     }
-
-    
     public function doLogin()
     {
         if ($this->request->isPost()) {
@@ -55,16 +40,13 @@ class LoginController extends HomeBaseController
                 'password.min'     => '密码不能小于6个字符',
                 'captcha.require'  => '验证码不能为空',
             ]);
-
             $data = $this->request->post();
             if (!$validate->check($data)) {
                 $this->error($validate->getError());
             }
-
             if (!cmf_captcha_check($data['captcha'])) {
                 $this->error(lang('CAPTCHA_NOT_RIGHT'));
             }
-
             $userModel         = new UserModel();
             $user['user_pass'] = $data['password'];
             if (Validate::is($data['username'], 'email')) {
@@ -100,17 +82,12 @@ class LoginController extends HomeBaseController
             $this->error("请求错误");
         }
     }
-
-    
     public function findPassword()
     {
         return $this->fetch('/find_password');
     }
-
-    
     public function passwordReset()
     {
-
         if ($this->request->isPost()) {
             $validate = new \think\Validate([
                 'captcha'           => 'require',
@@ -124,27 +101,21 @@ class LoginController extends HomeBaseController
                 'password.min'              => '密码不能小于6个字符',
                 'captcha.require'           => '验证码不能为空',
             ]);
-
             $data = $this->request->post();
             if (!$validate->check($data)) {
                 $this->error($validate->getError());
             }
-
             $captchaId = empty($data['_captcha_id']) ? '' : $data['_captcha_id'];
             if (!cmf_captcha_check($data['captcha'], $captchaId)) {
                 $this->error('验证码错误');
             }
-
             $errMsg = cmf_check_verification_code($data['username'], $data['verification_code']);
             if (!empty($errMsg)) {
                 $this->error($errMsg);
             }
-
             $userModel = new UserModel();
             if (Validate::is($data['username'], 'email')) {
-
                 $log = $userModel->emailPasswordReset($data['username'], $data['password']);
-
             } else if (cmf_check_mobile($data['username'])) {
                 $user['mobile'] = $data['username'];
                 $log            = $userModel->mobilePasswordReset($data['username'], $data['password']);
@@ -164,11 +135,8 @@ class LoginController extends HomeBaseController
                 default :
                     $this->error('未受理的请求');
             }
-
         } else {
             $this->error("请求错误");
         }
     }
-
-
 }

@@ -1,12 +1,6 @@
 <?php
-
-
-
 namespace mindplay\demo\annotations;
-
-
 use mindplay\annotations\AnnotationManager;
-
 abstract class Package
 {
     public static function register(AnnotationManager $annotationManager)

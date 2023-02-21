@@ -1,21 +1,12 @@
 <?php
-
-
-
 abstract class HTMLPurifier_AttrTransform
 {
-
-    
     abstract public function transform($attr, $config, $context);
-
-    
     public function prependCSS(&$attr, $css)
     {
         $attr['style'] = isset($attr['style']) ? $attr['style'] : '';
         $attr['style'] = $css . $attr['style'];
     }
-
-    
     public function confiscateAttr(&$attr, $key)
     {
         if (!isset($attr[$key])) {
@@ -26,5 +17,3 @@ abstract class HTMLPurifier_AttrTransform
         return $value;
     }
 }
-
-

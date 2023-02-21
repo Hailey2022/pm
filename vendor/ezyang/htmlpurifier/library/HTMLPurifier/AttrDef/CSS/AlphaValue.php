@@ -1,14 +1,10 @@
 <?php
-
 class HTMLPurifier_AttrDef_CSS_AlphaValue extends HTMLPurifier_AttrDef_CSS_Number
 {
-
     public function __construct()
     {
         parent::__construct(false); 
     }
-
-    
     public function validate($number, $config, $context)
     {
         $result = parent::validate($number, $config, $context);
@@ -25,5 +21,3 @@ class HTMLPurifier_AttrDef_CSS_AlphaValue extends HTMLPurifier_AttrDef_CSS_Numbe
         return $result;
     }
 }
-
-

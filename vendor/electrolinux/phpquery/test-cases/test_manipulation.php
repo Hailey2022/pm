@@ -1,20 +1,16 @@
 <?php
 require_once('../phpQuery/phpQuery.php');
 phpQuery::$debug = true;
-
-
 $testName = 'Simple data insertion';
 $testResult = <<<EOF
 <div class="articles">
 			div.articles text node
             <ul>
-
             <li>
                 	<p>This is paragraph of first LI</p>
                     <p class="title">News 1 title</p>
                     <p class="body">News 1 body</p>
                 </li>
-
 <li>
                 	<p>This is paragraph of first LI</p>
                     <p class="title">News 2 title</p>
@@ -66,8 +62,6 @@ if ($similarity > 90)
 else
 	print "Test '{$testName}' <strong>FAILED</strong> ($similarity) !!!";
 print "\n";
-
-
 $testName = 'Parent && children';
 $result = phpQuery::newDocumentFile('test.html');
 $parent = $result->find('ul:first');
@@ -82,8 +76,6 @@ if (! $e) {
 	print "Test '{$testName}' PASSED :)";
 }
 print "\n";
-
-
 $testName = 'HTML insertion';
 $doc = phpQuery::newDocument('<div><p/></div>');
 $string = "La Thermo-sonde de cuisson vous permet de cuire à la perfection au four comme au bain-marie. Température: entre <b>0°C et 210°C</b>.";
@@ -95,8 +87,6 @@ else {
 	print $doc->htmlOuter('htmlentities');
 }
 print "\n";
-
-
 $testName = 'HTML insertion 2';
 $doc = phpQuery::newDocument('<div><p/></div>');
 $string = "<div>La Thermo-sonde de cuisson vous permet de cuire à la perfection au four comme au bain-marie. Température: entre <b>0°C et 210°C</b>.</div>";
@@ -108,8 +98,6 @@ if (pq('div')->length == 2) {
 	print $doc->htmlOuter('htmlentities');
 }
 print "\n";
-
-
 $testName = 'HTML insertion 3';
 $doc = phpQuery::newDocument('<div><p/></div>');
 $string = 'Hors paragraphe.
@@ -125,10 +113,6 @@ if (pq('img')->length == 1) {
 	print $doc->htmlOuter('htmlentities');
 }
 print "\n";
-
-
-
-
 $testName = 'Text insertion';
 $doc = phpQuery::newDocument('<div><p/></div>');
 $string = "La Thermo-sonde de cuisson vous permet de cuire à la perfection au four comme au bain-marie";

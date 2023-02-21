@@ -1,12 +1,6 @@
 <?php
-
-
-
-
 class HTMLPurifier_AttrTransform_ImgRequired extends HTMLPurifier_AttrTransform
 {
-
-    
     public function transform($attr, $config, $context)
     {
         $src = true;
@@ -17,7 +11,6 @@ class HTMLPurifier_AttrTransform_ImgRequired extends HTMLPurifier_AttrTransform
             $attr['src'] = $config->get('Attr.DefaultInvalidImage');
             $src = false;
         }
-
         if (!isset($attr['alt'])) {
             if ($src) {
                 $alt = $config->get('Attr.DefaultImageAlt');
@@ -33,5 +26,3 @@ class HTMLPurifier_AttrTransform_ImgRequired extends HTMLPurifier_AttrTransform
         return $attr;
     }
 }
-
-

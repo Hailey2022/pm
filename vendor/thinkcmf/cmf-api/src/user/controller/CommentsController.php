@@ -1,31 +1,17 @@
 <?php
-
-
-
-
-
-
-
-
-
 namespace api\user\controller;
-
 use api\user\model\CommentModel;
 use api\user\model\UserModel;
 use api\user\service\CommentService;
 use cmf\controller\RestBaseController;
-
 class CommentsController extends RestBaseController
 {
-
-    
     public function getUserComments()
     {
         $param            = $this->request->param();
         $param['user_id'] = $this->getUserId();
         $commentService   = new CommentService();
         $data             = $commentService->userComments($param);
-
         if (empty($this->apiVersion) || $this->apiVersion == '1.0.0') {
             $response = [$data];
         } else {
@@ -35,10 +21,7 @@ class CommentsController extends RestBaseController
             $this->error('暂无评论！');
         }
         $this->success('请求成功', $response);
-
     }
-
-    
     public function getComments()
     {
         $param = $this->request->param();
@@ -48,7 +31,6 @@ class CommentsController extends RestBaseController
         if (empty($param['table_name'])) {
             $this->error('table_name参数不存在');
         }
-
         $commentService = new CommentService();
         $data           = $commentService->userComments($param);
         if (!$data->isEmpty()) {
@@ -66,8 +48,6 @@ class CommentsController extends RestBaseController
             $this->success('评论获取成功!', $response);
         }
     }
-
-    
     public function delComments()
     {
         $input = $this->request->param();
@@ -85,8 +65,6 @@ class CommentsController extends RestBaseController
             $this->error('删除失败！');
         }
     }
-
-    
     public function setComments()
     {
         $data = $this->_setComments();
@@ -97,8 +75,6 @@ class CommentsController extends RestBaseController
             $this->error('评论失败');
         }
     }
-
-    
     protected function _setComments()
     {
         $input = $this->request->param();
@@ -122,19 +98,15 @@ class CommentsController extends RestBaseController
         } else {
             $this->error('内容不为空');
         }
-
         $data['parent_id'] = $this->request->has('parent_id') ? $input['parent_id'] : 0;
-
         $result = $this->validate($data,
             [
                 'object_id' => 'require|number',
                 'content'   => 'require',
             ]);
         if (true !== $result) {
-            
             $this->error($result);
         }
-
         $data['delete_time'] = 0;
         $data['create_time'] = time();
         if ($data['parent_id']) {
@@ -155,7 +127,6 @@ class CommentsController extends RestBaseController
         if (!$userData) {
             $this->error('评论用户不存在');
         }
-
         $data['full_name'] = $userData['user_nickname'];
         $data['email']     = $userData['user_email'];
         return $data;

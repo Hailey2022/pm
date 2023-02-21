@@ -1,7 +1,4 @@
 <?php
-
-
-
 $PHPMAILER_LANG['authenticate']         = 'SMTP-virhe: käyttäjätunnistus epäonnistui.';
 $PHPMAILER_LANG['connect_host']         = 'SMTP-virhe: yhteys palvelimeen ei onnistu.';
 $PHPMAILER_LANG['data_not_accepted']    = 'SMTP-virhe: data on virheellinen.';

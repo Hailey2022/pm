@@ -1,37 +1,29 @@
 <?php
-
 namespace app\admin\controller;
-
 use app\admin\logic\MenuLogic;
 use app\admin\model\AdminMenuModel;
 use app\admin\model\AuthRuleModel;
 use cmf\controller\AdminBaseController;
 use think\facade\Cache;
 use tree\Tree;
-
 class MenuController extends AdminBaseController
 {
-
     public function index()
     {
         $content = hook_one('admin_menu_index_view');
-
         if (!empty($content)) {
             return $content;
         }
-
         session('admin_menu_index', 'Menu/index');
         $result = AdminMenuModel::order(["list_order" => "ASC"])->select()->toArray();
         $tree = new Tree();
         $tree->icon = ['&nbsp;&nbsp;&nbsp;│ ', '&nbsp;&nbsp;&nbsp;├─', '&nbsp;&nbsp;&nbsp;└─ '];
         $tree->nbsp = '&nbsp;&nbsp;&nbsp;';
-
         $newMenus = [];
         foreach ($result as $m) {
             $newMenus[$m['id']] = $m;
         }
         foreach ($result as $key => $value) {
-
             $result[$key]['parent_id_node'] = ($value['parent_id']) ? ' class="child-of-node-' . $value['parent_id'] . '"' : '';
             $result[$key]['style'] = empty($value['parent_id']) ? '' : 'display:none;';
             $result[$key]['str_manage'] = '<a class="btn btn-xs btn-primary" href="' . url("Menu/add", ["parent_id" => $value['id'], "menu_id" => $this->request->param("menu_id")]) . '">' . lang('ADD_SUB_MENU') . '</a> 
@@ -42,7 +34,6 @@ class MenuController extends AdminBaseController
                 $result[$key]['app'] = $value['app'] . "/" . $value['controller'] . "/" . $value['action'];
             }
         }
-
         $tree->init($result);
         $str = "<tr id='node-\$id' \$parent_id_node style='\$style'>
                         <td style='padding-left:20px;'><input name='list_orders[\$id]' type='text' size='3' value='\$list_order' class='input input-order'></td>
@@ -56,8 +47,6 @@ class MenuController extends AdminBaseController
         $this->assign("category", $category);
         return $this->fetch();
     }
-
-
     public function lists()
     {
         session('admin_menu_index', 'Menu/lists');
@@ -65,8 +54,6 @@ class MenuController extends AdminBaseController
         $this->assign("menus", $result);
         return $this->fetch();
     }
-
-
     public function add()
     {
         $tree = new Tree();
@@ -83,8 +70,6 @@ class MenuController extends AdminBaseController
         $this->assign("select_category", $selectCategory);
         return $this->fetch();
     }
-
-
     public function addPost()
     {
         if ($this->request->isPost()) {
@@ -94,14 +79,12 @@ class MenuController extends AdminBaseController
             } else {
                 $data = $this->request->param();
                 AdminMenuModel::strict(false)->field(true)->insert($data);
-
                 $app = $this->request->param("app");
                 $controller = $this->request->param("controller");
                 $action = $this->request->param("action");
                 $param = $this->request->param("param");
                 $authRuleName = "$app/$controller/$action";
                 $menuName = $this->request->param("name");
-
                 $findAuthRuleCount = AuthRuleModel::where([
                     'app' => $app,
                     'name' => $authRuleName,
@@ -125,8 +108,6 @@ class MenuController extends AdminBaseController
             }
         }
     }
-
-
     public function edit()
     {
         $tree = new Tree();
@@ -145,16 +126,12 @@ class MenuController extends AdminBaseController
         $this->assign("select_category", $selectCategory);
         return $this->fetch();
     }
-
-
     public function editPost()
     {
         if ($this->request->isPost()) {
             $id = $this->request->param('id', 0, 'intval');
             $oldMenu = AdminMenuModel::where('id', $id)->find();
-
             $result = $this->validate($this->request->param(), 'AdminMenu.edit');
-
             if ($result !== true) {
                 $this->error($result);
             } else {
@@ -165,7 +142,6 @@ class MenuController extends AdminBaseController
                 $param = $this->request->param("param");
                 $authRuleName = "$app/$controller/$action";
                 $menuName = $this->request->param("name");
-
                 $findAuthRuleCount = AuthRuleModel::where([
                     'app' => $app,
                     'name' => $authRuleName,
@@ -207,8 +183,6 @@ class MenuController extends AdminBaseController
             }
         }
     }
-
-
     public function delete()
     {
         if ($this->request->isPost()) {
@@ -224,33 +198,24 @@ class MenuController extends AdminBaseController
             }
         }
     }
-
-
     public function listOrder()
     {
         $adminMenuModel = new AdminMenuModel();
         parent::listOrders($adminMenuModel);
         $this->success("排序更新成功！");
     }
-
-
     public function getActions()
     {
         $apps = cmf_scan_dir(APP_PATH . '*', GLOB_ONLYDIR);
-
         array_push($apps, 'admin', 'user');
-
         $apps = array_values(array_unique($apps));
-
         $app = $this->request->param('app', '');
         if (empty($app)) {
             $app = $apps[0];
         }
-
         if (!in_array($app, $apps)) {
             $this->error('应用' . $app . '不存在!');
         }
-
         $newMenus = MenuLogic::importMenus($app);
         $index = array_search($app, $apps);
         $nextIndex = $index + 1;
@@ -260,34 +225,24 @@ class MenuController extends AdminBaseController
         }
         $this->assign("app", $app);
         $this->assign("new_menus", $newMenus);
-
         Cache::clear('admin_menus');
-
         return $this->fetch();
-
     }
-
-
     private function _exportAppMenuDefaultLang()
     {
         $menus = AdminMenuModel::order(["app" => "ASC", "controller" => "ASC", "action" => "ASC"])->select();
         $langDir = cmf_current_lang();
         $adminMenuLang = CMF_DATA . "lang/" . $langDir . "/admin_menu.php";
-
         if (!empty($adminMenuLang) && !file_exists_case($adminMenuLang)) {
             mkdir(dirname($adminMenuLang), 0777, true);
         }
-
         $lang = [];
-
         foreach ($menus as $menu) {
             $lang_key = strtoupper($menu['app'] . '_' . $menu['controller'] . '_' . $menu['action']);
             $lang[$lang_key] = $menu['name'];
         }
-
         $langStr = var_export($lang, true);
         $langStr = preg_replace("/\s+\d+\s=>\s(\n|\r)/", "\n", $langStr);
-
         if (!empty($adminMenuLang)) {
             file_put_contents($adminMenuLang, "<?php\nreturn $langStr;");
         }

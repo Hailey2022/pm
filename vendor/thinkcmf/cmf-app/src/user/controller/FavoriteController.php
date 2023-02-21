@@ -1,22 +1,9 @@
 <?php
-
-
-
-
-
-
-
-
-
 namespace app\user\controller;
-
 use cmf\controller\UserBaseController;
 use app\user\model\UserFavoriteModel;
-
 class FavoriteController extends UserBaseController
 {
-
-    
     public function index()
     {
         $userFavoriteModel = new UserFavoriteModel();
@@ -27,8 +14,6 @@ class FavoriteController extends UserBaseController
         $this->assign("lists", $data['lists']);
         return $this->fetch();
     }
-
-    
     public function delete()
     {
         if ($this->request->isPost()) {
@@ -42,8 +27,6 @@ class FavoriteController extends UserBaseController
             }
         }
     }
-
-    
     public function add()
     {
         if (!$this->request->isPost()) {
@@ -51,26 +34,19 @@ class FavoriteController extends UserBaseController
         }
         $data   = $this->request->param();
         $result = $this->validate($data, 'Favorite');
-
         if ($result !== true) {
             $this->error($result);
         }
-
         $id    = $this->request->param('id', 0, 'intval');
         $table = $this->request->param('table');
-
-
         $findFavoriteCount = UserFavoriteModel::where([
             'object_id'  => $id,
             'table_name' => $table,
             'user_id'    => cmf_get_current_user_id()
         ])->count();
-
         if ($findFavoriteCount > 0) {
             $this->error("您已收藏过啦");
         }
-
-
         $title       = base64_decode($this->request->param('title'));
         $url         = $this->request->param('url');
         $url         = base64_decode($url);
@@ -85,8 +61,6 @@ class FavoriteController extends UserBaseController
             'table_name'  => $table,
             'create_time' => time()
         ]);
-
         $this->success('收藏成功');
-
     }
 }

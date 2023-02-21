@@ -1,17 +1,9 @@
 <?php
-
-
 class HTMLPurifier_HTMLModule_SafeScripting extends HTMLPurifier_HTMLModule
 {
-    
     public $name = 'SafeScripting';
-
-    
     public function setup($config)
     {
-        
-        
-
         $allowed = $config->get('HTML.SafeScripting');
         $script = $this->addElement(
             'script',
@@ -19,8 +11,6 @@ class HTMLPurifier_HTMLModule_SafeScripting extends HTMLPurifier_HTMLModule
             'Optional:', 
             null,
             array(
-                
-                
                 'type' => 'Enum#text/javascript',
                 'src*' => new HTMLPurifier_AttrDef_Enum(array_keys($allowed),  true)
             )
@@ -29,5 +19,3 @@ class HTMLPurifier_HTMLModule_SafeScripting extends HTMLPurifier_HTMLModule
         $script->attr_transform_post[] = new HTMLPurifier_AttrTransform_ScriptRequired();
     }
 }
-
-

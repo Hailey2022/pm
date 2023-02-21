@@ -1,7 +1,4 @@
 <?php
-
-
-
 $PHPMAILER_LANG['authenticate']         = 'SMTP Feil: Kunne ikke autentisere.';
 $PHPMAILER_LANG['connect_host']         = 'SMTP Feil: Kunne ikke koble til SMTP tjener.';
 $PHPMAILER_LANG['data_not_accepted']    = 'SMTP Feil: Datainnhold ikke akseptert.';

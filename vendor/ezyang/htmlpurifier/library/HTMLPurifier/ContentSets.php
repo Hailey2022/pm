@@ -1,33 +1,19 @@
 <?php
-
-
 class HTMLPurifier_ContentSets
 {
-
-    
     public $info = array();
-
-    
     public $lookup = array();
-
-    
     protected $keys = array();
-    
     protected $values = array();
-
-    
     public function __construct($modules)
     {
         if (!is_array($modules)) {
             $modules = array($modules);
         }
-        
-        
         foreach ($modules as $module) {
             foreach ($module->content_sets as $key => $value) {
                 $temp = $this->convertToLookup($value);
                 if (isset($this->lookup[$key])) {
-                    
                     $this->lookup[$key] = array_merge($this->lookup[$key], $temp);
                 } else {
                     $this->lookup[$key] = $temp;
@@ -48,15 +34,12 @@ class HTMLPurifier_ContentSets
                 $this->lookup[$i] += $add;
             }
         }
-
         foreach ($this->lookup as $key => $lookup) {
             $this->info[$key] = implode(' | ', array_keys($lookup));
         }
         $this->keys   = array_keys($this->info);
         $this->values = array_values($this->info);
     }
-
-    
     public function generateChildDef(&$def, $module)
     {
         if (!empty($def->child)) { 
@@ -64,24 +47,19 @@ class HTMLPurifier_ContentSets
         }
         $content_model = $def->content_model;
         if (is_string($content_model)) {
-            
             $def->content_model = preg_replace_callback(
                 '/\b(' . implode('|', $this->keys) . ')\b/',
                 array($this, 'generateChildDefCallback'),
                 $content_model
             );
             //$def->content_model = str_replace(
-            
         }
         $def->child = $this->getChildDef($def, $module);
     }
-
     public function generateChildDefCallback($matches)
     {
         return $this->info[$matches[0]];
     }
-
-    
     public function getChildDef($def, $module)
     {
         $value = $def->content_model;
@@ -103,7 +81,6 @@ class HTMLPurifier_ContentSets
             case 'custom':
                 return new HTMLPurifier_ChildDef_Custom($value);
         }
-        
         $return = false;
         if ($module->defines_child_def) { 
             $return = $module->getChildDef($def);
@@ -111,15 +88,12 @@ class HTMLPurifier_ContentSets
         if ($return !== false) {
             return $return;
         }
-        
         trigger_error(
             'Could not determine which ChildDef class to instantiate',
             E_USER_ERROR
         );
         return false;
     }
-
-    
     protected function convertToLookup($string)
     {
         $array = explode('|', str_replace(' ', '', $string));
@@ -130,5 +104,3 @@ class HTMLPurifier_ContentSets
         return $ret;
     }
 }
-
-

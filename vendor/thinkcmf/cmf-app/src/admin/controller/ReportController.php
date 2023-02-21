@@ -29,6 +29,7 @@ class ReportController extends AdminBaseController
                     $query->where('c.clientId', $uid);
                 }
             })
+            ->order('reportTime', 'desc')
             ->select();
         $this->assign('reports', $reports);
         return $this->fetch();
@@ -178,6 +179,7 @@ class ReportController extends AdminBaseController
                     $query->where('c.clientId', $uid);
                 }
             })
+            ->order('picTime', 'desc')
             ->select();
         $this->assign('pics', $pics);
         return $this->fetch();

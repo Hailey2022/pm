@@ -1,28 +1,21 @@
 <?php
-
 namespace app\admin\controller;
-
 use app\admin\model\RoleUserModel;
 use app\admin\model\UserModel;
 use cmf\controller\AdminBaseController;
-
 class PublicController extends AdminBaseController
 {
     public function initialize()
     {
     }
-
-
     public function login()
     {
         $loginAllowed = session("__LOGIN_BY_CMF_ADMIN_PW__");
         if (empty($loginAllowed)) {
-            //$this->error('非法登录!', cmf_get_root() . '/');
             return redirect(cmf_get_root() . "/");
         }
-
         $admin_id = session('ADMIN_ID');
-        if (!empty($admin_id)) { //已经登录
+        if (!empty($admin_id)) {
             return redirect(url("admin/Index/index"));
         } else {
             session("__SP_ADMIN_LOGIN_PAGE_SHOWED_SUCCESS__", true);
@@ -33,8 +26,6 @@ class PublicController extends AdminBaseController
             return $this->fetch(":login");
         }
     }
-
-
     public function doLogin()
     {
         if (!$this->request->isPost()) {
@@ -43,21 +34,10 @@ class PublicController extends AdminBaseController
         if (hook_one('admin_custom_login_open')) {
             $this->error('您已经通过插件自定义后台登录！');
         }
-
         $loginAllowed = session("__LOGIN_BY_CMF_ADMIN_PW__");
         if (empty($loginAllowed)) {
             $this->error('非法登录!', cmf_get_root() . '/');
         }
-
-
-
-
-
-        //验证码
-
-
-
-
         $name = $this->request->param("username");
         if (empty($name)) {
             $this->error(lang('USERNAME_OR_EMAIL_EMPTY'));
@@ -71,9 +51,7 @@ class PublicController extends AdminBaseController
         } else {
             $where['user_login'] = $name;
         }
-
         $result = UserModel::where($where)->find();
-
         if (!empty($result) && $result['user_type'] == 1) {
             if (cmf_compare_password($pass, $result['user_pass'])) {
                 $groups = RoleUserModel::alias("a")
@@ -83,7 +61,6 @@ class PublicController extends AdminBaseController
                 if ($result["id"] != 1 && (empty($groups) || empty($result['user_status']))) {
                     $this->error(lang('USE_DISABLED'));
                 }
-                //登入成功页面跳转
                 session('ADMIN_ID', $result["id"]);
                 session('name', $result["user_login"]);
                 $data = [];
@@ -104,8 +81,6 @@ class PublicController extends AdminBaseController
             $this->error('用户名或者密码错误');
         }
     }
-
-
     public function logout()
     {
         session('ADMIN_ID', null);

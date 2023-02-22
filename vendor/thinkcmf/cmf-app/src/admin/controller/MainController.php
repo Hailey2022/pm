@@ -52,49 +52,82 @@ class MainController extends AdminBaseController
         $this->assign('dashboard_widget_plugins', $dashboardWidgetPlugins);
         $this->assign('has_smtp_setting', empty($smtpSetting) ? false : true);
         $userid = cmf_get_current_admin_id();
-        $res = Db::name('role_user r, pm_role l, pm_user u')
-            ->where('r.user_id = u.id')
-            ->where('r.role_id = l.id')
-            ->where('u.id', $userid)
-            ->find();
-        if ($res !== null) {
-            $username = $res['user_login'];
-            $name = $res['name'];
-            $this->assign('username', $username);
-            $this->assign('type', $name);
-        }
-        $dailyReportCount = Db::name('contract c, pm_report r')
-            ->where('c.clientId', $userid)
-            ->where('c.contractId = r.contractId')
-            ->where('r.reportTypeId', '1')
-            ->count();
-        $monthlyReportCount = Db::name('contract c, pm_report r')
-            ->where('c.clientId', $userid)
-            ->where('c.contractId = r.contractId')
-            ->where('r.reportTypeId', '<>', '1')
-            ->count();
-        $picCount = Db::name('contract c, pm_pics r')
-            ->where('c.clientId', $userid)
-            ->where('c.contractId = r.contractId')
-            ->count();
-        $this->assign('dailyReportCount', $dailyReportCount);
-        $this->assign('monthlyReportCount', $monthlyReportCount);
-        $this->assign('picCount', $picCount);
-        $res = Db::name('contract c, pm_report r')
-            ->where('c.clientId', $userid)
-            ->where('c.contractId = r.contractId')
-            ->order('reportTime', 'desc')
-            ->find('reportTime');
-        if ($res != null) {
-            $this->assign('reportTime', "最后上传时间：" . $res['reportTime']);
-        }
-        $res = Db::name('contract c, pm_pics r')
-            ->where('c.clientId', $userid)
-            ->where('c.contractId = r.contractId')
-            ->order('picTime', 'desc')
-            ->find('picTime');
-        if ($res != null) {
-            $this->assign('picTime', "最后上传时间：" . $res['picTime']);
+        if (cmf_auth_check($userid, 'admin/manager/view')) {
+            $dailyReportCount = Db::name('report')
+                ->where('reportTypeId', '1')
+                ->count();
+            $monthlyReportCount = Db::name('report')
+                ->where('reportTypeId', '<>', '1')
+                ->count();
+            $picCount = Db::name('pics')
+                ->count();
+            $projectCount = Db::name('project')
+                ->count();
+            $clientCount = Db::name('user')
+                ->where('score', '<>', 100)
+                ->count();
+            $this->assign('dailyReportCount', $dailyReportCount);
+            $this->assign('monthlyReportCount', $monthlyReportCount);
+            $this->assign('picCount', $picCount);
+            $this->assign('projectCount', $projectCount);
+            $this->assign('clientCount', $clientCount);
+            $res = Db::name('report')
+                ->order('reportTime', 'desc')
+                ->find();
+            if ($res != null) {
+                $this->assign('reportTime', "最后上传时间：" . $res['reportTime']);
+            }
+            $res = Db::name('pics')
+                ->order('picTime', 'desc')
+                ->find();
+            if ($res != null) {
+                $this->assign('picTime', "最后上传时间：" . $res['picTime']);
+            }
+        } else {
+            $res = Db::name('role_user r, pm_role l, pm_user u')
+                ->where('r.user_id = u.id')
+                ->where('r.role_id = l.id')
+                ->where('u.id', $userid)
+                ->find();
+            if ($res !== null) {
+                $username = $res['user_login'];
+                $name = $res['name'];
+                $this->assign('username', $username);
+                $this->assign('type', $name);
+            }
+            $dailyReportCount = Db::name('contract c, pm_report r')
+                ->where('c.clientId', $userid)
+                ->where('c.contractId = r.contractId')
+                ->where('r.reportTypeId', '1')
+                ->count();
+            $monthlyReportCount = Db::name('contract c, pm_report r')
+                ->where('c.clientId', $userid)
+                ->where('c.contractId = r.contractId')
+                ->where('r.reportTypeId', '<>', '1')
+                ->count();
+            $picCount = Db::name('contract c, pm_pics r')
+                ->where('c.clientId', $userid)
+                ->where('c.contractId = r.contractId')
+                ->count();
+            $this->assign('dailyReportCount', $dailyReportCount);
+            $this->assign('monthlyReportCount', $monthlyReportCount);
+            $this->assign('picCount', $picCount);
+            $res = Db::name('contract c, pm_report r')
+                ->where('c.clientId', $userid)
+                ->where('c.contractId = r.contractId')
+                ->order('reportTime', 'desc')
+                ->find('reportTime');
+            if ($res != null) {
+                $this->assign('reportTime', "最后上传时间：" . $res['reportTime']);
+            }
+            $res = Db::name('contract c, pm_pics r')
+                ->where('c.clientId', $userid)
+                ->where('c.contractId = r.contractId')
+                ->order('picTime', 'desc')
+                ->find('picTime');
+            if ($res != null) {
+                $this->assign('picTime', "最后上传时间：" . $res['picTime']);
+            }
         }
         return $this->fetch();
     }

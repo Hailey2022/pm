@@ -10,6 +10,9 @@ class ReportController extends AdminBaseController
     function isAdmin($uid)
     {
         return ($uid == 1 || $uid == 9);
+        // $res = Db::name('user')
+        // ->where('score', 100)
+        // ->select();
     }
     public function reports()
     {

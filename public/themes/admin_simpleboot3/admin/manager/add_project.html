@@ -201,71 +201,13 @@
                         </div>
                     </div>
                 </div>
-                <br>
                 <div class="form-group">
-                    <div class="右 左">
-                        <label for="file-1-name" class="col-sm-1 control-label">可研报告</label>
-                        <div class="col-sm-3" style="padding-bottom: 10px;">
-                            <input id="file-1" type="hidden" name="file_url_1">
-                            <input class="form-control" id="file-1-name" type="text" name="file_name_1" title="可研报告">
-                            <a href="javascript:uploadOne('可研报告上传','#file-1','file');">上传</a>
-                            <a class="previewBtn">预览</a>
-                        </div>
-                    </div>
-                    <div class="右 左">
-                        <label for="file-2-name" class="col-sm-1 control-label">可研批复</label>
-                        <div class="col-sm-3" style="padding-bottom: 10px;">
-                            <input id="file-2" type="hidden" name="file_url_2">
-                            <input class="form-control" id="file-2-name" type="text" name="file_name_2" title="可研批复">
-                            <a href="javascript:uploadOne('可研批复上传','#file-2','file');">上传</a>
-                            <a class="previewBtn">预览</a>
-                        </div>
-                    </div>
                     <div class="右 左">
                         <label for="input-estimatedPrice" class="col-sm-1 control-label">估算价</label>
                         <div class="col-sm-3" style="padding-bottom: 10px;">
                             <input class="form-control" id="input-estimatedPrice" name="estimatedPrice" type="number"
                                 onkeyup="updateEstimatedPriceChineseNum()">
                             <input class="form-control" id="chinese-estimatedPrice" type="text" readonly>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="右 左">
-                        <label for="file_url_3" class="col-sm-1 control-label">初步设计报告</label>
-                        <div class="col-sm-3" style="padding-bottom: 10px;">
-                            <input id="file-3" type="hidden" name="file_url_3">
-                            <input class="form-control" id="file-3-name" type="text" name="file_name_3" title="初步设计报告">
-                            <a href="javascript:uploadOne('初步设计报告上传','#file-3','file');">上传</a>
-                            <a class="previewBtn">预览</a>
-                        </div>
-                    </div>
-                    <div class="右 左">
-                        <label for="file_url_4" class="col-sm-1 control-label">初步设计批复</label>
-                        <div class="col-sm-3" style="padding-bottom: 10px;">
-                            <input id="file-4" type="hidden" name="file_url_4">
-                            <input class="form-control" id="file-4-name" type="text" name="file_name_4" title="初步设计批复">
-                            <a href="javascript:uploadOne('初步设计批复上传','#file-4','file');">上传</a>
-                            <a class="previewBtn">预览</a>
-                        </div>
-                    </div>
-                    <div class="右 左">
-                        <label for="input-approximatePrice" class="col-sm-1 control-label">概算价</label>
-                        <div class="col-sm-3" style="padding-bottom: 10px;">
-                            <input class="form-control" id="input-approximatePrice" name="approximatePrice"
-                                type="number" onkeyup="updateApproximatePriceChineseNum()">
-                            <input class="form-control" id="chinese-approximatePrice" type="text" readonly>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="右 左">
-                        <label for="file-5-name" class="col-sm-1 control-label">预算上报文件</label>
-                        <div class="col-sm-3" style="padding-bottom: 10px;">
-                            <input id="file-5" type="hidden" name="file_url_5">
-                            <input class="form-control" id="file-5-name" type="text" name="file_name_5" title="预算上报文件">
-                            <a href="javascript:uploadOne('预算上报文件上传','#file-5','file');">上传</a>
-                            <a class="previewBtn">预览</a>
                         </div>
                     </div>
                     <div class="右 左">
@@ -286,16 +228,6 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="右 左">
-                        <label for="file_name_6" class="col-sm-1 control-label">施工图</label>
-                        <div class="col-sm-3" style="padding-bottom: 10px;">
-                            <input id="file-6" type="hidden" name="file_url_6">
-                            <input class="form-control" id="file-6-name" type="text" name="file_name_6" title="施工图">
-                            <!-- <a id="file-6-preview" target="_blank">下载</a> -->
-                            <a href="javascript:uploadOne('施工图上传','#file-6','file');">上传</a>
-                            <a class="previewBtn">预览</a>
-                        </div>
-                    </div>
                     <div class="右 左">
                         <label for="tenderingMethod" class="col-sm-1 control-label">招标方式</label>
                         <div class="col-sm-3" style="padding-bottom: 10px;">
@@ -322,10 +254,301 @@
                             </select>
                         </div>
                     </div>
+                    <div class="右 左">
+                        <label for="file-5-name" class="col-sm-1 control-label">预算上报文件</label>
+                        <div class="col-sm-3" style="padding-bottom: 10px;">
+                            <input id="file-5" type="hidden" name="file_url_5">
+                            <input class="form-control" id="file-5-name" type="text" name="file_name_5" title="预算上报文件">
+                            <a href="javascript:uploadOne('预算上报文件上传','#file-5','file');">上传</a>
+                            <a class="previewBtn">预览</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <div class="信息框大框" style="min-width: 920px">
+            <div class="信息框标题"><a style="font-size: 150%;">可研阶段</a></div>
+            <div class="上下宽度 右">
+                <div class="form-group">
+                    <div class="右 左">
+                        <label for="file-1-name" class="col-sm-1 control-label">可研报告</label>
+                        <div class="col-sm-3" style="padding-bottom: 10px;">
+                            <input id="file-1" type="hidden" name="file_url_1">
+                            <input class="form-control" id="file-1-name" type="text" name="file_name_1" title="可研报告">
+                            <a href="javascript:uploadOne('可研报告上传','#file-1','file');">上传</a>
+                            <a class="previewBtn">预览</a>
+                        </div>
+                    </div>
+                    <div class="右 左">
+                        <label for="file-7-name" class="col-sm-1 control-label">可研审批文件</label>
+                        <div class="col-sm-3" style="padding-bottom: 10px;">
+                            <input id="file-7" type="hidden" name="file_url_7">
+                            <input class="form-control" id="file-7-name" type="text" name="file_name_7" title="可研审批文件">
+                            <a href="javascript:uploadOne('可研审批文件上传','#file-7','file');">上传</a>
+                            <a class="previewBtn">预览</a>
+                        </div>
+                    </div>
+                    <div class="右 左">
+                        <label for="file-2-name" class="col-sm-1 control-label">可研批复</label>
+                        <div class="col-sm-3" style="padding-bottom: 10px;">
+                            <input id="file-2" type="hidden" name="file_url_2">
+                            <input class="form-control" id="file-2-name" type="text" name="file_name_2" title="可研批复">
+                            <a href="javascript:uploadOne('可研批复上传','#file-2','file');">上传</a>
+                            <a class="previewBtn">预览</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+
+        <div class="信息框大框" style="min-width: 920px">
+            <div class="信息框标题"><a style="font-size: 150%;">初步设计阶段</a></div>
+            <div class="上下宽度 右">
+                <div class="form-group">
+                    <div class="右 左">
+                        <label for="file-3-name" class="col-sm-1 control-label">初步设计报告</label>
+                        <div class="col-sm-3" style="padding-bottom: 10px;">
+                            <input id="file-3" type="hidden" name="file_url_3">
+                            <input class="form-control" id="file-3-name" type="text" name="file_name_3" title="初步设计报告">
+                            <a href="javascript:uploadOne('初步设计报告上传','#file-3','file');">上传</a>
+                            <a class="previewBtn">预览</a>
+                        </div>
+                    </div>
+                    <div class="右 左">
+                        <label for="file-8-name" class="col-sm-1 control-label">初步设计图纸</label>
+                        <div class="col-sm-3" style="padding-bottom: 10px;">
+                            <input id="file-8" type="hidden" name="file_url_8">
+                            <input class="form-control" id="file-8-name" type="text" name="file_name_8" title="初步设计图纸">
+                            <a href="javascript:uploadOne('初步设计图纸上传','#file-8','file');">上传</a>
+                            <a class="previewBtn">预览</a>
+                        </div>
+                    </div>
+
+                    <div class="右 左">
+                        <label for="file_url_4" class="col-sm-1 control-label">初步设计批复</label>
+                        <div class="col-sm-3" style="padding-bottom: 10px;">
+                            <input id="file-4" type="hidden" name="file_url_4">
+                            <input class="form-control" id="file-4-name" type="text" name="file_name_4" title="初步设计批复">
+                            <a href="javascript:uploadOne('初步设计批复上传','#file-4','file');">上传</a>
+                            <a class="previewBtn">预览</a>
+                        </div>
+                    </div>
+
+                </div>
+                <br>
+                <div class="form-group">
+                    <div class="右 左">
+                        <label for="file-9-name" class="col-sm-1 control-label">审批请示和批复</label>
+                        <div class="col-sm-3" style="padding-bottom: 10px;">
+                            <input id="file-9" type="hidden" name="file_url_9">
+                            <input class="form-control" id="file-9-name" type="text" name="file_name_9" title="审批请示和批复">
+                            <a href="javascript:uploadOne('审批请示和批复上传','#file-9','file');">上传</a>
+                            <a class="previewBtn">预览</a>
+                        </div>
+                    </div>
+                    <div class="右 左">
+                        <label for="file-10-name" class="col-sm-1 control-label">概算书</label>
+                        <div class="col-sm-3" style="padding-bottom: 10px;">
+                            <input id="file-10" type="hidden" name="file_url_10">
+                            <input class="form-control" id="file-10-name" type="text" name="file_name_10" title="概算书">
+                            <a href="javascript:uploadOne('概算书上传','#file-10','file');">上传</a>
+                            <a class="previewBtn">预览</a>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="form-group">
+                    <div class="右 左">
+                        <label for="input-approximatePrice" class="col-sm-1 control-label">批复概算价</label>
+                        <div class="col-sm-3" style="padding-bottom: 10px;">
+                            <input class="form-control" id="input-approximatePrice" name="approximatePrice"
+                                type="number" onkeyup="updateApproximatePriceChineseNum()">
+                            <input class="form-control" id="chinese-approximatePrice" type="text" readonly>
+                        </div>
+                    </div>
+                    <div class="右 左">
+                        <label for="input-fee1" class="col-sm-1 control-label">建安费</label>
+                        <div class="col-sm-3" style="padding-bottom: 10px;">
+                            <input class="form-control" id="input-fee1" name="fee1"
+                                type="number" onkeyup="updateFeeChineseNum(1)">
+                            <input class="form-control" id="chinese-fee1" type="text" readonly>
+                        </div>
+                    </div>
+                    <!-- TODO -->
+                    <div class="右 左">
+                        <label for="input-fee2" class="col-sm-1 control-label">监理费</label>
+                        <div class="col-sm-3" style="padding-bottom: 10px;">
+                            <input class="form-control" id="input-fee2" name="fee2"
+                                type="number" onkeyup="updateFeeChineseNum(2)">
+                            <input class="form-control" id="chinese-fee2" type="text" readonly>
+                        </div>
+                    </div>
+
+                </div>
+                <br>
+                <div class="form-group">
+                    <div class="右 左">
+                        <label for="input-fee3" class="col-sm-1 control-label">检测费</label>
+                        <div class="col-sm-3" style="padding-bottom: 10px;">
+                            <input class="form-control" id="input-fee3" name="fee3"
+                                type="number" onkeyup="updateFeeChineseNum(3)">
+                            <input class="form-control" id="chinese-fee3" type="text" readonly>
+                        </div>
+                    </div>
+                    <div class="右 左">
+                        <label for="input-fee4" class="col-sm-1 control-label">造价咨询费</label>
+                        <div class="col-sm-3" style="padding-bottom: 10px;">
+                            <input class="form-control" id="input-fee4" name="fee4"
+                                type="number" onkeyup="updateFeeChineseNum(4)">
+                            <input class="form-control" id="chinese-fee4" type="text" readonly>
+                        </div>
+                    </div>
+                    <div class="右 左">
+                        <label for="input-fee5" class="col-sm-1 control-label">其他</label>
+                        <div class="col-sm-3" style="padding-bottom: 10px;">
+                            <input class="form-control" id="input-fee5" name="fee5"
+                                type="number" onkeyup="updateFeeChineseNum(5)">
+                            <input class="form-control" id="chinese-fee5" type="text" readonly>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="信息框大框" style="min-width: 920px">
+            <div class="信息框标题"><a style="font-size: 150%;">施工图预算阶段</a></div>
+            <div class="上下宽度 右">
+                <div class="form-group">
+                    <div class="右 左">
+                        <label for="file_name_6" class="col-sm-1 control-label">施工图</label>
+                        <div class="col-sm-3" style="padding-bottom: 10px;">
+                            <input id="file-6" type="hidden" name="file_url_6">
+                            <input class="form-control" id="file-6-name" type="text" name="file_name_6" title="施工图">
+                            <a href="javascript:uploadOne('施工图上传','#file-6','file');">上传</a>
+                            <a class="previewBtn">预览</a>
+                        </div>
+                    </div>
+                    <div class="右 左">
+                        <label for="file-11-name" class="col-sm-1 control-label">预算书</label>
+                        <div class="col-sm-3" style="padding-bottom: 10px;">
+                            <input id="file-11" type="hidden" name="file_url_11">
+                            <input class="form-control" id="file-11-name" type="text" name="file_name_11" title="预算书">
+                            <a href="javascript:uploadOne('预算书上传','#file-11','file');">上传</a>
+                            <a class="previewBtn">预览</a>
+                        </div>
+                    </div>
+                    <!-- TODO -->
+                    <div class="右 左">
+                        <label for="file-12-name" class="col-sm-1 control-label">定案预算书</label>
+                        <div class="col-sm-3" style="padding-bottom: 10px;">
+                            <input id="file-12" type="hidden" name="file_url_12">
+                            <input class="form-control" id="file-12-name" type="text" name="file_name_12" title="定案预算书">
+                            <a href="javascript:uploadOne('定案预算书上传','#file-12','file');">上传</a>
+                            <a class="previewBtn">预览</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="信息框大框" style="min-width: 920px">
+            <div class="信息框标题"><a style="font-size: 150%;">工程招标</a></div>
+            <div class="上下宽度 右">
+                <div class="form-group">
+                    <div class="右 左">
+                        <label for="file_name_13" class="col-sm-1 control-label">选定代理上会材料</label>
+                        <div class="col-sm-3" style="padding-bottom: 10px;">
+                            <input id="file-13" type="hidden" name="file_url_13">
+                            <input class="form-control" id="file-13-name" type="text" name="file_name_13"
+                                title="选定代理上会材料">
+                            <a href="javascript:uploadOne('选定代理上会材料上传','#file-13','file');">上传</a>
+                            <a class="previewBtn">预览</a>
+                        </div>
+                    </div>
+                    <div class="右 左">
+                        <label for="file-14-name" class="col-sm-1 control-label">招标代理合同签批</label>
+                        <div class="col-sm-3" style="padding-bottom: 10px;">
+                            <input id="file-14" type="hidden" name="file_url_14">
+                            <input class="form-control" id="file-14-name" type="text" name="file_name_14"
+                                title="招标代理合同签批">
+                            <a href="javascript:uploadOne('招标代理合同签批上传','#file-14','file');">上传</a>
+                            <a class="previewBtn">预览</a>
+                        </div>
+                    </div>
+                    <div class="右 左">
+                        <label for="file-15-name" class="col-sm-1 control-label">招标文件签批</label>
+                        <div class="col-sm-3" style="padding-bottom: 10px;">
+                            <input id="file-15" type="hidden" name="file_url_15">
+                            <input class="form-control" id="file-15-name" type="text" name="file_name_15" title="招标文件签批">
+                            <a href="javascript:uploadOne('招标文件签批上传','#file-15','file');">上传</a>
+                            <a class="previewBtn">预览</a>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="form-group">
+                    <div class="右 左">
+                        <label for="file_name_16" class="col-sm-1 control-label">招标过程文件</label>
+                        <div class="col-sm-3" style="padding-bottom: 10px;">
+                            <input id="file-16" type="hidden" name="file_url_16">
+                            <input class="form-control" id="file-16-name" type="text" name="file_name_16" title="招标过程文件">
+                            <a href="javascript:uploadOne('招标过程文件上传','#file-16','file');">上传</a>
+                            <a class="previewBtn">预览</a>
+                        </div>
+                    </div>
+                    <div class="右 左">
+                        <label for="file-17-name" class="col-sm-1 control-label">中标标书</label>
+                        <div class="col-sm-3" style="padding-bottom: 10px;">
+                            <input id="file-17" type="hidden" name="file_url_17">
+                            <input class="form-control" id="file-17-name" type="text" name="file_name_17" title="中标标书">
+                            <a href="javascript:uploadOne('中标标书上传','#file-17','file');">上传</a>
+                            <a class="previewBtn">预览</a>
+                        </div>
+                    </div>
+                    <div class="右 左">
+                        <label for="file-18-name" class="col-sm-1 control-label">施工招标</label>
+                        <div class="col-sm-3" style="padding-bottom: 10px;">
+                            <input id="file-18" type="hidden" name="file_url_18">
+                            <input class="form-control" id="file-18-name" type="text" name="file_name_18" title="施工招标">
+                            <a href="javascript:uploadOne('施工招标上传','#file-18','file');">上传</a>
+                            <a class="previewBtn">预览</a>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="form-group">
+                    <div class="右 左">
+                        <label for="file_name_19" class="col-sm-1 control-label">监理招标</label>
+                        <div class="col-sm-3" style="padding-bottom: 10px;">
+                            <input id="file-19" type="hidden" name="file_url_19">
+                            <input class="form-control" id="file-19-name" type="text" name="file_name_19" title="监理招标">
+                            <a href="javascript:uploadOne('监理招标上传','#file-19','file');">上传</a>
+                            <a class="previewBtn">预览</a>
+                        </div>
+                    </div>
+                    <div class="右 左">
+                        <label for="file-20-name" class="col-sm-1 control-label">检测招标</label>
+                        <div class="col-sm-3" style="padding-bottom: 10px;">
+                            <input id="file-20" type="hidden" name="file_url_20">
+                            <input class="form-control" id="file-20-name" type="text" name="file_name_20" title="检测招标">
+                            <a href="javascript:uploadOne('检测招标上传','#file-20','file');">上传</a>
+                            <a class="previewBtn">预览</a>
+                        </div>
+                    </div>
+                    <div class="右 左">
+                        <label for="file-21-name" class="col-sm-1 control-label">造价咨询招标</label>
+                        <div class="col-sm-3" style="padding-bottom: 10px;">
+                            <input id="file-21" type="hidden" name="file_url_21">
+                            <input class="form-control" id="file-21-name" type="text" name="file_name_21" title="造价咨询招标">
+                            <a href="javascript:uploadOne('造价咨询招标上传','#file-21','file');">上传</a>
+                            <a class="previewBtn">预览</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="信息框大框" style="min-width: 920px">
             <div class="信息框标题">
                 <a style="font-size: 140%;">服务商基本信息</a>
@@ -439,7 +662,7 @@
     <div class="form-group">
         <div class="">
             <div class="col-md-3">
-                <button class="button-s" id="" onclick="$('#add_project_submit').click()">
+                <button class="button-s" id="" onclick="handleUpload()">
                     提交
                 </button>
             </div>
@@ -495,8 +718,23 @@
         var num = convertCurrency(Math.abs($("#input-approvedBudget").val()))
         $("#chinese-approvedBudget").val(num);
     }
+    function updateFeeChineseNum(id){
+        var num = convertCurrency(Math.abs($("#input-fee"+id).val()))
+        $("#chinese-fee"+id).val(num);
+    }
     function ask() {
         if (confirm("确定返回？")) { window.location.href = "{:url('manager/view')}" } else { return false }
+    }
+    function parseInteger(n){
+        return isNaN(parseInt(n))?0:parseInt(n)
+    }
+    function handleUpload(){
+        if ($("#input-approximatePrice").val() != (parseInteger($("#input-fee1").val()) + parseInteger($("#input-fee2").val()) + parseInteger($("#input-fee3").val()) + parseInteger($("#input-fee4").val()) + parseInteger($("#input-fee5").val())))
+        {
+            alert("请检查批复概算价的值")
+        }
+        return false
+        $('#add_project_submit').click()
     }
 </script>
 <script type="text/javascript" src="__STATIC__/js/admin.js"></script>

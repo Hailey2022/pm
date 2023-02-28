@@ -34,6 +34,7 @@
             left: 30px;
         }
     </style>
+    <!-- <php>var_dump($menus)</php> -->
     <script>
         var GV = {
             HOST: "{$_SERVER['HTTP_HOST']|default=''}",
@@ -132,14 +133,6 @@
     <php>}
         }
     </php>
-    <if condition="APP_DEBUG">
-        <style>
-            #think_page_trace_open {
-                left: 0 !important;
-                right: initial !important;
-            }
-        </style>
-    </if>
 </head>
 <body style="min-width:900px;overflow: hidden;" bgcolor="#">
     <div id="loading"><i class="loadingicon"></i><span>{:lang('LOADING')}</span></div>
@@ -216,6 +209,10 @@
         </div>
     </div>
     <div class="main-container container-fluid">
+        <!-- <div class="page-content" id="content">
+            <iframe src="{:url('Main/index')}" style="width:100%;height: 100%;" frameborder="0" id="appiframe-0"
+                class="appiframe"></iframe>
+        </div> -->
         <div class="sidebar" id="sidebar">
             <div class="sidebar-shortcuts" id="sidebar-shortcuts" style="display: none;">
                 <a class="btn btn-sm btn-warning" href="__ROOT__/" title="{:lang('WEBSITE_HOME_PAGE')}" target="_blank"

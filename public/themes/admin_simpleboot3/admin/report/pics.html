@@ -6,12 +6,23 @@
     .deleteBtn:hover {
         color: #ff0000;
     }
+    .btns {
+        float: right;
+    }
 </style>
 <body id="container">
+    <div class="btns">
+        <a class='btn btn-primary' href="/">返回</a>
+    </div>
     <div class="wrap js-check-wrap">
         <ul class="nav nav-tabs">
+            <present name="projectId">
+            <li class="active"><a href="{:url('Report/pics', ['projectId'=>$projectId])}">查看图片</a></li>
+            <li><a href="{:url('Report/addPic', ['projectId'=>$projectId])}">添加图片</a></li>
+            <else />
             <li class="active"><a href="{:url('Report/pics')}">查看图片</a></li>
             <li><a href="{:url('Report/addPic')}">添加图片</a></li>
+            </present>
         </ul>
         <table class="table table-hover table-bordered">
             <thead>

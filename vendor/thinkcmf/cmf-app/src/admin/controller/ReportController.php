@@ -14,6 +14,18 @@ class ReportController extends AdminBaseController
         // ->where('score', 100)
         // ->select();
     }
+    public function getProjectNameByProjectId($projectId = null)
+    {
+        if ($projectId != null) {
+            $projectId = Db::name("project")
+                ->where("projectId", $projectId)
+                ->find();
+            if ($projectId != null) {
+                return $projectId["projectName"];
+            }
+        }
+        return null;
+    }
     public function reports()
     {
         $projectId = $this->request->param('projectId');
@@ -165,6 +177,9 @@ class ReportController extends AdminBaseController
     {
         $uid = cmf_get_current_admin_id();
         $projectId = $this->request->param('projectId');
+        $this->assign('projectId', $projectId);
+        $projectName = $this-> getProjectNameByProjectId($projectId);
+        $this->assign('projectName',$projectName);
         $pics = Db::name('contract c, pm_project p, pm_user u, pm_pics r')
             ->where('r.contractId = c.contractId')
             ->where('c.projectId = p.projectId')
@@ -184,6 +199,8 @@ class ReportController extends AdminBaseController
     }
     public function addPic()
     {
+        $projectId = $this->request->param('projectId');
+        $this->assign('projectId', $projectId);
         $uid = cmf_get_current_admin_id();
         $projects = Db::name('contract c, pm_project p')
             ->where('p.projectId = c.projectId')

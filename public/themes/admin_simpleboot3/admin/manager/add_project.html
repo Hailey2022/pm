@@ -1,11 +1,12 @@
 <include file="public@header" />
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add</title>
+    <title>新增工程</title>
     <script type="text/html" id="photos-item-tpl">
         <li id="saved-image{id}">
             <input id="photo-{id}" type="hidden" name="file_urls[]" value="{filepath}">
@@ -36,23 +37,28 @@
             width: 96%;
             margin-top: 50px;
         }
+
         .信息框标题 {
             width: 200px;
             height: 22px;
             line-height: 20px;
             text-align: center;
         }
+
         .信息框标题 span {
             padding: 1px 1px;
             margin-top: auto;
             margin-right: 10px;
         }
+
         .信息框标题 a.工程加号 a.工程减号 {
             cursor: pointer;
         }
+
         a:hover {
             text-decoration: none;
         }
+
         .信息框边框 {
             border: 1px solid #333;
             padding: 5px;
@@ -60,9 +66,11 @@
             border-color: #18BC9C;
             border-style: none;
         }
+
         ul {
             list-style-type: none;
         }
+
         .上下宽度 {
             padding: 1%;
             border-style: dashed dashed dashed dashed;
@@ -70,14 +78,17 @@
             border-radius: 16px;
             border-color: #18BC9C;
         }
+
         .btn-primary {
             color: #333333;
             background-color: #c2fbd7;
             border-color: #c2fbd7;
         }
+
         * {
             user-select: none;
         }
+
         .button-s {
             --color: #18BC9C;
             font-family: inherit;
@@ -97,6 +108,7 @@
             color: var(--color);
             margin-left: 100px !important;
         }
+
         .button-s:before {
             content: "";
             position: absolute;
@@ -106,43 +118,55 @@
             width: 200px !important;
             border-radius: 80% !important;
         }
+
         .button-s:hover {
             color: #fff;
         }
+
         .button-s:before {
             top: 100% !important;
             left: 100% !important;
             transition: all .7s !important;
         }
+
         .button-s:hover:before {
             top: -30px !important;
             left: -30px !important;
         }
+
         .button-s:active:before {
             background: #18BC9C !important;
             transition: background 0s !important;
         }
+
         .左 {
             margin-right: 30px;
         }
+
         .右 {
             margin-left: 30px;
         }
+
         label {
             font-size: 10px;
         }
+
         input[type="text"] {
             font-size: 10px;
         }
+
         input[type="number"] {
             font-size: 10px;
         }
+
         select {
             font-size: 10px;
         }
+
         textarea[type="text"] {
             font-size: 10px;
         }
+
         @media screen and (min-width: 768px) {
             .uploadfiles {
                 padding-left: 26%;
@@ -173,6 +197,7 @@
         })
     </script>
 </head>
+
 <body>
     <form method="post" class="form-horizontal js-ajax-form" action="{:url('manager/postProjectAdd')}">
         <div class="信息框大框" style="min-width: 920px">
@@ -370,8 +395,8 @@
                     <div class="右 左">
                         <label for="input-fee1" class="col-sm-1 control-label">建安费</label>
                         <div class="col-sm-3" style="padding-bottom: 10px;">
-                            <input class="form-control" id="input-fee1" name="fee1"
-                                type="number" onkeyup="updateFeeChineseNum(1)">
+                            <input class="form-control" id="input-fee1" name="fee1" type="number"
+                                onkeyup="updateFeeChineseNum(1)">
                             <input class="form-control" id="chinese-fee1" type="text" readonly>
                         </div>
                     </div>
@@ -379,8 +404,8 @@
                     <div class="右 左">
                         <label for="input-fee2" class="col-sm-1 control-label">监理费</label>
                         <div class="col-sm-3" style="padding-bottom: 10px;">
-                            <input class="form-control" id="input-fee2" name="fee2"
-                                type="number" onkeyup="updateFeeChineseNum(2)">
+                            <input class="form-control" id="input-fee2" name="fee2" type="number"
+                                onkeyup="updateFeeChineseNum(2)">
                             <input class="form-control" id="chinese-fee2" type="text" readonly>
                         </div>
                     </div>
@@ -391,24 +416,24 @@
                     <div class="右 左">
                         <label for="input-fee3" class="col-sm-1 control-label">检测费</label>
                         <div class="col-sm-3" style="padding-bottom: 10px;">
-                            <input class="form-control" id="input-fee3" name="fee3"
-                                type="number" onkeyup="updateFeeChineseNum(3)">
+                            <input class="form-control" id="input-fee3" name="fee3" type="number"
+                                onkeyup="updateFeeChineseNum(3)">
                             <input class="form-control" id="chinese-fee3" type="text" readonly>
                         </div>
                     </div>
                     <div class="右 左">
                         <label for="input-fee4" class="col-sm-1 control-label">造价咨询费</label>
                         <div class="col-sm-3" style="padding-bottom: 10px;">
-                            <input class="form-control" id="input-fee4" name="fee4"
-                                type="number" onkeyup="updateFeeChineseNum(4)">
+                            <input class="form-control" id="input-fee4" name="fee4" type="number"
+                                onkeyup="updateFeeChineseNum(4)">
                             <input class="form-control" id="chinese-fee4" type="text" readonly>
                         </div>
                     </div>
                     <div class="右 左">
                         <label for="input-fee5" class="col-sm-1 control-label">其他</label>
                         <div class="col-sm-3" style="padding-bottom: 10px;">
-                            <input class="form-control" id="input-fee5" name="fee5"
-                                type="number" onkeyup="updateFeeChineseNum(5)">
+                            <input class="form-control" id="input-fee5" name="fee5" type="number"
+                                onkeyup="updateFeeChineseNum(5)">
                             <input class="form-control" id="chinese-fee5" type="text" readonly>
                         </div>
                     </div>
@@ -480,7 +505,8 @@
                         <label for="file-15-name" class="col-sm-1 control-label">招标文件签批</label>
                         <div class="col-sm-3" style="padding-bottom: 10px;">
                             <input id="file-15" type="hidden" name="file_url_15">
-                            <input class="form-control" id="file-15-name" type="text" name="file_name_15" title="招标文件签批">
+                            <input class="form-control" id="file-15-name" type="text" name="file_name_15"
+                                title="招标文件签批">
                             <a href="javascript:uploadOne('招标文件签批上传','#file-15','file');">上传</a>
                             <a class="previewBtn">预览</a>
                         </div>
@@ -492,7 +518,8 @@
                         <label for="file_name_16" class="col-sm-1 control-label">招标过程文件</label>
                         <div class="col-sm-3" style="padding-bottom: 10px;">
                             <input id="file-16" type="hidden" name="file_url_16">
-                            <input class="form-control" id="file-16-name" type="text" name="file_name_16" title="招标过程文件">
+                            <input class="form-control" id="file-16-name" type="text" name="file_name_16"
+                                title="招标过程文件">
                             <a href="javascript:uploadOne('招标过程文件上传','#file-16','file');">上传</a>
                             <a class="previewBtn">预览</a>
                         </div>
@@ -540,7 +567,8 @@
                         <label for="file-21-name" class="col-sm-1 control-label">造价咨询招标</label>
                         <div class="col-sm-3" style="padding-bottom: 10px;">
                             <input id="file-21" type="hidden" name="file_url_21">
-                            <input class="form-control" id="file-21-name" type="text" name="file_name_21" title="造价咨询招标">
+                            <input class="form-control" id="file-21-name" type="text" name="file_name_21"
+                                title="造价咨询招标">
                             <a href="javascript:uploadOne('造价咨询招标上传','#file-21','file');">上传</a>
                             <a class="previewBtn">预览</a>
                         </div>
@@ -675,13 +703,13 @@
     </div>
 </body>
 <script>
-    $('.previewBtn').on('click', function(){
+    $('.previewBtn').on('click', function () {
         var url = $(this).prev().prev().prev().val();
-        if (url == ""){
+        if (url == "") {
             alert("请先上传")
             return
         }
-        var link = '/upload/' + url 
+        var link = '/upload/' + url
         handlePreview(link)
     });
     $('#add_project_submit').on("click", function () {
@@ -718,30 +746,29 @@
         var num = convertCurrency(Math.abs($("#input-approvedBudget").val()))
         $("#chinese-approvedBudget").val(num);
     }
-    function updateFeeChineseNum(id){
-        var num = convertCurrency(Math.abs($("#input-fee"+id).val()))
-        $("#chinese-fee"+id).val(num);
+    function updateFeeChineseNum(id) {
+        var num = convertCurrency(Math.abs($("#input-fee" + id).val()))
+        $("#chinese-fee" + id).val(num);
     }
     function ask() {
         if (confirm("确定返回？")) { window.location.href = "{:url('manager/view')}" } else { return false }
     }
-    function parseInteger(n){
-        return isNaN(parseInt(n))?0:parseInt(n)
+    function parseInteger(n) {
+        return isNaN(parseInt(n)) ? 0 : parseInt(n)
     }
-    function handleUpload(){
-        if ($("#input-approximatePrice").val() != (parseInteger($("#input-fee1").val()) + parseInteger($("#input-fee2").val()) + parseInteger($("#input-fee3").val()) + parseInteger($("#input-fee4").val()) + parseInteger($("#input-fee5").val())))
-        {
+    function handleUpload() {
+        if ($("#input-approximatePrice").val() != (parseInteger($("#input-fee1").val()) + parseInteger($("#input-fee2").val()) + parseInteger($("#input-fee3").val()) + parseInteger($("#input-fee4").val()) + parseInteger($("#input-fee5").val()))) {
             alert("请检查批复概算价的值")
+        } else {
+            $('#add_project_submit').click()
         }
-        return false
-        $('#add_project_submit').click()
     }
 </script>
 <script type="text/javascript" src="__STATIC__/js/admin.js"></script>
 <script type="text/javascript" src="__STATIC__/js/frontend.js"></script>
 <script type="text/javascript">
     function handlePreview(url) {
-        if (url == ""){
+        if (url == "") {
             alert("请先上传")
             return
         }
@@ -762,4 +789,5 @@
         })
     }
 </script>
+
 </html>

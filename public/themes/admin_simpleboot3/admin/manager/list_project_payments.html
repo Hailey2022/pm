@@ -9,7 +9,8 @@
 </head>
 <style>
     .btns {
-        float: left;
+        float: right;
+        padding: 10px;
     }
     * {
         user-select: none;
@@ -17,7 +18,11 @@
     }
 </style>
 <body>
-    <h2 style="text-align: center;padding: 15px;">{$projectName}
+    <h2 style="text-align: center;" class="title">{$projectName}
+        <div class="btns">
+            <a class='btn btn-primary' href="{:url('manager/listProjectInfo', ['projectId'=>$projectId])}">工程信息</a>
+            <a class='btn btn-primary' href="{:url('manager/view')}">返回</a>
+        </div>
     </h2>
     <br>
     <table class="table table-hover table-bordered">

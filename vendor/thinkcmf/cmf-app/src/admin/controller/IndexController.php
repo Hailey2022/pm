@@ -2,6 +2,7 @@
 namespace app\admin\controller;
 use cmf\controller\AdminBaseController;
 use app\admin\model\AdminMenuModel;
+use think\Db;
 class IndexController extends AdminBaseController
 {
     public function initialize()
@@ -27,19 +28,31 @@ class IndexController extends AdminBaseController
             $menus = $adminMenuModel->menuTree();
             cache('admin_menus_' . cmf_get_current_admin_id(), $menus, null, 'admin_menus');
         }
+        // var_dump($menus['162admin']);
+        if (cmf_auth_check(cmf_get_current_admin_id(),'admin/manager/view')){
+            $projects = Db::name('project')->order('updateTime', 'desc')->select();
+            foreach ($projects as $project){
+                $menus['162admin']['items'][$project['projectId']] = [ //TODO: 改成auto
+                    "icon" => "",
+                    "id" => $project['projectId'],
+                    "name" => $project['projectName'],
+                    "parent" => 162, //TODO: 改成auto
+                    "url" => url("manager/listProjectPayments", ['projectId'=>$project['projectId']]),
+                    "lang" => "ADMIN_MANAGER_VIEW"
+                ];
+            }
+        }
+        // var_dump($menus['162admin']['items']);
         $this->assign("menus", $menus);
         $result = AdminMenuModel::order(["app" => "ASC", "controller" => "ASC", "action" => "ASC"])->select();
         $menusTmp = array();
         foreach ($result as $item) {
-            //去掉/ _ 全部小写。作为索引。
             $indexTmp = $item['app'] . $item['controller'] . $item['action'];
             $indexTmp = preg_replace("/[\\/|_]/", "", $indexTmp);
             $indexTmp = strtolower($indexTmp);
             $menusTmp[$indexTmp] = $item;
         }
         $this->assign("menus_js_var", json_encode($menusTmp));
-        //$admin = Db::name("user")->where('id', cmf_get_current_admin_id())->find();
-        //$this->assign('admin', $admin);
         return $this->fetch();
     }
 }

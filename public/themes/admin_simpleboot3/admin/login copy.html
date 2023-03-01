@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>工程项目综合管理系统</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        a {
+            text-decoration: none;
+        }
+        input,
+        button {
+            background: transparent;
+            border: 0;
+            outline: none;
+        }
+        body {
+            height: 100vh;
+            background: linear-gradient(#141e30, #243b55);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 16px;
+            color: #03e9f4;
+            backdrop-filter: blur(5px);
+            -webkit-touch-callout: none;
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            -khtml-user-select: none;
+            user-select: none;
+        }
+        .loginBox {
+            width: 500px;
+            height: 360px;
+            background-color: #0c1622;
+            margin: 100px auto;
+            border-radius: 10px;
+            box-shadow: 0 15px 25px 0 rgba(0, 0, 0, .6);
+            padding: 40px;
+            box-sizing: border-box;
+        }
+        h2 {
+            text-align: center;
+            color: aliceblue;
+            margin-bottom: 30px;
+            font-family: 'Times New Roman', Times, serif;
+        }
+        .item {
+            height: 45px;
+            border-bottom: 1px solid #fff;
+            margin-bottom: 40px;
+            position: relative;
+            font-family: 'Times New Roman', Times, serif;
+        }
+        .item input {
+            width: 100%;
+            height: 100%;
+            color: #fff;
+            padding-top: 20px;
+            box-sizing: border-box;
+        }
+        .item input:focus+label,
+        .item input:valid+label {
+            top: 0px;
+            font-size: 2px;
+        }
+        .item label {
+            position: absolute;
+            left: 0;
+            top: 12px;
+            transition: all 0.3s linear;
+            font-family: 'Times New Roman', Times, serif;
+            font-weight: bold;
+        }
+        .btn {
+            margin-top: 5px;
+            position: relative;
+            overflow: hidden;
+            left: 40%;
+            color: var(--bs-btn-active-color);
+            background-color: var(--bs-btn-active-bg);
+            border-color: var(--bs-btn-active-border-color);
+            box-shadow: var(--bs-btn-focus-box-shadow);
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 2em;
+            font-weight: bold;
+        }
+        input:-webkit-autofill,
+        input:-webkit-autofill:focus {
+            transition: background-color 600000s 0s, color 600000s 0s;
+        }
+    </style>
+    <script>
+        if (window.parent !== window.self) {
+            document.write = '';
+            window.parent.location.href = window.self.location.href;
+            setTimeout(function () {
+                document.body.innerHTML = '';
+            }, 0);
+        }
+    </script>
+</head>
+<html>
+<body>
+    <div class="loginBox">
+        <h2 style="color: var(--bs-btn-active-color)">工程项目综合管理系统</h2>
+        <form class="js-ajax-form" action="{:url('public/doLogin')}" method="post">
+            <div class="item">
+                <input id="username" name="username" type="text" required autocomplete="off">
+                <label for="username">用户名</label>
+            </div>
+            <div class="item">
+                <input id="password" name="password" type="password" required autocomplete="off">
+                <label for="password">密码</label>
+            </div>
+            <button id="login" class="btn js-ajax-submit" style="padding-bottom: 16px;">登录</button>
+        </form>
+    </div>
+</body>
+</html>
+<script type="text/javascript">
+    var GV = {
+        ROOT: "__ROOT__/",
+        WEB_ROOT: "__WEB_ROOT__/",
+        JS_ROOT: "static/js/",
+        APP: ''
+    };
+</script>
+<script src="__TMPL__/public/assets/js/jquery-1.10.2.min.js"></script>
+<script src="__STATIC__/js/wind.js"></script>
+<script src="__STATIC__/js/admin.js"></script>
+<script>
+    $("#login").on('click', function () {
+        $("#username").val($("#username").val().trim())
+    })
+</script>

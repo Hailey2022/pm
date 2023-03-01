@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh_CN" style="overflow: hidden;">
+
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="renderer" content="webkit">
@@ -15,23 +16,61 @@
         .nav-list>li.open {
             position: relative;
         }
+
         .nav-list>li.open .back {
             display: none;
         }
+
         .nav-list>li.open .normal {
             display: inline-block !important;
         }
+
         .nav-list>li.open a {
             padding-left: 7px;
         }
+
         .nav-list>li .submenu>li>a {
             background: #fff;
         }
+
         .nav-list>li .submenu>li a>[class*="fa-"]:first-child {
             left: 20px;
         }
+
         .nav-list>li ul.submenu ul.submenu>li a>[class*="fa-"]:first-child {
             left: 30px;
+        }
+
+        .nav-list>li>a {
+            background-color: #143E63;
+            color: #fff;
+        }
+
+        .nav-list>li>a b.normal {
+            color: #fff;
+        }
+
+        .nav-list>li>a:focus {
+            color: #333;
+        }
+
+        .nav-list>li.open {
+            height: auto;
+        }
+
+        .nav-list>li.open>a {
+            background-color: #ccc;
+        }
+
+        .nav-list>li .submenu>li>a:hover {
+            background-color: #5b6a8a;
+            color: #fff;
+        }
+        .sidebar-shortcuts {
+            background-color: #22507b;
+        }
+        .nav-list>li>a:hover {
+            background-color: #ccc;
         }
     </style>
     <!-- <php>var_dump($menus)</php> -->
@@ -134,15 +173,15 @@
         }
     </php>
 </head>
+
 <body style="min-width:900px;overflow: hidden;" bgcolor="#">
     <div id="loading"><i class="loadingicon"></i><span>{:lang('LOADING')}</span></div>
     <div id="right-tools-wrapper">
     </div>
-    <div class="navbar navbar-default">
+    <div class="navbar navbar-default" style="background-color: #143E63;">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="/"
-                    style="min-width: 200px;text-align: center;">工程项目综合管理系统</a>
+                <a class="navbar-brand" href="/" style="min-width: 200px;text-align: center;">工程项目综合管理系统</a>
                 <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -213,7 +252,7 @@
             <iframe src="{:url('Main/index')}" style="width:100%;height: 100%;" frameborder="0" id="appiframe-0"
                 class="appiframe"></iframe>
         </div> -->
-        <div class="sidebar" id="sidebar" style="width:262px">
+        <div class="sidebar" id="sidebar" style="width:262px;background-color: #143E63;">
             <div class="sidebar-shortcuts" id="sidebar-shortcuts" style="display: none;">
                 <a class="btn btn-sm btn-warning" href="__ROOT__/" title="{:lang('WEBSITE_HOME_PAGE')}" target="_blank"
                     data-toggle="tooltip">
@@ -248,7 +287,7 @@
                     </a>
                 </if>
             </div>
-            <div id="nav-wrapper" style="background-color: #fff;">
+            <div id="nav-wrapper" style="background-color: #143E63;">
                 <ul class="nav nav-list">
                     {:getsubmenu($submenus)}
                 </ul>
@@ -274,7 +313,7 @@
             }, function () {
                 $(this).removeClass("open");
             });
-            var menus= {$menus_js_var};
+            var menus = { $menus_js_var };
             if (typeof (menus) != "undefined") {
                 var tw = window.top;
                 var twa = tw.location.href.split("#");
@@ -358,5 +397,7 @@
         }
         );
     </script>
+
 </body>
+
 </html>

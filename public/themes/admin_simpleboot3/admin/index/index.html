@@ -193,10 +193,10 @@
                     <a id="task-pre" class="task-changebt"><i class="fa fa-chevron-left"></i></a>
                     <div id="task-content">
                         <ul class="nav navbar-nav cmf-component-tab" id="task-content-inner">
-                            <li class="cmf-component-tabitem noclose" app-id="0" app-url="{:url('main/index')}"
+                            <!-- <li class="cmf-component-tabitem noclose" app-id="0" app-url="{:url('main/index')}"
                                 app-name="首页">
                                 <a class="cmf-tabs-item-text" onclick="window.location='/'">{:lang('HOME')}</a>
-                            </li>
+                            </li> -->
                         </ul>
                         <div style="clear:both;"></div>
                     </div>
@@ -313,7 +313,7 @@
             }, function () {
                 $(this).removeClass("open");
             });
-            var menus = { $menus_js_var };
+            var menus = {$menus_js_var};
             if (typeof (menus) != "undefined") {
                 var tw = window.top;
                 var twa = tw.location.href.split("#");

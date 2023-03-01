@@ -1,793 +1,461 @@
-<include file="public@header" />
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>新增工程</title>
-    <script type="text/html" id="photos-item-tpl">
-        <li id="saved-image{id}">
-            <input id="photo-{id}" type="hidden" name="file_urls[]" value="{filepath}">
-            <input class="form-control" id="photo-{id}-name" type="text" name="file_names[]" value="{name}"
-                   style="width: 370px;" title="图片名称">
-            <img id="photo-{id}-preview" src="{url}" style="height:36px;width: 36px;"
-                 onclick="imagePreviewDialog(this.src);">
-            <a href="javascript:uploadOneImage('图片上传','#photo-{id}');">替换</a>
-            <a href="javascript:(function(){$('#saved-image{id}').remove();})();">移除</a>
-        </li>
-    </script>
-    <script type="text/html" id="files-item-tpl">
-        <li id="saved-file{id}">
-            <input id="file-{id}" type="hidden" name="file_urls[]" value="{filepath}">
-            <input class="form-control" id="file-{id}-name" type="text" name="file_names[]" value="{name}"
-                   style="width: 370px;" title="文件名称">
-            <a id="file-{id}-preview" href="{preview_url}" target="_blank">下载</a>
-            <a href="javascript:uploadOne('文件上传','#file-{id}','file');">替换</a>
-            <a href="javascript:(function(){$('#saved-file{id}').remove();})();">移除</a>
-        </li>
-    </script>
-    <link href="__STATIC__/js/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css" rel="stylesheet"
-        media="screen">
-    <link src="__STATIC__/js/wind.js">
-    </link>
+    <meta charset="utf-8">
+    <title>工程录入</title>
     <style>
-        .信息框大框 {
-            width: 96%;
-            margin-top: 50px;
-        }
-
-        .信息框标题 {
-            width: 200px;
-            height: 22px;
-            line-height: 20px;
-            text-align: center;
-        }
-
-        .信息框标题 span {
-            padding: 1px 1px;
-            margin-top: auto;
-            margin-right: 10px;
-        }
-
-        .信息框标题 a.工程加号 a.工程减号 {
-            cursor: pointer;
-        }
-
-        a:hover {
-            text-decoration: none;
-        }
-
-        .信息框边框 {
-            border: 1px solid #333;
-            padding: 5px;
-            clear: both;
-            border-color: #18BC9C;
-            border-style: none;
-        }
-
-        ul {
-            list-style-type: none;
-        }
-
-        .上下宽度 {
-            padding: 1%;
-            border-style: dashed dashed dashed dashed;
-            margin-top: 5px;
-            border-radius: 16px;
-            border-color: #18BC9C;
-        }
-
-        .btn-primary {
-            color: #333333;
-            background-color: #c2fbd7;
-            border-color: #c2fbd7;
-        }
-
         * {
-            user-select: none;
+            margin: 0;
+            padding: 0;
+            border: none;
+            list-style-type: none;
+            -moz-user-select: none;
+            -webkit-user-select: none
         }
 
-        .button-s {
-            --color: #18BC9C;
-            font-family: inherit;
-            display: inline-block;
-            width: 8em;
-            height: 2.6em;
-            line-height: 2.5em;
-            margin: 20px;
-            position: relative;
+        a,
+        img {
+            border: 0;
+        }
+
+        ::-moz-focus-inner {
+            border: 0px;
+        }
+
+        ul,
+        ul li,
+        ol li,
+        li {
+            list-style: none;
+        }
+
+        a,
+        img,
+        input,
+        textarea {
+            border: none;
+        }
+
+        a {
+            text-decoration: none;
+            color: #111
+        }
+
+        div.xf_input {
+            background-color: #F9F9F9;
+            margin: 15px 50px 5px 50px;
+            font-family: "Microsoft Yahei", verdana;
+            font-size: 12px;
+            padding-bottom: 15px;
+
+            border: 1px solid #ccc;
+            width: 90%;
+
             overflow: hidden;
-            border: 0px solid var(--color);
-            transition: color .5s;
-            z-index: 1;
-            font-size: 17px;
-            border-radius: 6px;
-            font-weight: 500;
-            color: var(--color);
-            margin-left: 100px !important;
+            float: left;
+            min-width: 1000px;
         }
 
-        .button-s:before {
-            content: "";
-            position: absolute;
-            z-index: -1;
-            background: var(--color) !important;
-            height: 150px !important;
-            width: 200px !important;
-            border-radius: 80% !important;
+        h4.xf_input_h4 {
+            background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAGBAMAAAD9IJlFAAAAJ1BMVEUAAACAgIBqcHVqcHVuc3ltcHhtcnducXhtcnhtcXhtcndtcndtcnh84727AAAADHRSTlMAADAxX2COkN7f7u/sMiwUAAAAH0lEQVQIHWMAgyIGoQQGTQULBQamLYsYGBhiAhjAAAA1JQOK8B+6tAAAAABJRU5ErkJggg==") no-repeat 5px;
+            background-color: #E9E9E9;
+            width: 100%;
+            text-indent: 15px;
+            line-height: 34px;
+            margin-bottom: 10px;
         }
 
-        .button-s:hover {
-            color: #fff;
+        div.xf_input ul {
+            padding: 7px 0 10px 0;
         }
 
-        .button-s:before {
-            top: 100% !important;
-            left: 100% !important;
-            transition: all .7s !important;
+        div.xf_input li {
+            margin: 5px 0 0 10px;
+            line-height: 32px;
+            padding-bottom: 10px;
+            border-bottom: 1px transparent solid;
+            border-image: linear-gradient(to right, #f6f6f6, #ddd, #f6f6f6) 1 10;
         }
 
-        .button-s:hover:before {
-            top: -30px !important;
-            left: -30px !important;
+        div.xf_input li span {
+            text-align: right;
+            width: 160px;
+            float: left;
+            color: #757575;
         }
 
-        .button-s:active:before {
-            background: #18BC9C !important;
-            transition: background 0s !important;
+        div.xf_input li span.xf_ser {
+            float: none;
+            margin-left: 2px;
         }
 
-        .左 {
-            margin-right: 30px;
+
+
+        div.xf_input li select {
+            width: 125px;
+            padding: 3px;
+            height: 30px;
+            transition: all 0.5s ease 0s;
+            border-radius: 3px;
+            font-size: 12px;
+            line-height: 1.666;
+            border: 1px solid rgb(187, 187, 187);
+            background: rgb(255, 255, 255);
+            box-shadow: rgb(0 0 0 / 10%) 1px 1px 2px inset;
+
         }
 
-        .右 {
-            margin-left: 30px;
+        div.xf_input li input {
+            width: 280px;
+            padding: 3px 8px;
+            height: 20px;
+            transition: all 0.5s ease 0s;
+            border-radius: 3px;
+            font-size: 12px;
+            line-height: 1.666;
+            border: 1px solid rgb(187, 187, 187);
+            background: rgb(255, 255, 255);
+            box-shadow: rgb(0 0 0 / 10%) 1px 1px 2px inset;
+            margin-right: 9px;
+
         }
 
-        label {
-            font-size: 10px;
+        input[type=date] {
+            width: 100px !important;
         }
 
-        input[type="text"] {
-            font-size: 10px;
+        div.xf_input li input:disabled {
+            background-color: #ddd;
         }
 
-        input[type="number"] {
-            font-size: 10px;
+        div.xf_input li b {
+            color: #f00;
+            padding-left: 2px;
+            font-weight: normal;
         }
 
-        select {
-            font-size: 10px;
+
+        xfupload {
+            background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAAAcCAAAAACy+EUkAAAAM0lEQVRIx2P8x0B7wEQHOxhY/o9aMjLj5N9oxI9aMpq6Ri0ZtWSYJ+HRhsQgtIRxuPgEANW3GE3csk9lAAAAAElFTkSuQmCC") repeat-x;
+            display: inline-block;
+            margin-right: 8px;
+            text-align: center;
+            vertical-align: middle;
+            border-radius: 4px;
+            line-height: 26px;
+            padding: 0px 13px 0px 10px;
+            position: relative;
+            font-size: 12px;
+            border: 1px solid rgb(153, 153, 153);
+            color: rgb(85, 85, 85);
+            cursor: pointer;
+            zoom: 1;
+            outline: 0px
         }
 
-        textarea[type="text"] {
-            font-size: 10px;
-        }
-
-        @media screen and (min-width: 768px) {
-            .uploadfiles {
-                padding-left: 26%;
-            }
+        xfuplaod_fix {
+            width: 221px;
+            float: left;
+            height: 30px;
+            overflow: hidden;
         }
     </style>
-    <script>
-        $(function () {
-            var 第一个li = '<xfli>' + $('.缓存对象 xfli:first').html() + '</xfli>';
-            $('a.工程加号').on("click", function () {
-                $('ul.缓存对象 xfli:last').after(第一个li)
-                var file_num = $('ul.缓存对象 xfli').length - 1
-                $('div.uploadfiles:last ul').attr('id', 'files' + file_num);
-                $('div.uploadfiles:last a.uploadfiles_file_flag').attr('href', "javascript:uploadMultiFile('文件上传','#files" + file_num + "','files-item-tpl','file');");
-                $('div.uploadfiles:last a.uploadfiles_image_flag').attr('href', "javascript:uploadMultiFile('图片上传','#files" + file_num + "','photos-item-tpl','image');");
-                $('.contractAmount').on("keyup", function () {
-                    $(this).parent().next().next().children().first().val(convertCurrency(Math.abs($(this).val())))
-                });
-            });
-            $('a.工程减号').on("click", function () {
-                var 信息框边框 = $(this).parent().next();
-                if (信息框边框.find('xfli').length == 1) {
-                    alert("不能再减少了");
-                    return
-                }
-                信息框边框.find('xfli').last().remove();
-            });
-        })
-    </script>
+
 </head>
 
 <body>
-    <form method="post" class="form-horizontal js-ajax-form" action="{:url('manager/postProjectAdd')}">
-        <div class="信息框大框" style="min-width: 920px">
-            <div class="信息框标题"><a style="font-size: 150%;">工程基本信息</a></div>
-            <div class="上下宽度 右">
-                <div class="form-group">
-                    <div class="右 左">
-                        <label for="input-project-name" class="col-sm-1 control-label">工程名称</label>
-                        <div class="col-sm-3" style="padding-bottom: 10px;">
-                            <input class="form-control" id="input-project-name" name="project-name" type="text"
-                                required>
-                        </div>
-                    </div>
-                    <div class="右 左">
-                        <label for="input-construction-name" class="col-sm-1 control-label">建设单位</label>
-                        <div class="col-sm-3" style="padding-bottom: 10px;">
-                            <input class="form-control" id="input-construction-name" name="constructionCompany"
-                                type="text">
-                        </div>
-                    </div>
-                    <div class="右 左">
-                        <label for="input-construction-year" class="col-sm-1 control-label">建设年份</label>
-                        <div class="col-sm-3" style="padding-bottom: 10px;">
-                            <input class="form-control" id="input-construction-year" name="constructionYear"
-                                type="text">
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="右 左">
-                        <label for="input-estimatedPrice" class="col-sm-1 control-label">估算价</label>
-                        <div class="col-sm-3" style="padding-bottom: 10px;">
-                            <input class="form-control" id="input-estimatedPrice" name="estimatedPrice" type="number"
-                                onkeyup="updateEstimatedPriceChineseNum()">
-                            <input class="form-control" id="chinese-estimatedPrice" type="text" readonly>
-                        </div>
-                    </div>
-                    <div class="右 左">
-                        <label for="input-reportedBudget" class="col-sm-1 control-label">上报预算价</label>
-                        <div class="col-sm-3" style="padding-bottom: 10px;">
-                            <input class="form-control" id="input-reportedBudget" name="reportedBudget" type="text"
-                                onkeyup="updateReportedBudgetChineseNum()">
-                            <input class="form-control" id="chinese-reportedBudget" type="text" readonly>
-                        </div>
-                    </div>
-                    <div class="右 左">
-                        <label for="input-approvedBudget" class="col-sm-1 control-label">批复预算价</label>
-                        <div class="col-sm-3" style="padding-bottom: 10px;">
-                            <input class="form-control" id="input-approvedBudget" name="approvedBudget" type="text"
-                                onkeyup="updateApprovedBudgetChineseNum()">
-                            <input class="form-control" id="chinese-approvedBudget" type="text" readonly>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="右 左">
-                        <label for="tenderingMethod" class="col-sm-1 control-label">招标方式</label>
-                        <div class="col-sm-3" style="padding-bottom: 10px;">
-                            <select class="form-control" list="tenderingMethod" name="tenderingMethod"
-                                id="input-tenderingMethod" required>
-                                <datalist id="tenderingMethod">
-                                    <foreach name="tenderingMethods" item="m">
-                                        <option name="tenderingMethod" value="{:$m.id}"> {$m.method}</option>
-                                    </foreach>
-                                </datalist>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="右 左">
-                        <label for="projectStatus" class="col-sm-1 control-label">实施阶段</label>
-                        <div class="col-sm-3" style="padding-bottom: 10px;">
-                            <select class="form-control" list="projectStatus" name="projectStatusId"
-                                id="input-projectStatus" required>
-                                <datalist id="projectStatus">
-                                    <foreach name="theProjectStatus" item="s">
-                                        <option name="projectStatus" value="{:$s.id}"> {$s.projectStatus}</option>
-                                    </foreach>
-                                </datalist>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="右 左">
-                        <label for="file-5-name" class="col-sm-1 control-label">预算上报文件</label>
-                        <div class="col-sm-3" style="padding-bottom: 10px;">
-                            <input id="file-5" type="hidden" name="file_url_5">
-                            <input class="form-control" id="file-5-name" type="text" name="file_name_5" title="预算上报文件">
-                            <a href="javascript:uploadOne('预算上报文件上传','#file-5','file');">上传</a>
-                            <a class="previewBtn">预览</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="xf_input">
+        <h4 class="xf_input_h4">工程基本信息</h4>
+        <ul>
+            <li>
+                <span>工程基本信息：</span>
+                <input type="text" autocomplete="off" required>
+                <b>必填</b>
+            </li>
+            <li>
+                <span>建设单位：</span>
+                <input type="text" autocomplete="off">
+                <!-- <span class="xf_ser">批复日期：</span>
+                <input disabled type="text"  autocomplete="off" value="3442.342万元"> -->
+            </li>
+            <li>
+                <span>建设年份：</span>
+                <input type="number" min="1900" max="2099" step="1" value="2023" />
+                <!-- <span class="xf_ser">批复日期：</span>
+                <input type="text"  autocomplete="off" value="3442.342万元"> -->
+            </li>
+            <li>
+                <span>估算价：</span>
+                <input type="text" autocomplete="off">
+                <span class="xf_ser">万元：</span>
+                <input type="text" autocomplete="off" value="xxxx 万元" disabled>
+            </li>
+            <li>
+                <span>上报预算价：</span>
+                <input type="text" autocomplete="off">
+                <span class="xf_ser">万元：</span>
+                <input type="text" autocomplete="off" value="xxxx 万元" disabled>
+            </li>
+            <li>
+                <span>批复预算价：</span>
+                <input type="text" autocomplete="off">
+                <span class="xf_ser">万元：</span>
+                <input type="text" autocomplete="off" value="xxxx 万元" disabled>
+            </li>
+            <!-- <li>
+                <span>批复预算价：</span>
+                <input type="text" autocomplete="off">
+                <span class="xf_ser">批复日期：</span>
+                <input type="date" autocomplete="off" value="3442.342万元">
+            </li> -->
 
-        <div class="信息框大框" style="min-width: 920px">
-            <div class="信息框标题"><a style="font-size: 150%;">可研阶段</a></div>
-            <div class="上下宽度 右">
-                <div class="form-group">
-                    <div class="右 左">
-                        <label for="file-1-name" class="col-sm-1 control-label">可研报告</label>
-                        <div class="col-sm-3" style="padding-bottom: 10px;">
-                            <input id="file-1" type="hidden" name="file_url_1">
-                            <input class="form-control" id="file-1-name" type="text" name="file_name_1" title="可研报告">
-                            <a href="javascript:uploadOne('可研报告上传','#file-1','file');">上传</a>
-                            <a class="previewBtn">预览</a>
-                        </div>
-                    </div>
-                    <div class="右 左">
-                        <label for="file-7-name" class="col-sm-1 control-label">可研审批文件</label>
-                        <div class="col-sm-3" style="padding-bottom: 10px;">
-                            <input id="file-7" type="hidden" name="file_url_7">
-                            <input class="form-control" id="file-7-name" type="text" name="file_name_7" title="可研审批文件">
-                            <a href="javascript:uploadOne('可研审批文件上传','#file-7','file');">上传</a>
-                            <a class="previewBtn">预览</a>
-                        </div>
-                    </div>
-                    <div class="右 左">
-                        <label for="file-2-name" class="col-sm-1 control-label">可研批复</label>
-                        <div class="col-sm-3" style="padding-bottom: 10px;">
-                            <input id="file-2" type="hidden" name="file_url_2">
-                            <input class="form-control" id="file-2-name" type="text" name="file_name_2" title="可研批复">
-                            <a href="javascript:uploadOne('可研批复上传','#file-2','file');">上传</a>
-                            <a class="previewBtn">预览</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="信息框大框" style="min-width: 920px">
-            <div class="信息框标题"><a style="font-size: 150%;">初步设计阶段</a></div>
-            <div class="上下宽度 右">
-                <div class="form-group">
-                    <div class="右 左">
-                        <label for="file-3-name" class="col-sm-1 control-label">初步设计报告</label>
-                        <div class="col-sm-3" style="padding-bottom: 10px;">
-                            <input id="file-3" type="hidden" name="file_url_3">
-                            <input class="form-control" id="file-3-name" type="text" name="file_name_3" title="初步设计报告">
-                            <a href="javascript:uploadOne('初步设计报告上传','#file-3','file');">上传</a>
-                            <a class="previewBtn">预览</a>
-                        </div>
-                    </div>
-                    <div class="右 左">
-                        <label for="file-8-name" class="col-sm-1 control-label">初步设计图纸</label>
-                        <div class="col-sm-3" style="padding-bottom: 10px;">
-                            <input id="file-8" type="hidden" name="file_url_8">
-                            <input class="form-control" id="file-8-name" type="text" name="file_name_8" title="初步设计图纸">
-                            <a href="javascript:uploadOne('初步设计图纸上传','#file-8','file');">上传</a>
-                            <a class="previewBtn">预览</a>
-                        </div>
-                    </div>
-
-                    <div class="右 左">
-                        <label for="file_url_4" class="col-sm-1 control-label">初步设计批复</label>
-                        <div class="col-sm-3" style="padding-bottom: 10px;">
-                            <input id="file-4" type="hidden" name="file_url_4">
-                            <input class="form-control" id="file-4-name" type="text" name="file_name_4" title="初步设计批复">
-                            <a href="javascript:uploadOne('初步设计批复上传','#file-4','file');">上传</a>
-                            <a class="previewBtn">预览</a>
-                        </div>
-                    </div>
-
-                </div>
+            <li>
+                <span>招标方式：</span>
+                <select>
+                    <option>未填写</option>
+                    <option>公开招标</option>
+                    <option>邀请招标</option>
+                    <option>单一来源</option>
+                    <option>竞争性谈判</option>
+                    <option>竞争性磋商</option>
+                </select>
+            </li>
+            <li>
+                <span>实施阶段：</span>
+                <select>
+                    <option value="0"> 未填写</option>
+                    <option value="1"> 正在施工</option>
+                    <option value="2"> 已完成</option>
+                    <option value="3"> 结算阶段</option>
+                    <option value="4"> 决算阶段</option>
+                    <option value="5"> 已竣工验收</option>
+                </select>
+            </li>
+            <!-- <li><span>实施阶段：</span><input type="text" autocomplete="off"></li> -->
+            <li>
+                <xfupload>上传</xfupload>
+                <span>预算上报文件：</span>
+                <input type="text" autocomplete="off">
+                <xfupload>预览</xfupload>
+                <xfupload>替换</xfupload>
+                <xfupload>删除</xfupload>
                 <br>
-                <div class="form-group">
-                    <div class="右 左">
-                        <label for="file-9-name" class="col-sm-1 control-label">审批请示和批复</label>
-                        <div class="col-sm-3" style="padding-bottom: 10px;">
-                            <input id="file-9" type="hidden" name="file_url_9">
-                            <input class="form-control" id="file-9-name" type="text" name="file_name_9" title="审批请示和批复">
-                            <a href="javascript:uploadOne('审批请示和批复上传','#file-9','file');">上传</a>
-                            <a class="previewBtn">预览</a>
-                        </div>
-                    </div>
-                    <div class="右 左">
-                        <label for="file-10-name" class="col-sm-1 control-label">概算书</label>
-                        <div class="col-sm-3" style="padding-bottom: 10px;">
-                            <input id="file-10" type="hidden" name="file_url_10">
-                            <input class="form-control" id="file-10-name" type="text" name="file_name_10" title="概算书">
-                            <a href="javascript:uploadOne('概算书上传','#file-10','file');">上传</a>
-                            <a class="previewBtn">预览</a>
-                        </div>
-                    </div>
-                </div>
-                <br>
-                <div class="form-group">
-                    <div class="右 左">
-                        <label for="input-approximatePrice" class="col-sm-1 control-label">批复概算价</label>
-                        <div class="col-sm-3" style="padding-bottom: 10px;">
-                            <input class="form-control" id="input-approximatePrice" name="approximatePrice"
-                                type="number" onkeyup="updateApproximatePriceChineseNum()">
-                            <input class="form-control" id="chinese-approximatePrice" type="text" readonly>
-                        </div>
-                    </div>
-                    <div class="右 左">
-                        <label for="input-fee1" class="col-sm-1 control-label">建安费</label>
-                        <div class="col-sm-3" style="padding-bottom: 10px;">
-                            <input class="form-control" id="input-fee1" name="fee1" type="number"
-                                onkeyup="updateFeeChineseNum(1)">
-                            <input class="form-control" id="chinese-fee1" type="text" readonly>
-                        </div>
-                    </div>
-                    <!-- TODO -->
-                    <div class="右 左">
-                        <label for="input-fee2" class="col-sm-1 control-label">监理费</label>
-                        <div class="col-sm-3" style="padding-bottom: 10px;">
-                            <input class="form-control" id="input-fee2" name="fee2" type="number"
-                                onkeyup="updateFeeChineseNum(2)">
-                            <input class="form-control" id="chinese-fee2" type="text" readonly>
-                        </div>
-                    </div>
+                <xfuplaod_fix></xfuplaod_fix>
+                <input type="text" autocomplete="off">
+                <xfupload>预览</xfupload>
+                <xfupload>替换</xfupload>
+                <xfupload>删除</xfupload><br>
+                <xfuplaod_fix></xfuplaod_fix>
+                <input type="text" autocomplete="off">
+                <xfupload>预览</xfupload>
+                <xfupload>替换</xfupload>
+                <xfupload>删除</xfupload><br>
+                <xfuplaod_fix></xfuplaod_fix>
+                <input type="text" autocomplete="off">
+                <xfupload>预览</xfupload>
+                <xfupload>替换</xfupload>
+                <xfupload>删除</xfupload>
+            </li>
+        </ul>
+    </div>
 
-                </div>
-                <br>
-                <div class="form-group">
-                    <div class="右 左">
-                        <label for="input-fee3" class="col-sm-1 control-label">检测费</label>
-                        <div class="col-sm-3" style="padding-bottom: 10px;">
-                            <input class="form-control" id="input-fee3" name="fee3" type="number"
-                                onkeyup="updateFeeChineseNum(3)">
-                            <input class="form-control" id="chinese-fee3" type="text" readonly>
-                        </div>
-                    </div>
-                    <div class="右 左">
-                        <label for="input-fee4" class="col-sm-1 control-label">造价咨询费</label>
-                        <div class="col-sm-3" style="padding-bottom: 10px;">
-                            <input class="form-control" id="input-fee4" name="fee4" type="number"
-                                onkeyup="updateFeeChineseNum(4)">
-                            <input class="form-control" id="chinese-fee4" type="text" readonly>
-                        </div>
-                    </div>
-                    <div class="右 左">
-                        <label for="input-fee5" class="col-sm-1 control-label">其他</label>
-                        <div class="col-sm-3" style="padding-bottom: 10px;">
-                            <input class="form-control" id="input-fee5" name="fee5" type="number"
-                                onkeyup="updateFeeChineseNum(5)">
-                            <input class="form-control" id="chinese-fee5" type="text" readonly>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <div class="信息框大框" style="min-width: 920px">
-            <div class="信息框标题"><a style="font-size: 150%;">施工图预算阶段</a></div>
-            <div class="上下宽度 右">
-                <div class="form-group">
-                    <div class="右 左">
-                        <label for="file_name_6" class="col-sm-1 control-label">施工图</label>
-                        <div class="col-sm-3" style="padding-bottom: 10px;">
-                            <input id="file-6" type="hidden" name="file_url_6">
-                            <input class="form-control" id="file-6-name" type="text" name="file_name_6" title="施工图">
-                            <a href="javascript:uploadOne('施工图上传','#file-6','file');">上传</a>
-                            <a class="previewBtn">预览</a>
-                        </div>
-                    </div>
-                    <div class="右 左">
-                        <label for="file-11-name" class="col-sm-1 control-label">预算书</label>
-                        <div class="col-sm-3" style="padding-bottom: 10px;">
-                            <input id="file-11" type="hidden" name="file_url_11">
-                            <input class="form-control" id="file-11-name" type="text" name="file_name_11" title="预算书">
-                            <a href="javascript:uploadOne('预算书上传','#file-11','file');">上传</a>
-                            <a class="previewBtn">预览</a>
-                        </div>
-                    </div>
-                    <!-- TODO -->
-                    <div class="右 左">
-                        <label for="file-12-name" class="col-sm-1 control-label">定案预算书</label>
-                        <div class="col-sm-3" style="padding-bottom: 10px;">
-                            <input id="file-12" type="hidden" name="file_url_12">
-                            <input class="form-control" id="file-12-name" type="text" name="file_name_12" title="定案预算书">
-                            <a href="javascript:uploadOne('定案预算书上传','#file-12','file');">上传</a>
-                            <a class="previewBtn">预览</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="xf_input">
+        <h4 class="xf_input_h4">可研阶段</h4>
+        <ul>
+            <li><span>可研报告：</span>
+                <xfupload>上传</xfupload><input type="text" autocomplete="off">
+                <xfupload>预览</xfupload>
+                <xfupload>替换</xfupload>
+                <xfupload>删除</xfupload>
+            </li>
+            <li><span>可研审批文件：</span>
+                <xfupload>上传</xfupload><input type="text" autocomplete="off">
+                <xfupload>预览</xfupload>
+                <xfupload>替换</xfupload>
+                <xfupload>删除</xfupload>
+            </li>
+            <li>
+                <span>可研批复：</span>
+                <xfupload>上传</xfupload><input type="text" autocomplete="off">
+                <xfupload>预览</xfupload>
+                <xfupload>替换</xfupload>
+                <xfupload>删除</xfupload>
+                <span class="xf_ser">批复日期：</span>
+                <input type="date" autocomplete="off" value="3442.342万元">
+            </li>
+        </ul>
+    </div>
 
-        <div class="信息框大框" style="min-width: 920px">
-            <div class="信息框标题"><a style="font-size: 150%;">工程招标</a></div>
-            <div class="上下宽度 右">
-                <div class="form-group">
-                    <div class="右 左">
-                        <label for="file_name_13" class="col-sm-1 control-label">选定代理上会材料</label>
-                        <div class="col-sm-3" style="padding-bottom: 10px;">
-                            <input id="file-13" type="hidden" name="file_url_13">
-                            <input class="form-control" id="file-13-name" type="text" name="file_name_13"
-                                title="选定代理上会材料">
-                            <a href="javascript:uploadOne('选定代理上会材料上传','#file-13','file');">上传</a>
-                            <a class="previewBtn">预览</a>
-                        </div>
-                    </div>
-                    <div class="右 左">
-                        <label for="file-14-name" class="col-sm-1 control-label">招标代理合同签批</label>
-                        <div class="col-sm-3" style="padding-bottom: 10px;">
-                            <input id="file-14" type="hidden" name="file_url_14">
-                            <input class="form-control" id="file-14-name" type="text" name="file_name_14"
-                                title="招标代理合同签批">
-                            <a href="javascript:uploadOne('招标代理合同签批上传','#file-14','file');">上传</a>
-                            <a class="previewBtn">预览</a>
-                        </div>
-                    </div>
-                    <div class="右 左">
-                        <label for="file-15-name" class="col-sm-1 control-label">招标文件签批</label>
-                        <div class="col-sm-3" style="padding-bottom: 10px;">
-                            <input id="file-15" type="hidden" name="file_url_15">
-                            <input class="form-control" id="file-15-name" type="text" name="file_name_15"
-                                title="招标文件签批">
-                            <a href="javascript:uploadOne('招标文件签批上传','#file-15','file');">上传</a>
-                            <a class="previewBtn">预览</a>
-                        </div>
-                    </div>
-                </div>
-                <br>
-                <div class="form-group">
-                    <div class="右 左">
-                        <label for="file_name_16" class="col-sm-1 control-label">招标过程文件</label>
-                        <div class="col-sm-3" style="padding-bottom: 10px;">
-                            <input id="file-16" type="hidden" name="file_url_16">
-                            <input class="form-control" id="file-16-name" type="text" name="file_name_16"
-                                title="招标过程文件">
-                            <a href="javascript:uploadOne('招标过程文件上传','#file-16','file');">上传</a>
-                            <a class="previewBtn">预览</a>
-                        </div>
-                    </div>
-                    <div class="右 左">
-                        <label for="file-17-name" class="col-sm-1 control-label">中标标书</label>
-                        <div class="col-sm-3" style="padding-bottom: 10px;">
-                            <input id="file-17" type="hidden" name="file_url_17">
-                            <input class="form-control" id="file-17-name" type="text" name="file_name_17" title="中标标书">
-                            <a href="javascript:uploadOne('中标标书上传','#file-17','file');">上传</a>
-                            <a class="previewBtn">预览</a>
-                        </div>
-                    </div>
-                    <div class="右 左">
-                        <label for="file-18-name" class="col-sm-1 control-label">施工招标</label>
-                        <div class="col-sm-3" style="padding-bottom: 10px;">
-                            <input id="file-18" type="hidden" name="file_url_18">
-                            <input class="form-control" id="file-18-name" type="text" name="file_name_18" title="施工招标">
-                            <a href="javascript:uploadOne('施工招标上传','#file-18','file');">上传</a>
-                            <a class="previewBtn">预览</a>
-                        </div>
-                    </div>
-                </div>
-                <br>
-                <div class="form-group">
-                    <div class="右 左">
-                        <label for="file_name_19" class="col-sm-1 control-label">监理招标</label>
-                        <div class="col-sm-3" style="padding-bottom: 10px;">
-                            <input id="file-19" type="hidden" name="file_url_19">
-                            <input class="form-control" id="file-19-name" type="text" name="file_name_19" title="监理招标">
-                            <a href="javascript:uploadOne('监理招标上传','#file-19','file');">上传</a>
-                            <a class="previewBtn">预览</a>
-                        </div>
-                    </div>
-                    <div class="右 左">
-                        <label for="file-20-name" class="col-sm-1 control-label">检测招标</label>
-                        <div class="col-sm-3" style="padding-bottom: 10px;">
-                            <input id="file-20" type="hidden" name="file_url_20">
-                            <input class="form-control" id="file-20-name" type="text" name="file_name_20" title="检测招标">
-                            <a href="javascript:uploadOne('检测招标上传','#file-20','file');">上传</a>
-                            <a class="previewBtn">预览</a>
-                        </div>
-                    </div>
-                    <div class="右 左">
-                        <label for="file-21-name" class="col-sm-1 control-label">造价咨询招标</label>
-                        <div class="col-sm-3" style="padding-bottom: 10px;">
-                            <input id="file-21" type="hidden" name="file_url_21">
-                            <input class="form-control" id="file-21-name" type="text" name="file_name_21"
-                                title="造价咨询招标">
-                            <a href="javascript:uploadOne('造价咨询招标上传','#file-21','file');">上传</a>
-                            <a class="previewBtn">预览</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="xf_input">
+        <h4 class="xf_input_h4">初步设计阶段</h4>
+        <ul>
+            <li><span>初步设计报告：</span>
+                <xfupload>上传</xfupload><input type="text" autocomplete="off">
+                <xfupload>预览</xfupload>
+                <xfupload>替换</xfupload>
+                <xfupload>删除</xfupload>
+            </li>
+            <li><span>初步设计图纸：</span>
+                <xfupload>上传</xfupload><input type="text" autocomplete="off">
+                <xfupload>预览</xfupload>
+                <xfupload>替换</xfupload>
+                <xfupload>删除</xfupload>
+            </li>
+            <li>
+                <span>初步设计批复：</span>
+                <xfupload>上传</xfupload><input type="text" autocomplete="off">
+                <xfupload>预览</xfupload>
+                <xfupload>替换</xfupload>
+                <xfupload>删除</xfupload>
+                <span class="xf_ser">批复日期：</span>
+                <input type="date" autocomplete="off" value="">
+            </li>
+            <li><span>审批、批复：</span>
+                <xfupload>上传</xfupload><input type="text" autocomplete="off">
+                <xfupload>预览</xfupload>
+                <xfupload>替换</xfupload>
+                <xfupload>删除</xfupload>
+                <span class="xf_ser">批复日期：</span>
+                <input type="date" autocomplete="off" value="">
+            </li>
+            <li><span>概算书：</span>
+                <xfupload>上传</xfupload><input type="text" autocomplete="off">
+                <xfupload>预览</xfupload>
+                <xfupload>替换</xfupload>
+                <xfupload>删除</xfupload>
+            </li>
+            <li>
+                <span>批复概算价：</span>
+                <input type="text" autocomplete="off">
+                <span class="xf_ser">万元：</span>
+                <input type="text" autocomplete="off" value="xxxx 万元" disabled>
+            </li>
+            <li>
+                <span>建安费：</span>
+                <input type="text" autocomplete="off">
+                <span class="xf_ser">万元：</span>
+                <input type="text" autocomplete="off" value="xxxx 万元" disabled>
+            </li>
+            <li>
+                <span>监理费：</span>
+                <input type="text" autocomplete="off">
+                <span class="xf_ser">万元：</span>
+                <input type="text" autocomplete="off" value="xxxx 万元" disabled>
+            </li>
+            <li>
+                <span>检测费：</span>
+                <input type="text" autocomplete="off">
+                <span class="xf_ser">万元：</span>
+                <input type="text" autocomplete="off" value="xxxx 万元" disabled>
+            </li>
+            <li>
+                <span>造价咨询费：</span>
+                <input type="text" autocomplete="off">
+                <span class="xf_ser">万元：</span>
+                <input type="text" autocomplete="off" value="xxxx 万元" disabled>
+            </li>
+            <li>
+                <span>其他：</span>
+                <input type="text" autocomplete="off">
+                <span class="xf_ser">万元：</span>
+                <input type="text" autocomplete="off" value="xxxx 万元" disabled>
+            </li>
+        </ul>
+    </div>
 
-        <div class="信息框大框" style="min-width: 920px">
-            <div class="信息框标题">
-                <a style="font-size: 140%;">服务商基本信息</a>
-            </div>
-            <div class="">
-                <a class="工程加号" style="display: none;">增加+</a>
-                <a class="工程减号" style="display: none;">减少-</a>
-            </div>
-            <div class="信息框边框">
-                <ul class="缓存对象">
-                    <xfli>
-                        <div class="row 上下宽度" style="padding-bottom: 10px;">
-                            <label for="users" class="col-sm-2 control-label">合同类别</label>
-                            <div class="col-sm-3" style="padding-bottom: 10px;">
-                                <select class="form-control" list="users" name="clientType[]" id="input-clientType"
-                                    required>
-                                    <datalist id="users">
-                                        <option name="clientType" value="">合同类别</option>
-                                        <foreach name="types" item="u">
-                                            <option name="clientType" value="{:$u.id}"> {$u.name}</option>
-                                        </foreach>
-                                    </datalist>
-                                </select>
-                            </div>
-                            <div style="padding-bottom: 10px;">
-                                <label for="clientId" class="col-sm-2 control-label">实施单位名称</label>
-                                <div class="col-sm-4" style="padding-bottom: 10px;">
-                                    <input class="form-control" list="clientName" name="clientName[]"
-                                        id="input-clientName" required>
-                                    <datalist id="clientName">
-                                        <option name="clientName" value="">实施单位名称</option>
-                                        <foreach name="users" item="u">
-                                            <option name="clientName" value="{:$u.user_login}"> {$u.user_login}</option>
-                                        </foreach>
-                                    </datalist>
-                                    </input>
-                                </div>
-                                <a class="btn" style="display: none;color: #0000ff">提交时自动添加</a>
-                            </div>
-                            <div>
-                                <label for="input-contractName" class="col-sm-2 control-label">合同名称</label>
-                                <div class="col-sm-5" style="padding-bottom: 10px;">
-                                    <input class="form-control" id="input-contractName" name="contractName[]"
-                                        type="text" placeholder="合同名称">
-                                </div>
-                                <label for="input-contractNumber" class="col-sm-1 control-label">合同编号</label>
-                                <div class="col-sm-3" style="padding-bottom: 10px;">
-                                    <input class="form-control" id="input-contractNumber" name="contractNumber[]"
-                                        type="text" placeholder="合同编号">
-                                </div>
-                            </div>
-                            <div>
-                                <label for="input-contractAmount" class="col-sm-2 control-label">合同金额</label>
-                                <div class="col-sm-3" style="padding-bottom: 10px;">
-                                    <input class="form-control contractAmount" id="input-contractAmount"
-                                        name="contractAmount[]" type="number" placeholder="合同金额" onkeyup="">
-                                </div>
-                                <label for="chinese-contractAmount" class="col-sm-1 control-label">金额中文</label>
-                                <div class="col-sm-5" style="padding-bottom: 10px;">
-                                    <input class="form-control" id="chinese-contractAmount" type="text" readonly
-                                        placeholder="中文金额">
-                                </div>
-                            </div>
-                            <div style="padding-bottom: 10px;">
-                                <label for="input-contractTime" class="col-sm-2 control-label">合同起始时间</label>
-                                <div class="col-sm-2" style="padding-bottom: 10px;">
-                                    <input class="form-control" id="input-contractTime" name="contractTime[]"
-                                        type="text" onmouseover="(this.type='date')" placeholder="合同签订时间">
-                                </div>
-                                <div class="col-sm-2" style="padding-bottom: 10px;">
-                                    <input class="form-control" id="input-contractExpTime" name="contractExpTime[]"
-                                        type="text" onmouseover="(this.type='date')" placeholder="合同结束时间">
-                                </div>
-                            </div>
-                            <div class="">
-                                <label for="input-clientAlias" class="col-sm-1 control-label">合同备注</label>
-                                <div class="col-sm-4" style="padding-bottom: 20px;">
-                                    <input class="form-control" id="input-clientAlias" name="clientAlias[]" type="text"
-                                        placeholder="备注(可选)">
-                                </div>
-                            </div>
-                            <div class="col-sm-8">
-                                <div class="uploadfiles">
-                                    <tr>
-                                        <td>
-                                            <ul id="files0" class="pic-list list-unstyled form-inline">
-                                            </ul>
-                                            <a href="javascript:uploadMultiFile('附件上传','#files0','files-item-tpl','file');"
-                                                class="btn btn-default uploadfiles_file_flag">选择文件</a>
-                                            <a href="javascript:uploadMultiFile('图片上传','#files0','photos-item-tpl','image');"
-                                                class="btn btn-default uploadfiles_image_flag">选择图片</a>
-                                            <input type="hidden" class="" name="uploadfiles[]" value="">
-                                            <input type="hidden" class="" name="uploadfilenames[]" value="">
-                                        </td>
-                                    </tr>
-                                </div>
-                            </div>
-                        </div>
-                    </xfli>
-                </ul>
-            </div>
-        </div>
-        <div class="信息框标题">
-            <a class="工程加号" style="font-size: 120%;">增加+</a>
-            <a onclick="$('.工程减号').first().click()" style="font-size: 120%;">减少-</a>
-        </div>
-        <button id="add_project_submit" style="display: none;">
-            提交
-        </button>
-    </form>
-    <div class="form-group">
-        <div class="">
-            <div class="col-md-3">
-                <button class="button-s" id="" onclick="handleUpload()">
-                    提交
-                </button>
-            </div>
-            <div class="col-md-3">
-                <button class="button-s" onclick="return ask()">
-                    返回
-                </button>
-            </div>
-        </div>
+    <div class="xf_input">
+        <h4 class="xf_input_h4">可研阶段</h4>
+        <ul>
+            <li><span>施工图：</span>
+                <xfupload>上传</xfupload><input type="text" autocomplete="off">
+                <xfupload>预览</xfupload>
+                <xfupload>替换</xfupload>
+                <xfupload>删除</xfupload>
+            </li>
+            <li><span>预算书：</span>
+                <xfupload>上传</xfupload><input type="text" autocomplete="off">
+                <xfupload>预览</xfupload>
+                <xfupload>替换</xfupload>
+                <xfupload>删除</xfupload>
+            </li>
+            <li>
+                <span>定案预算书：</span>
+                <xfupload>上传</xfupload><input type="text" autocomplete="off">
+                <xfupload>预览</xfupload>
+                <xfupload>替换</xfupload>
+                <xfupload>删除</xfupload>
+                <span class="xf_ser">批复日期：</span>
+                <input type="date" autocomplete="off" value="3442.342万元">
+            </li>
+        </ul>
+    </div>
+    <div class="xf_input">
+        <h4 class="xf_input_h4">工程基本信息</h4>
+        <ul>
+            <li><span>选定代理上会材料：</span>
+                <xfupload>上传</xfupload><input type="text" autocomplete="off">
+                <xfupload>预览</xfupload>
+                <xfupload>替换</xfupload>
+                <xfupload>删除</xfupload>
+            </li>
+            <li><span>招标代理合同签批：</span>
+                <xfupload>上传</xfupload><input type="text" autocomplete="off">
+                <xfupload>预览</xfupload>
+                <xfupload>替换</xfupload>
+                <xfupload>删除</xfupload>
+            </li>
+            <li>
+                <span>招标文件签批：</span>
+                <xfupload>上传</xfupload><input type="text" autocomplete="off">
+                <xfupload>预览</xfupload>
+                <xfupload>替换</xfupload>
+                <xfupload>删除</xfupload>
+                <span class="xf_ser">批复日期：</span>
+                <input type="date" autocomplete="off" value="3442.342万元">
+            </li>
+            <li><span>招标过程文件：</span>
+                <xfupload>上传</xfupload><input type="text" autocomplete="off">
+                <xfupload>预览</xfupload>
+                <xfupload>替换</xfupload>
+                <xfupload>删除</xfupload>
+            </li>
+            <li><span>中标标书：</span>
+                <xfupload>上传</xfupload><input type="text" autocomplete="off">
+                <xfupload>预览</xfupload>
+                <xfupload>替换</xfupload>
+                <xfupload>删除</xfupload>
+            </li>
+            <li><span>施工招标：</span>
+                <xfupload>上传</xfupload><input type="text" autocomplete="off">
+                <xfupload>预览</xfupload>
+                <xfupload>替换</xfupload>
+                <xfupload>删除</xfupload>
+            </li>
+            <li>
+                <span>监理招标：</span>
+                <xfupload>上传</xfupload><input type="text" autocomplete="off">
+                <xfupload>预览</xfupload>
+                <xfupload>替换</xfupload>
+                <xfupload>删除</xfupload>
+                <span class="xf_ser">批复日期：</span>
+                <input type="date" autocomplete="off" value="3442.342万元">
+            </li>
+            <li><span>检测招标：</span>
+                <xfupload>上传</xfupload><input type="text" autocomplete="off">
+                <xfupload>预览</xfupload>
+                <xfupload>替换</xfupload>
+                <xfupload>删除</xfupload>
+            </li>
+            <li><span>造价咨询招标：</span>
+                <xfupload>上传</xfupload><input type="text" autocomplete="off">
+                <xfupload>预览</xfupload>
+                <xfupload>替换</xfupload>
+                <xfupload>删除</xfupload>
+            </li>
+        </ul>
     </div>
 </body>
-<script>
-    $('.previewBtn').on('click', function () {
-        var url = $(this).prev().prev().prev().val();
-        if (url == "") {
-            alert("请先上传")
-            return
-        }
-        var link = '/upload/' + url
-        handlePreview(link)
-    });
-    $('#add_project_submit').on("click", function () {
-        $('xfli').each(function () {
-            var str0 = '';
-            $(this).find("input:hidden[name='file_urls[]']").each(function () {
-                str0 += $(this).val() + '|'
-            });
-            $(this).find("input:hidden[name='uploadfiles[]']").val(str0.substring(0, str0.lastIndexOf('|')));
-            var str1 = '';
-            $(this).find("input:text[name='file_names[]']").each(function () {
-                str1 += $(this).val() + '|'
-            });
-            $(this).find("input:hidden[name='uploadfilenames[]']").val(str1.substring(0, str1.lastIndexOf('|')));
-        });
-    });
-    function convertCurrency(r) { var t = ["零", "壹", "贰", "叁", "肆", "伍", "陆", "柒", "捌", "玖"], e = ["", "拾", "佰", "仟"], n = ["", "万", "亿", "兆"], s = ["角", "分", "毫", "厘"], a = "整", f = "元", i = 1e15, u, o, v = "", l; if ("" == r) return ""; if ((r = parseFloat(r)) >= 1e15) return ""; if (0 == r) return v = "零元整"; if (-1 == (r = r.toString()).indexOf(".") ? (u = r, o = "") : (u = (l = r.split("."))[0], o = l[1].substr(0, 4)), parseInt(u, 10) > 0) { for (var p = 0, b = u.length, c = 0; c < b; c++) { var g, h = b - c - 1, I = h / 4, d = h % 4; "0" == (g = u.substr(c, 1)) ? p++ : (p > 0 && (v += "零"), p = 0, v += t[parseInt(g)] + e[d]), 0 == d && p < 4 && (v += n[I]) } v += "元" } if ("" != o) for (var x = o.length, c = 0; c < x; c++) { var g; "0" != (g = o.substr(c, 1)) && (v += t[+g] + s[c]) } return "" == v ? v += "零元整" : "" == o && (v += "整"), v }
-    $('.contractAmount').on("keyup", function () {
-        $(this).parent().next().next().children().first().val(convertCurrency(Math.abs($(this).val())))
-    });
-    function updateEstimatedPriceChineseNum() {
-        var num = convertCurrency(Math.abs($("#input-estimatedPrice").val()))
-        $("#chinese-estimatedPrice").val(num);
-    }
-    function updateApproximatePriceChineseNum() {
-        var num = convertCurrency(Math.abs($("#input-approximatePrice").val()))
-        $("#chinese-approximatePrice").val(num);
-    }
-    function updateReportedBudgetChineseNum() {
-        var num = convertCurrency(Math.abs($("#input-reportedBudget").val()))
-        $("#chinese-reportedBudget").val(num);
-    }
-    function updateApprovedBudgetChineseNum() {
-        var num = convertCurrency(Math.abs($("#input-approvedBudget").val()))
-        $("#chinese-approvedBudget").val(num);
-    }
-    function updateFeeChineseNum(id) {
-        var num = convertCurrency(Math.abs($("#input-fee" + id).val()))
-        $("#chinese-fee" + id).val(num);
-    }
-    function ask() {
-        if (confirm("确定返回？")) { window.location.href = "{:url('manager/view')}" } else { return false }
-    }
-    function parseInteger(n) {
-        return isNaN(parseInt(n)) ? 0 : parseInt(n)
-    }
-    function handleUpload() {
-        if ($("#input-approximatePrice").val() != (parseInteger($("#input-fee1").val()) + parseInteger($("#input-fee2").val()) + parseInteger($("#input-fee3").val()) + parseInteger($("#input-fee4").val()) + parseInteger($("#input-fee5").val()))) {
-            alert("请检查批复概算价的值")
-        } else {
-            $('#add_project_submit').click()
-        }
-    }
-</script>
-<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
-<script type="text/javascript" src="__STATIC__/js/frontend.js"></script>
-<script type="text/javascript">
-    function handlePreview(url) {
-        if (url == "") {
-            alert("请先上传")
-            return
-        }
-        if (url.slice(-3) == 'pdf') {
-            window.open(url, '预览pdf');
-            return;
-        } else if (url.slice(-3) == 'png' || url.slice(-3) == 'jpg' || url.slice(-4) == 'jepg') {
-            var openstr = '<img align="center" height="550" style="margin-top:8px;margin-left:8px" src="' + url + '" />';
-        } else {
-            var openstr = '此格式暂不支持预览,请<a href="' + url + '" target="_blank">下载</a>后再查看'
-        }
-        parent.openIframeLayer(openstr, '预览', {
-            type: 1,
-            skin: 'layui-layer-rim',
-            closeBtn: 1,
-            shadeClose: true,
-            area: ['900px', '600px']
-        })
-    }
-</script>
 
 </html>

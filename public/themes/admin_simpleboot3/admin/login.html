@@ -1,5 +1,30 @@
 <head>
     <title>工程项目综合管理系统</title>
+    <script>
+        if (window.parent !== window.self) {
+            document.write = '';
+            window.parent.location.href = window.self.location.href;
+            setTimeout(function () {
+                document.body.innerHTML = '';
+            }, 0);
+        }
+    </script>
+    <script type="text/javascript">
+        var GV = {
+            ROOT: "__ROOT__/",
+            WEB_ROOT: "__WEB_ROOT__/",
+            JS_ROOT: "static/js/",
+            APP: ''
+        };
+    </script>
+    <script src="__TMPL__/public/assets/js/jquery-1.10.2.min.js"></script>
+    <script src="__STATIC__/js/wind.js"></script>
+    <script src="__STATIC__/js/admin.js"></script>
+    <script>
+        $("#login").on('click', function () {
+            $("#username").val($("#username").val().trim())
+        })
+    </script>
     <style>
         @charset "UTF-8";
 
@@ -1144,31 +1169,32 @@
 </head>
 
 <body>
-    <div id="app">
-        <div class="c-h100" style="display: block;">
-            <div new-ui class="login">
-                <div new-ui class="main tvc">
-                    <div new-ui class="card">
-                        <div new-ui class="card-img c-flex1"></div>
-                        <div new-ui class="c-flex1 login-box tvc">
-                            <div new-ui class="login-main">
-                                <div new-ui class="logo c-tvc">
-                                    <a>工程项目综合管理系统</a>
-                                </div>
-                                <div new-ui class="form">
-                                    <div new-ui class="content">
-                                        <div new-ui class="col input-chang">
-                                            <div new-ui class="input-label">用户名</div><input
-                                                new-ui placeholder="账户名">
-                                        </div>
-                                        <div new-ui class="col input-chang">
-                                            <div new-ui class="input-label">密码</div><input
-                                                new-ui placeholder="密码" type="password">
-                                        </div>
-                                        <div new-ui class="col"><button new-ui
-                                                class="button">登录</button></div>
-                                        <div new-ui class="col">
-                                            <div new-ui class="warn-msg"> </div>
+    <form class="js-ajax-form" action="{:url('public/doLogin')}" method="post">
+        <div id="app">
+            <div class="c-h100" style="display: block;">
+                <div new-ui class="login">
+                    <div new-ui class="main tvc">
+                        <div new-ui class="card">
+                            <div new-ui class="card-img c-flex1"></div>
+                            <div new-ui class="c-flex1 login-box tvc">
+                                <div new-ui class="login-main">
+                                    <div new-ui class="logo c-tvc">
+                                        <a>工程项目综合管理系统</a>
+                                    </div>
+                                    <div new-ui class="form">
+                                        <div new-ui class="content">
+                                            <div new-ui class="col input-chang">
+                                                <div new-ui class="input-label">用户名</div><input new-ui name="username"
+                                                    placeholder="用户名">
+                                            </div>
+                                            <div new-ui class="col input-chang">
+                                                <div new-ui class="input-label">密码</div><input new-ui placeholder="密码"
+                                                    name="password" type="password">
+                                            </div>
+                                            <div new-ui class="col"><button new-ui class="button js-ajax-submit" >登录</button></div>
+                                            <!-- <div new-ui class="col">
+                                                <div new-ui class="warn-msg"> </div>
+                                            </div> -->
                                         </div>
                                     </div>
                                 </div>
@@ -1178,5 +1204,21 @@
                 </div>
             </div>
         </div>
-    </div>
+    </form>
 </body>
+<script type="text/javascript">
+    var GV = {
+        ROOT: "__ROOT__/",
+        WEB_ROOT: "__WEB_ROOT__/",
+        JS_ROOT: "static/js/",
+        APP: ''
+    };
+</script>
+<script src="__TMPL__/public/assets/js/jquery-1.10.2.min.js"></script>
+<script src="__STATIC__/js/wind.js"></script>
+<script src="__STATIC__/js/admin.js"></script>
+<script>
+    $("#login").on('click', function () {
+        $("#username").val($("#username").val().trim())
+    })
+</script>

@@ -13,7 +13,6 @@
         [class*=" el-icon-"],
         [class^=el-icon-] {
             font-family: element-icons !important;
-            speak: none;
             font-style: normal;
             font-weight: 400;
             font-variant: normal;
@@ -677,26 +676,12 @@
             text-transform: none
         }
 
-        [type=button],
-        [type=reset],
-        [type=submit],
-        button {
-            -webkit-appearance: button
-        }
-
         [type=button]::-moz-focus-inner,
         [type=reset]::-moz-focus-inner,
         [type=submit]::-moz-focus-inner,
         button::-moz-focus-inner {
             border-style: none;
             padding: 0
-        }
-
-        [type=button]:-moz-focusring,
-        [type=reset]:-moz-focusring,
-        [type=submit]:-moz-focusring,
-        button:-moz-focusring {
-            outline: 1px dotted ButtonText
         }
 
         [type=checkbox],
@@ -709,11 +694,6 @@
         [type=number]::-webkit-inner-spin-button,
         [type=number]::-webkit-outer-spin-button {
             height: auto
-        }
-
-        [type=search] {
-            -webkit-appearance: textfield;
-            outline-offset: -2px
         }
 
         [type=search]::-webkit-search-decoration {
@@ -1136,7 +1116,6 @@
             height: 50px;
             border: 0;
             color: #fff;
-            -webkit-appearance: none;
             outline: 0;
             cursor: pointer;
             background: -webkit-gradient(linear, left bottom, left top, from(#01c8ee), to(#01c8ee));
@@ -1167,29 +1146,29 @@
 <body>
     <div id="app">
         <div class="c-h100" style="display: block;">
-            <div new-ui="" class="login">
-                <div new-ui="" class="main tvc">
-                    <div new-ui="" class="card">
-                        <div new-ui="" class="card-img c-flex1"></div>
-                        <div new-ui="" class="c-flex1 login-box tvc">
-                            <div new-ui="" class="login-main">
-                                <div new-ui="" class="logo c-tvc">
+            <div new-ui class="login">
+                <div new-ui class="main tvc">
+                    <div new-ui class="card">
+                        <div new-ui class="card-img c-flex1"></div>
+                        <div new-ui class="c-flex1 login-box tvc">
+                            <div new-ui class="login-main">
+                                <div new-ui class="logo c-tvc">
                                     <a>工程项目综合管理系统</a>
                                 </div>
-                                <div new-ui="" class="form">
-                                    <div new-ui="" class="content">
-                                        <div new-ui="" class="col input-chang">
-                                            <div new-ui="" class="input-label">用户名</div><input
-                                                new-ui="" placeholder="账户名">
+                                <div new-ui class="form">
+                                    <div new-ui class="content">
+                                        <div new-ui class="col input-chang">
+                                            <div new-ui class="input-label">用户名</div><input
+                                                new-ui placeholder="账户名">
                                         </div>
-                                        <div new-ui="" class="col input-chang">
-                                            <div new-ui="" class="input-label">密码</div><input
-                                                new-ui="" placeholder="密码" type="password">
+                                        <div new-ui class="col input-chang">
+                                            <div new-ui class="input-label">密码</div><input
+                                                new-ui placeholder="密码" type="password">
                                         </div>
-                                        <div new-ui="" class="col"><button new-ui=""
+                                        <div new-ui class="col"><button new-ui
                                                 class="button">登录</button></div>
-                                        <div new-ui="" class="col">
-                                            <div new-ui="" class="warn-msg"> </div>
+                                        <div new-ui class="col">
+                                            <div new-ui class="warn-msg"> </div>
                                         </div>
                                     </div>
                                 </div>

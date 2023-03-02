@@ -41,20 +41,20 @@
             text-decoration: none;
             color: #111
         }
-
+        body{ font-family: "Microsoft Yahei", verdana;}
         div.xf_input {
             background-color: #F9F9F9;
             margin: 15px 50px 5px 50px;
-            font-family: "Microsoft Yahei", verdana;
+           
             font-size: 12px;
             padding-bottom: 15px;
 
             border: 1px solid #ccc;
-            width: 90%;
+         
 
             overflow: hidden;
             float: left;
-            min-width: 1000px;
+            min-width: 900px;
         }
 
         h4.xf_input_h4 {
@@ -160,11 +160,29 @@
             height: 30px;
             overflow: hidden;
         }
-    </style>
+        div.main_left{width: 260px; height: 1000px; float: left; font-size: 12px; background-color:#083255 ; color: #fff;}
+        div.main_left li{font-size: 11px; text-indent: 10px; line-height: 20px; border-bottom: 1px solid #ccc; background: url(/static/images/zTreeStandard.png) no-repeat;}
+        div.main_left li a{color: #fff;}
 
+        
+    </style>
+    
 </head>
 
 <body>
+
+<div class="main">
+    <div class="main_left">
+        <h4 class="xf_input_h4">项目名称</h4>
+        <ul>
+            <li><a href="#">水库维修工程二期</a></li>
+            <li><a href="#">江门市碧道建设工程（西江蓬江段）</a></li>
+            <li><a href="#">水库维修工程二期</a></li>
+            <li><a href="#">2022小型水库安全监测能力提升项目</a></li>
+        </ul>
+
+    </div>
+
     <div class="xf_input">
         <h4 class="xf_input_h4">工程基本信息</h4>
         <ul>
@@ -456,6 +474,7 @@
             </li>
         </ul>
     </div>
+</div>
 </body>
 
 </html>

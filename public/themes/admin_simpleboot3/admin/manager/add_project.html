@@ -41,16 +41,20 @@
             text-decoration: none;
             color: #111
         }
-        body{ font-family: "Microsoft Yahei", verdana;}
+
+        body {
+            font-family: "Microsoft Yahei", verdana;
+        }
+
         div.xf_input {
             background-color: #F9F9F9;
             margin: 15px 50px 5px 50px;
-           
+
             font-size: 12px;
             padding-bottom: 15px;
 
             border: 1px solid #ccc;
-         
+
 
             overflow: hidden;
             float: left;
@@ -160,321 +164,338 @@
             height: 30px;
             overflow: hidden;
         }
-        div.main_left{width: 260px; height: 1000px; float: left; font-size: 12px; background-color:#083255 ; color: #fff;}
-        div.main_left li{font-size: 11px; text-indent: 10px; line-height: 20px; border-bottom: 1px solid #ccc; background: url(/static/images/zTreeStandard.png) no-repeat;}
-        div.main_left li a{color: #fff;}
 
-        
+        div.main_left {
+            width: 260px;
+            height: 1000px;
+            float: left;
+            font-size: 12px;
+            background-color: #083255;
+            color: #fff;
+        }
+
+        div.main_left li {
+            font-size: 11px;
+            text-indent: 10px;
+            line-height: 20px;
+            border-bottom: 1px solid #ccc;
+            background: url(/static/images/zTreeStandard.png) no-repeat;
+        }
+
+        div.main_left li a {
+            color: #fff;
+        }
     </style>
-    
+
 </head>
 
 <body>
+    <form method="post" class="form-horizontal js-ajax-form" action="{:url('manager/postProjectAdd')}">
+        <div class="main">
+            <div class="main_left">
+                <h4 class="xf_input_h4">项目名称</h4>
+                <ul>
+                    <li><a href="#">水库维修工程二期</a></li>
+                    <li><a href="#">江门市碧道建设工程（西江蓬江段）</a></li>
+                    <li><a href="#">水库维修工程二期</a></li>
+                    <li><a href="#">2022小型水库安全监测能力提升项目</a></li>
+                </ul>
 
-<div class="main">
-    <div class="main_left">
-        <h4 class="xf_input_h4">项目名称</h4>
-        <ul>
-            <li><a href="#">水库维修工程二期</a></li>
-            <li><a href="#">江门市碧道建设工程（西江蓬江段）</a></li>
-            <li><a href="#">水库维修工程二期</a></li>
-            <li><a href="#">2022小型水库安全监测能力提升项目</a></li>
-        </ul>
+            </div>
 
-    </div>
-
-    <div class="xf_input">
-        <h4 class="xf_input_h4">工程基本信息</h4>
-        <ul>
-            <li>
-                <span>工程基本信息：</span>
-                <input type="text" autocomplete="off" required>
-                <b>必填</b>
-            </li>
-            <li>
-                <span>建设单位：</span>
-                <input type="text" autocomplete="off">
-                <!-- <span class="xf_ser">批复日期：</span>
+            <div class="xf_input">
+                <h4 class="xf_input_h4">工程基本信息</h4>
+                <ul>
+                    <li>
+                        <span>工程基本信息：</span>
+                        <input type="text" autocomplete="off" required>
+                        <b>必填</b>
+                    </li>
+                    <li>
+                        <span>建设单位：</span>
+                        <input type="text" autocomplete="off">
+                        <!-- <span class="xf_ser">批复日期：</span>
                 <input disabled type="text"  autocomplete="off" value="3442.342万元"> -->
-            </li>
-            <li>
-                <span>建设年份：</span>
-                <input type="number" min="1900" max="2099" step="1" value="2023" />
-                <!-- <span class="xf_ser">批复日期：</span>
+                    </li>
+                    <li>
+                        <span>建设年份：</span>
+                        <input type="number" min="1900" max="2099" step="1" value="2023" />
+                        <!-- <span class="xf_ser">批复日期：</span>
                 <input type="text"  autocomplete="off" value="3442.342万元"> -->
-            </li>
-            <li>
-                <span>估算价：</span>
-                <input type="text" autocomplete="off">
-                <span class="xf_ser">万元：</span>
-                <input type="text" autocomplete="off" value="xxxx 万元" disabled>
-            </li>
-            <li>
-                <span>上报预算价：</span>
-                <input type="text" autocomplete="off">
-                <span class="xf_ser">万元：</span>
-                <input type="text" autocomplete="off" value="xxxx 万元" disabled>
-            </li>
-            <li>
-                <span>批复预算价：</span>
-                <input type="text" autocomplete="off">
-                <span class="xf_ser">万元：</span>
-                <input type="text" autocomplete="off" value="xxxx 万元" disabled>
-            </li>
-            <!-- <li>
+                    </li>
+                    <li>
+                        <span>估算价：</span>
+                        <input type="text" autocomplete="off">
+                        <span class="xf_ser">万元：</span>
+                        <input type="text" autocomplete="off" value="xxxx 万元" disabled>
+                    </li>
+                    <li>
+                        <span>上报预算价：</span>
+                        <input type="text" autocomplete="off">
+                        <span class="xf_ser">万元：</span>
+                        <input type="text" autocomplete="off" value="xxxx 万元" disabled>
+                    </li>
+                    <li>
+                        <span>批复预算价：</span>
+                        <input type="text" autocomplete="off">
+                        <span class="xf_ser">万元：</span>
+                        <input type="text" autocomplete="off" value="xxxx 万元" disabled>
+                    </li>
+                    <!-- <li>
                 <span>批复预算价：</span>
                 <input type="text" autocomplete="off">
                 <span class="xf_ser">批复日期：</span>
                 <input type="date" autocomplete="off" value="3442.342万元">
             </li> -->
 
-            <li>
-                <span>招标方式：</span>
-                <select>
-                    <option>未填写</option>
-                    <option>公开招标</option>
-                    <option>邀请招标</option>
-                    <option>单一来源</option>
-                    <option>竞争性谈判</option>
-                    <option>竞争性磋商</option>
-                </select>
-            </li>
-            <li>
-                <span>实施阶段：</span>
-                <select>
-                    <option value="0"> 未填写</option>
-                    <option value="1"> 正在施工</option>
-                    <option value="2"> 已完成</option>
-                    <option value="3"> 结算阶段</option>
-                    <option value="4"> 决算阶段</option>
-                    <option value="5"> 已竣工验收</option>
-                </select>
-            </li>
-            <!-- <li><span>实施阶段：</span><input type="text" autocomplete="off"></li> -->
-            <li>
-                <xfupload>上传</xfupload>
-                <span>预算上报文件：</span>
-                <input type="text" autocomplete="off">
-                <xfupload>预览</xfupload>
-                <xfupload>替换</xfupload>
-                <xfupload>删除</xfupload>
-                <br>
-                <xfuplaod_fix></xfuplaod_fix>
-                <input type="text" autocomplete="off">
-                <xfupload>预览</xfupload>
-                <xfupload>替换</xfupload>
-                <xfupload>删除</xfupload><br>
-                <xfuplaod_fix></xfuplaod_fix>
-                <input type="text" autocomplete="off">
-                <xfupload>预览</xfupload>
-                <xfupload>替换</xfupload>
-                <xfupload>删除</xfupload><br>
-                <xfuplaod_fix></xfuplaod_fix>
-                <input type="text" autocomplete="off">
-                <xfupload>预览</xfupload>
-                <xfupload>替换</xfupload>
-                <xfupload>删除</xfupload>
-            </li>
-        </ul>
-    </div>
+                    <li>
+                        <span>招标方式：</span>
+                        <select>
+                            <option>未填写</option>
+                            <option>公开招标</option>
+                            <option>邀请招标</option>
+                            <option>单一来源</option>
+                            <option>竞争性谈判</option>
+                            <option>竞争性磋商</option>
+                        </select>
+                    </li>
+                    <li>
+                        <span>实施阶段：</span>
+                        <select>
+                            <option value="0"> 未填写</option>
+                            <option value="1"> 正在施工</option>
+                            <option value="2"> 已完成</option>
+                            <option value="3"> 结算阶段</option>
+                            <option value="4"> 决算阶段</option>
+                            <option value="5"> 已竣工验收</option>
+                        </select>
+                    </li>
+                    <!-- <li><span>实施阶段：</span><input type="text" autocomplete="off"></li> -->
+                    <li>
+                        <xfupload>上传</xfupload>
+                        <span>预算上报文件：</span>
+                        <input type="text" autocomplete="off">
+                        <xfupload>预览</xfupload>
+                        <xfupload>替换</xfupload>
+                        <xfupload>删除</xfupload>
+                        <br>
+                        <xfuplaod_fix></xfuplaod_fix>
+                        <input type="text" autocomplete="off">
+                        <xfupload>预览</xfupload>
+                        <xfupload>替换</xfupload>
+                        <xfupload>删除</xfupload><br>
+                        <xfuplaod_fix></xfuplaod_fix>
+                        <input type="text" autocomplete="off">
+                        <xfupload>预览</xfupload>
+                        <xfupload>替换</xfupload>
+                        <xfupload>删除</xfupload><br>
+                        <xfuplaod_fix></xfuplaod_fix>
+                        <input type="text" autocomplete="off">
+                        <xfupload>预览</xfupload>
+                        <xfupload>替换</xfupload>
+                        <xfupload>删除</xfupload>
+                    </li>
+                </ul>
+            </div>
 
 
-    <div class="xf_input">
-        <h4 class="xf_input_h4">可研阶段</h4>
-        <ul>
-            <li><span>可研报告：</span>
-                <xfupload>上传</xfupload><input type="text" autocomplete="off">
-                <xfupload>预览</xfupload>
-                <xfupload>替换</xfupload>
-                <xfupload>删除</xfupload>
-            </li>
-            <li><span>可研审批文件：</span>
-                <xfupload>上传</xfupload><input type="text" autocomplete="off">
-                <xfupload>预览</xfupload>
-                <xfupload>替换</xfupload>
-                <xfupload>删除</xfupload>
-            </li>
-            <li>
-                <span>可研批复：</span>
-                <xfupload>上传</xfupload><input type="text" autocomplete="off">
-                <xfupload>预览</xfupload>
-                <xfupload>替换</xfupload>
-                <xfupload>删除</xfupload>
-                <span class="xf_ser">批复日期：</span>
-                <input type="date" autocomplete="off" value="3442.342万元">
-            </li>
-        </ul>
-    </div>
+            <div class="xf_input">
+                <h4 class="xf_input_h4">可研阶段</h4>
+                <ul>
+                    <li><span>可研报告：</span>
+                        <xfupload>上传</xfupload><input type="text" autocomplete="off">
+                        <xfupload>预览</xfupload>
+                        <xfupload>替换</xfupload>
+                        <xfupload>删除</xfupload>
+                    </li>
+                    <li><span>可研审批文件：</span>
+                        <xfupload>上传</xfupload><input type="text" autocomplete="off">
+                        <xfupload>预览</xfupload>
+                        <xfupload>替换</xfupload>
+                        <xfupload>删除</xfupload>
+                    </li>
+                    <li>
+                        <span>可研批复：</span>
+                        <xfupload>上传</xfupload><input type="text" autocomplete="off">
+                        <xfupload>预览</xfupload>
+                        <xfupload>替换</xfupload>
+                        <xfupload>删除</xfupload>
+                        <span class="xf_ser">批复日期：</span>
+                        <input type="date" autocomplete="off" value="3442.342万元">
+                    </li>
+                </ul>
+            </div>
 
-    <div class="xf_input">
-        <h4 class="xf_input_h4">初步设计阶段</h4>
-        <ul>
-            <li><span>初步设计报告：</span>
-                <xfupload>上传</xfupload><input type="text" autocomplete="off">
-                <xfupload>预览</xfupload>
-                <xfupload>替换</xfupload>
-                <xfupload>删除</xfupload>
-            </li>
-            <li><span>初步设计图纸：</span>
-                <xfupload>上传</xfupload><input type="text" autocomplete="off">
-                <xfupload>预览</xfupload>
-                <xfupload>替换</xfupload>
-                <xfupload>删除</xfupload>
-            </li>
-            <li>
-                <span>初步设计批复：</span>
-                <xfupload>上传</xfupload><input type="text" autocomplete="off">
-                <xfupload>预览</xfupload>
-                <xfupload>替换</xfupload>
-                <xfupload>删除</xfupload>
-                <span class="xf_ser">批复日期：</span>
-                <input type="date" autocomplete="off" value="">
-            </li>
-            <li><span>审批、批复：</span>
-                <xfupload>上传</xfupload><input type="text" autocomplete="off">
-                <xfupload>预览</xfupload>
-                <xfupload>替换</xfupload>
-                <xfupload>删除</xfupload>
-                <span class="xf_ser">批复日期：</span>
-                <input type="date" autocomplete="off" value="">
-            </li>
-            <li><span>概算书：</span>
-                <xfupload>上传</xfupload><input type="text" autocomplete="off">
-                <xfupload>预览</xfupload>
-                <xfupload>替换</xfupload>
-                <xfupload>删除</xfupload>
-            </li>
-            <li>
-                <span>批复概算价：</span>
-                <input type="text" autocomplete="off">
-                <span class="xf_ser">万元：</span>
-                <input type="text" autocomplete="off" value="xxxx 万元" disabled>
-            </li>
-            <li>
-                <span>建安费：</span>
-                <input type="text" autocomplete="off">
-                <span class="xf_ser">万元：</span>
-                <input type="text" autocomplete="off" value="xxxx 万元" disabled>
-            </li>
-            <li>
-                <span>监理费：</span>
-                <input type="text" autocomplete="off">
-                <span class="xf_ser">万元：</span>
-                <input type="text" autocomplete="off" value="xxxx 万元" disabled>
-            </li>
-            <li>
-                <span>检测费：</span>
-                <input type="text" autocomplete="off">
-                <span class="xf_ser">万元：</span>
-                <input type="text" autocomplete="off" value="xxxx 万元" disabled>
-            </li>
-            <li>
-                <span>造价咨询费：</span>
-                <input type="text" autocomplete="off">
-                <span class="xf_ser">万元：</span>
-                <input type="text" autocomplete="off" value="xxxx 万元" disabled>
-            </li>
-            <li>
-                <span>其他：</span>
-                <input type="text" autocomplete="off">
-                <span class="xf_ser">万元：</span>
-                <input type="text" autocomplete="off" value="xxxx 万元" disabled>
-            </li>
-        </ul>
-    </div>
+            <div class="xf_input">
+                <h4 class="xf_input_h4">初步设计阶段</h4>
+                <ul>
+                    <li><span>初步设计报告：</span>
+                        <xfupload>上传</xfupload><input type="text" autocomplete="off">
+                        <xfupload>预览</xfupload>
+                        <xfupload>替换</xfupload>
+                        <xfupload>删除</xfupload>
+                    </li>
+                    <li><span>初步设计图纸：</span>
+                        <xfupload>上传</xfupload><input type="text" autocomplete="off">
+                        <xfupload>预览</xfupload>
+                        <xfupload>替换</xfupload>
+                        <xfupload>删除</xfupload>
+                    </li>
+                    <li>
+                        <span>初步设计批复：</span>
+                        <xfupload>上传</xfupload><input type="text" autocomplete="off">
+                        <xfupload>预览</xfupload>
+                        <xfupload>替换</xfupload>
+                        <xfupload>删除</xfupload>
+                        <span class="xf_ser">批复日期：</span>
+                        <input type="date" autocomplete="off" value="">
+                    </li>
+                    <li><span>审批、批复：</span>
+                        <xfupload>上传</xfupload><input type="text" autocomplete="off">
+                        <xfupload>预览</xfupload>
+                        <xfupload>替换</xfupload>
+                        <xfupload>删除</xfupload>
+                        <span class="xf_ser">批复日期：</span>
+                        <input type="date" autocomplete="off" value="">
+                    </li>
+                    <li><span>概算书：</span>
+                        <xfupload>上传</xfupload><input type="text" autocomplete="off">
+                        <xfupload>预览</xfupload>
+                        <xfupload>替换</xfupload>
+                        <xfupload>删除</xfupload>
+                    </li>
+                    <li>
+                        <span>批复概算价：</span>
+                        <input type="text" autocomplete="off">
+                        <span class="xf_ser">万元：</span>
+                        <input type="text" autocomplete="off" value="xxxx 万元" disabled>
+                    </li>
+                    <li>
+                        <span>建安费：</span>
+                        <input type="text" autocomplete="off">
+                        <span class="xf_ser">万元：</span>
+                        <input type="text" autocomplete="off" value="xxxx 万元" disabled>
+                    </li>
+                    <li>
+                        <span>监理费：</span>
+                        <input type="text" autocomplete="off">
+                        <span class="xf_ser">万元：</span>
+                        <input type="text" autocomplete="off" value="xxxx 万元" disabled>
+                    </li>
+                    <li>
+                        <span>检测费：</span>
+                        <input type="text" autocomplete="off">
+                        <span class="xf_ser">万元：</span>
+                        <input type="text" autocomplete="off" value="xxxx 万元" disabled>
+                    </li>
+                    <li>
+                        <span>造价咨询费：</span>
+                        <input type="text" autocomplete="off">
+                        <span class="xf_ser">万元：</span>
+                        <input type="text" autocomplete="off" value="xxxx 万元" disabled>
+                    </li>
+                    <li>
+                        <span>其他：</span>
+                        <input type="text" autocomplete="off">
+                        <span class="xf_ser">万元：</span>
+                        <input type="text" autocomplete="off" value="xxxx 万元" disabled>
+                    </li>
+                </ul>
+            </div>
 
-    <div class="xf_input">
-        <h4 class="xf_input_h4">可研阶段</h4>
-        <ul>
-            <li><span>施工图：</span>
-                <xfupload>上传</xfupload><input type="text" autocomplete="off">
-                <xfupload>预览</xfupload>
-                <xfupload>替换</xfupload>
-                <xfupload>删除</xfupload>
-            </li>
-            <li><span>预算书：</span>
-                <xfupload>上传</xfupload><input type="text" autocomplete="off">
-                <xfupload>预览</xfupload>
-                <xfupload>替换</xfupload>
-                <xfupload>删除</xfupload>
-            </li>
-            <li>
-                <span>定案预算书：</span>
-                <xfupload>上传</xfupload><input type="text" autocomplete="off">
-                <xfupload>预览</xfupload>
-                <xfupload>替换</xfupload>
-                <xfupload>删除</xfupload>
-                <span class="xf_ser">批复日期：</span>
-                <input type="date" autocomplete="off" value="3442.342万元">
-            </li>
-        </ul>
-    </div>
-    <div class="xf_input">
-        <h4 class="xf_input_h4">工程招标</h4>
-        <ul>
-            <li><span>选定代理上会材料：</span>
-                <xfupload>上传</xfupload><input type="text" autocomplete="off">
-                <xfupload>预览</xfupload>
-                <xfupload>替换</xfupload>
-                <xfupload>删除</xfupload>
-            </li>
-            <li><span>招标代理合同签批：</span>
-                <xfupload>上传</xfupload><input type="text" autocomplete="off">
-                <xfupload>预览</xfupload>
-                <xfupload>替换</xfupload>
-                <xfupload>删除</xfupload>
-            </li>
-            <li>
-                <span>招标文件签批：</span>
-                <xfupload>上传</xfupload><input type="text" autocomplete="off">
-                <xfupload>预览</xfupload>
-                <xfupload>替换</xfupload>
-                <xfupload>删除</xfupload>
-                <span class="xf_ser">批复日期：</span>
-                <input type="date" autocomplete="off" value="3442.342万元">
-            </li>
-            <li><span>招标过程文件：</span>
-                <xfupload>上传</xfupload><input type="text" autocomplete="off">
-                <xfupload>预览</xfupload>
-                <xfupload>替换</xfupload>
-                <xfupload>删除</xfupload>
-            </li>
-            <li><span>中标标书：</span>
-                <xfupload>上传</xfupload><input type="text" autocomplete="off">
-                <xfupload>预览</xfupload>
-                <xfupload>替换</xfupload>
-                <xfupload>删除</xfupload>
-            </li>
-            <li><span>施工招标：</span>
-                <xfupload>上传</xfupload><input type="text" autocomplete="off">
-                <xfupload>预览</xfupload>
-                <xfupload>替换</xfupload>
-                <xfupload>删除</xfupload>
-            </li>
-            <li>
-                <span>监理招标：</span>
-                <xfupload>上传</xfupload><input type="text" autocomplete="off">
-                <xfupload>预览</xfupload>
-                <xfupload>替换</xfupload>
-                <xfupload>删除</xfupload>
-                <span class="xf_ser">批复日期：</span>
-                <input type="date" autocomplete="off" value="3442.342万元">
-            </li>
-            <li><span>检测招标：</span>
-                <xfupload>上传</xfupload><input type="text" autocomplete="off">
-                <xfupload>预览</xfupload>
-                <xfupload>替换</xfupload>
-                <xfupload>删除</xfupload>
-            </li>
-            <li><span>造价咨询招标：</span>
-                <xfupload>上传</xfupload><input type="text" autocomplete="off">
-                <xfupload>预览</xfupload>
-                <xfupload>替换</xfupload>
-                <xfupload>删除</xfupload>
-            </li>
-        </ul>
-    </div>
-</div>
+            <div class="xf_input">
+                <h4 class="xf_input_h4">可研阶段</h4>
+                <ul>
+                    <li><span>施工图：</span>
+                        <xfupload>上传</xfupload><input type="text" autocomplete="off">
+                        <xfupload>预览</xfupload>
+                        <xfupload>替换</xfupload>
+                        <xfupload>删除</xfupload>
+                    </li>
+                    <li><span>预算书：</span>
+                        <xfupload>上传</xfupload><input type="text" autocomplete="off">
+                        <xfupload>预览</xfupload>
+                        <xfupload>替换</xfupload>
+                        <xfupload>删除</xfupload>
+                    </li>
+                    <li>
+                        <span>定案预算书：</span>
+                        <xfupload>上传</xfupload><input type="text" autocomplete="off">
+                        <xfupload>预览</xfupload>
+                        <xfupload>替换</xfupload>
+                        <xfupload>删除</xfupload>
+                        <span class="xf_ser">批复日期：</span>
+                        <input type="date" autocomplete="off" value="3442.342万元">
+                    </li>
+                </ul>
+            </div>
+            <div class="xf_input">
+                <h4 class="xf_input_h4">工程招标</h4>
+                <ul>
+                    <li><span>选定代理上会材料：</span>
+                        <xfupload>上传</xfupload><input type="text" autocomplete="off">
+                        <xfupload>预览</xfupload>
+                        <xfupload>替换</xfupload>
+                        <xfupload>删除</xfupload>
+                    </li>
+                    <li><span>招标代理合同签批：</span>
+                        <xfupload>上传</xfupload><input type="text" autocomplete="off">
+                        <xfupload>预览</xfupload>
+                        <xfupload>替换</xfupload>
+                        <xfupload>删除</xfupload>
+                    </li>
+                    <li>
+                        <span>招标文件签批：</span>
+                        <xfupload>上传</xfupload><input type="text" autocomplete="off">
+                        <xfupload>预览</xfupload>
+                        <xfupload>替换</xfupload>
+                        <xfupload>删除</xfupload>
+                        <span class="xf_ser">批复日期：</span>
+                        <input type="date" autocomplete="off" value="3442.342万元">
+                    </li>
+                    <li><span>招标过程文件：</span>
+                        <xfupload>上传</xfupload><input type="text" autocomplete="off">
+                        <xfupload>预览</xfupload>
+                        <xfupload>替换</xfupload>
+                        <xfupload>删除</xfupload>
+                    </li>
+                    <li><span>中标标书：</span>
+                        <xfupload>上传</xfupload><input type="text" autocomplete="off">
+                        <xfupload>预览</xfupload>
+                        <xfupload>替换</xfupload>
+                        <xfupload>删除</xfupload>
+                    </li>
+                    <li><span>施工招标：</span>
+                        <xfupload>上传</xfupload><input type="text" autocomplete="off">
+                        <xfupload>预览</xfupload>
+                        <xfupload>替换</xfupload>
+                        <xfupload>删除</xfupload>
+                    </li>
+                    <li>
+                        <span>监理招标：</span>
+                        <xfupload>上传</xfupload><input type="text" autocomplete="off">
+                        <xfupload>预览</xfupload>
+                        <xfupload>替换</xfupload>
+                        <xfupload>删除</xfupload>
+                        <span class="xf_ser">批复日期：</span>
+                        <input type="date" autocomplete="off" value="3442.342万元">
+                    </li>
+                    <li><span>检测招标：</span>
+                        <xfupload>上传</xfupload><input type="text" autocomplete="off">
+                        <xfupload>预览</xfupload>
+                        <xfupload>替换</xfupload>
+                        <xfupload>删除</xfupload>
+                    </li>
+                    <li><span>造价咨询招标：</span>
+                        <xfupload>上传</xfupload><input type="text" autocomplete="off">
+                        <xfupload>预览</xfupload>
+                        <xfupload>替换</xfupload>
+                        <xfupload>删除</xfupload>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </form>
 </body>
 
 </html>

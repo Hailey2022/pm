@@ -14,82 +14,56 @@
         <ul>
             <li>
                 <span>工程名称：</span>
-                <input type="text" autocomplete="off" disabled>
+                <input type="text" disabled value="{$project.projectName}">
             </li>
             <li>
                 <span>建设单位：</span>
-                <input type="text" autocomplete="off">
-                <!-- <span class="xf_ser">批复日期：</span>
-                <input disabled type="text"  autocomplete="off" value="3442.342万元"> -->
+                <input type="text" disabled value="{$project.constructionCompany}">
             </li>
             <li>
                 <span>建设年份：</span>
-                <input type="number" min="1900" max="2099" step="1" value="2023" />
-                <!-- <span class="xf_ser">批复日期：</span>
-                <input type="text"  autocomplete="off" value="3442.342万元"> -->
+                <input type="number" disabled value="{$project.constructionYear}" />
             </li>
             <li>
                 <span>估算价：</span>
-                <input type="text" autocomplete="off">
+                <input type="text" disabled value="{$project.estimatedPrice}">
                 <span class="xf_ser">万元：</span>
-                <input type="text" autocomplete="off" value="xxxx 万元" disabled>
+                <input type="text"
+                    value="{:is_numeric($project.estimatedPrice)? $project.estimatedPrice / 10000 . '万元': ''}" disabled>
             </li>
             <li>
                 <span>上报预算价：</span>
-                <input type="text" autocomplete="off">
+                <input type="text" disabled value="{$project.reportedBudget}">
                 <span class="xf_ser">万元：</span>
-                <input type="text" autocomplete="off" value="xxxx 万元" disabled>
+                <input type="text"
+                    value="{:is_numeric($project.reportedBudget)? $project.reportedBudget / 10000 . '万元': ''}" disabled>
             </li>
             <li>
                 <span>批复预算价：</span>
-                <input type="text" autocomplete="off">
+                <input type="text" disabled value="{$project.approvedBudget}">
                 <span class="xf_ser">万元：</span>
-                <input type="text" autocomplete="off" value="xxxx 万元" disabled>
+                <input type="text"
+                    value="{:is_numeric($project.approvedBudget)? $project.approvedBudget / 10000 . '万元': ''}" disabled>
             </li>
-            <!-- <li>
-                <span>批复预算价：</span>
-                <input type="text" autocomplete="off">
-                <span class="xf_ser">批复日期：</span>
-                <input type="date" autocomplete="off" value="3442.342万元">
-            </li> -->
-
             <li>
                 <span>招标方式：</span>
-                <select>
-                    <option>未填写</option>
-                    <option>公开招标</option>
-                    <option>邀请招标</option>
-                    <option>单一来源</option>
-                    <option>竞争性谈判</option>
-                    <option>竞争性磋商</option>
-                </select>
+                <foreach name="tenderingMethods" item="m">
+                    <if condition="$project.tenderingMethod == $m.id">
+                        <input type="text" disabled value="{$m.method}"></input>
+                    </if>
+                </foreach>
             </li>
             <li>
                 <span>实施阶段：</span>
-                <select>
-                    <option value="0"> 未填写</option>
-                    <option value="1"> 正在施工</option>
-                    <option value="2"> 已完成</option>
-                    <option value="3"> 结算阶段</option>
-                    <option value="4"> 决算阶段</option>
-                    <option value="5"> 已竣工验收</option>
-                </select>
+                <foreach name="theProjectStatus" item="s">
+                    <if condition="$project.projectStatusId == $s.id">
+                        <input disabled value="{$s.projectStatus}">
+                    </if>
+                </foreach>
             </li>
             <li>
                 <span>预算上报文件：</span>
-                <input type="text" autocomplete="off">
-                <xfupload>预览</xfupload>
-                <br>
-                <xf_fix></xf_fix>
-                <input type="text" autocomplete="off">
-                <xfupload>预览</xfupload>
-                <br>
-                <xf_fix></xf_fix>
-                <input type="text" autocomplete="off">
-                <xfupload>预览</xfupload>
-                <br>
-                <xf_fix></xf_fix>
-                <input type="text" autocomplete="off">
+                <input type="text" value="{$project.file_name_5}" disabled>
                 <xfupload>预览</xfupload>
             </li>
         </ul>
@@ -100,22 +74,22 @@
         <h4 class="xf_input_h4">可研阶段</h4>
         <ul>
             <li><span>可研报告：</span>
-                <input type="text" autocomplete="off">
+                <input type="text">
                 <xfupload>预览</xfupload>
 
             </li>
             <li><span>可研审批文件：</span>
-                <input type="text" autocomplete="off">
+                <input type="text">
                 <xfupload>预览</xfupload>
 
             </li>
             <li>
                 <span>可研批复：</span>
-                <input type="text" autocomplete="off">
+                <input type="text">
                 <xfupload>预览</xfupload>
 
                 <span class="xf_ser">批复日期：</span>
-                <input type="date" autocomplete="off" value="3442.342万元">
+                <input type="date" value="3442.342万元">
             </li>
         </ul>
     </div>
@@ -124,70 +98,70 @@
         <h4 class="xf_input_h4">初步设计阶段</h4>
         <ul>
             <li><span>初步设计报告：</span>
-                <input type="text" autocomplete="off">
+                <input type="text">
                 <xfupload>预览</xfupload>
 
             </li>
             <li><span>初步设计图纸：</span>
-                <input type="text" autocomplete="off">
+                <input type="text">
                 <xfupload>预览</xfupload>
 
             </li>
             <li>
                 <span>初步设计批复：</span>
-                <input type="text" autocomplete="off">
+                <input type="text">
                 <xfupload>预览</xfupload>
 
                 <span class="xf_ser">批复日期：</span>
-                <input type="date" autocomplete="off" value="">
+                <input type="date" value="">
             </li>
             <li><span>审批、批复：</span>
-                <input type="text" autocomplete="off">
+                <input type="text">
                 <xfupload>预览</xfupload>
 
                 <span class="xf_ser">批复日期：</span>
-                <input type="date" autocomplete="off" value="">
+                <input type="date" value="">
             </li>
             <li><span>概算书：</span>
-                <input type="text" autocomplete="off">
+                <input type="text">
                 <xfupload>预览</xfupload>
 
             </li>
             <li>
                 <span>批复概算价：</span>
-                <input type="text" autocomplete="off">
+                <input type="text">
                 <span class="xf_ser">万元：</span>
-                <input type="text" autocomplete="off" value="xxxx 万元" disabled>
+                <input type="text" value="xxxx 万元" disabled>
             </li>
             <li>
                 <span>建安费：</span>
-                <input type="text" autocomplete="off">
+                <input type="text">
                 <span class="xf_ser">万元：</span>
-                <input type="text" autocomplete="off" value="xxxx 万元" disabled>
+                <input type="text" value="xxxx 万元" disabled>
             </li>
             <li>
                 <span>监理费：</span>
-                <input type="text" autocomplete="off">
+                <input type="text">
                 <span class="xf_ser">万元：</span>
-                <input type="text" autocomplete="off" value="xxxx 万元" disabled>
+                <input type="text" value="xxxx 万元" disabled>
             </li>
             <li>
                 <span>检测费：</span>
-                <input type="text" autocomplete="off">
+                <input type="text">
                 <span class="xf_ser">万元：</span>
-                <input type="text" autocomplete="off" value="xxxx 万元" disabled>
+                <input type="text" value="xxxx 万元" disabled>
             </li>
             <li>
                 <span>造价咨询费：</span>
-                <input type="text" autocomplete="off">
+                <input type="text">
                 <span class="xf_ser">万元：</span>
-                <input type="text" autocomplete="off" value="xxxx 万元" disabled>
+                <input type="text" value="xxxx 万元" disabled>
             </li>
             <li>
                 <span>其他：</span>
-                <input type="text" autocomplete="off">
+                <input type="text">
                 <span class="xf_ser">万元：</span>
-                <input type="text" autocomplete="off" value="xxxx 万元" disabled>
+                <input type="text" value="xxxx 万元" disabled>
             </li>
         </ul>
     </div>
@@ -196,22 +170,22 @@
         <h4 class="xf_input_h4">可研阶段</h4>
         <ul>
             <li><span>施工图：</span>
-                <input type="text" autocomplete="off">
+                <input type="text">
                 <xfupload>预览</xfupload>
 
             </li>
             <li><span>预算书：</span>
-                <input type="text" autocomplete="off">
+                <input type="text">
                 <xfupload>预览</xfupload>
 
             </li>
             <li>
                 <span>定案预算书：</span>
-                <input type="text" autocomplete="off">
+                <input type="text">
                 <xfupload>预览</xfupload>
 
                 <span class="xf_ser">批复日期：</span>
-                <input type="date" autocomplete="off" value="3442.342万元">
+                <input type="date" value="3442.342万元">
             </li>
         </ul>
     </div>
@@ -219,58 +193,87 @@
         <h4 class="xf_input_h4">工程招标</h4>
         <ul>
             <li><span>选定代理上会材料：</span>
-                <input type="text" autocomplete="off">
+                <input type="text">
                 <xfupload>预览</xfupload>
 
             </li>
             <li><span>招标代理合同签批：</span>
-                <input type="text" autocomplete="off">
+                <input type="text">
                 <xfupload>预览</xfupload>
 
             </li>
             <li>
                 <span>招标文件签批：</span>
-                <input type="text" autocomplete="off">
+                <input type="text">
                 <xfupload>预览</xfupload>
 
                 <span class="xf_ser">批复日期：</span>
-                <input type="date" autocomplete="off" value="3442.342万元">
+                <input type="date" value="3442.342万元">
             </li>
             <li><span>招标过程文件：</span>
-                <input type="text" autocomplete="off">
+                <input type="text">
                 <xfupload>预览</xfupload>
 
             </li>
             <li><span>中标标书：</span>
-                <input type="text" autocomplete="off">
+                <input type="text">
                 <xfupload>预览</xfupload>
 
             </li>
             <li><span>施工招标：</span>
-                <input type="text" autocomplete="off">
+                <input type="text">
                 <xfupload>预览</xfupload>
 
             </li>
             <li>
                 <span>监理招标：</span>
-                <input type="text" autocomplete="off">
+                <input type="text">
                 <xfupload>预览</xfupload>
 
                 <span class="xf_ser">批复日期：</span>
-                <input type="date" autocomplete="off" value="3442.342万元">
+                <input type="date" value="3442.342万元">
             </li>
             <li><span>检测招标：</span>
-                <input type="text" autocomplete="off">
+                <input type="text">
                 <xfupload>预览</xfupload>
 
             </li>
             <li><span>造价咨询招标：</span>
-                <input type="text" autocomplete="off">
+                <input type="text">
                 <xfupload>预览</xfupload>
-
             </li>
         </ul>
     </div>
 </body>
+<script type="text/javascript" src="__STATIC__/js/jquery.js"></script>
+<script>
+    $('xfupload').on('click', function () {
+        var url = $(this).prev().val();
+        if (url == "") {
+            alert("录入员没有上传")
+            return
+        }
+        var link = '/upload/' + url
+        handlePreview(link)
+    });
+
+    function handlePreview(url) {
+        if (url.slice(-3) == 'pdf') {
+            window.open(url, '预览pdf');
+            return;
+        } else if (url.slice(-3) == 'png' || url.slice(-3) == 'jpg' || url.slice(-4) == 'jepg') {
+            var openstr = '<img align="center" height="550" style="margin-top:8px;margin-left:8px" src="' + url + '" />';
+        } else {
+            var openstr = '此格式暂不支持预览,请<a href="' + url + '" target="_blank">下载</a>后再查看'
+        }
+        parent.openIframeLayer(openstr, '预览', {
+            type: 1,
+            skin: 'layui-layer-rim',
+            closeBtn: 1,
+            shadeClose: true,
+            area: ['900px', '600px']
+        })
+    }
+</script>
 
 </html>

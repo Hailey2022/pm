@@ -32,6 +32,16 @@ class ManagerController extends AdminBaseController
         $project = Db::name('project')
             ->where('projectId', $projectId)
             ->find();
+        for ($x = 1; $x <= 21; $x++){
+            $names = json_decode($project['file_name_' . $x]);
+            $urls = json_decode($project['file_url_' . $x]);
+            if ($urls != null and $names != null) {
+                $files = array_combine($urls, $names);
+                $project['file_'.$x] = $files;
+            }else{
+                $project['file_'.$x] = "";
+            }
+        }
         $this->assign("project", $project);
         $tenderingMethods = Db::name('tenderingmethod')->select();
         $this->assign("tenderingMethods", $tenderingMethods);

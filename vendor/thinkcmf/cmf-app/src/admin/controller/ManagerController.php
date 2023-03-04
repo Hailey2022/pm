@@ -360,6 +360,8 @@ class ManagerController extends AdminBaseController
     }
     public function postProjectAdd()
     {
+        var_dump($this->request->param());
+        return;
         if ($this->request->isPost()) {
             $request = $this->request->param();
             $projectName = $request['project-name'];

@@ -766,6 +766,26 @@ function uploadMultiFile(dialog_title, container_selector, item_tpl_wrapper_id, 
         $(container_selector).append(html);
     }, extra_params, 1, filetype, app);
 }
+
+function uploadFiles(dialog_title, container_selector, item_tpl_wrapper_id, filetype, key, extra_params, app) {
+    filetype = filetype ? filetype : 'file';
+    openUploadDialog(dialog_title, function (dialog, files) {
+        var tpl = $('#' + item_tpl_wrapper_id).html();
+        var html = '';
+        $.each(files, function (i, item) {
+            var itemtpl = tpl;
+            itemtpl = itemtpl.replace(/\{id\}/g, item.id);
+            itemtpl = itemtpl.replace(/\{url\}/g, item.url);
+            itemtpl = itemtpl.replace(/\{preview_url\}/g, item.preview_url);
+            itemtpl = itemtpl.replace(/\{filepath\}/g, item.filepath);
+            itemtpl = itemtpl.replace(/\{name\}/g, item.name);
+            itemtpl = itemtpl.replace(/\{key\}/g, key);
+            html += itemtpl;
+        });
+        $(container_selector).append(html);
+    }, extra_params, 1, filetype, app);
+}
+
 function imagePreviewDialog(img, mini = img) {
     Wind.css('layer');
     Wind.use("layer", function () {
@@ -808,6 +828,25 @@ function artdialogAlert(msg) {
         });
     });
 }
+
+function xfPreview(url) {
+    if (url.slice(-3) == 'pdf') {
+        window.open(url, '预览pdf');
+        return;
+    } else if (url.slice(-3) == 'png' || url.slice(-3) == 'jpg' || url.slice(-4) == 'jepg') {
+        var openstr = '<img align="center" height="550" style="margin-top:8px;margin-left:8px" src="' + url + '" />';
+    } else {
+        var openstr = '此格式暂不支持预览,请<a href="' + url + '" target="_blank">下载</a>后再查看'
+    }
+    parent.openIframeLayer(openstr, '预览', {
+        type: 1,
+        skin: 'layui-layer-rim',
+        closeBtn: 1,
+        shadeClose: true,
+        area: ['900px', '600px']
+    })
+}
+
 function openIframeLayer(url, title, options) {
     var params = {
         type: 2,

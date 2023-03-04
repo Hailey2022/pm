@@ -4,324 +4,86 @@
 <head>
     <meta charset="utf-8">
     <title>工程录入</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            border: none;
-            list-style-type: none;
-            -moz-user-select: none;
-            -webkit-user-select: none
-        }
+    <link href="__STATIC__/css/xf_ui.css" rel="stylesheet" type="text/css">
+    <script type="text/html" id="tpl">
+    <div id="file-{id}">
+        <upload_span></upload_span>
+        <xfpreview onclick="xfPreview('/upload/{filepath}')">预览</xfpreview>
+        <!-- <xfreplace onclick="javascript:uploadOne('文件替换','#file-{id}','file');">替换</xfreplace> -->
+        <xfdelete onclick="javascript:(function(){$('#file-{id}').remove();})();">删除</xfdelete>
+        <input type="text" autocomplete="off" name="file_name_{key}[]" value="{name}">
+        <input type="text" autocomplete="off" hidden name="file_url_{key}[]" value="{filepath}">
+    </div>
+    </script>
 
-        a,
-        img {
-            border: 0;
-        }
-
-        ::-moz-focus-inner {
-            border: 0px;
-        }
-
-        ul,
-        ul li,
-        ol li,
-        li {
-            list-style: none;
-        }
-
-        a,
-        img,
-        input,
-        textarea {
-            border: none;
-        }
-
-        a {
-            text-decoration: none;
-            color: #111
-        }
-
-        body {
-            font-family: "Microsoft Yahei", verdana;
-        }
-
-        div.xf_input {
-            background-color: #F9F9F9;
-            margin: 15px 50px 5px 50px;
-
-            font-size: 12px;
-            padding-bottom: 15px;
-
-            border: 1px solid #ccc;
-
-
-            overflow: hidden;
-            float: left;
-            min-width: 900px;
-        }
-
-        h4.xf_input_h4 {
-            background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAGBAMAAAD9IJlFAAAAJ1BMVEUAAACAgIBqcHVqcHVuc3ltcHhtcnducXhtcnhtcXhtcndtcndtcnh84727AAAADHRSTlMAADAxX2COkN7f7u/sMiwUAAAAH0lEQVQIHWMAgyIGoQQGTQULBQamLYsYGBhiAhjAAAA1JQOK8B+6tAAAAABJRU5ErkJggg==") no-repeat 5px;
-            background-color: #E9E9E9;
-            width: 100%;
-            text-indent: 15px;
-            line-height: 34px;
-            margin-bottom: 10px;
-        }
-
-        div.xf_input ul {
-            padding: 7px 0 10px 0;
-        }
-
-        div.xf_input li {
-            margin: 5px 0 0 10px;
-            line-height: 32px;
-            padding-bottom: 10px;
-            border-bottom: 1px transparent solid;
-            border-image: linear-gradient(to right, #f6f6f6, #ddd, #f6f6f6) 1 10;
-        }
-
-        div.xf_input li span {
-            text-align: right;
-            width: 160px;
-            float: left;
-            color: #757575;
-        }
-
-        div.xf_input li span.xf_ser {
-            float: none;
-            margin-left: 2px;
-        }
-
-
-
-        div.xf_input li select {
-            width: 125px;
-            padding: 3px;
-            height: 30px;
-            transition: all 0.5s ease 0s;
-            border-radius: 3px;
-            font-size: 12px;
-            line-height: 1.666;
-            border: 1px solid rgb(187, 187, 187);
-            background: rgb(255, 255, 255);
-            box-shadow: rgb(0 0 0 / 10%) 1px 1px 2px inset;
-
-        }
-
-        div.xf_input li input {
-            width: 280px;
-            padding: 3px 8px;
-            height: 20px;
-            transition: all 0.5s ease 0s;
-            border-radius: 3px;
-            font-size: 12px;
-            line-height: 1.666;
-            border: 1px solid rgb(187, 187, 187);
-            background: rgb(255, 255, 255);
-            box-shadow: rgb(0 0 0 / 10%) 1px 1px 2px inset;
-            margin-right: 9px;
-
-        }
-
-        input[type=date] {
-            width: 100px !important;
-        }
-
-        div.xf_input li input:disabled {
-            background-color: #ddd;
-        }
-
-        div.xf_input li b {
-            color: #f00;
-            padding-left: 2px;
-            font-weight: normal;
-        }
-
-
-        xfupload {
-            background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAAAcCAAAAACy+EUkAAAAM0lEQVRIx2P8x0B7wEQHOxhY/o9aMjLj5N9oxI9aMpq6Ri0ZtWSYJ+HRhsQgtIRxuPgEANW3GE3csk9lAAAAAElFTkSuQmCC") repeat-x;
-            display: inline-block;
-            margin-right: 8px;
-            text-align: center;
-            vertical-align: middle;
-            border-radius: 4px;
-            line-height: 26px;
-            padding: 0px 13px 0px 10px;
-            position: relative;
-            font-size: 12px;
-            border: 1px solid rgb(153, 153, 153);
-            color: rgb(85, 85, 85);
-            cursor: pointer;
-            zoom: 1;
-            outline: 0px
-        }
-
-        xfuplaod_fix {
-            width: 221px;
-            float: left;
-            height: 30px;
-            overflow: hidden;
-        }
-
-        div.main_left {
-            width: 260px;
-            height: 1000px;
-            float: left;
-            font-size: 12px;
-            background-color: #083255;
-            color: #fff;
-        }
-
-        div.main_left li {
-            font-size: 11px;
-            text-indent: 10px;
-            line-height: 20px;
-            border-bottom: 1px solid #ccc;
-            background: url(/static/images/zTreeStandard.png) no-repeat;
-        }
-
-        div.main_left li a {
-            color: #fff;
-        }
-    </style>
-
+    <script type="text/html" id="tpl_with_date">
+    <div id="file-{id}">
+        <upload_span></upload_span>
+        <xfpreview onclick="xfPreview('/upload/{filepath}')">预览</xfpreview>
+        <!-- <xfreplace onclick="javascript:uploadOne('文件替换','#file-{id}','file');">替换</xfreplace> -->
+        <xfdelete onclick="javascript:(function(){$('#file-{id}').remove();})();">删除</xfdelete>
+        <input type="text" autocomplete="off" name="file_name_{key}[]" value="{name}">
+        <input type="text" autocomplete="off" hidden name="file_url_{key}[]" value="{filepath}">
+        <span class="xf_ser">批复日期：</span>
+        <input type="date" name="file_date_{key}[]" autocomplete="off" value="">
+    </div>
+    </script>
 </head>
 
 <body>
     <form method="post" class="form-horizontal js-ajax-form" action="{:url('manager/postProjectAdd')}">
         <div class="main">
-            <div class="main_left">
-                <h4 class="xf_input_h4">项目名称</h4>
+            <!-- <div class="main_left">
+                <h4 class="xf_input_h4">功能</h4>
                 <ul>
-                    <li><a href="#">水库维修工程二期</a></li>
+                    <li><a href="#">基本信息</a></li>
                     <li><a href="#">江门市碧道建设工程（西江蓬江段）</a></li>
                     <li><a href="#">水库维修工程二期</a></li>
                     <li><a href="#">2022小型水库安全监测能力提升项目</a></li>
                 </ul>
-
-            </div>
+            </div> -->
 
             <div class="xf_input">
                 <h4 class="xf_input_h4">工程基本信息</h4>
                 <ul>
                     <li>
-                        <span>工程基本信息：</span>
-                        <input type="text" autocomplete="off" required>
-                        <b>必填</b>
+                        <span>工程名称：</span>
+                        <input type="text" autocomplete="off" required name="project-name">
+                        <b>*必填</b>
                     </li>
                     <li>
                         <span>建设单位：</span>
-                        <input type="text" autocomplete="off">
-                        <!-- <span class="xf_ser">批复日期：</span>
-                <input disabled type="text"  autocomplete="off" value="3442.342万元"> -->
+                        <input type="text" autocomplete="off" name="constructionCompany">
                     </li>
                     <li>
                         <span>建设年份：</span>
-                        <input type="number" min="1900" max="2099" step="1" value="2023" />
-                        <!-- <span class="xf_ser">批复日期：</span>
-                <input type="text"  autocomplete="off" value="3442.342万元"> -->
-                    </li>
-                    <li>
-                        <span>估算价：</span>
-                        <input type="text" autocomplete="off">
-                        <span class="xf_ser">万元：</span>
-                        <input type="text" autocomplete="off" value="xxxx 万元" disabled>
-                    </li>
-                    <li>
-                        <span>上报预算价：</span>
-                        <input type="text" autocomplete="off">
-                        <span class="xf_ser">万元：</span>
-                        <input type="text" autocomplete="off" value="xxxx 万元" disabled>
-                    </li>
-                    <li>
-                        <span>批复预算价：</span>
-                        <input type="text" autocomplete="off">
-                        <span class="xf_ser">万元：</span>
-                        <input type="text" autocomplete="off" value="xxxx 万元" disabled>
-                    </li>
-                    <!-- <li>
-                <span>批复预算价：</span>
-                <input type="text" autocomplete="off">
-                <span class="xf_ser">批复日期：</span>
-                <input type="date" autocomplete="off" value="3442.342万元">
-            </li> -->
-
-                    <li>
-                        <span>招标方式：</span>
-                        <select>
-                            <option>未填写</option>
-                            <option>公开招标</option>
-                            <option>邀请招标</option>
-                            <option>单一来源</option>
-                            <option>竞争性谈判</option>
-                            <option>竞争性磋商</option>
-                        </select>
-                    </li>
-                    <li>
-                        <span>实施阶段：</span>
-                        <select>
-                            <option value="0"> 未填写</option>
-                            <option value="1"> 正在施工</option>
-                            <option value="2"> 已完成</option>
-                            <option value="3"> 结算阶段</option>
-                            <option value="4"> 决算阶段</option>
-                            <option value="5"> 已竣工验收</option>
-                        </select>
-                    </li>
-                    <!-- <li><span>实施阶段：</span><input type="text" autocomplete="off"></li> -->
-                    <li>
-                        <xfupload>上传</xfupload>
-                        <span>预算上报文件：</span>
-                        <input type="text" autocomplete="off">
-                        <xfupload>预览</xfupload>
-                        <xfupload>替换</xfupload>
-                        <xfupload>删除</xfupload>
-                        <br>
-                        <xfuplaod_fix></xfuplaod_fix>
-                        <input type="text" autocomplete="off">
-                        <xfupload>预览</xfupload>
-                        <xfupload>替换</xfupload>
-                        <xfupload>删除</xfupload><br>
-                        <xfuplaod_fix></xfuplaod_fix>
-                        <input type="text" autocomplete="off">
-                        <xfupload>预览</xfupload>
-                        <xfupload>替换</xfupload>
-                        <xfupload>删除</xfupload><br>
-                        <xfuplaod_fix></xfuplaod_fix>
-                        <input type="text" autocomplete="off">
-                        <xfupload>预览</xfupload>
-                        <xfupload>替换</xfupload>
-                        <xfupload>删除</xfupload>
+                        <input type="number" min="1900" max="2099" step="1" name="constructionYear"
+                            value="{:date('Y')}" />
                     </li>
                 </ul>
             </div>
 
-
             <div class="xf_input">
                 <h4 class="xf_input_h4">可研阶段</h4>
                 <ul>
-                    <li><span>可研报告：</span>
-                        <xfupload>上传</xfupload><input type="text" autocomplete="off">
-                        <xfupload>预览</xfupload>
-                        <xfupload>替换</xfupload>
-                        <xfupload>删除</xfupload>
+                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                        <span>可研报告：</span>
+                         <xfupload file_id="1">上传</xfupload><br>
                     </li>
-                    <li><span>可研审批文件：</span>
-                        <xfupload>上传</xfupload><input type="text" autocomplete="off">
-                        <xfupload>预览</xfupload>
-                        <xfupload>替换</xfupload>
-                        <xfupload>删除</xfupload>
+                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                        <span>可研审批文件：</span>
+                         <xfupload file_id="1">上传</xfupload><br>
                     </li>
-                    <li>
+                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>可研批复：</span>
-                        <xfupload>上传</xfupload><input type="text" autocomplete="off">
-                        <xfupload>预览</xfupload>
-                        <xfupload>替换</xfupload>
-                        <xfupload>删除</xfupload>
-                        <span class="xf_ser">批复日期：</span>
-                        <input type="date" autocomplete="off" value="3442.342万元">
+                         <xfupload file_id="1">上传</xfupload><br>
+
+                    </li>
+                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                        <span>估算价：</span>
+                        <input type="text" autocomplete="off">
+                        <span class="xf_ser">万元：</span>
+                        <input type="text" autocomplete="off" value="xxxx 万元" disabled>
                     </li>
                 </ul>
             </div>
@@ -329,72 +91,58 @@
             <div class="xf_input">
                 <h4 class="xf_input_h4">初步设计阶段</h4>
                 <ul>
-                    <li><span>初步设计报告：</span>
-                        <xfupload>上传</xfupload><input type="text" autocomplete="off">
-                        <xfupload>预览</xfupload>
-                        <xfupload>替换</xfupload>
-                        <xfupload>删除</xfupload>
+                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                        <span>初步设计报告：</span>
+                        <xfupload file_id="1">上传</xfupload>
                     </li>
-                    <li><span>初步设计图纸：</span>
-                        <xfupload>上传</xfupload><input type="text" autocomplete="off">
-                        <xfupload>预览</xfupload>
-                        <xfupload>替换</xfupload>
-                        <xfupload>删除</xfupload>
+                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                        <span>初步设计图纸：</span>
+                         <xfupload file_id="1">上传</xfupload><br>
                     </li>
-                    <li>
+                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>初步设计批复：</span>
-                        <xfupload>上传</xfupload><input type="text" autocomplete="off">
-                        <xfupload>预览</xfupload>
-                        <xfupload>替换</xfupload>
-                        <xfupload>删除</xfupload>
-                        <span class="xf_ser">批复日期：</span>
-                        <input type="date" autocomplete="off" value="">
+                        <xfupload date>上传</xfupload><br>
                     </li>
-                    <li><span>审批、批复：</span>
-                        <xfupload>上传</xfupload><input type="text" autocomplete="off">
-                        <xfupload>预览</xfupload>
-                        <xfupload>替换</xfupload>
-                        <xfupload>删除</xfupload>
-                        <span class="xf_ser">批复日期：</span>
-                        <input type="date" autocomplete="off" value="">
+                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                        <span>审批、批复：</span>
+                         <xfupload file_id="1">上传</xfupload><br>
+
                     </li>
-                    <li><span>概算书：</span>
-                        <xfupload>上传</xfupload><input type="text" autocomplete="off">
-                        <xfupload>预览</xfupload>
-                        <xfupload>替换</xfupload>
-                        <xfupload>删除</xfupload>
+                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                        <span>概算书：</span>
+                         <xfupload file_id="1">上传</xfupload><br>
                     </li>
-                    <li>
+                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>批复概算价：</span>
                         <input type="text" autocomplete="off">
                         <span class="xf_ser">万元：</span>
                         <input type="text" autocomplete="off" value="xxxx 万元" disabled>
                     </li>
-                    <li>
+                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>建安费：</span>
                         <input type="text" autocomplete="off">
                         <span class="xf_ser">万元：</span>
                         <input type="text" autocomplete="off" value="xxxx 万元" disabled>
                     </li>
-                    <li>
+                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>监理费：</span>
                         <input type="text" autocomplete="off">
                         <span class="xf_ser">万元：</span>
                         <input type="text" autocomplete="off" value="xxxx 万元" disabled>
                     </li>
-                    <li>
+                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>检测费：</span>
                         <input type="text" autocomplete="off">
                         <span class="xf_ser">万元：</span>
                         <input type="text" autocomplete="off" value="xxxx 万元" disabled>
                     </li>
-                    <li>
+                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>造价咨询费：</span>
                         <input type="text" autocomplete="off">
                         <span class="xf_ser">万元：</span>
                         <input type="text" autocomplete="off" value="xxxx 万元" disabled>
                     </li>
-                    <li>
+                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>其他：</span>
                         <input type="text" autocomplete="off">
                         <span class="xf_ser">万元：</span>
@@ -404,98 +152,132 @@
             </div>
 
             <div class="xf_input">
-                <h4 class="xf_input_h4">可研阶段</h4>
+                <h4 class="xf_input_h4">施工图阶段</h4>
+                <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                    <span>上报预算价：</span>
+                    <input type="text" autocomplete="off">
+                    <span class="xf_ser">万元：</span>
+                    <input type="text" autocomplete="off" value="xxxx 万元" disabled>
+                </li>
+                <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                    <span>批复预算价：</span>
+                    <input type="text" autocomplete="off">
+                    <span class="xf_ser">万元：</span>
+                    <input type="text" autocomplete="off" value="xxxx 万元" disabled>
+                </li>
                 <ul>
-                    <li><span>施工图：</span>
-                        <xfupload>上传</xfupload><input type="text" autocomplete="off">
-                        <xfupload>预览</xfupload>
-                        <xfupload>替换</xfupload>
-                        <xfupload>删除</xfupload>
+                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                        <span>施工图：</span>
+                         <xfupload file_id="1">上传</xfupload><br>
                     </li>
-                    <li><span>预算书：</span>
-                        <xfupload>上传</xfupload><input type="text" autocomplete="off">
-                        <xfupload>预览</xfupload>
-                        <xfupload>替换</xfupload>
-                        <xfupload>删除</xfupload>
+                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                        <span>预算书：</span>
+                         <xfupload file_id="1">上传</xfupload><br>
                     </li>
-                    <li>
+                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>定案预算书：</span>
-                        <xfupload>上传</xfupload><input type="text" autocomplete="off">
-                        <xfupload>预览</xfupload>
-                        <xfupload>替换</xfupload>
-                        <xfupload>删除</xfupload>
-                        <span class="xf_ser">批复日期：</span>
-                        <input type="date" autocomplete="off" value="3442.342万元">
+                         <xfupload file_id="1">上传</xfupload><br>
+
+                    </li>
+                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                        <span>预算上报文件：</span>
+                         <xfupload file_id="1">上传</xfupload>
                     </li>
                 </ul>
             </div>
             <div class="xf_input">
-                <h4 class="xf_input_h4">工程招标</h4>
+                <h4 class="xf_input_h4">招标阶段</h4>
+                <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                    <span>招标方式：</span>
+                    <select>
+                        <option>未填写</option>
+                        <option>公开招标</option>
+                        <option>邀请招标</option>
+                        <option>单一来源</option>
+                        <option>竞争性谈判</option>
+                        <option>竞争性磋商</option>
+                    </select>
+                </li>
+                <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                    <span>实施阶段：</span>
+                    <select>
+                        <option value="0"> 未填写</option>
+                        <option value="1"> 正在施工</option>
+                        <option value="2"> 已完成</option>
+                        <option value="3"> 结算阶段</option>
+                        <option value="4"> 决算阶段</option>
+                        <option value="5"> 已竣工验收</option>
+                    </select>
+                </li>
                 <ul>
-                    <li><span>选定代理上会材料：</span>
-                        <xfupload>上传</xfupload><input type="text" autocomplete="off">
-                        <xfupload>预览</xfupload>
-                        <xfupload>替换</xfupload>
-                        <xfupload>删除</xfupload>
+                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                        <span>选定代理上会材料：</span>
+                         <xfupload file_id="1">上传</xfupload><br>
                     </li>
-                    <li><span>招标代理合同签批：</span>
-                        <xfupload>上传</xfupload><input type="text" autocomplete="off">
-                        <xfupload>预览</xfupload>
-                        <xfupload>替换</xfupload>
-                        <xfupload>删除</xfupload>
+                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                        <span>招标代理合同签批：</span>
+                         <xfupload file_id="1">上传</xfupload><br>
                     </li>
-                    <li>
+                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>招标文件签批：</span>
-                        <xfupload>上传</xfupload><input type="text" autocomplete="off">
-                        <xfupload>预览</xfupload>
-                        <xfupload>替换</xfupload>
-                        <xfupload>删除</xfupload>
-                        <span class="xf_ser">批复日期：</span>
-                        <input type="date" autocomplete="off" value="3442.342万元">
+                         <xfupload file_id="1">上传</xfupload><br>
+
                     </li>
-                    <li><span>招标过程文件：</span>
-                        <xfupload>上传</xfupload><input type="text" autocomplete="off">
-                        <xfupload>预览</xfupload>
-                        <xfupload>替换</xfupload>
-                        <xfupload>删除</xfupload>
+                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                        <span>招标过程文件：</span>
+                         <xfupload file_id="1">上传</xfupload><br>
                     </li>
-                    <li><span>中标标书：</span>
-                        <xfupload>上传</xfupload><input type="text" autocomplete="off">
-                        <xfupload>预览</xfupload>
-                        <xfupload>替换</xfupload>
-                        <xfupload>删除</xfupload>
+                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                        <span>中标标书：</span>
+                         <xfupload file_id="1">上传</xfupload><br>
                     </li>
-                    <li><span>施工招标：</span>
-                        <xfupload>上传</xfupload><input type="text" autocomplete="off">
-                        <xfupload>预览</xfupload>
-                        <xfupload>替换</xfupload>
-                        <xfupload>删除</xfupload>
+                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                        <span>施工招标：</span>
+                         <xfupload file_id="1">上传</xfupload><br>
                     </li>
-                    <li>
+                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>监理招标：</span>
-                        <xfupload>上传</xfupload><input type="text" autocomplete="off">
-                        <xfupload>预览</xfupload>
-                        <xfupload>替换</xfupload>
-                        <xfupload>删除</xfupload>
-                        <span class="xf_ser">批复日期：</span>
-                        <input type="date" autocomplete="off" value="3442.342万元">
+                         <xfupload file_id="1">上传</xfupload><br>
+
                     </li>
-                    <li><span>检测招标：</span>
-                        <xfupload>上传</xfupload><input type="text" autocomplete="off">
-                        <xfupload>预览</xfupload>
-                        <xfupload>替换</xfupload>
-                        <xfupload>删除</xfupload>
+                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                        <span>检测招标：</span>
+                         <xfupload file_id="1">上传</xfupload><br>
                     </li>
-                    <li><span>造价咨询招标：</span>
-                        <xfupload>上传</xfupload><input type="text" autocomplete="off">
-                        <xfupload>预览</xfupload>
-                        <xfupload>替换</xfupload>
-                        <xfupload>删除</xfupload>
+                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                        <span>造价咨询招标：</span>
+                         <xfupload file_id="1">上传</xfupload><br>
                     </li>
                 </ul>
             </div>
         </div>
+        <button>提交123</button>
     </form>
+
 </body>
+<script type="text/javascript">
+    var GV = {
+        ROOT: "__ROOT__/",
+        WEB_ROOT: "__WEB_ROOT__/",
+        JS_ROOT: "static/js/",
+    };
+</script>
+<script src="__STATIC__/js/jquery.js"></script>
+<script src="__STATIC__/js/wind.js"></script>
+<script src="__STATIC__/js/admin.js"></script>
+<script>
+    $("xfupload").on("click", function () {
+        var title = $(this).prev('span').text().replace("：", "") + "上传"
+        var id = $(this).parent().attr('id')
+        var attr = $(this).attr('date')
+        var key = $(this).attr('file_id')
+        if (typeof attr !== 'undefined' && attr !== false) {
+            var tpl = "tpl_with_date";
+        } else {
+            var tpl = "tpl";
+        }
+        uploadFiles(title, '#' + id, tpl, 'file', key)
+    })
+</script>
 
 </html>

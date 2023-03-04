@@ -129,7 +129,10 @@ div.xf_input li b {
 }
 
 
-xfupload {
+xfupload,
+xfpreview,
+xfreplace,
+xfdelete {
     background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAAAcCAAAAACy+EUkAAAAM0lEQVRIx2P8x0B7wEQHOxhY/o9aMjLj5N9oxI9aMpq6Ri0ZtWSYJ+HRhsQgtIRxuPgEANW3GE3csk9lAAAAAElFTkSuQmCC") repeat-x;
     display: inline-block;
     margin-right: 8px;
@@ -155,6 +158,19 @@ xfupload_fix {
 }
 
 xf_fix {
+    width: 160px;
+    float: left;
+    height: 30px;
+    overflow: hidden;
+}
+
+div.upload_div {
+    float: left;
+    width: 520px;
+    padding-left: 10px;
+}
+
+upload_span {
     width: 160px;
     float: left;
     height: 30px;

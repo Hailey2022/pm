@@ -29,6 +29,16 @@
     </div>
     </script>
 </head>
+<script type="text/javascript">
+    var GV = {
+        ROOT: "__ROOT__/",
+        WEB_ROOT: "__WEB_ROOT__/",
+        JS_ROOT: "static/js/",
+    };
+</script>
+<script src="__STATIC__/js/jquery.js"></script>
+<script src="__STATIC__/js/wind.js"></script>
+<script src="__STATIC__/js/admin.js"></script>
 
 <body>
     <form method="post" class="form-horizontal js-ajax-form" action="{:url('manager/postProjectAdd')}">
@@ -57,7 +67,7 @@
                     </li>
                     <li>
                         <span>建设年份：</span>
-                        <input type="number" min="1900" max="2099" step="1" name="constructionYear"
+                        <input type="number" step="0.01" min="1900" max="2099" step="1" name="constructionYear"
                             value="{:date('Y')}" />
                     </li>
                 </ul>
@@ -68,22 +78,22 @@
                 <ul>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>可研报告：</span>
-                         <xfupload file_id="1">上传</xfupload><br>
+                        <xfupload file_id="1">上传</xfupload><br>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>可研审批文件：</span>
-                         <xfupload file_id="1">上传</xfupload><br>
+                        <xfupload file_id="7">上传</xfupload><br>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>可研批复：</span>
-                         <xfupload file_id="1">上传</xfupload><br>
+                        <xfupload file_id="2" date>上传</xfupload><br>
 
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>估算价：</span>
-                        <input type="text" autocomplete="off">
+                        <input type="number" step="0.01" class="to10k" min="0" name="estimatedPrice" autocomplete="off">
                         <span class="xf_ser">万元：</span>
-                        <input type="text" autocomplete="off" value="xxxx 万元" disabled>
+                        <input type="text" autocomplete="off" value="" disabled>
                     </li>
                 </ul>
             </div>
@@ -93,58 +103,57 @@
                 <ul>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>初步设计报告：</span>
-                        <xfupload file_id="1">上传</xfupload>
+                        <xfupload file_id="3">上传</xfupload>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>初步设计图纸：</span>
-                         <xfupload file_id="1">上传</xfupload><br>
+                        <xfupload file_id="8">上传</xfupload><br>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>初步设计批复：</span>
-                        <xfupload date>上传</xfupload><br>
+                        <xfupload file_id="4" date>上传</xfupload><br>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>审批、批复：</span>
-                         <xfupload file_id="1">上传</xfupload><br>
-
+                        <xfupload file_id="9" date>上传</xfupload><br>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>概算书：</span>
-                         <xfupload file_id="1">上传</xfupload><br>
+                        <xfupload file_id="10">上传</xfupload><br>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>批复概算价：</span>
-                        <input type="text" autocomplete="off">
+                        <input class="to10k" type="number" step="0.01" min=0 autocomplete="off">
                         <span class="xf_ser">万元：</span>
                         <input type="text" autocomplete="off" value="xxxx 万元" disabled>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>建安费：</span>
-                        <input type="text" autocomplete="off">
+                        <input class="to10k" type="number" step="0.01" min=0 autocomplete="off">
                         <span class="xf_ser">万元：</span>
                         <input type="text" autocomplete="off" value="xxxx 万元" disabled>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>监理费：</span>
-                        <input type="text" autocomplete="off">
+                        <input class="to10k" type="number" step="0.01" min=0 autocomplete="off">
                         <span class="xf_ser">万元：</span>
                         <input type="text" autocomplete="off" value="xxxx 万元" disabled>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>检测费：</span>
-                        <input type="text" autocomplete="off">
+                        <input class="to10k" type="number" step="0.01" min=0 autocomplete="off">
                         <span class="xf_ser">万元：</span>
                         <input type="text" autocomplete="off" value="xxxx 万元" disabled>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>造价咨询费：</span>
-                        <input type="text" autocomplete="off">
+                        <input class="to10k" type="number" step="0.01" min=0 autocomplete="off">
                         <span class="xf_ser">万元：</span>
                         <input type="text" autocomplete="off" value="xxxx 万元" disabled>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>其他：</span>
-                        <input type="text" autocomplete="off">
+                        <input class="to10k" type="number" step="0.01" min=0 autocomplete="off">
                         <span class="xf_ser">万元：</span>
                         <input type="text" autocomplete="off" value="xxxx 万元" disabled>
                     </li>
@@ -155,33 +164,33 @@
                 <h4 class="xf_input_h4">施工图阶段</h4>
                 <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                     <span>上报预算价：</span>
-                    <input type="text" autocomplete="off">
+                    <input class="to10k" type="number" step="0.01" min=0 autocomplete="off">
                     <span class="xf_ser">万元：</span>
                     <input type="text" autocomplete="off" value="xxxx 万元" disabled>
                 </li>
                 <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                     <span>批复预算价：</span>
-                    <input type="text" autocomplete="off">
+                    <input class="to10k" type="number" step="0.01" min=0 autocomplete="off">
                     <span class="xf_ser">万元：</span>
                     <input type="text" autocomplete="off" value="xxxx 万元" disabled>
                 </li>
                 <ul>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>施工图：</span>
-                         <xfupload file_id="1">上传</xfupload><br>
+                        <xfupload file_id="6">上传</xfupload><br>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>预算书：</span>
-                         <xfupload file_id="1">上传</xfupload><br>
+                        <xfupload file_id="11">上传</xfupload><br>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>定案预算书：</span>
-                         <xfupload file_id="1">上传</xfupload><br>
+                        <xfupload file_id="12">上传</xfupload><br>
 
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                        <span>预算上报文件：</span>
-                         <xfupload file_id="1">上传</xfupload>
+                        <span>预算上文件：</span>
+                        <xfupload file_id="5">上传</xfupload>
                     </li>
                 </ul>
             </div>
@@ -212,41 +221,41 @@
                 <ul>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>选定代理上会材料：</span>
-                         <xfupload file_id="1">上传</xfupload><br>
+                        <xfupload file_id="13">上传</xfupload><br>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>招标代理合同签批：</span>
-                         <xfupload file_id="1">上传</xfupload><br>
+                        <xfupload file_id="14">上传</xfupload><br>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>招标文件签批：</span>
-                         <xfupload file_id="1">上传</xfupload><br>
+                        <xfupload file_id="15">上传</xfupload><br>
 
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>招标过程文件：</span>
-                         <xfupload file_id="1">上传</xfupload><br>
+                        <xfupload file_id="16">上传</xfupload><br>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>中标标书：</span>
-                         <xfupload file_id="1">上传</xfupload><br>
+                        <xfupload file_id="17">上传</xfupload><br>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>施工招标：</span>
-                         <xfupload file_id="1">上传</xfupload><br>
+                        <xfupload file_id="18">上传</xfupload><br>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>监理招标：</span>
-                         <xfupload file_id="1">上传</xfupload><br>
+                        <xfupload file_id="19">上传</xfupload><br>
 
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>检测招标：</span>
-                         <xfupload file_id="1">上传</xfupload><br>
+                        <xfupload file_id="20">上传</xfupload><br>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>造价咨询招标：</span>
-                         <xfupload file_id="1">上传</xfupload><br>
+                        <xfupload file_id="21">上传</xfupload><br>
                     </li>
                 </ul>
             </div>
@@ -255,28 +264,31 @@
     </form>
 
 </body>
-<script type="text/javascript">
-    var GV = {
-        ROOT: "__ROOT__/",
-        WEB_ROOT: "__WEB_ROOT__/",
-        JS_ROOT: "static/js/",
-    };
-</script>
-<script src="__STATIC__/js/jquery.js"></script>
-<script src="__STATIC__/js/wind.js"></script>
-<script src="__STATIC__/js/admin.js"></script>
 <script>
-    $("xfupload").on("click", function () {
-        var title = $(this).prev('span').text().replace("：", "") + "上传"
-        var id = $(this).parent().attr('id')
-        var attr = $(this).attr('date')
-        var key = $(this).attr('file_id')
-        if (typeof attr !== 'undefined' && attr !== false) {
-            var tpl = "tpl_with_date";
-        } else {
-            var tpl = "tpl";
-        }
-        uploadFiles(title, '#' + id, tpl, 'file', key)
+    function formatNum(num) {
+        return Math.round(num * Math.pow(10, 6)) / Math.pow(10, 6);
+    }
+    $(function () {
+        $("xfupload").on("click", function () {
+            var title = $(this).prev('span').text().replace("：", "") + "上传"
+            var id = $(this).parent().attr('id')
+            var attr = $(this).attr('date')
+            var key = $(this).attr('file_id')
+            if (typeof attr !== 'undefined' && attr !== false) {
+                var tpl = "tpl_with_date";
+            } else {
+                var tpl = "tpl";
+            }
+            uploadFiles(title, '#' + id, tpl, 'file', key)
+        });
+        $('.to10k').on('change', function () {
+            num = $(this).val()
+            if (isNaN(num)) {
+                $(this).next().next().val("请输入正确的数字")
+            } else {
+                $(this).next().next().val(formatNum(num / 10000) + "万元")
+            }
+        });
     })
 </script>
 

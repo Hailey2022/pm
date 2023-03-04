@@ -164,13 +164,13 @@
                 <h4 class="xf_input_h4">施工图阶段</h4>
                 <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                     <span>上报预算价：</span>
-                    <input class="to10k" type="number" step="0.01" min=0 autocomplete="off">
+                    <input class="to10k" type="number" step="0.01" min=0 autocomplete="off"  name="reportedBudget">
                     <span class="xf_ser">万元：</span>
                     <input type="text" autocomplete="off" value="" disabled>
                 </li>
                 <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                     <span>批复预算价：</span>
-                    <input class="to10k" type="number" step="0.01" min=0 autocomplete="off">
+                    <input class="to10k" type="number" step="0.01" min=0 autocomplete="off"  name="approvedBudget" >
                     <span class="xf_ser">万元：</span>
                     <input type="text" autocomplete="off" value="" disabled>
                 </li>
@@ -206,13 +206,10 @@
                 </li>
                 <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                     <span>实施阶段：</span>
-                    <select>
-                        <option value="0"> 未填写</option>
-                        <option value="1"> 正在施工</option>
-                        <option value="2"> 已完成</option>
-                        <option value="3"> 结算阶段</option>
-                        <option value="4"> 决算阶段</option>
-                        <option value="5"> 已竣工验收</option>
+                    <select name="projectStatusId">
+                        <foreach name="theProjectStatus" item="s">
+                            <option name="projectStatus" value="{$s.id}"> {$s.projectStatus}</option>
+                        </foreach>
                     </select>
                 </li>
                 <ul>

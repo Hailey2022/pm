@@ -32,14 +32,14 @@ class ManagerController extends AdminBaseController
         $project = Db::name('project')
             ->where('projectId', $projectId)
             ->find();
-        for ($x = 1; $x <= 21; $x++){
+        for ($x = 1; $x <= 21; $x++) {
             $names = json_decode($project['file_name_' . $x]);
             $urls = json_decode($project['file_url_' . $x]);
             if ($urls != null and $names != null) {
                 $files = array_combine($urls, $names);
-                $project['file_'.$x] = $files;
-            }else{
-                $project['file_'.$x] = "";
+                $project['file_' . $x] = $files;
+            } else {
+                $project['file_' . $x] = "";
             }
         }
         $this->assign("project", $project);
@@ -360,8 +360,8 @@ class ManagerController extends AdminBaseController
     }
     public function postProjectAdd()
     {
-        var_dump($this->request->param());
-        return;
+        // var_dump($this->request->param());
+        // return;
         if ($this->request->isPost()) {
             $request = $this->request->param();
             $projectName = $request['project-name'];
@@ -381,48 +381,6 @@ class ManagerController extends AdminBaseController
                 'approximatePrice' => $request['approximatePrice'],
                 'constructionCompany' => $request['constructionCompany'],
                 'constructionYear' => $request['constructionYear'],
-                'file_url_1' => $request['file_url_1'],
-                'file_url_2' => $request['file_url_2'],
-                'file_url_3' => $request['file_url_3'],
-                'file_url_4' => $request['file_url_4'],
-                'file_url_5' => $request['file_url_5'],
-                'file_url_6' => $request['file_url_6'],
-                'file_url_7' => $request['file_url_7'],
-                'file_url_8' => $request['file_url_8'],
-                'file_url_9' => $request['file_url_9'],
-                'file_url_10' => $request['file_url_10'],
-                'file_url_11' => $request['file_url_11'],
-                'file_url_12' => $request['file_url_12'],
-                'file_url_13' => $request['file_url_13'],
-                'file_url_14' => $request['file_url_14'],
-                'file_url_15' => $request['file_url_15'],
-                'file_url_16' => $request['file_url_16'],
-                'file_url_17' => $request['file_url_17'],
-                'file_url_18' => $request['file_url_18'],
-                'file_url_19' => $request['file_url_19'],
-                'file_url_20' => $request['file_url_20'],
-                'file_url_21' => $request['file_url_21'],
-                'file_name_1' => $request['file_name_1'],
-                'file_name_2' => $request['file_name_2'],
-                'file_name_3' => $request['file_name_3'],
-                'file_name_4' => $request['file_name_4'],
-                'file_name_5' => $request['file_name_5'],
-                'file_name_6' => $request['file_name_6'],
-                'file_name_7' => $request['file_name_7'],
-                'file_name_8' => $request['file_name_8'],
-                'file_name_9' => $request['file_name_9'],
-                'file_name_10' => $request['file_name_10'],
-                'file_name_11' => $request['file_name_11'],
-                'file_name_12' => $request['file_name_12'],
-                'file_name_13' => $request['file_name_13'],
-                'file_name_14' => $request['file_name_14'],
-                'file_name_15' => $request['file_name_15'],
-                'file_name_16' => $request['file_name_16'],
-                'file_name_17' => $request['file_name_17'],
-                'file_name_18' => $request['file_name_18'],
-                'file_name_19' => $request['file_name_19'],
-                'file_name_20' => $request['file_name_20'],
-                'file_name_21' => $request['file_name_21'],
                 'estimatedPrice' => $request['estimatedPrice'],
                 'reportedBudget' => $request['reportedBudget'],
                 'approvedBudget' => $request['approvedBudget'],
@@ -434,34 +392,40 @@ class ManagerController extends AdminBaseController
                 'fee4' => $request['fee4'],
                 'fee5' => $request['fee5'],
             ];
-            $contractsCount = count($request["clientName"]);
-            for ($i = 0; $i < $contractsCount; $i++) {
-                $contract = [
-                    'contractId' => uniqid(),
-                    'clientId' => $this->getClientIdByClientName($request["clientName"][$i]),
-                    'clientAlias' => $request["clientAlias"][$i],
-                    'projectId' => $data["projectId"],
-                    'clientType' => $request["clientType"][$i],
-                    'contractName' => $request["contractName"][$i],
-                    'contractAmount' => $request["contractAmount"][$i] === "" ? 0 : $request["contractAmount"][$i],
-                    'contractTime' => $request["contractTime"][$i],
-                    'contractNumber' => $request["contractNumber"][$i],
-                    'paid' => 0
-                ];
-                if ($request["uploadfiles"][$i] != "" && $request["uploadfilenames"][$i] != "") {
-                    $urls = explode('|', $request["uploadfiles"][$i]);
-                    $names = explode('|', $request["uploadfilenames"][$i]);
-                    $contract['file_urls'] = $urls;
-                    $contract['file_names'] = $names;
-                }
-                $res = Db::name('contract')->insert($contract);
-                if ($res === false) {
-                    $this->error("Error while adding contracts...");
+            for ($i = 1; $i <= 21; $i++) {
+                if (array_key_exists("file_name_" . $i, $request) && array_key_exists("file_url_" . $i, $request)) {
+                    $data["file_name_" . $i] = $request["file_name_" . $i];
+                    $data["file_url_" . $i] = $request["file_url_" . $i];
                 }
             }
+            // $contractsCount = count($request["clientName"]);
+            // for ($i = 0; $i < $contractsCount; $i++) {
+            //     $contract = [
+            //         'contractId' => uniqid(),
+            //         'clientId' => $this->getClientIdByClientName($request["clientName"][$i]),
+            //         'clientAlias' => $request["clientAlias"][$i],
+            //         'projectId' => $data["projectId"],
+            //         'clientType' => $request["clientType"][$i],
+            //         'contractName' => $request["contractName"][$i],
+            //         'contractAmount' => $request["contractAmount"][$i] === "" ? 0 : $request["contractAmount"][$i],
+            //         'contractTime' => $request["contractTime"][$i],
+            //         'contractNumber' => $request["contractNumber"][$i],
+            //         'paid' => 0
+            //     ];
+            //     if ($request["uploadfiles"][$i] != "" && $request["uploadfilenames"][$i] != "") {
+            //         $urls = explode('|', $request["uploadfiles"][$i]);
+            //         $names = explode('|', $request["uploadfilenames"][$i]);
+            //         $contract['file_urls'] = $urls;
+            //         $contract['file_names'] = $names;
+            //     }
+            //     $res = Db::name('contract')->insert($contract);
+            //     if ($res === false) {
+            //         $this->error("Error while adding contracts...");
+            //     }
+            // }
             $res = Db::name('project')->insert($data);
             if ($res !== false) {
-                $this->calculateProjectAmount($data['projectId']);
+                // $this->calculateProjectAmount($data['projectId']);
                 $this->success("保存成功！", url('manager/listProjectPayments', ["projectId" => $data["projectId"]]));
             } else {
                 $this->error("保存时出错！");

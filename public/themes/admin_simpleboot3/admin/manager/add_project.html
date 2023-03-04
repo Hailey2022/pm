@@ -123,39 +123,39 @@
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>批复概算价：</span>
-                        <input class="to10k" type="number" step="0.01" min=0 autocomplete="off">
+                        <input class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="approximatePrice">
                         <span class="xf_ser">万元：</span>
-                        <input type="text" autocomplete="off" value="xxxx 万元" disabled>
+                        <input type="text" autocomplete="off" value="" disabled>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>建安费：</span>
-                        <input class="to10k" type="number" step="0.01" min=0 autocomplete="off">
+                        <input class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="fee1">
                         <span class="xf_ser">万元：</span>
-                        <input type="text" autocomplete="off" value="xxxx 万元" disabled>
+                        <input type="text" autocomplete="off" value="" disabled>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>监理费：</span>
-                        <input class="to10k" type="number" step="0.01" min=0 autocomplete="off">
+                        <input class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="fee2">
                         <span class="xf_ser">万元：</span>
-                        <input type="text" autocomplete="off" value="xxxx 万元" disabled>
+                        <input type="text" autocomplete="off" value="" disabled>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>检测费：</span>
-                        <input class="to10k" type="number" step="0.01" min=0 autocomplete="off">
+                        <input class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="fee3">
                         <span class="xf_ser">万元：</span>
-                        <input type="text" autocomplete="off" value="xxxx 万元" disabled>
+                        <input type="text" autocomplete="off" value="" disabled>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>造价咨询费：</span>
-                        <input class="to10k" type="number" step="0.01" min=0 autocomplete="off">
+                        <input class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="fee4">
                         <span class="xf_ser">万元：</span>
-                        <input type="text" autocomplete="off" value="xxxx 万元" disabled>
+                        <input type="text" autocomplete="off" value="" disabled>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>其他：</span>
-                        <input class="to10k" type="number" step="0.01" min=0 autocomplete="off">
+                        <input class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="fee5">
                         <span class="xf_ser">万元：</span>
-                        <input type="text" autocomplete="off" value="xxxx 万元" disabled>
+                        <input type="text" autocomplete="off" value="" disabled>
                     </li>
                 </ul>
             </div>
@@ -166,13 +166,13 @@
                     <span>上报预算价：</span>
                     <input class="to10k" type="number" step="0.01" min=0 autocomplete="off">
                     <span class="xf_ser">万元：</span>
-                    <input type="text" autocomplete="off" value="xxxx 万元" disabled>
+                    <input type="text" autocomplete="off" value="" disabled>
                 </li>
                 <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                     <span>批复预算价：</span>
                     <input class="to10k" type="number" step="0.01" min=0 autocomplete="off">
                     <span class="xf_ser">万元：</span>
-                    <input type="text" autocomplete="off" value="xxxx 万元" disabled>
+                    <input type="text" autocomplete="off" value="" disabled>
                 </li>
                 <ul>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
@@ -189,7 +189,7 @@
 
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                        <span>预算上文件：</span>
+                        <span>预算上报文件：</span>
                         <xfupload file_id="5">上传</xfupload>
                     </li>
                 </ul>
@@ -198,13 +198,10 @@
                 <h4 class="xf_input_h4">招标阶段</h4>
                 <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                     <span>招标方式：</span>
-                    <select>
-                        <option>未填写</option>
-                        <option>公开招标</option>
-                        <option>邀请招标</option>
-                        <option>单一来源</option>
-                        <option>竞争性谈判</option>
-                        <option>竞争性磋商</option>
+                    <select name="tenderingMethod">
+                        <foreach name="tenderingMethods" item="m">
+                            <option name="tenderingMethod" value="{$m.id}"> {$m.method}</option>
+                        </foreach>
                     </select>
                 </li>
                 <li id="{:md5(uniqid(md5(microtime(true)),true))}">
@@ -260,7 +257,7 @@
                 </ul>
             </div>
         </div>
-        <button>提交123</button>
+        <button id="project_submit">提交</button>
     </form>
 
 </body>
@@ -268,6 +265,14 @@
     function formatNum(num) {
         return Math.round(num * Math.pow(10, 6)) / Math.pow(10, 6);
     }
+    // function upload() {
+    //     // TODO: 校对概算价(小数)
+    //     if ($("#input-approximatePrice").val() != (parseInteger($("#input-fee1").val()) + parseInteger($("#input-fee2").val()) + parseInteger($("#input-fee3").val()) + parseInteger($("#input-fee4").val()) + parseInteger($("#input-fee5").val()))) {
+    //         alert("请检查批复概算价的值")
+    //     } else {
+    //         $('#project_submit').click()
+    //     }
+    // }
     $(function () {
         $("xfupload").on("click", function () {
             var title = $(this).prev('span').text().replace("：", "") + "上传"
@@ -281,7 +286,8 @@
             }
             uploadFiles(title, '#' + id, tpl, 'file', key)
         });
-        $('.to10k').on('change', function () {
+        //TODO: onkeyup not working!!!!!!!!!!!!!!
+        $('.to10k').on('change keyup', function () {
             num = $(this).val()
             if (isNaN(num)) {
                 $(this).next().next().val("请输入正确的数字")

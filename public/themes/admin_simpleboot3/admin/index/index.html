@@ -72,8 +72,11 @@
         .nav-list>li>a:hover {
             background-color: #ccc;
         }
+        ul.submenu>li.selected>a {
+            background-color: #5b6a8a;
+            color: #fff;
+        }
     </style>
-    <!-- <php>var_dump($menus)</php> -->
     <script>
         var GV = {
             HOST: "{$_SERVER['HTTP_HOST']|default=''}",
@@ -398,8 +401,8 @@
         );
     </script>
     <script>
-        $("li").on('click', function (event){
-            $("li").removeClass("selected")
+        $("ul.submenu>li").on('click', function (event){
+            $("ul.submenu>li").removeClass("selected")
             $(this).addClass("selected")
         })
     </script>

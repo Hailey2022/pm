@@ -47,8 +47,14 @@
 <body>
    
     <include file="manager/left_menu" projectID="123123"/> 
+    <div class="main">
+        <div class="main_menu">
+         <a href="#">工程信息</a>
+         <a href="#">修改工程</a>
+         <a href="javascript:void(0);" class="on add">新增工程</a>
+        </div>
     <form method="post" class="form-horizontal js-ajax-form" action="{:url('manager/postProjectAdd')}">
-        <div class="main">
+       
         
             
             <!-- <div class="main_left">
@@ -266,7 +272,7 @@
             </div>
         </div>
                 <!-- <xf_submit><button id="project_submit">提交</button><button>取消</button></xf_submit> -->
-        <xf_submit><button id="project_submit">提交</button></xf_submit>
+        <xf_submit><button id="project_submit">提交</button><button>取消</button></xf_submit>
     </form>
 
 </body>

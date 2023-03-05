@@ -45,7 +45,7 @@ div.left_menu li:hover a{color: #000;}
 div.left_menu li a{color: #fcfcfc;}
 div.xf_input {
     background-color: #F9F9F9;
-    margin: 15px 50px 5px 50px;
+    margin: 0 50px 15px 50px;
     font-family: "Microsoft Yahei", verdana;
     font-size: 12px;
     padding-bottom: 15px;
@@ -219,3 +219,11 @@ xf_submit button{margin: 6px 0 0 20px;
 xf_submit button:first{ background-color: rgb(219, 235, 254);background: #F3F3F3; color: #111;margin-left: 200px;}
 xf_submit button:last-child{ background-color: rgb(219, 235, 254);background: #F3F3F3; color: #111;}
 xf_submit button:hover{box-shadow: 0 0  2px #666; }
+div.main_menu{ margin:10px 0 0 50px; float: left;}
+div.main_menu a{float: left;  line-height: 35px; padding: 0 9px 0 9px; font-weight: bold; border: 1px solid #ccc; border-bottom: none; margin-right: 10px;
+font-size: 13px; background-color: #F9F9F9;
+}
+div.main_menu a.on{background-color: bisque; }
+div.main_menu a.add{cursor:cell}
+div.main_menu a:hover{box-shadow: 0 0 5px #ccc }
+div.main_menu a:not(.on):hover{background-color:#257db9;color: #fff;}

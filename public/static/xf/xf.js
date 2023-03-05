@@ -20,11 +20,24 @@ function renameButton() {
 //         $('#project_submit').click()
 //     }
 // }
+
+function to10k(that) {
+    num = that.val()
+    if (isNaN(num)) {
+        that.next().next().val("请输入正确的数字")
+    } else {
+        that.next().next().val(formatNum(num / 10000) + "万元")
+    }
+}
+
 $(function () {
+    $('.to10k').each(function () {
+        to10k($(this))
+    })
     $("xfupload").on("click", function () {
         var title = $(this).prev('span').text().replace("：", "") + "上传"
         var id = $(this).parent().attr('id')
-        var attr = $(this).attr('date')
+        // var attr = $(this).attr('date')
         var key = $(this).attr('file_id')
         var tpl = "tpl";
         // if (typeof attr !== 'undefined' && attr !== false) {
@@ -49,14 +62,9 @@ $(function () {
             files.length && renameButton();
         }, null, 1, 'file');
     });
-    //TODO: onkeyup not working!!!!!!!!!!!!!!
+    //TODO: sometimes onkeyup not working!!!!!!!!!!!!!!
     $('.to10k').on('change keyup', function () {
-        num = $(this).val()
-        if (isNaN(num)) {
-            $(this).next().next().val("请输入正确的数字")
-        } else {
-            $(this).next().next().val(formatNum(num / 10000) + "万元")
-        }
+        to10k($(this))
     });
 
     renameButton();

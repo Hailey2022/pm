@@ -37,50 +37,50 @@ class IndexController extends AdminBaseController
                     "id" => $project['projectId'],
                     "name" => $project['projectName'],
                     // "parent" => 162, //TODO: 改成auto
-                    "url" => url("manager/listProjectPayments", ['projectId'=>$project['projectId']]),
+                    "url" => url("manager/updateProject", ['projectId'=>$project['projectId']]),
                     "lang" => "ADMIN_MANAGER_VIEW",
-                    "items" => [
-                        "工程信息" =>[
-                            "icon" => "",
-                            "id" => $project['projectId'] . "AAA",
-                            "name" => "工程信息",
-                            "parent" =>  $project['projectId'],
-                            "url" => url("manager/updateProject", ['projectId'=>$project['projectId']]),
-                            "lang" => "",
-                        ],
-                        "合同录入" =>[
-                            "icon" => "",
-                            "id" => $project['projectId'] . "BBB",
-                            "name" => "合同录入",
-                            "parent" =>  $project['projectId'],
-                            "url" => url("manager/addContract", ['projectId'=>$project['projectId']]),
-                            "lang" => "",
-                        ],
-                        "支付录入" =>[
-                            "icon" => "",
-                            "id" => $project['projectId'] . "CCC",
-                            "name" => "支付录入",
-                            "parent" =>  $project['projectId'],
-                            "url" => url("manager/pay", ['projectId'=>$project['projectId']]),
-                            "lang" => "",
-                        ],
-                        "合同列表" =>[
-                            "icon" => "",
-                            "id" => $project['projectId'] . "DDD",
-                            "name" => "合同列表",
-                            "parent" =>  $project['projectId'],
-                            "url" => url("manager/listContract", ['projectId'=>$project['projectId']]),
-                            "lang" => "",
-                        ],
-                        "支付记录" =>[
-                            "icon" => "",
-                            "id" => $project['projectId'] . "EEE",
-                            "name" => "支付记录",
-                            "parent" =>  $project['projectId'],
-                            "url" => url("manager/listprojectpayments", ['projectId'=>$project['projectId']]),
-                            "lang" => "",
-                        ]
-                    ]
+                    // "items" => [
+                    //     "工程信息" =>[
+                    //         "icon" => "",
+                    //         "id" => $project['projectId'] . "AAA",
+                    //         "name" => "工程信息",
+                    //         "parent" =>  $project['projectId'],
+                    //         "url" => url("manager/updateProject", ['projectId'=>$project['projectId']]),
+                    //         "lang" => "",
+                    //     ],
+                    //     "合同录入" =>[
+                    //         "icon" => "",
+                    //         "id" => $project['projectId'] . "BBB",
+                    //         "name" => "合同录入",
+                    //         "parent" =>  $project['projectId'],
+                    //         "url" => url("manager/addContract", ['projectId'=>$project['projectId']]),
+                    //         "lang" => "",
+                    //     ],
+                    //     "支付录入" =>[
+                    //         "icon" => "",
+                    //         "id" => $project['projectId'] . "CCC",
+                    //         "name" => "支付录入",
+                    //         "parent" =>  $project['projectId'],
+                    //         "url" => url("manager/pay", ['projectId'=>$project['projectId']]),
+                    //         "lang" => "",
+                    //     ],
+                    //     "合同列表" =>[
+                    //         "icon" => "",
+                    //         "id" => $project['projectId'] . "DDD",
+                    //         "name" => "合同列表",
+                    //         "parent" =>  $project['projectId'],
+                    //         "url" => url("manager/listContract", ['projectId'=>$project['projectId']]),
+                    //         "lang" => "",
+                    //     ],
+                    //     "支付记录" =>[
+                    //         "icon" => "",
+                    //         "id" => $project['projectId'] . "EEE",
+                    //         "name" => "支付记录",
+                    //         "parent" =>  $project['projectId'],
+                    //         "url" => url("manager/listprojectpayments", ['projectId'=>$project['projectId']]),
+                    //         "lang" => "",
+                    //     ]
+                    // ]
                 ];
             }
         }

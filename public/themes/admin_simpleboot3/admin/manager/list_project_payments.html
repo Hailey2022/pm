@@ -192,13 +192,13 @@
                                     원="{$d.total}">{$d.total}</td>
                                 <td></td>
                                 <td style="text-align: center;">
-                                    <if condition="$d.file_url_5 && $d.file_url_5 != 'null'">
+                                    <if condition="$d.file_url_1 && $d.file_url_1 != 'null'">
                                         <a class="btn "
                                             href="javascript:handlePreview('{:url('manager/viewPaymentFiles',array('paymentId'=>$d['paymentId']))}','{$c['contractName']} {$d['installment']} 支付凭证')">点击查看</a>
                                     </if>
                                 </td>
                                 <td style="text-align: center;">
-                                    <if condition="$d.file1_urls && $d.file1_urls != 'null'">
+                                    <if condition="$d.file_url_2 && $d.file_url_2 != 'null'">
                                         <a class="btn "
                                             href="javascript:handlePreview('{:url('manager/viewPaymentFiles',array('type'=>1, 'paymentId'=>$d['paymentId']))}','{$c['contractName']} {$d['installment']} 支金来源凭证')">点击查看</a>
                                     </if>

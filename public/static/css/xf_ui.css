@@ -35,11 +35,14 @@ a {
     color: #111
 }
 body{display: block;}
-div.main{ overflow-x: hidden; }
-div.left_menu{float: left;width: 190px; overflow: hidden; height: 70%; background-color: #257db9;position:fixed; left: 0;
-top: 60px;
+div.main{ overflow-x: hidden; margin-left: 190px; }
+div.left_menu{float: left;width: 160px; overflow: hidden; height: 70%; background-color: #5B6A8A;position:fixed; left: 0;
+top: 60px; padding: 10px 0 0 0;
 }
-div.left_menu li{ line-height: 30px; text-align: center;}
+div.left_menu li{ line-height: 40px; text-align: center; }
+div.left_menu li:hover{background-color: bisque;}
+div.left_menu li:hover a{color: #000;}
+div.left_menu li a{color: #fcfcfc;}
 div.xf_input {
     background-color: #F9F9F9;
     margin: 15px 50px 5px 50px;

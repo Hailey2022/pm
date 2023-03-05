@@ -169,10 +169,10 @@ function openapp(url, appId, appname, refresh) {
     
     if (window.history && history.pushState){
         var tw = window.top;
-
         var twa =tw.location.href.split("#");
         var newUrl =  twa[0]+"#"+url;
         tw.history.replaceState(null,null,newUrl);
+        // alert(newUrl)
     }
 
 

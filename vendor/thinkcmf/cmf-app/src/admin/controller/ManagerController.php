@@ -441,8 +441,8 @@ class ManagerController extends AdminBaseController
         $projectId = $this->request->param('projectId');
         $projectName = $this->getProjectNameByProjectId($projectId);
         if ($projectName === null){
-            // $this->error('非法访问');
-            $this->assign("projectName", "dev");
+            $this->error('非法访问');
+            // $this->assign("projectName", "dev");
         }else{
             $this->assign("projectName", $projectName);
         }

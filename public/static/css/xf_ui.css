@@ -66,10 +66,12 @@ div.xf_input ul {
 div.xf_input li {
     margin: 5px 0 0 10px;
     line-height: 32px;
-    padding-bottom: 10px;
+    padding-bottom: 5px;
+    padding-top: 5px;
     border-bottom: 1px transparent solid;
     border-image: linear-gradient(to right, #f6f6f6, #ddd, #f6f6f6) 1 10;
 }
+div.xf_input li:hover{background-color: #ddd;}
 
 div.xf_input li span {
     text-align: right;

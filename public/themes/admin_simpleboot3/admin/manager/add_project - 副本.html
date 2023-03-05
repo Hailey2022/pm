@@ -10,8 +10,7 @@
         <upload_span></upload_span>
         <xfpreview onclick="xfPreview('/upload/{filepath}')">预览</xfpreview>
         <!-- <xfreplace onclick="javascript:uploadOne('文件替换','#file-{id}','file');">替换</xfreplace> -->
-        <!-- <xfdelete onclick="javascript:(function(){$('#file-{id}').remove();})();">删除</xfdelete> -->
-        <xfdelete onclick="javascript:删除动作('#file-{id}');">删除</xfdelete>
+        <xfdelete onclick="javascript:(function(){$('#file-{id}').remove();})();">删除</xfdelete>
         <input type="text" autocomplete="off" name="file_name_{key}[]" value="{name}">
         <input type="text" autocomplete="off" hidden name="file_url_{key}[]" value="{filepath}">
     </div>
@@ -22,7 +21,7 @@
         <upload_span></upload_span>
         <xfpreview onclick="xfPreview('/upload/{filepath}')">预览</xfpreview>
         <!-- <xfreplace onclick="javascript:uploadOne('文件替换','#file-{id}','file');">替换</xfreplace> -->
-        <xfdelete onclick="javascript:删除动作('#file-{id}');">删除</xfdelete>
+        <xfdelete onclick="javascript:(function(){$('#file-{id}').remove();})();">删除</xfdelete>
         <input type="text" autocomplete="off" name="file_name_{key}[]" value="{name}">
         <input type="text" autocomplete="off" hidden name="file_url_{key}[]" value="{filepath}">
         <span class="xf_ser">批复日期：</span>
@@ -79,7 +78,7 @@
                 <ul>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>可研报告：</span>
-                        <xfupload file_id="1"> 上传 / 新增 </xfupload><br>
+                        <xfupload file_id="1">上传</xfupload><br>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>可研审批文件：</span>
@@ -87,8 +86,7 @@
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>可研批复：</span>
-                        <xfupload file_id="2" date>上传</xfupload><span class="xf_ser">批复日期：</span>
-                        <input type="date" autocomplete="off" value="3442.342万元"><br>
+                        <xfupload file_id="2" date>上传</xfupload><br>
 
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
@@ -113,13 +111,11 @@
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>初步设计批复：</span>
-                        <xfupload file_id="4" date>上传</xfupload><span class="xf_ser">批复日期：</span>
-                        <input type="date" autocomplete="off" value="3442.342万元"><br>
+                        <xfupload file_id="4" date>上传</xfupload><br>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>审批、批复：</span>
-                        <xfupload file_id="9" date>上传</xfupload><span class="xf_ser">批复日期：</span>
-                        <input type="date" autocomplete="off" value="3442.342万元"><br>
+                        <xfupload file_id="9" date>上传</xfupload><br>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>概算书：</span>
@@ -266,16 +262,6 @@
     function formatNum(num) {
         return Math.round(num * Math.pow(10, 6)) / Math.pow(10, 6);
     }
-    function 删除动作(id_str) {
-        if (!confirm('注意！是否确认删除附件！\n《'+$(id_str).find("input:not(:hidden)").val()+'》')){ 
-                return false; 
-        }
-        $(id_str).remove();
-
-    }
-    function 修改上传按钮名称(){
-        $('div.xf_input li:has(input:hidden)').find('xfupload').text('增加');
-    }
     // function upload() {
     //     // TODO: 校对概算价(小数)
     //     if ($("#input-approximatePrice").val() != (parseInteger($("#input-fee1").val()) + parseInteger($("#input-fee2").val()) + parseInteger($("#input-fee3").val()) + parseInteger($("#input-fee4").val()) + parseInteger($("#input-fee5").val()))) {
@@ -295,28 +281,7 @@
             } else {
                 var tpl = "tpl";
             }
-        // function new_uploadFiles(dialog_title, container_selector, item_tpl_wrapper_id, filetype, key, extra_params, app) {
-    // filetype = filetype ? filetype : 'file';
-    openUploadDialog(title, function (dialog, files) {
-        var self_tpl = $('#' + tpl).html();
-        var html = '';
-        $.each(files, function (i, item) {
-            var itemtpl = self_tpl;
-            itemtpl = itemtpl.replace(/\{id\}/g, item.id);
-            itemtpl = itemtpl.replace(/\{url\}/g, item.url);
-            itemtpl = itemtpl.replace(/\{preview_url\}/g, item.preview_url);
-            itemtpl = itemtpl.replace(/\{filepath\}/g, item.filepath);
-            itemtpl = itemtpl.replace(/\{name\}/g, item.name);
-            itemtpl = itemtpl.replace(/\{key\}/g, key);
-            html += itemtpl;
-        });
-        $('#' + id).append(html);
-        files.length && 修改上传按钮名称();
-    }, null, 1, 'file');
-// }
-
-// new_uploadFiles(title, '#' + id, tpl, 'file', key)
-            
+            uploadFiles(title, '#' + id, tpl, 'file', key)
         });
         //TODO: onkeyup not working!!!!!!!!!!!!!!
         $('.to10k').on('change keyup', function () {
@@ -327,8 +292,6 @@
                 $(this).next().next().val(formatNum(num / 10000) + "万元")
             }
         });
-        
-        修改上传按钮名称();
     })
 </script>
 

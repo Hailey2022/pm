@@ -1,0 +1,118 @@
+<include file="public@header" />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>工程</title>
+</head>
+<style>
+    .btns {
+        float: right;
+        padding: 10px;
+    }
+    .title {
+        text-align: center
+    }
+    .deleteBtn {
+        color: #ff0000 !important;
+    }
+    .deleteBtn:hover {
+        color: #ff0000;
+    }
+    .funcBtn {
+        padding: 1.5px;
+    }
+    * {
+        user-select: none;
+    }
+    table {
+        border-collapse: collapse !important;
+        width: 100%;
+    }
+    th,
+    td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid rgb(223, 230, 236) !important;
+        border-top: 1px solid rgb(223, 230, 236) !important;
+        border-left: 1px solid rgb(223, 230, 236) !important;
+        border-right: 1px solid rgb(223, 230, 236) !important;
+    }
+</style>
+<body>
+    <h1 class="title">工程管理
+        <div class="btns">
+            <a class='btn btn-primary' href="{:url('manager/addproject')}">新建工程</a>
+        </div>
+    </h1>
+    <table class="table table-hover table-bordered">
+        <thead>
+            <tr>
+                <th style="text-align: center;">序号</th>
+                <th style="text-align: center;">工程名称</th>
+                <th style="text-align: center;">建设单位</th>
+                <th style="text-align: center;">建设开始年份</th>
+                <th style="text-align: center;">招标方式</th>
+                <th style="text-align: center;">估算投资</th>
+                <th style="text-align: center;">概算投资</th>
+                <th style="text-align: center;">合同总金额</th>
+                <th style="text-align: center;">已付款</th>
+                <th style="text-align: center;">未付款</th>
+                <th style="text-align: center;">实施阶段</th>
+                <th style="text-align: center;">操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <foreach name="data" item="d" key="k">
+                <if condition="$k%2!=0">
+                    <tr style='background-color:rgb(255, 255, 255)'>
+                        <else />
+                    <tr style='background-color:rgb(245, 247, 250)'>
+                </if>
+                <td style="text-align: center;">{$k + 1}</td>
+                <td style="text-align: center;"><a
+                        href="{:url('manager/listProjectPayments',array('projectId'=>$d['projectId']))}">{$d.projectName}</a>
+                </td>
+                <td style="text-align: center;">{$d.constructionCompany}</td>
+                <td style="text-align: center;">{$d.constructionYear}</td>
+                <td style="text-align: center;">{$d.method}</td>
+                <td style="text-align: center;">{$d.estimatedPrice}</td>
+                <td style="text-align: center;">{$d.approximatePrice}</td>
+                <td style="text-align: center;">{$d.total}</td>
+                <td style="text-align: center;">{$d.paid}</td>
+                <egt name="$d.total - $d.paid" value="0">
+                    <td style="text-align: center;">{:round(($d.total - $d.paid), 2)}</td>
+                    <else />
+                    <td style="text-align: center; color: #ff0000;">{:round(($d.total - $d.paid), 2)} (请检查)</td>
+                </egt>
+                <td style="text-align: center;">{$d.projectStatus}</td>
+                <td style="text-align: center;">
+                    <a class="funcBtn" href="{:url('report/reports',array('projectId'=>$d['projectId']))}">日常报表</a>
+                    <a class="funcBtn"
+                        href="{:url('manager/updateProject',array('projectId'=>$d['projectId']))}">修改工程</a>
+                    <br>
+                    <a class="funcBtn" href="{:url('report/pics',array('projectId'=>$d['projectId']))}">工程图片</a>
+                    <a class=" funcBtn deleteBtn"
+                        href="{:url('manager/deleteProject',array('projectId'=>$d['projectId']))}"
+                        onclick="return handleDelete()">删除工程</a>
+                </td>
+                </tr>
+            </foreach>
+        </tbody>
+    </table>
+</body>
+<script>
+    function handleDelete() {
+        var tmp = "{:cmf_random_string($len = 8)}";
+        var input = prompt("正在删除工程，删除后不可还原，请输入 " + tmp + " 删除");
+        if (input == tmp) {
+            return true
+        } else if (input != null) {
+            alert("输入错误，取消删除")
+        }
+        return false
+    }
+</script>
+</html>

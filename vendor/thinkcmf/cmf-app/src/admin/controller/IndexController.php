@@ -37,7 +37,7 @@ class IndexController extends AdminBaseController
                     "id" => $project['projectId'],
                     "name" => $project['projectName'],
                     // "parent" => 162, //TODO: 改成auto
-                    "url" => url("manager/updateProject", ['projectId'=>$project['projectId']]),
+                    "url" => url("manager/listProjectInfo", ['projectId'=>$project['projectId']]),
                     "lang" => "ADMIN_MANAGER_VIEW",
                     // "items" => [
                     //     "工程信息" =>[

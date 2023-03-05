@@ -42,588 +42,588 @@
 <script src="__STATIC__/xf/xf.js"></script>
 
 <body>
-    <form method="post" class="form-horizontal js-ajax-form" action="{:url('manager/postProjectUpdate')}">
-        <div class="main">
-            <!-- <div class="main_left">
-                <h4 class="xf_input_h4">功能</h4>
-                <ul>
-                    <li><a href="#">基本信息</a></li>
-                    <li><a href="#">江门市碧道建设工程（西江蓬江段）</a></li>
-                    <li><a href="#">水库维修工程二期</a></li>
-                    <li><a href="#">2022小型水库安全监测能力提升项目</a></li>
-                </ul>
-            </div> -->
-            <input name="projectId" type="text" style="display: none;" value="{$project.projectId}">
+    <include file="manager/left_menu" /> 
+    <!-- <div class="main"> -->
 
-            <div class="xf_input">
-                <h4 class="xf_input_h4">工程基本信息</h4>
-                <ul>
-                    <li>
-                        <span>工程名称：</span>
-                        <input type="text" autocomplete="off" required name="project-name"
-                            value="{$project.projectName}">
-                        <b>*必填</b>
-                    </li>
-                    <li>
-                        <span>建设单位：</span>
-                        <input type="text" autocomplete="off" name="constructionCompany"
-                            value="{$project.constructionCompany}">
-                    </li>
-                    <li>
-                        <span>建设年份：</span>
-                        <input type="number" step="0.01" min="1900" max="2099" step="1" name="constructionYear"
-                            value="{$project.constructionYear}" value="{:date('Y')}" />
-                    </li>
-                </ul>
-            </div>
+        <form method="post" class="form-horizontal js-ajax-form" action="{:url('manager/postProjectUpdate')}">
+            <div class="main">
+                <div class="main_menu">
+                    <a href="{:url('manager/listProjectInfo', ['projectId'=>$projectId])}">工程信息</a>
+                    <a >修改工程</a>
+                    <a href="{:url('manager/addProject')}" class="on add">新增工程</a>
+                </div>
+                <input name="projectId" type="text" style="display: none;" value="{$project.projectId}">
 
-            <div class="xf_input">
-                <h4 class="xf_input_h4">可研阶段</h4>
-                <ul>
-                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                        <span>可研报告：</span>
-                        <notempty name="file_1">
-                            <xfupload file_id="1">增加</xfupload>
-                            <foreach name="file_1" key="url" item="name">
-                                <php>$file_url=cmf_get_file_download_url($url);</php>
-                                <php>$file_id=hash("sha256", uniqid() . $url);</php>
-                                <div id="{$file_id}">
-                                    <upload_span></upload_span>
-                                    <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
-                                    <xfdelete onclick="javascript:handleDelete('#{$file_id}');">删除</xfdelete>
-                                    <input type="text" autocomplete="off" name="file_name_{key}[]" value="{$name}">
-                                    <input type="text" autocomplete="off" hidden name="file_url_{key}[]"
-                                        value="{$file_url}">
-                                </div>
-                            </foreach>
-                            <else />
-                            <xfupload file_id="1">上传 </xfupload>
-                        </notempty>
-                    </li>
-                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                        <span>可研审批文件：</span>
-                        <notempty name="file_7">
-                            <xfupload file_id="7">增加</xfupload>
-                            <foreach name="file_7" key="url" item="name">
-                                <php>$file_url=cmf_get_file_download_url($url);</php>
-                                <php>$file_id=hash("sha256", uniqid() . $url);</php>
-                                <div id="{$file_id}">
-                                    <upload_span></upload_span>
-                                    <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
-                                    <xfdelete onclick="javascript:handleDelete('#{$file_id}');">删除</xfdelete>
-                                    <input type="text" autocomplete="off" name="file_name_7[]" value="{$name}">
-                                    <input type="text" autocomplete="off" hidden name="file_url_7[]"
-                                        value='{$file_url}'>
-                                </div>
-                            </foreach>
-                            <else />
-                            <xfupload file_id="7">上传</xfupload>
-                        </notempty>
-                    </li>
-                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                        <span>可研批复：</span>
-                        <notempty name="file_2">
-                            <xfupload file_id="2">增加</xfupload>
-                            <span class="xf_ser">批复日期：</span>
-                            <input type="date" autocomplete="off" name="file_date_2" value="{$project.file_date_2}"><br>
-                            <foreach name="file_2" key="url" item="name">
-                                <php>$file_url=cmf_get_file_download_url($url);</php>
-                                <php>$file_id=hash("sha256", uniqid() . $url);</php>
-                                <div id="{$file_id}">
-                                    <upload_span></upload_span>
-                                    <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
-                                    <xfdelete onclick="javascript:handleDelete('#{$file_id}');">删除</xfdelete>
-                                    <input type="text" autocomplete="off" name="file_name_2[]" value="{$name}">
-                                    <input type="text" autocomplete="off" hidden name="file_url_2[]"
-                                        value='{$file_url}'>
-                                </div>
-                            </foreach>
-                            <else />
-                            <xfupload file_id="2" date>上传</xfupload><span class="xf_ser">批复日期：</span>
-                            <input type="date" autocomplete="off" name="file_date_2" value="{$project.file_date_2}"><br>
-                        </notempty>
-                    </li>
-                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                        <span>估算价：</span>
-                        <input type="number" step="0.01" class="to10k" min="0" name="estimatedPrice" autocomplete="off"
-                            value="{$project.estimatedPrice}">
-                        <span class="xf_ser">万元：</span>
-                        <input type="text" autocomplete="off" value="" disabled>
-                    </li>
-                </ul>
-            </div>
+                <div class="xf_input">
+                    <h4 class="xf_input_h4">工程基本信息</h4>
+                    <ul>
+                        <li>
+                            <span>工程名称：</span>
+                            <input type="text" autocomplete="off" required name="project-name"
+                                value="{$project.projectName}">
+                            <b>*必填</b>
+                        </li>
+                        <li>
+                            <span>建设单位：</span>
+                            <input type="text" autocomplete="off" name="constructionCompany"
+                                value="{$project.constructionCompany}">
+                        </li>
+                        <li>
+                            <span>建设年份：</span>
+                            <input type="number" step="0.01" min="1900" max="2099" step="1" name="constructionYear"
+                                value="{$project.constructionYear}" value="{:date('Y')}" />
+                        </li>
+                    </ul>
+                </div>
 
-            <div class="xf_input">
-                <h4 class="xf_input_h4">初步设计阶段</h4>
-                <ul>
-                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                        <span>初步设计报告：</span>
-                        <notempty name="file_3">
-                            <xfupload file_id="3">增加</xfupload>
-                            <foreach name="file_3" key="url" item="name">
-                                <php>$file_url=cmf_get_file_download_url($url);</php>
-                                <php>$file_id=hash("sha256", uniqid() . $url);</php>
-                                <div id="{$file_id}">
-                                    <upload_span></upload_span>
-                                    <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
-                                    <xfdelete onclick="javascript:handleDelete('#{$file_id}');">删除</xfdelete>
-                                    <input type="text" autocomplete="off" name="file_name_3[]" value="{$name}">
-                                    <input type="text" autocomplete="off" hidden name="file_url_3[]"
-                                        value='{$file_url}'>
-                                </div>
-                            </foreach>
-                            <else />
-                            <xfupload file_id="3">上传</xfupload>
-                        </notempty>
-                    </li>
-                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                        <span>初步设计图纸：</span>
-                        <notempty name="file_8">
-                            <xfupload file_id="8">增加</xfupload>
-                            <foreach name="file_8" key="url" item="name">
-                                <php>$file_url=cmf_get_file_download_url($url);</php>
-                                <php>$file_id=hash("sha256", uniqid() . $url);</php>
-                                <div id="{$file_id}">
-                                    <upload_span></upload_span>
-                                    <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
-                                    <xfdelete onclick="javascript:handleDelete('#{$file_id}');">删除</xfdelete>
-                                    <input type="text" autocomplete="off" name="file_name_8[]" value="{$name}">
-                                    <input type="text" autocomplete="off" hidden name="file_url_8[]"
-                                        value='{$file_url}'>
-                                </div>
-                            </foreach>
-                            <else />
-                            <xfupload file_id="8">上传</xfupload>
-                        </notempty>
-                    </li>
-                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                        <span>初步设计批复：</span>
-                        <notempty name="file_4">
-                            <xfupload file_id="4">增加</xfupload>
-                            <span class="xf_ser">批复日期：</span>
-                            <input type="date" autocomplete="off" name="file_date_4" value="{$project.file_date_4}"><br>
-                            <foreach name="file_4" key="url" item="name">
-                                <php>$file_url=cmf_get_file_download_url($url);</php>
-                                <php>$file_id=hash("sha256", uniqid() . $url);</php>
-                                <div id="{$file_id}">
-                                    <upload_span></upload_span>
-                                    <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
-                                    <xfdelete onclick="javascript:handleDelete('#{$file_id}');">删除</xfdelete>
-                                    <input type="text" autocomplete="off" name="file_name_4[]" value="{$name}">
-                                    <input type="text" autocomplete="off" hidden name="file_url_4[]"
-                                        value='{$file_url}'>
-                                </div>
-                            </foreach>
-                            <else />
-                            <xfupload file_id="4" date>上传</xfupload><span class="xf_ser">批复日期：</span>
-                            <input type="date" autocomplete="off" name="file_date_4" value="{$project.file_date_4}"><br>
-                        </notempty>
-                    </li>
-                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                        <span>审批、批复：</span>
-                        <notempty name="file_9">
-                            <xfupload file_id="9">增加</xfupload>
-                            <span class="xf_ser">批复日期：</span>
-                            <input type="date" autocomplete="off" name="file_date_9" value="{$project.file_date_9}"><br>
-                            <foreach name="file_9" key="url" item="name">
-                                <php>$file_url=cmf_get_file_download_url($url);</php>
-                                <php>$file_id=hash("sha256", uniqid() . $url);</php>
-                                <div id="{$file_id}">
-                                    <upload_span></upload_span>
-                                    <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
-                                    <xfdelete onclick="javascript:handleDelete('#{$file_id}');">删除</xfdelete>
-                                    <input type="text" autocomplete="off" name="file_name_9[]" value="{$name}">
-                                    <input type="text" autocomplete="off" hidden name="file_url_9[]"
-                                        value='{$file_url}'>
-                                </div>
-                            </foreach>
-                            <else />
-                            <xfupload file_id="9" date>上传</xfupload><span class="xf_ser">批复日期：</span>
-                            <input type="date" autocomplete="off" name="file_date_9" value="{$project.file_date_9}"><br>
-                        </notempty>
-                    </li>
-                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                        <span>概算书：</span>
-                        <notempty name="file_10">
-                            <xfupload file_id="10">增加</xfupload>
-                            <foreach name="file_10" key="url" item="name">
-                                <php>$file_url=cmf_get_file_download_url($url);</php>
-                                <php>$file_id=hash("sha256", uniqid() . $url);</php>
-                                <div id="{$file_id}">
-                                    <upload_span></upload_span>
-                                    <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
-                                    <xfdelete onclick="javascript:handleDelete('#{$file_id}');">删除</xfdelete>
-                                    <input type="text" autocomplete="off" name="file_name_10[]" value="{$name}">
-                                    <input type="text" autocomplete="off" hidden name="file_url_10[]"
-                                        value='{$file_url}'>
-                                </div>
-                            </foreach>
-                            <else />
-                            <xfupload file_id="10">上传</xfupload>
-                        </notempty>
-                    </li>
-                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                        <span>批复概算价：</span>
-                        <input class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="approximatePrice"
-                            value="{$project.approximatePrice}">
-                        <span class="xf_ser">万元：</span>
-                        <input type="text" autocomplete="off" disabled>
-                    </li>
-                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                        <span>建安费：</span>
-                        <input class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="fee1"
-                            value="{$project.fee1}">
-                        <span class="xf_ser">万元：</span>
-                        <input type="text" autocomplete="off" value="" disabled>
-                    </li>
-                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                        <span>监理费：</span>
-                        <input class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="fee2"
-                            value="{$project.fee2}">
-                        <span class="xf_ser">万元：</span>
-                        <input type="text" autocomplete="off" value="" disabled>
-                    </li>
-                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                        <span>检测费：</span>
-                        <input class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="fee3"
-                            value="{$project.fee3}">
-                        <span class="xf_ser">万元：</span>
-                        <input type="text" autocomplete="off" value="" disabled>
-                    </li>
-                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                        <span>造价咨询费：</span>
-                        <input class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="fee4"
-                            value="{$project.fee4}">
-                        <span class="xf_ser">万元：</span>
-                        <input type="text" autocomplete="off" value="" disabled>
-                    </li>
-                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                        <span>其他：</span>
-                        <input class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="fee5"
-                            value="{$project.fee5}">
-                        <span class="xf_ser">万元：</span>
-                        <input type="text" autocomplete="off" value="" disabled>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="xf_input">
-                <h4 class="xf_input_h4">施工图阶段</h4>
-                <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                    <span>上报预算价：</span>
-                    <input class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="reportedBudget"
-                        value="{$project.reportedBudget}">
-                    <span class="xf_ser">万元：</span>
-                    <input type="text" autocomplete="off" value="" disabled>
-                </li>
-                <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                    <span>批复预算价：</span>
-                    <input class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="approvedBudget"
-                        value="{$project.approvedBudget}">
-                    <span class="xf_ser">万元：</span>
-                    <input type="text" autocomplete="off" value="" disabled>
-                </li>
-                <ul>
-                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                        <span>施工图：</span>
-                        <notempty name="file_6">
-                            <xfupload file_id="6">增加</xfupload>
-                            <foreach name="file_6" key="url" item="name">
-                                <php>$file_url=cmf_get_file_download_url($url);</php>
-                                <php>$file_id=hash("sha256", uniqid() . $url);</php>
-                                <div id="{$file_id}">
-                                    <upload_span></upload_span>
-                                    <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
-                                    <xfdelete onclick="javascript:handleDelete('#{$file_id}');">删除</xfdelete>
-                                    <input type="text" autocomplete="off" name="file_name_6[]" value="{$name}">
-                                    <input type="text" autocomplete="off" hidden name="file_url_6[]"
-                                        value='{$file_url}'>
-                                </div>
-                            </foreach>
-                            <else />
-                            <xfupload file_id="6">上传</xfupload>
-                        </notempty>
-                    </li>
-                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                        <span>预算书：</span>
-                        <notempty name="file_11">
-                            <xfupload file_id="11">增加</xfupload>
-                            <foreach name="file_11" key="url" item="name">
-                                <php>$file_url=cmf_get_file_download_url($url);</php>
-                                <php>$file_id=hash("sha256", uniqid() . $url);</php>
-                                <div id="{$file_id}">
-                                    <upload_span></upload_span>
-                                    <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
-                                    <xfdelete onclick="javascript:handleDelete('#{$file_id}');">删除</xfdelete>
-                                    <input type="text" autocomplete="off" name="file_name_11[]" value="{$name}">
-                                    <input type="text" autocomplete="off" hidden name="file_url_11[]"
-                                        value='{$file_url}'>
-                                </div>
-                            </foreach>
-                            <else />
-                            <xfupload file_id="11">上传</xfupload>
-                        </notempty>
-                    </li>
-                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                        <span>定案预算书：</span>
-                        <notempty name="file_12">
-                            <xfupload file_id="12">增加</xfupload>
-                            <foreach name="file_12" key="url" item="name">
-                                <php>$file_url=cmf_get_file_download_url($url);</php>
-                                <php>$file_id=hash("sha256", uniqid() . $url);</php>
-                                <div id="{$file_id}">
-                                    <upload_span></upload_span>
-                                    <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
-                                    <xfdelete onclick="javascript:handleDelete('#{$file_id}');">删除</xfdelete>
-                                    <input type="text" autocomplete="off" name="file_name_12[]" value="{$name}">
-                                    <input type="text" autocomplete="off" hidden name="file_url_12[]"
-                                        value='{$file_url}'>
-                                </div>
-                            </foreach>
-                            <else />
-                            <xfupload file_id="12">上传</xfupload>
-                        </notempty>
-
-                    </li>
-                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                        <span>预算上报文件：</span>
-                        <notempty name="file_5">
-                            <xfupload file_id="5">增加</xfupload>
-                            <foreach name="file_5" key="url" item="name">
-                                <php>$file_url=cmf_get_file_download_url($url);</php>
-                                <php>$file_id=hash("sha256", uniqid() . $url);</php>
-                                <div id="{$file_id}">
-                                    <upload_span></upload_span>
-                                    <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
-                                    <xfdelete onclick="javascript:handleDelete('#{$file_id}');">删除</xfdelete>
-                                    <input type="text" autocomplete="off" name="file_name_5[]" value="{$name}">
-                                    <input type="text" autocomplete="off" hidden name="file_url_5[]"
-                                        value='{$file_url}'>
-                                </div>
-                            </foreach>
-                            <else />
-                            <xfupload file_id="5">上传</xfupload>
-                        </notempty>
-                    </li>
-                </ul>
-            </div>
-            <div class="xf_input">
-                <h4 class="xf_input_h4">招标阶段</h4>
-                <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                    <span>招标方式：</span>
-                    <select name="tenderingMethod">
-                        <foreach name="tenderingMethods" item="m">
-                            <if condition="$project.tenderingMethod == $m.id">
-                                <option name="tenderingMethod" selected value="{$m.id}"> {$m.method}
-                                </option>
+                <div class="xf_input">
+                    <h4 class="xf_input_h4">可研阶段</h4>
+                    <ul>
+                        <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                            <span>可研报告：</span>
+                            <notempty name="file_1">
+                                <xfupload file_id="1">增加</xfupload>
+                                <foreach name="file_1" key="url" item="name">
+                                    <php>$file_url=cmf_get_file_download_url($url);</php>
+                                    <php>$file_id=hash("sha256", uniqid() . $url);</php>
+                                    <div id="{$file_id}">
+                                        <upload_span></upload_span>
+                                        <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
+                                        <xfdelete onclick="javascript:handleDelete('#{$file_id}');">删除</xfdelete>
+                                        <input type="text" autocomplete="off" name="file_name_{key}[]" value="{$name}">
+                                        <input type="text" autocomplete="off" hidden name="file_url_{key}[]"
+                                            value="{$file_url}">
+                                    </div>
+                                </foreach>
                                 <else />
-                                <option name="tenderingMethod" value="{$m.id}"> {$m.method}</option>
-                            </if>
-                        </foreach>
-                    </select>
-                </li>
-                <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                    <span>实施阶段：</span>
-                    <select name="projectStatusId">
-                        <foreach name="theProjectStatus" item="s">
-                            <if condition="$project.projectStatusId == $s.id">
-                                <option name="projectStatus" selected value="{$s.id}"> {$s.projectStatus}
-                                </option>
+                                <xfupload file_id="1">上传 </xfupload>
+                            </notempty>
+                        </li>
+                        <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                            <span>可研审批文件：</span>
+                            <notempty name="file_7">
+                                <xfupload file_id="7">增加</xfupload>
+                                <foreach name="file_7" key="url" item="name">
+                                    <php>$file_url=cmf_get_file_download_url($url);</php>
+                                    <php>$file_id=hash("sha256", uniqid() . $url);</php>
+                                    <div id="{$file_id}">
+                                        <upload_span></upload_span>
+                                        <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
+                                        <xfdelete onclick="javascript:handleDelete('#{$file_id}');">删除</xfdelete>
+                                        <input type="text" autocomplete="off" name="file_name_7[]" value="{$name}">
+                                        <input type="text" autocomplete="off" hidden name="file_url_7[]"
+                                            value='{$file_url}'>
+                                    </div>
+                                </foreach>
                                 <else />
-                                <option name="projectStatus" value="{$s.id}"> {$s.projectStatus}</option>
-                            </if>
-                        </foreach>
-                    </select>
-                </li>
-                <ul>
-                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                        <span>选定代理上会材料：</span>
-                        <notempty name="file_13">
-                            <xfupload file_id="13">增加</xfupload>
-                            <foreach name="file_13" key="url" item="name">
-                                <php>$file_url=cmf_get_file_download_url($url);</php>
-                                <php>$file_id=hash("sha256", uniqid() . $url);</php>
-                                <div id="{$file_id}">
-                                    <upload_span></upload_span>
-                                    <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
-                                    <xfdelete onclick="javascript:handleDelete('#{$file_id}');">删除</xfdelete>
-                                    <input type="text" autocomplete="off" name="file_name_13[]" value="{$name}">
-                                    <input type="text" autocomplete="off" hidden name="file_url_13[]"
-                                        value='{$file_url}'>
-                                </div>
-                            </foreach>
-                            <else />
-                            <xfupload file_id="13">上传</xfupload>
-                        </notempty>
-                    </li>
-                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                        <span>招标代理合同签批：</span>
-                        <notempty name="file_14">
-                            <xfupload file_id="14">增加</xfupload>
-                            <foreach name="file_14" key="url" item="name">
-                                <php>$file_url=cmf_get_file_download_url($url);</php>
-                                <php>$file_id=hash("sha256", uniqid() . $url);</php>
-                                <div id="{$file_id}">
-                                    <upload_span></upload_span>
-                                    <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
-                                    <xfdelete onclick="javascript:handleDelete('#{$file_id}');">删除</xfdelete>
-                                    <input type="text" autocomplete="off" name="file_name_14[]" value="{$name}">
-                                    <input type="text" autocomplete="off" hidden name="file_url_14[]"
-                                        value='{$file_url}'>
-                                </div>
-                            </foreach>
-                            <else />
-                            <xfupload file_id="14">上传</xfupload>
-                        </notempty>
-                    </li>
-                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                        <span>招标文件签批：</span>
-                        <notempty name="file_15">
-                            <xfupload file_id="15">增加</xfupload>
-                            <foreach name="file_15" key="url" item="name">
-                                <php>$file_url=cmf_get_file_download_url($url);</php>
-                                <php>$file_id=hash("sha256", uniqid() . $url);</php>
-                                <div id="{$file_id}">
-                                    <upload_span></upload_span>
-                                    <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
-                                    <xfdelete onclick="javascript:handleDelete('#{$file_id}');">删除</xfdelete>
-                                    <input type="text" autocomplete="off" name="file_name_15[]" value="{$name}">
-                                    <input type="text" autocomplete="off" hidden name="file_url_15[]"
-                                        value='{$file_url}'>
-                                </div>
-                            </foreach>
-                            <else />
-                            <xfupload file_id="15">上传</xfupload>
-                        </notempty>
+                                <xfupload file_id="7">上传</xfupload>
+                            </notempty>
+                        </li>
+                        <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                            <span>可研批复：</span>
+                            <notempty name="file_2">
+                                <xfupload file_id="2">增加</xfupload>
+                                <span class="xf_ser">批复日期：</span>
+                                <input type="date" autocomplete="off" name="file_date_2" value="{$project.file_date_2}"><br>
+                                <foreach name="file_2" key="url" item="name">
+                                    <php>$file_url=cmf_get_file_download_url($url);</php>
+                                    <php>$file_id=hash("sha256", uniqid() . $url);</php>
+                                    <div id="{$file_id}">
+                                        <upload_span></upload_span>
+                                        <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
+                                        <xfdelete onclick="javascript:handleDelete('#{$file_id}');">删除</xfdelete>
+                                        <input type="text" autocomplete="off" name="file_name_2[]" value="{$name}">
+                                        <input type="text" autocomplete="off" hidden name="file_url_2[]"
+                                            value='{$file_url}'>
+                                    </div>
+                                </foreach>
+                                <else />
+                                <xfupload file_id="2" date>上传</xfupload><span class="xf_ser">批复日期：</span>
+                                <input type="date" autocomplete="off" name="file_date_2" value="{$project.file_date_2}"><br>
+                            </notempty>
+                        </li>
+                        <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                            <span>估算价：</span>
+                            <input type="number" step="0.01" class="to10k" min="0" name="estimatedPrice" autocomplete="off"
+                                value="{$project.estimatedPrice}">
+                            <span class="xf_ser">万元：</span>
+                            <input type="text" autocomplete="off" value="" disabled>
+                        </li>
+                    </ul>
+                </div>
 
-                    </li>
-                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                        <span>招标过程文件：</span>
-                        <notempty name="file_16">
-                            <xfupload file_id="16">增加</xfupload>
-                            <foreach name="file_16" key="url" item="name">
-                                <php>$file_url=cmf_get_file_download_url($url);</php>
-                                <php>$file_id=hash("sha256", uniqid() . $url);</php>
-                                <div id="{$file_id}">
-                                    <upload_span></upload_span>
-                                    <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
-                                    <xfdelete onclick="javascript:handleDelete('#{$file_id}');">删除</xfdelete>
-                                    <input type="text" autocomplete="off" name="file_name_16[]" value="{$name}">
-                                    <input type="text" autocomplete="off" hidden name="file_url_16[]"
-                                        value='{$file_url}'>
-                                </div>
-                            </foreach>
-                            <else />
-                            <xfupload file_id="16">上传</xfupload>
-                        </notempty>
-                    </li>
-                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                        <span>中标标书：</span>
-                        <notempty name="file_17">
-                            <xfupload file_id="17">增加</xfupload>
-                            <foreach name="file_17" key="url" item="name">
-                                <php>$file_url=cmf_get_file_download_url($url);</php>
-                                <php>$file_id=hash("sha256", uniqid() . $url);</php>
-                                <div id="{$file_id}">
-                                    <upload_span></upload_span>
-                                    <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
-                                    <xfdelete onclick="javascript:handleDelete('#{$file_id}');">删除</xfdelete>
-                                    <input type="text" autocomplete="off" name="file_name_17[]" value="{$name}">
-                                    <input type="text" autocomplete="off" hidden name="file_url_17[]"
-                                        value='{$file_url}'>
-                                </div>
-                            </foreach>
-                            <else />
-                            <xfupload file_id="17">上传</xfupload>
-                        </notempty>
-                    </li>
-                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                        <span>施工招标：</span>
-                        <notempty name="file_18">
-                            <xfupload file_id="18">增加</xfupload>
-                            <foreach name="file_18" key="url" item="name">
-                                <php>$file_url=cmf_get_file_download_url($url);</php>
-                                <php>$file_id=hash("sha256", uniqid() . $url);</php>
-                                <div id="{$file_id}">
-                                    <upload_span></upload_span>
-                                    <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
-                                    <xfdelete onclick="javascript:handleDelete('#{$file_id}');">删除</xfdelete>
-                                    <input type="text" autocomplete="off" name="file_name_18[]" value="{$name}">
-                                    <input type="text" autocomplete="off" hidden name="file_url_18[]"
-                                        value='{$file_url}'>
-                                </div>
-                            </foreach>
-                            <else />
-                            <xfupload file_id="18">上传</xfupload>
-                        </notempty>
-                    </li>
-                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                        <span>监理招标：</span>
-                        <notempty name="file_19">
-                            <xfupload file_id="19">增加</xfupload>
-                            <foreach name="file_19" key="url" item="name">
-                                <php>$file_url=cmf_get_file_download_url($url);</php>
-                                <php>$file_id=hash("sha256", uniqid() . $url);</php>
-                                <div id="{$file_id}">
-                                    <upload_span></upload_span>
-                                    <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
-                                    <xfdelete onclick="javascript:handleDelete('#{$file_id}');">删除</xfdelete>
-                                    <input type="text" autocomplete="off" name="file_name_19[]" value="{$name}">
-                                    <input type="text" autocomplete="off" hidden name="file_url_19[]"
-                                        value='{$file_url}'>
-                                </div>
-                            </foreach>
-                            <else />
-                            <xfupload file_id="19">上传</xfupload>
-                        </notempty>
+                <div class="xf_input">
+                    <h4 class="xf_input_h4">初步设计阶段</h4>
+                    <ul>
+                        <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                            <span>初步设计报告：</span>
+                            <notempty name="file_3">
+                                <xfupload file_id="3">增加</xfupload>
+                                <foreach name="file_3" key="url" item="name">
+                                    <php>$file_url=cmf_get_file_download_url($url);</php>
+                                    <php>$file_id=hash("sha256", uniqid() . $url);</php>
+                                    <div id="{$file_id}">
+                                        <upload_span></upload_span>
+                                        <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
+                                        <xfdelete onclick="javascript:handleDelete('#{$file_id}');">删除</xfdelete>
+                                        <input type="text" autocomplete="off" name="file_name_3[]" value="{$name}">
+                                        <input type="text" autocomplete="off" hidden name="file_url_3[]"
+                                            value='{$file_url}'>
+                                    </div>
+                                </foreach>
+                                <else />
+                                <xfupload file_id="3">上传</xfupload>
+                            </notempty>
+                        </li>
+                        <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                            <span>初步设计图纸：</span>
+                            <notempty name="file_8">
+                                <xfupload file_id="8">增加</xfupload>
+                                <foreach name="file_8" key="url" item="name">
+                                    <php>$file_url=cmf_get_file_download_url($url);</php>
+                                    <php>$file_id=hash("sha256", uniqid() . $url);</php>
+                                    <div id="{$file_id}">
+                                        <upload_span></upload_span>
+                                        <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
+                                        <xfdelete onclick="javascript:handleDelete('#{$file_id}');">删除</xfdelete>
+                                        <input type="text" autocomplete="off" name="file_name_8[]" value="{$name}">
+                                        <input type="text" autocomplete="off" hidden name="file_url_8[]"
+                                            value='{$file_url}'>
+                                    </div>
+                                </foreach>
+                                <else />
+                                <xfupload file_id="8">上传</xfupload>
+                            </notempty>
+                        </li>
+                        <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                            <span>初步设计批复：</span>
+                            <notempty name="file_4">
+                                <xfupload file_id="4">增加</xfupload>
+                                <span class="xf_ser">批复日期：</span>
+                                <input type="date" autocomplete="off" name="file_date_4" value="{$project.file_date_4}"><br>
+                                <foreach name="file_4" key="url" item="name">
+                                    <php>$file_url=cmf_get_file_download_url($url);</php>
+                                    <php>$file_id=hash("sha256", uniqid() . $url);</php>
+                                    <div id="{$file_id}">
+                                        <upload_span></upload_span>
+                                        <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
+                                        <xfdelete onclick="javascript:handleDelete('#{$file_id}');">删除</xfdelete>
+                                        <input type="text" autocomplete="off" name="file_name_4[]" value="{$name}">
+                                        <input type="text" autocomplete="off" hidden name="file_url_4[]"
+                                            value='{$file_url}'>
+                                    </div>
+                                </foreach>
+                                <else />
+                                <xfupload file_id="4" date>上传</xfupload><span class="xf_ser">批复日期：</span>
+                                <input type="date" autocomplete="off" name="file_date_4" value="{$project.file_date_4}"><br>
+                            </notempty>
+                        </li>
+                        <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                            <span>审批、批复：</span>
+                            <notempty name="file_9">
+                                <xfupload file_id="9">增加</xfupload>
+                                <span class="xf_ser">批复日期：</span>
+                                <input type="date" autocomplete="off" name="file_date_9" value="{$project.file_date_9}"><br>
+                                <foreach name="file_9" key="url" item="name">
+                                    <php>$file_url=cmf_get_file_download_url($url);</php>
+                                    <php>$file_id=hash("sha256", uniqid() . $url);</php>
+                                    <div id="{$file_id}">
+                                        <upload_span></upload_span>
+                                        <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
+                                        <xfdelete onclick="javascript:handleDelete('#{$file_id}');">删除</xfdelete>
+                                        <input type="text" autocomplete="off" name="file_name_9[]" value="{$name}">
+                                        <input type="text" autocomplete="off" hidden name="file_url_9[]"
+                                            value='{$file_url}'>
+                                    </div>
+                                </foreach>
+                                <else />
+                                <xfupload file_id="9" date>上传</xfupload><span class="xf_ser">批复日期：</span>
+                                <input type="date" autocomplete="off" name="file_date_9" value="{$project.file_date_9}"><br>
+                            </notempty>
+                        </li>
+                        <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                            <span>概算书：</span>
+                            <notempty name="file_10">
+                                <xfupload file_id="10">增加</xfupload>
+                                <foreach name="file_10" key="url" item="name">
+                                    <php>$file_url=cmf_get_file_download_url($url);</php>
+                                    <php>$file_id=hash("sha256", uniqid() . $url);</php>
+                                    <div id="{$file_id}">
+                                        <upload_span></upload_span>
+                                        <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
+                                        <xfdelete onclick="javascript:handleDelete('#{$file_id}');">删除</xfdelete>
+                                        <input type="text" autocomplete="off" name="file_name_10[]" value="{$name}">
+                                        <input type="text" autocomplete="off" hidden name="file_url_10[]"
+                                            value='{$file_url}'>
+                                    </div>
+                                </foreach>
+                                <else />
+                                <xfupload file_id="10">上传</xfupload>
+                            </notempty>
+                        </li>
+                        <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                            <span>批复概算价：</span>
+                            <input class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="approximatePrice"
+                                value="{$project.approximatePrice}">
+                            <span class="xf_ser">万元：</span>
+                            <input type="text" autocomplete="off" disabled>
+                        </li>
+                        <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                            <span>建安费：</span>
+                            <input class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="fee1"
+                                value="{$project.fee1}">
+                            <span class="xf_ser">万元：</span>
+                            <input type="text" autocomplete="off" value="" disabled>
+                        </li>
+                        <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                            <span>监理费：</span>
+                            <input class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="fee2"
+                                value="{$project.fee2}">
+                            <span class="xf_ser">万元：</span>
+                            <input type="text" autocomplete="off" value="" disabled>
+                        </li>
+                        <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                            <span>检测费：</span>
+                            <input class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="fee3"
+                                value="{$project.fee3}">
+                            <span class="xf_ser">万元：</span>
+                            <input type="text" autocomplete="off" value="" disabled>
+                        </li>
+                        <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                            <span>造价咨询费：</span>
+                            <input class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="fee4"
+                                value="{$project.fee4}">
+                            <span class="xf_ser">万元：</span>
+                            <input type="text" autocomplete="off" value="" disabled>
+                        </li>
+                        <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                            <span>其他：</span>
+                            <input class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="fee5"
+                                value="{$project.fee5}">
+                            <span class="xf_ser">万元：</span>
+                            <input type="text" autocomplete="off" value="" disabled>
+                        </li>
+                    </ul>
+                </div>
 
+                <div class="xf_input">
+                    <h4 class="xf_input_h4">施工图阶段</h4>
+                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                        <span>上报预算价：</span>
+                        <input class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="reportedBudget"
+                            value="{$project.reportedBudget}">
+                        <span class="xf_ser">万元：</span>
+                        <input type="text" autocomplete="off" value="" disabled>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                        <span>检测招标：</span>
-                        <notempty name="file_20">
-                            <xfupload file_id="20">增加</xfupload>
-                            <foreach name="file_20" key="url" item="name">
-                                <php>$file_url=cmf_get_file_download_url($url);</php>
-                                <php>$file_id=hash("sha256", uniqid() . $url);</php>
-                                <div id="{$file_id}">
-                                    <upload_span></upload_span>
-                                    <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
-                                    <xfdelete onclick="javascript:handleDelete('#{$file_id}');">删除</xfdelete>
-                                    <input type="text" autocomplete="off" name="file_name_20[]" value="{$name}">
-                                    <input type="text" autocomplete="off" hidden name="file_url_20[]"
-                                        value='{$file_url}'>
-                                </div>
+                        <span>批复预算价：</span>
+                        <input class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="approvedBudget"
+                            value="{$project.approvedBudget}">
+                        <span class="xf_ser">万元：</span>
+                        <input type="text" autocomplete="off" value="" disabled>
+                    </li>
+                    <ul>
+                        <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                            <span>施工图：</span>
+                            <notempty name="file_6">
+                                <xfupload file_id="6">增加</xfupload>
+                                <foreach name="file_6" key="url" item="name">
+                                    <php>$file_url=cmf_get_file_download_url($url);</php>
+                                    <php>$file_id=hash("sha256", uniqid() . $url);</php>
+                                    <div id="{$file_id}">
+                                        <upload_span></upload_span>
+                                        <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
+                                        <xfdelete onclick="javascript:handleDelete('#{$file_id}');">删除</xfdelete>
+                                        <input type="text" autocomplete="off" name="file_name_6[]" value="{$name}">
+                                        <input type="text" autocomplete="off" hidden name="file_url_6[]"
+                                            value='{$file_url}'>
+                                    </div>
+                                </foreach>
+                                <else />
+                                <xfupload file_id="6">上传</xfupload>
+                            </notempty>
+                        </li>
+                        <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                            <span>预算书：</span>
+                            <notempty name="file_11">
+                                <xfupload file_id="11">增加</xfupload>
+                                <foreach name="file_11" key="url" item="name">
+                                    <php>$file_url=cmf_get_file_download_url($url);</php>
+                                    <php>$file_id=hash("sha256", uniqid() . $url);</php>
+                                    <div id="{$file_id}">
+                                        <upload_span></upload_span>
+                                        <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
+                                        <xfdelete onclick="javascript:handleDelete('#{$file_id}');">删除</xfdelete>
+                                        <input type="text" autocomplete="off" name="file_name_11[]" value="{$name}">
+                                        <input type="text" autocomplete="off" hidden name="file_url_11[]"
+                                            value='{$file_url}'>
+                                    </div>
+                                </foreach>
+                                <else />
+                                <xfupload file_id="11">上传</xfupload>
+                            </notempty>
+                        </li>
+                        <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                            <span>定案预算书：</span>
+                            <notempty name="file_12">
+                                <xfupload file_id="12">增加</xfupload>
+                                <foreach name="file_12" key="url" item="name">
+                                    <php>$file_url=cmf_get_file_download_url($url);</php>
+                                    <php>$file_id=hash("sha256", uniqid() . $url);</php>
+                                    <div id="{$file_id}">
+                                        <upload_span></upload_span>
+                                        <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
+                                        <xfdelete onclick="javascript:handleDelete('#{$file_id}');">删除</xfdelete>
+                                        <input type="text" autocomplete="off" name="file_name_12[]" value="{$name}">
+                                        <input type="text" autocomplete="off" hidden name="file_url_12[]"
+                                            value='{$file_url}'>
+                                    </div>
+                                </foreach>
+                                <else />
+                                <xfupload file_id="12">上传</xfupload>
+                            </notempty>
+
+                        </li>
+                        <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                            <span>预算上报文件：</span>
+                            <notempty name="file_5">
+                                <xfupload file_id="5">增加</xfupload>
+                                <foreach name="file_5" key="url" item="name">
+                                    <php>$file_url=cmf_get_file_download_url($url);</php>
+                                    <php>$file_id=hash("sha256", uniqid() . $url);</php>
+                                    <div id="{$file_id}">
+                                        <upload_span></upload_span>
+                                        <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
+                                        <xfdelete onclick="javascript:handleDelete('#{$file_id}');">删除</xfdelete>
+                                        <input type="text" autocomplete="off" name="file_name_5[]" value="{$name}">
+                                        <input type="text" autocomplete="off" hidden name="file_url_5[]"
+                                            value='{$file_url}'>
+                                    </div>
+                                </foreach>
+                                <else />
+                                <xfupload file_id="5">上传</xfupload>
+                            </notempty>
+                        </li>
+                    </ul>
+                </div>
+                <div class="xf_input">
+                    <h4 class="xf_input_h4">招标阶段</h4>
+                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                        <span>招标方式：</span>
+                        <select name="tenderingMethod">
+                            <foreach name="tenderingMethods" item="m">
+                                <if condition="$project.tenderingMethod == $m.id">
+                                    <option name="tenderingMethod" selected value="{$m.id}"> {$m.method}
+                                    </option>
+                                    <else />
+                                    <option name="tenderingMethod" value="{$m.id}"> {$m.method}</option>
+                                </if>
                             </foreach>
-                            <else />
-                            <xfupload file_id="20">上传</xfupload>
-                        </notempty>
+                        </select>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                        <span>造价咨询招标：</span>
-                        <notempty name="file_21">
-                            <xfupload file_id="21">增加</xfupload>
-                            <foreach name="file_21" key="url" item="name">
-                                <php>$file_url=cmf_get_file_download_url($url);</php>
-                                <php>$file_id=hash("sha256", uniqid() . $url);</php>
-                                <div id="{$file_id}">
-                                    <upload_span></upload_span>
-                                    <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
-                                    <xfdelete onclick="javascript:handleDelete('#{$file_id}');">删除</xfdelete>
-                                    <input type="text" autocomplete="off" name="file_name_21[]" value="{$name}">
-                                    <input type="text" autocomplete="off" hidden name="file_url_21[]"
-                                        value='{$file_url}'>
-                                </div>
+                        <span>实施阶段：</span>
+                        <select name="projectStatusId">
+                            <foreach name="theProjectStatus" item="s">
+                                <if condition="$project.projectStatusId == $s.id">
+                                    <option name="projectStatus" selected value="{$s.id}"> {$s.projectStatus}
+                                    </option>
+                                    <else />
+                                    <option name="projectStatus" value="{$s.id}"> {$s.projectStatus}</option>
+                                </if>
                             </foreach>
-                            <else />
-                            <xfupload file_id="21">上传</xfupload>
-                        </notempty>
+                        </select>
                     </li>
-                </ul>
+                    <ul>
+                        <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                            <span>选定代理上会材料：</span>
+                            <notempty name="file_13">
+                                <xfupload file_id="13">增加</xfupload>
+                                <foreach name="file_13" key="url" item="name">
+                                    <php>$file_url=cmf_get_file_download_url($url);</php>
+                                    <php>$file_id=hash("sha256", uniqid() . $url);</php>
+                                    <div id="{$file_id}">
+                                        <upload_span></upload_span>
+                                        <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
+                                        <xfdelete onclick="javascript:handleDelete('#{$file_id}');">删除</xfdelete>
+                                        <input type="text" autocomplete="off" name="file_name_13[]" value="{$name}">
+                                        <input type="text" autocomplete="off" hidden name="file_url_13[]"
+                                            value='{$file_url}'>
+                                    </div>
+                                </foreach>
+                                <else />
+                                <xfupload file_id="13">上传</xfupload>
+                            </notempty>
+                        </li>
+                        <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                            <span>招标代理合同签批：</span>
+                            <notempty name="file_14">
+                                <xfupload file_id="14">增加</xfupload>
+                                <foreach name="file_14" key="url" item="name">
+                                    <php>$file_url=cmf_get_file_download_url($url);</php>
+                                    <php>$file_id=hash("sha256", uniqid() . $url);</php>
+                                    <div id="{$file_id}">
+                                        <upload_span></upload_span>
+                                        <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
+                                        <xfdelete onclick="javascript:handleDelete('#{$file_id}');">删除</xfdelete>
+                                        <input type="text" autocomplete="off" name="file_name_14[]" value="{$name}">
+                                        <input type="text" autocomplete="off" hidden name="file_url_14[]"
+                                            value='{$file_url}'>
+                                    </div>
+                                </foreach>
+                                <else />
+                                <xfupload file_id="14">上传</xfupload>
+                            </notempty>
+                        </li>
+                        <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                            <span>招标文件签批：</span>
+                            <notempty name="file_15">
+                                <xfupload file_id="15">增加</xfupload>
+                                <foreach name="file_15" key="url" item="name">
+                                    <php>$file_url=cmf_get_file_download_url($url);</php>
+                                    <php>$file_id=hash("sha256", uniqid() . $url);</php>
+                                    <div id="{$file_id}">
+                                        <upload_span></upload_span>
+                                        <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
+                                        <xfdelete onclick="javascript:handleDelete('#{$file_id}');">删除</xfdelete>
+                                        <input type="text" autocomplete="off" name="file_name_15[]" value="{$name}">
+                                        <input type="text" autocomplete="off" hidden name="file_url_15[]"
+                                            value='{$file_url}'>
+                                    </div>
+                                </foreach>
+                                <else />
+                                <xfupload file_id="15">上传</xfupload>
+                            </notempty>
+
+                        </li>
+                        <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                            <span>招标过程文件：</span>
+                            <notempty name="file_16">
+                                <xfupload file_id="16">增加</xfupload>
+                                <foreach name="file_16" key="url" item="name">
+                                    <php>$file_url=cmf_get_file_download_url($url);</php>
+                                    <php>$file_id=hash("sha256", uniqid() . $url);</php>
+                                    <div id="{$file_id}">
+                                        <upload_span></upload_span>
+                                        <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
+                                        <xfdelete onclick="javascript:handleDelete('#{$file_id}');">删除</xfdelete>
+                                        <input type="text" autocomplete="off" name="file_name_16[]" value="{$name}">
+                                        <input type="text" autocomplete="off" hidden name="file_url_16[]"
+                                            value='{$file_url}'>
+                                    </div>
+                                </foreach>
+                                <else />
+                                <xfupload file_id="16">上传</xfupload>
+                            </notempty>
+                        </li>
+                        <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                            <span>中标标书：</span>
+                            <notempty name="file_17">
+                                <xfupload file_id="17">增加</xfupload>
+                                <foreach name="file_17" key="url" item="name">
+                                    <php>$file_url=cmf_get_file_download_url($url);</php>
+                                    <php>$file_id=hash("sha256", uniqid() . $url);</php>
+                                    <div id="{$file_id}">
+                                        <upload_span></upload_span>
+                                        <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
+                                        <xfdelete onclick="javascript:handleDelete('#{$file_id}');">删除</xfdelete>
+                                        <input type="text" autocomplete="off" name="file_name_17[]" value="{$name}">
+                                        <input type="text" autocomplete="off" hidden name="file_url_17[]"
+                                            value='{$file_url}'>
+                                    </div>
+                                </foreach>
+                                <else />
+                                <xfupload file_id="17">上传</xfupload>
+                            </notempty>
+                        </li>
+                        <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                            <span>施工招标：</span>
+                            <notempty name="file_18">
+                                <xfupload file_id="18">增加</xfupload>
+                                <foreach name="file_18" key="url" item="name">
+                                    <php>$file_url=cmf_get_file_download_url($url);</php>
+                                    <php>$file_id=hash("sha256", uniqid() . $url);</php>
+                                    <div id="{$file_id}">
+                                        <upload_span></upload_span>
+                                        <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
+                                        <xfdelete onclick="javascript:handleDelete('#{$file_id}');">删除</xfdelete>
+                                        <input type="text" autocomplete="off" name="file_name_18[]" value="{$name}">
+                                        <input type="text" autocomplete="off" hidden name="file_url_18[]"
+                                            value='{$file_url}'>
+                                    </div>
+                                </foreach>
+                                <else />
+                                <xfupload file_id="18">上传</xfupload>
+                            </notempty>
+                        </li>
+                        <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                            <span>监理招标：</span>
+                            <notempty name="file_19">
+                                <xfupload file_id="19">增加</xfupload>
+                                <foreach name="file_19" key="url" item="name">
+                                    <php>$file_url=cmf_get_file_download_url($url);</php>
+                                    <php>$file_id=hash("sha256", uniqid() . $url);</php>
+                                    <div id="{$file_id}">
+                                        <upload_span></upload_span>
+                                        <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
+                                        <xfdelete onclick="javascript:handleDelete('#{$file_id}');">删除</xfdelete>
+                                        <input type="text" autocomplete="off" name="file_name_19[]" value="{$name}">
+                                        <input type="text" autocomplete="off" hidden name="file_url_19[]"
+                                            value='{$file_url}'>
+                                    </div>
+                                </foreach>
+                                <else />
+                                <xfupload file_id="19">上传</xfupload>
+                            </notempty>
+
+                        </li>
+                        <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                            <span>检测招标：</span>
+                            <notempty name="file_20">
+                                <xfupload file_id="20">增加</xfupload>
+                                <foreach name="file_20" key="url" item="name">
+                                    <php>$file_url=cmf_get_file_download_url($url);</php>
+                                    <php>$file_id=hash("sha256", uniqid() . $url);</php>
+                                    <div id="{$file_id}">
+                                        <upload_span></upload_span>
+                                        <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
+                                        <xfdelete onclick="javascript:handleDelete('#{$file_id}');">删除</xfdelete>
+                                        <input type="text" autocomplete="off" name="file_name_20[]" value="{$name}">
+                                        <input type="text" autocomplete="off" hidden name="file_url_20[]"
+                                            value='{$file_url}'>
+                                    </div>
+                                </foreach>
+                                <else />
+                                <xfupload file_id="20">上传</xfupload>
+                            </notempty>
+                        </li>
+                        <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                            <span>造价咨询招标：</span>
+                            <notempty name="file_21">
+                                <xfupload file_id="21">增加</xfupload>
+                                <foreach name="file_21" key="url" item="name">
+                                    <php>$file_url=cmf_get_file_download_url($url);</php>
+                                    <php>$file_id=hash("sha256", uniqid() . $url);</php>
+                                    <div id="{$file_id}">
+                                        <upload_span></upload_span>
+                                        <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
+                                        <xfdelete onclick="javascript:handleDelete('#{$file_id}');">删除</xfdelete>
+                                        <input type="text" autocomplete="off" name="file_name_21[]" value="{$name}">
+                                        <input type="text" autocomplete="off" hidden name="file_url_21[]"
+                                            value='{$file_url}'>
+                                    </div>
+                                </foreach>
+                                <else />
+                                <xfupload file_id="21">上传</xfupload>
+                            </notempty>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
-                <!-- <xf_submit><button id="project_submit">提交</button><button>取消</button></xf_submit> -->
-        <xf_submit><button id="project_submit">提交</button></xf_submit>
-    </form>
+                    <!-- <xf_submit><button id="project_submit">提交</button><button>取消</button></xf_submit> -->
+            <xf_submit><button id="project_submit">提交</button></xf_submit>
+        </form>
+    <!-- </div> -->
 
 </body>
 

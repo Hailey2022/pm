@@ -26,29 +26,7 @@ class ManagerController extends AdminBaseController
         $this->assign("theProjectStatus", $theProjectStatus);
         return $this->fetch();
     }
-    public function listProjectInfo()
-    {
-        $projectId = $this->request->param('projectId');
-        $project = Db::name('project')
-            ->where('projectId', $projectId)
-            ->find();
-        for ($x = 1; $x <= 21; $x++) {
-            $names = json_decode($project['file_name_' . $x]);
-            $urls = json_decode($project['file_url_' . $x]);
-            if ($urls != null and $names != null) {
-                $files = array_combine($urls, $names);
-                $project['file_' . $x] = $files;
-            } else {
-                $project['file_' . $x] = "";
-            }
-        }
-        $this->assign("project", $project);
-        $tenderingMethods = Db::name('tenderingmethod')->select();
-        $this->assign("tenderingMethods", $tenderingMethods);
-        $theProjectStatus = Db::name('implementationPhase')->select();
-        $this->assign("theProjectStatus", $theProjectStatus);
-        return $this->fetch();
-    }
+
     public function getProjectIdByContractId($contractId = null)
     {
         if ($contractId != null) {
@@ -317,6 +295,7 @@ class ManagerController extends AdminBaseController
     public function listContract()
     {
         $projectId = $this->request->param("projectId");
+        $this->assign('projectId', $projectId);
         $all = Db::name('user u, pm_project p, pm_type t, pm_contract c')
             ->where("c.projectId=p.projectId")
             ->where("c.clientType=t.id")
@@ -329,6 +308,8 @@ class ManagerController extends AdminBaseController
     }
     public function updateContract()
     {
+        $projectId = $this->request->param("projectId");
+        $this->assign('projectId', $projectId);
         $cid = $this->request->param("contractId");
         $projectName = $this->getProjectNameByProjectId($this->getProjectIdByContractId($cid));
         $this->assign("projectName", $projectName);
@@ -354,7 +335,7 @@ class ManagerController extends AdminBaseController
         $res = Db::name('contract')->where('contractId', $request["contractId"])->update($request);
         if ($res !== false) {
             $this->calculateProjectAmount($this->getProjectIdByContractId($request["contractId"]));
-            $this->success("更新成功！", url('manager/listProjectPayments', ["projectId" => $this->getProjectIdByContractId($request["contractId"])]));
+            $this->success("更新成功！", url('manager/listContract', ["projectId" => $this->getProjectIdByContractId($request["contractId"])]));
         } else {
             $this->error("出错了！");
         }
@@ -428,7 +409,7 @@ class ManagerController extends AdminBaseController
             $res = Db::name('project')->insert($data);
             if ($res !== false) {
                 // $this->calculateProjectAmount($data['projectId']);
-                $this->success("保存成功！", url('manager/listProjectPayments', ["projectId" => $data["projectId"]]));
+                $this->success("保存成功！", url('manager/listProjectInfo', ["projectId" => $data["projectId"]]));
             } else {
                 $this->error("保存时出错！");
             }
@@ -723,7 +704,7 @@ class ManagerController extends AdminBaseController
                 $this->error("Error while adding contracts.");
             } else {
                 $this->calculateProjectAmount($this->getProjectIdByContractId($contract["contractId"]));
-                $this->success("成功新增一个合同", url('manager/listProjectPayments', ["projectId" => $request['projectId']]));
+                $this->success("成功新增一个合同", url('manager/listContract', ["projectId" => $request['projectId']]));
             }
         } else {
             $this->error("非法访问");
@@ -786,7 +767,7 @@ class ManagerController extends AdminBaseController
             $res = Db::name("project")->where('projectId', $projectId)->update($data);
 
             if ($res !== false) {
-                $this->success("工程已更新", url('manager/view'));
+                $this->success("工程已更新", url('manager/listProjectInfo', ['projectId' => $projectId]));
             } else {
                 $this->error("更新工程时出现了一个错误");
             }
@@ -797,6 +778,31 @@ class ManagerController extends AdminBaseController
     public function updateProject()
     {
         $projectId = $this->request->param('projectId');
+        $this->assign('projectId', $projectId);
+        $project = Db::name('project')
+            ->where('projectId', $projectId)
+            ->find();
+        for ($x = 1; $x <= 21; $x++) {
+            $names = json_decode($project['file_name_' . $x]);
+            $urls = json_decode($project['file_url_' . $x]);
+            if ($urls != null and $names != null) {
+                $files = array_combine($urls, $names);
+                $this->assign('file_' . $x, $files);
+            }
+        }
+        $this->assign("project", $project);
+        $tenderingMethods = Db::name('tenderingmethod')->select();
+        $this->assign("tenderingMethods", $tenderingMethods);
+        $theProjectStatus = Db::name('implementationPhase')->select();
+        $this->assign("theProjectStatus", $theProjectStatus);
+        return $this->fetch();
+    }
+
+    public function listProjectInfo()
+    {
+
+        $projectId = $this->request->param('projectId');
+        $this->assign('projectId', $projectId);
         $project = Db::name('project')
             ->where('projectId', $projectId)
             ->find();

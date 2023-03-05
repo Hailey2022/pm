@@ -5,10 +5,19 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="__STATIC__/css/xf_ui.css" rel="stylesheet" type="text/css">
+
     <title>合同</title>
 </head>
 <body>
-    <h3 style="text-align: center;">{$projectName}合同清单</h3>
+    <include file="manager/left_menu" /> 
+    <div class="main">
+        <div class="main_menu">
+            <a>合同信息</a>
+            <a href="{:url('manager/updateContract', ['projectId'=>$projectId])}">修改合同</a>
+            <a href="{:url('manager/addContract', ['projectId'=>$projectId])}" class="on add">新增合同</a>
+        </div>
+    <!-- <h3 style="text-align: center;">{$projectName}合同清单</h3> -->
     <!-- <a class="btn btn-primary" href="javascript:history.go(-1)">返回</a> -->
     <table class="table table-hover table-bordered">
         <thead>
@@ -46,6 +55,7 @@
             </foreach>
         </tbody>
     </table>
+    </div>
 </body>
 <script>
     function handlePreview(url) {

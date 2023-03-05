@@ -12,6 +12,8 @@ class ManagerController extends AdminBaseController
     }
     public function addProject()
     {
+        $projectId = $this->request->param('projectId');
+        $this->assign("projectId", $projectId);
         $users = Db::name('user')
             ->where('id', '<>', '1')
             ->where('id', '<>', '9')

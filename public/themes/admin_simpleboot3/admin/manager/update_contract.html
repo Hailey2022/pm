@@ -30,6 +30,12 @@
 <script src="__STATIC__/xf/xf.js"></script>
 
 <body>
+    <include file="manager/left_menu" /> 
+    <div class="main">
+        <div class="main_menu">
+            <a href="{:url('manager/listContract', ['projectId'=>$projectId])}">合同信息</a>
+            <a href="{:url('manager/addContract', ['projectId'=>$projectId])}" class="on add">新增合同</a>
+        </div>
     <form method="post" class="form-horizontal js-ajax-form margin-top-20"
         action="{:url('manager/postContractUpdate')}">
         <div class="xf_input">
@@ -187,7 +193,7 @@
         <xf_submit><button id="project_submit">提交</button></xf_submit>
 
     </form>
-
+    </div>
 </body>
 <script>
     $("#contractAmount").on("change keyup paste click", function () {

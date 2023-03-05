@@ -14,7 +14,6 @@
     <div class="main">
         <div class="main_menu">
             <a>合同信息</a>
-            <a href="{:url('manager/updateContract', ['projectId'=>$projectId])}">修改合同</a>
             <a href="{:url('manager/addContract', ['projectId'=>$projectId])}" class="on add">新增合同</a>
         </div>
     <!-- <h3 style="text-align: center;">{$projectName}合同清单</h3> -->
@@ -28,8 +27,8 @@
                 <th style="text-align: center;">合同名称</th>
                 <th style="text-align: center;">合同总金额</th>
                 <th style="text-align: center;">已支付金额</th>
-                <!-- <th style="text-align: center;">附件</th>
-                <th style="text-align: center;">操作</th> -->
+                <!-- <th style="text-align: center;">附件</th> -->
+                <th style="text-align: center;">操作</th>
             </tr>
         </thead>
         <tbody>
@@ -47,11 +46,11 @@
                 <td style="text-align: center;">{$d.paid}</td>
                 <!-- <td style="text-align: center;"><a class="btn "
                         href="javascript:handlePreview('{:url('manager/viewContracts',array('contractId'=>$d['contractId']))}')">查看</a>
-                </td>
+                </td> -->
                 <td style="text-align: center;">
-                    <a href="{:url('manager/updateContract',array('contractId'=>$d['contractId']))}" class="btn">修改</a>
+                    <a href="{:url('manager/updateContract',array('projectId'=>$projectId,'contractId'=>$d['contractId']))}" class="btn">修改</a>
                 </td>
-                </tr> -->
+                </tr>
             </foreach>
         </tbody>
     </table>

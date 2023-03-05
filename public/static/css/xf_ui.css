@@ -216,5 +216,6 @@ xf_submit button{margin: 6px 0 0 20px;
     border-radius: 5px;
     border: 1px solid #666;
 }
+xf_submit button:first{ background-color: rgb(219, 235, 254);background: #F3F3F3; color: #111;margin-left: 200px;}
 xf_submit button:last-child{ background-color: rgb(219, 235, 254);background: #F3F3F3; color: #111;}
 xf_submit button:hover{box-shadow: 0 0  2px #666; }

@@ -11,24 +11,23 @@
         <xfpreview onclick="xfPreview('/upload/{filepath}')">预览</xfpreview>
         <!-- <xfreplace onclick="javascript:uploadOne('文件替换','#file-{id}','file');">替换</xfreplace> -->
         <!-- <xfdelete onclick="javascript:(function(){$('#file-{id}').remove();})();">删除</xfdelete> -->
-        <xfdelete onclick="javascript:删除动作('#file-{id}');">删除</xfdelete>
+        <xfdelete onclick="javascript:handleDelete('#file-{id}');">删除</xfdelete>
         <input type="text" autocomplete="off" name="file_name_{key}[]" value="{name}">
         <input type="text" autocomplete="off" hidden name="file_url_{key}[]" value="{filepath}">
     </div>
     </script>
 
-    <script type="text/html" id="tpl_with_date">
+    <!-- <script type="text/html" id="tpl_with_date">
     <div id="file-{id}">
         <upload_span></upload_span>
         <xfpreview onclick="xfPreview('/upload/{filepath}')">预览</xfpreview>
-        <!-- <xfreplace onclick="javascript:uploadOne('文件替换','#file-{id}','file');">替换</xfreplace> -->
-        <xfdelete onclick="javascript:删除动作('#file-{id}');">删除</xfdelete>
+        <xfdelete onclick="javascript:handleDelete('#file-{id}');">删除</xfdelete>
         <input type="text" autocomplete="off" name="file_name_{key}[]" value="{name}">
         <input type="text" autocomplete="off" hidden name="file_url_{key}[]" value="{filepath}">
         <span class="xf_ser">批复日期：</span>
         <input type="date" name="file_date_{key}[]" autocomplete="off" value="">
     </div>
-    </script>
+    </script> -->
 </head>
 <script type="text/javascript">
     var GV = {
@@ -79,7 +78,7 @@
                 <ul>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>可研报告：</span>
-                        <xfupload file_id="1"> 上传 / 新增 </xfupload><br>
+                        <xfupload file_id="1">上传</xfupload><br>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>可研审批文件：</span>
@@ -168,13 +167,13 @@
                 <h4 class="xf_input_h4">施工图阶段</h4>
                 <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                     <span>上报预算价：</span>
-                    <input class="to10k" type="number" step="0.01" min=0 autocomplete="off"  name="reportedBudget">
+                    <input class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="reportedBudget">
                     <span class="xf_ser">万元：</span>
                     <input type="text" autocomplete="off" value="" disabled>
                 </li>
                 <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                     <span>批复预算价：</span>
-                    <input class="to10k" type="number" step="0.01" min=0 autocomplete="off"  name="approvedBudget" >
+                    <input class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="approvedBudget">
                     <span class="xf_ser">万元：</span>
                     <input type="text" autocomplete="off" value="" disabled>
                 </li>
@@ -266,14 +265,15 @@
     function formatNum(num) {
         return Math.round(num * Math.pow(10, 6)) / Math.pow(10, 6);
     }
-    function 删除动作(id_str) {
-        if (!confirm('注意！是否确认删除附件！\n《'+$(id_str).find("input:not(:hidden)").val()+'》')){ 
-                return false; 
+    function handleDelete(id_str) {
+        if (!confirm('注意！是否确认删除附件？\n《' + $(id_str).find("input:not(:hidden)").val() + '》')) {
+            return false;
         }
         $(id_str).remove();
 
     }
-    function 修改上传按钮名称(){
+    // TODO: rename it to 上传 when there isn't 
+    function renameButton() {
         $('div.xf_input li:has(input:hidden)').find('xfupload').text('增加');
     }
     // function upload() {
@@ -290,33 +290,28 @@
             var id = $(this).parent().attr('id')
             var attr = $(this).attr('date')
             var key = $(this).attr('file_id')
-            if (typeof attr !== 'undefined' && attr !== false) {
-                var tpl = "tpl_with_date";
-            } else {
-                var tpl = "tpl";
-            }
-        // function new_uploadFiles(dialog_title, container_selector, item_tpl_wrapper_id, filetype, key, extra_params, app) {
-    // filetype = filetype ? filetype : 'file';
-    openUploadDialog(title, function (dialog, files) {
-        var self_tpl = $('#' + tpl).html();
-        var html = '';
-        $.each(files, function (i, item) {
-            var itemtpl = self_tpl;
-            itemtpl = itemtpl.replace(/\{id\}/g, item.id);
-            itemtpl = itemtpl.replace(/\{url\}/g, item.url);
-            itemtpl = itemtpl.replace(/\{preview_url\}/g, item.preview_url);
-            itemtpl = itemtpl.replace(/\{filepath\}/g, item.filepath);
-            itemtpl = itemtpl.replace(/\{name\}/g, item.name);
-            itemtpl = itemtpl.replace(/\{key\}/g, key);
-            html += itemtpl;
-        });
-        $('#' + id).append(html);
-        files.length && 修改上传按钮名称();
-    }, null, 1, 'file');
-// }
-
-// new_uploadFiles(title, '#' + id, tpl, 'file', key)
-            
+            var tpl = "tpl";
+            // if (typeof attr !== 'undefined' && attr !== false) {
+            //     var tpl = "tpl_with_date";
+            // } else {
+            //     var tpl = "tpl";
+            // }
+            openUploadDialog(title, function (dialog, files) {
+                var self_tpl = $('#' + tpl).html();
+                var html = '';
+                $.each(files, function (i, item) {
+                    var itemtpl = self_tpl;
+                    itemtpl = itemtpl.replace(/\{id\}/g, item.id);
+                    itemtpl = itemtpl.replace(/\{url\}/g, item.url);
+                    itemtpl = itemtpl.replace(/\{preview_url\}/g, item.preview_url);
+                    itemtpl = itemtpl.replace(/\{filepath\}/g, item.filepath);
+                    itemtpl = itemtpl.replace(/\{name\}/g, item.name);
+                    itemtpl = itemtpl.replace(/\{key\}/g, key);
+                    html += itemtpl;
+                });
+                $('#' + id).append(html);
+                files.length && renameButton();
+            }, null, 1, 'file');
         });
         //TODO: onkeyup not working!!!!!!!!!!!!!!
         $('.to10k').on('change keyup', function () {
@@ -327,8 +322,8 @@
                 $(this).next().next().val(formatNum(num / 10000) + "万元")
             }
         });
-        
-        修改上传按钮名称();
+
+        renameButton();
     })
 </script>
 

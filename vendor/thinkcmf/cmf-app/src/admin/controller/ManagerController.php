@@ -391,6 +391,9 @@ class ManagerController extends AdminBaseController
                 'fee3' => $request['fee3'],
                 'fee4' => $request['fee4'],
                 'fee5' => $request['fee5'],
+                'file_date_2' => $request['file_date_2'],
+                'file_date_4' => $request['file_date_4'],
+                'file_date_9' => $request['file_date_9'],
             ];
             for ($i = 1; $i <= 21; $i++) {
                 if (array_key_exists("file_name_" . $i, $request) && array_key_exists("file_url_" . $i, $request)) {

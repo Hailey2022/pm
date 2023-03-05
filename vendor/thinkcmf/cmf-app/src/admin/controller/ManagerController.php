@@ -476,13 +476,13 @@ class ManagerController extends AdminBaseController
                 'others' => $request['others'],
                 'total' => $request['province'] + $request['city'] + $request['bond'] + $request['budget'] + $request['others']
             ];
-            if (array_key_exists('file_urls', $request) && array_key_exists('file_names', $request)) {
-                $data['file_urls'] = $request['file_urls'];
-                $data['file_names'] = $request['file_names'];
+            if (array_key_exists('file_url_1', $request) && array_key_exists('file_name_1', $request)) {
+                $data['file_url_1'] = $request['file_url_1'];
+                $data['file_name_1'] = $request['file_name_1'];
             }
-            if (array_key_exists('file1_urls', $request) && array_key_exists('file1_names', $request)) {
-                $data['file1_urls'] = $request['file1_urls'];
-                $data['file1_names'] = $request['file1_names'];
+            if (array_key_exists('file_url_2', $request) && array_key_exists('file_name_2', $request)) {
+                $data['file_url_2'] = $request['file_url_2'];
+                $data['file_name_2'] = $request['file_name_2'];
             }
             $res = Db::name('payment')->insert($data);
             if ($res !== false) {

@@ -144,7 +144,8 @@
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>估算价：</span>
-                        <input type="number" step="0.01" class="to10k" min="0" name="estimatedPrice" autocomplete="off">
+                        <input type="number" step="0.01" class="to10k" min="0" name="estimatedPrice" autocomplete="off"
+                            value="{$project.estimatedPrice}">
                         <span class="xf_ser">万元：</span>
                         <input type="text" autocomplete="off" value="" disabled>
                     </li>
@@ -262,37 +263,43 @@
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>批复概算价：</span>
-                        <input class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="approximatePrice">
+                        <input class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="approximatePrice"
+                            value="{$project.approximatePrice}">
                         <span class="xf_ser">万元：</span>
-                        <input type="text" autocomplete="off" value="" disabled>
+                        <input type="text" autocomplete="off" disabled>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>建安费：</span>
-                        <input class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="fee1">
+                        <input class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="fee1"
+                            value="{$project.fee1}">
                         <span class="xf_ser">万元：</span>
                         <input type="text" autocomplete="off" value="" disabled>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>监理费：</span>
-                        <input class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="fee2">
+                        <input class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="fee2"
+                            value="{$project.fee2}">
                         <span class="xf_ser">万元：</span>
                         <input type="text" autocomplete="off" value="" disabled>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>检测费：</span>
-                        <input class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="fee3">
+                        <input class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="fee3"
+                            value="{$project.fee3}">
                         <span class="xf_ser">万元：</span>
                         <input type="text" autocomplete="off" value="" disabled>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>造价咨询费：</span>
-                        <input class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="fee4">
+                        <input class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="fee4"
+                            value="{$project.fee4}">
                         <span class="xf_ser">万元：</span>
                         <input type="text" autocomplete="off" value="" disabled>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>其他：</span>
-                        <input class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="fee5">
+                        <input class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="fee5"
+                            value="{$project.fee5}">
                         <span class="xf_ser">万元：</span>
                         <input type="text" autocomplete="off" value="" disabled>
                     </li>
@@ -303,13 +310,15 @@
                 <h4 class="xf_input_h4">施工图阶段</h4>
                 <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                     <span>上报预算价：</span>
-                    <input class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="reportedBudget">
+                    <input class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="reportedBudget"
+                        value="{$project.reportedBudget}">
                     <span class="xf_ser">万元：</span>
                     <input type="text" autocomplete="off" value="" disabled>
                 </li>
                 <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                     <span>批复预算价：</span>
-                    <input class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="approvedBudget">
+                    <input class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="approvedBudget"
+                        value="{$project.approvedBudget}">
                     <span class="xf_ser">万元：</span>
                     <input type="text" autocomplete="off" value="" disabled>
                 </li>
@@ -630,6 +639,14 @@
     function renameButton() {
         $('div.xf_input li:has(input:hidden)').find('xfupload').text('增加');
     }
+    function to10k(that) {
+        num = that.val()
+        if (isNaN(num)) {
+            that.next().next().val("请输入正确的数字")
+        } else {
+            that.next().next().val(formatNum(num / 10000) + "万元")
+        }
+    }
     // function upload() {
     //     // TODO: 校对概算价(小数)
     //     if ($("#input-approximatePrice").val() != (parseInteger($("#input-fee1").val()) + parseInteger($("#input-fee2").val()) + parseInteger($("#input-fee3").val()) + parseInteger($("#input-fee4").val()) + parseInteger($("#input-fee5").val()))) {
@@ -639,6 +656,10 @@
     //     }
     // }
     $(function () {
+        $('.to10k').each(function () {
+            to10k($(this))
+        });
+
         $("xfupload").on("click", function () {
             var title = $(this).prev('span').text().replace("：", "") + "上传"
             var id = $(this).parent().attr('id')
@@ -669,12 +690,7 @@
         });
         //TODO: onkeyup not working!!!!!!!!!!!!!!
         $('.to10k').on('change keyup', function () {
-            num = $(this).val()
-            if (isNaN(num)) {
-                $(this).next().next().val("请输入正确的数字")
-            } else {
-                $(this).next().next().val(formatNum(num / 10000) + "万元")
-            }
+            to10k($(this))
         });
 
         renameButton();

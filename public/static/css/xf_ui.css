@@ -34,9 +34,12 @@ a {
     text-decoration: none;
     color: #111
 }
-body{display: block; overflow-x: hidden;}
-/* div.main{float: left; overflow-x: hidden; width: 100%; height: 100%;} */
-div.left_menu{float: left;width: 230px; overflow: hidden;}
+body{display: block;}
+div.main{ overflow-x: hidden; }
+div.left_menu{float: left;width: 190px; overflow: hidden; height: 70%; background-color: #257db9;position:fixed; left: 0;
+top: 60px;
+}
+div.left_menu li{ line-height: 30px; text-align: center;}
 div.xf_input {
     background-color: #F9F9F9;
     margin: 15px 50px 5px 50px;

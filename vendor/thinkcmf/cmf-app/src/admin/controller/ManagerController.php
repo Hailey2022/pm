@@ -438,11 +438,24 @@ class ManagerController extends AdminBaseController
     }
     public function pay()
     {
-        $contractId = $this->request->param("contractId");
-        $data = Db::name("contract")
-            ->where("contractId", $contractId)
-            ->find();
-        $this->assign("data", $data);
+        $projectId = $this->request->param('projectId');
+        $projectName = $this->getProjectNameByProjectId($projectId);
+        if ($projectName === null){
+            // $this->error('非法访问');
+            $this->assign("projectName", "dev");
+        }else{
+            $this->assign("projectName", $projectName);
+        }
+        $contracts = Db::name('contract')->where('projectId', $projectId)->select();
+        if (count($contracts) == 0){
+            $this->error('先录入合同再录入支付');
+        }
+        $this->assign('contracts', $contracts);
+        // $contractId = $this->request->param("contractId");
+        // $data = Db::name("contract")
+        //     ->where("contractId", $contractId)
+        //     ->find();
+        // $this->assign("data", $data);
         return $this->fetch();
     }
     public function postPaymentAdd()

@@ -20,7 +20,7 @@
 <body>
     <h2 style="text-align: center;" class="title">{$projectName}
         <div class="btns">
-            <a class='btn btn-primary' href="{:url('manager/listProjectInfo', ['projectId'=>$projectId])}">工程信息</a>
+            <a id="pay" class='btn btn-primary' href="{:url('manager/pay', ['projectId'=>$projectId])}">新增支付</a>
             <a class='btn btn-primary' href="{:url('manager/view')}">返回</a>
         </div>
     </h2>
@@ -149,16 +149,17 @@
                             (请检查)</td>
                     </egt>
                     <td style="text-align: center;">
-                        <if condition="$c.file_url_5 && $c.file_url_5 != 'null'">
+                        <!-- <if condition="$c.file_url_5 && $c.file_url_5 != 'null'">
                             <a class="btn"
                                 href="javascript:handlePreview('{:url('manager/viewContracts',array('contractId'=>$c['contractId']))}', '{$c.contractName} 附件')">合同附件</a>
-                        </if>
+                        </if> -->
                     </td>
                     <td></td>
                     <td style="text-align: center; background-color:rgb(245, 247, 250)"
                         onclick="showOrHide('{$c.contractId}')">{$c.clientAlias}</td>
-                    <td style="text-align: center; background-color:rgb(245, 247, 250)"><a style="color: #18BC9C;"
-                            href="{:url('manager/pay',array('contractId'=>$c['contractId']))}" class="btn">新增支付</a>
+                    <td style="text-align: center; background-color:rgb(245, 247, 250)">
+                        <!-- <a style="color: #18BC9C;"
+                            href="javascript:$('#pay').click()" class="btn">新增支付</a> -->
                         <a style="color: #18BC9C;"
                             href="{:url('manager/updateContract',array('contractId'=>$c['contractId']))}"
                             class="btn">修改合同</a>

@@ -679,7 +679,7 @@ class ManagerController extends AdminBaseController
             $contract = [
                 'contractId' => uniqid(),
                 'clientId' => $this->getClientIdByClientName($request["clientName"]),
-                'clientAlias' => $request["clientAlias"],
+                // 'clientAlias' => $request["clientAlias"],
                 'projectId' => $request["projectId"],
                 'clientType' => $request["clientType"],
                 'contractName' => $request["contractName"],
@@ -687,13 +687,24 @@ class ManagerController extends AdminBaseController
                 'contractTime' => $request["contractTime"],
                 'contractExpTime' => $request["contractExpTime"],
                 'contractNumber' => $request["contractNumber"],
-                'paid' => 0
+                'paid' => 0,
+                'paymentTerms' => $request["paymentTerms"],
+                'firstParty' => $request["paymentTerms"],
+                'secondParty' => $request["paymentTerms"],
+                'managerA' => $request["paymentTerms"],
+                'managerB' => $request["paymentTerms"],
             ];
-            if (array_key_exists('file_urls', $request) && array_key_exists('file_names', $request)) {
-                $urls = $request["file_urls"];
-                $names = $request["file_names"];
-                $contract['file_urls'] = $urls;
-                $contract['file_names'] = $names;
+            // if (array_key_exists('file_urls', $request) && array_key_exists('file_names', $request)) {
+            //     $urls = $request["file_urls"];
+            //     $names = $request["file_names"];
+            //     $contract['file_urls'] = $urls;
+            //     $contract['file_names'] = $names;
+            // }
+            for ($i = 1; $i <= 5; $i++) {
+                if (array_key_exists("file_name_" . $i, $request) && array_key_exists("file_url_" . $i, $request)) {
+                    $contract["file_name_" . $i] = $request["file_name_" . $i];
+                    $contract["file_url_" . $i] = $request["file_url_" . $i];
+                }
             }
             $res = Db::name('contract')->insert($contract);
             if ($res === false) {

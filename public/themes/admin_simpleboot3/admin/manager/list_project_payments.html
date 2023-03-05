@@ -149,7 +149,7 @@
                             (请检查)</td>
                     </egt>
                     <td style="text-align: center;">
-                        <if condition="$c.file_urls && $c.file_urls != 'null'">
+                        <if condition="$c.file_url_5 && $c.file_url_5 != 'null'">
                             <a class="btn"
                                 href="javascript:handlePreview('{:url('manager/viewContracts',array('contractId'=>$c['contractId']))}', '{$c.contractName} 附件')">合同附件</a>
                         </if>
@@ -191,7 +191,7 @@
                                     원="{$d.total}">{$d.total}</td>
                                 <td></td>
                                 <td style="text-align: center;">
-                                    <if condition="$d.file_urls && $d.file_urls != 'null'">
+                                    <if condition="$d.file_url_5 && $d.file_url_5 != 'null'">
                                         <a class="btn "
                                             href="javascript:handlePreview('{:url('manager/viewPaymentFiles',array('paymentId'=>$d['paymentId']))}','{$c['contractName']} {$d['installment']} 支付凭证')">点击查看</a>
                                     </if>

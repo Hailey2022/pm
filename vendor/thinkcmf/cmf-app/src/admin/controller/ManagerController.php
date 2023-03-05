@@ -734,66 +734,33 @@ class ManagerController extends AdminBaseController
             if (Db::name('project')->where('projectName', $projectName)->where('projectId', '<>', $projectId)->find() != null) {
                 $this->error('存在相同名字的工程，请检查');
             }
-            $res = Db::name("project")->where('projectId', $projectId)->update(
-                [
-                    'projectName' => $projectName,
-                    'approximatePrice' => $request['approximatePrice'],
-                    'constructionCompany' => $request['constructionCompany'],
-                    'constructionYear' => $request['constructionYear'],
-                    'file_url_1' => $request['file_url_1'],
-                    'file_url_2' => $request['file_url_2'],
-                    'file_url_3' => $request['file_url_3'],
-                    'file_url_4' => $request['file_url_4'],
-                    'file_url_5' => $request['file_url_5'],
-                    'file_url_6' => $request['file_url_6'],
-                    'file_url_7' => $request['file_url_7'],
-                    'file_url_8' => $request['file_url_8'],
-                    'file_url_9' => $request['file_url_9'],
-                    'file_url_10' => $request['file_url_10'],
-                    'file_url_11' => $request['file_url_11'],
-                    'file_url_12' => $request['file_url_12'],
-                    'file_url_13' => $request['file_url_13'],
-                    'file_url_14' => $request['file_url_14'],
-                    'file_url_15' => $request['file_url_15'],
-                    'file_url_16' => $request['file_url_16'],
-                    'file_url_17' => $request['file_url_17'],
-                    'file_url_18' => $request['file_url_18'],
-                    'file_url_19' => $request['file_url_19'],
-                    'file_url_20' => $request['file_url_20'],
-                    'file_url_21' => $request['file_url_21'],
-                    'file_name_1' => $request['file_name_1'],
-                    'file_name_2' => $request['file_name_2'],
-                    'file_name_3' => $request['file_name_3'],
-                    'file_name_4' => $request['file_name_4'],
-                    'file_name_5' => $request['file_name_5'],
-                    'file_name_6' => $request['file_name_6'],
-                    'file_name_7' => $request['file_name_7'],
-                    'file_name_8' => $request['file_name_8'],
-                    'file_name_9' => $request['file_name_9'],
-                    'file_name_10' => $request['file_name_10'],
-                    'file_name_11' => $request['file_name_11'],
-                    'file_name_12' => $request['file_name_12'],
-                    'file_name_13' => $request['file_name_13'],
-                    'file_name_14' => $request['file_name_14'],
-                    'file_name_15' => $request['file_name_15'],
-                    'file_name_16' => $request['file_name_16'],
-                    'file_name_17' => $request['file_name_17'],
-                    'file_name_18' => $request['file_name_18'],
-                    'file_name_19' => $request['file_name_19'],
-                    'file_name_20' => $request['file_name_20'],
-                    'file_name_21' => $request['file_name_21'],
-                    'estimatedPrice' => $request['estimatedPrice'],
-                    'reportedBudget' => $request['reportedBudget'],
-                    'approvedBudget' => $request['approvedBudget'],
-                    'tenderingMethod' => $request['tenderingMethod'],
-                    'projectStatusId' => $request['projectStatusId'],
-                    'fee1' => $request['fee1'],
-                    'fee2' => $request['fee2'],
-                    'fee3' => $request['fee3'],
-                    'fee4' => $request['fee4'],
-                    'fee5' => $request['fee5'],
-                ]
-            );
+            $data = [
+                'projectName' => $projectName,
+                'approximatePrice' => $request['approximatePrice'],
+                'constructionCompany' => $request['constructionCompany'],
+                'constructionYear' => $request['constructionYear'],
+                'estimatedPrice' => $request['estimatedPrice'],
+                'reportedBudget' => $request['reportedBudget'],
+                'approvedBudget' => $request['approvedBudget'],
+                'tenderingMethod' => $request['tenderingMethod'],
+                'projectStatusId' => $request['projectStatusId'],
+                'fee1' => $request['fee1'],
+                'fee2' => $request['fee2'],
+                'fee3' => $request['fee3'],
+                'fee4' => $request['fee4'],
+                'fee5' => $request['fee5'],
+                'file_date_2' => $request['file_date_2'],
+                'file_date_4' => $request['file_date_4'],
+                'file_date_9' => $request['file_date_9'],
+            ];
+            for ($i = 1; $i <= 21; $i++) {
+                if (array_key_exists("file_name_" . $i, $request) && array_key_exists("file_url_" . $i, $request)) {
+                    $data["file_name_" . $i] = $request["file_name_" . $i];
+                    $data["file_url_" . $i] = $request["file_url_" . $i];
+                }
+            }
+            $res = Db::name("project")->where('projectId', $projectId)->update($data);
+
             if ($res !== false) {
                 $this->success("工程已更新", url('manager/view'));
             } else {

@@ -107,7 +107,7 @@
                             <notempty name="files">
                                 <foreach name="files" key="url" item="name">
                                     <php>$file_url=cmf_get_file_download_url($url);</php>
-                                    <php>$file_id=hash("sha256", $url);</php>
+                                    <php>$file_id=hash("sha256", uniqid() . $url);</php>
                                     <li id="saved-file{$file_id}">
                                         <input class="form-control" id="file-{$file_id}" type="hidden"
                                             name="file_urls[]" value="{$url}">
@@ -138,7 +138,7 @@
                             <notempty name="files1">
                                 <foreach name="files1" key="url" item="name">
                                     <php>$file_url=cmf_get_file_download_url($url);</php>
-                                    <php>$file_id=hash("sha256", $url);</php>
+                                    <php>$file_id=hash("sha256", uniqid() . $url);</php>
                                     <li id="saved-file1-{$file_id}">
                                         <input class="form-control" id="file1-{$file_id}" type="hidden"
                                             name="file1_urls[]" value="{$url}">

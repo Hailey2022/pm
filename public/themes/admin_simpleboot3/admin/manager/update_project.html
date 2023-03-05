@@ -52,6 +52,7 @@
                     <li><a href="#">2022小型水库安全监测能力提升项目</a></li>
                 </ul>
             </div> -->
+            <input name="projectId" type="text" style="display: none;" value="{$project.projectId}">
 
             <div class="xf_input">
                 <h4 class="xf_input_h4">工程基本信息</h4>
@@ -84,7 +85,7 @@
                             <xfupload file_id="1">增加</xfupload>
                             <foreach name="file_1" key="url" item="name">
                                 <php>$file_url=cmf_get_file_download_url($url);</php>
-                                <php>$file_id=hash("sha256", $url);</php>
+                                <php>$file_id=hash("sha256", uniqid() . $url);</php>
                                 <div id="{$file_id}">
                                     <upload_span></upload_span>
                                     <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
@@ -104,7 +105,7 @@
                             <xfupload file_id="7">增加</xfupload>
                             <foreach name="file_7" key="url" item="name">
                                 <php>$file_url=cmf_get_file_download_url($url);</php>
-                                <php>$file_id=hash("sha256", $url);</php>
+                                <php>$file_id=hash("sha256", uniqid() . $url);</php>
                                 <div id="{$file_id}">
                                     <upload_span></upload_span>
                                     <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
@@ -126,7 +127,7 @@
                             <input type="date" autocomplete="off" name="file_date_2" value="{$project.file_date_2}"><br>
                             <foreach name="file_2" key="url" item="name">
                                 <php>$file_url=cmf_get_file_download_url($url);</php>
-                                <php>$file_id=hash("sha256", $url);</php>
+                                <php>$file_id=hash("sha256", uniqid() . $url);</php>
                                 <div id="{$file_id}">
                                     <upload_span></upload_span>
                                     <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
@@ -159,7 +160,7 @@
                             <xfupload file_id="3">增加</xfupload>
                             <foreach name="file_3" key="url" item="name">
                                 <php>$file_url=cmf_get_file_download_url($url);</php>
-                                <php>$file_id=hash("sha256", $url);</php>
+                                <php>$file_id=hash("sha256", uniqid() . $url);</php>
                                 <div id="{$file_id}">
                                     <upload_span></upload_span>
                                     <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
@@ -179,7 +180,7 @@
                             <xfupload file_id="8">增加</xfupload>
                             <foreach name="file_8" key="url" item="name">
                                 <php>$file_url=cmf_get_file_download_url($url);</php>
-                                <php>$file_id=hash("sha256", $url);</php>
+                                <php>$file_id=hash("sha256", uniqid() . $url);</php>
                                 <div id="{$file_id}">
                                     <upload_span></upload_span>
                                     <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
@@ -201,7 +202,7 @@
                             <input type="date" autocomplete="off" name="file_date_4" value="{$project.file_date_4}"><br>
                             <foreach name="file_4" key="url" item="name">
                                 <php>$file_url=cmf_get_file_download_url($url);</php>
-                                <php>$file_id=hash("sha256", $url);</php>
+                                <php>$file_id=hash("sha256", uniqid() . $url);</php>
                                 <div id="{$file_id}">
                                     <upload_span></upload_span>
                                     <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
@@ -224,7 +225,7 @@
                             <input type="date" autocomplete="off" name="file_date_9" value="{$project.file_date_9}"><br>
                             <foreach name="file_9" key="url" item="name">
                                 <php>$file_url=cmf_get_file_download_url($url);</php>
-                                <php>$file_id=hash("sha256", $url);</php>
+                                <php>$file_id=hash("sha256", uniqid() . $url);</php>
                                 <div id="{$file_id}">
                                     <upload_span></upload_span>
                                     <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
@@ -245,7 +246,7 @@
                             <xfupload file_id="10">增加</xfupload>
                             <foreach name="file_10" key="url" item="name">
                                 <php>$file_url=cmf_get_file_download_url($url);</php>
-                                <php>$file_id=hash("sha256", $url);</php>
+                                <php>$file_id=hash("sha256", uniqid() . $url);</php>
                                 <div id="{$file_id}">
                                     <upload_span></upload_span>
                                     <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
@@ -319,7 +320,7 @@
                             <xfupload file_id="6">增加</xfupload>
                             <foreach name="file_6" key="url" item="name">
                                 <php>$file_url=cmf_get_file_download_url($url);</php>
-                                <php>$file_id=hash("sha256", $url);</php>
+                                <php>$file_id=hash("sha256", uniqid() . $url);</php>
                                 <div id="{$file_id}">
                                     <upload_span></upload_span>
                                     <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
@@ -339,7 +340,7 @@
                             <xfupload file_id="11">增加</xfupload>
                             <foreach name="file_11" key="url" item="name">
                                 <php>$file_url=cmf_get_file_download_url($url);</php>
-                                <php>$file_id=hash("sha256", $url);</php>
+                                <php>$file_id=hash("sha256", uniqid() . $url);</php>
                                 <div id="{$file_id}">
                                     <upload_span></upload_span>
                                     <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
@@ -359,7 +360,7 @@
                             <xfupload file_id="12">增加</xfupload>
                             <foreach name="file_12" key="url" item="name">
                                 <php>$file_url=cmf_get_file_download_url($url);</php>
-                                <php>$file_id=hash("sha256", $url);</php>
+                                <php>$file_id=hash("sha256", uniqid() . $url);</php>
                                 <div id="{$file_id}">
                                     <upload_span></upload_span>
                                     <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
@@ -380,7 +381,7 @@
                             <xfupload file_id="5">增加</xfupload>
                             <foreach name="file_5" key="url" item="name">
                                 <php>$file_url=cmf_get_file_download_url($url);</php>
-                                <php>$file_id=hash("sha256", $url);</php>
+                                <php>$file_id=hash("sha256", uniqid() . $url);</php>
                                 <div id="{$file_id}">
                                     <upload_span></upload_span>
                                     <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
@@ -431,7 +432,7 @@
                             <xfupload file_id="13">增加</xfupload>
                             <foreach name="file_13" key="url" item="name">
                                 <php>$file_url=cmf_get_file_download_url($url);</php>
-                                <php>$file_id=hash("sha256", $url);</php>
+                                <php>$file_id=hash("sha256", uniqid() . $url);</php>
                                 <div id="{$file_id}">
                                     <upload_span></upload_span>
                                     <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
@@ -451,7 +452,7 @@
                             <xfupload file_id="14">增加</xfupload>
                             <foreach name="file_14" key="url" item="name">
                                 <php>$file_url=cmf_get_file_download_url($url);</php>
-                                <php>$file_id=hash("sha256", $url);</php>
+                                <php>$file_id=hash("sha256", uniqid() . $url);</php>
                                 <div id="{$file_id}">
                                     <upload_span></upload_span>
                                     <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
@@ -471,7 +472,7 @@
                             <xfupload file_id="15">增加</xfupload>
                             <foreach name="file_15" key="url" item="name">
                                 <php>$file_url=cmf_get_file_download_url($url);</php>
-                                <php>$file_id=hash("sha256", $url);</php>
+                                <php>$file_id=hash("sha256", uniqid() . $url);</php>
                                 <div id="{$file_id}">
                                     <upload_span></upload_span>
                                     <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
@@ -492,7 +493,7 @@
                             <xfupload file_id="16">增加</xfupload>
                             <foreach name="file_16" key="url" item="name">
                                 <php>$file_url=cmf_get_file_download_url($url);</php>
-                                <php>$file_id=hash("sha256", $url);</php>
+                                <php>$file_id=hash("sha256", uniqid() . $url);</php>
                                 <div id="{$file_id}">
                                     <upload_span></upload_span>
                                     <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
@@ -512,7 +513,7 @@
                             <xfupload file_id="17">增加</xfupload>
                             <foreach name="file_17" key="url" item="name">
                                 <php>$file_url=cmf_get_file_download_url($url);</php>
-                                <php>$file_id=hash("sha256", $url);</php>
+                                <php>$file_id=hash("sha256", uniqid() . $url);</php>
                                 <div id="{$file_id}">
                                     <upload_span></upload_span>
                                     <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
@@ -532,7 +533,7 @@
                             <xfupload file_id="18">增加</xfupload>
                             <foreach name="file_18" key="url" item="name">
                                 <php>$file_url=cmf_get_file_download_url($url);</php>
-                                <php>$file_id=hash("sha256", $url);</php>
+                                <php>$file_id=hash("sha256", uniqid() . $url);</php>
                                 <div id="{$file_id}">
                                     <upload_span></upload_span>
                                     <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
@@ -552,7 +553,7 @@
                             <xfupload file_id="19">增加</xfupload>
                             <foreach name="file_19" key="url" item="name">
                                 <php>$file_url=cmf_get_file_download_url($url);</php>
-                                <php>$file_id=hash("sha256", $url);</php>
+                                <php>$file_id=hash("sha256", uniqid() . $url);</php>
                                 <div id="{$file_id}">
                                     <upload_span></upload_span>
                                     <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
@@ -573,7 +574,7 @@
                             <xfupload file_id="20">增加</xfupload>
                             <foreach name="file_20" key="url" item="name">
                                 <php>$file_url=cmf_get_file_download_url($url);</php>
-                                <php>$file_id=hash("sha256", $url);</php>
+                                <php>$file_id=hash("sha256", uniqid() . $url);</php>
                                 <div id="{$file_id}">
                                     <upload_span></upload_span>
                                     <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
@@ -593,7 +594,7 @@
                             <xfupload file_id="21">增加</xfupload>
                             <foreach name="file_21" key="url" item="name">
                                 <php>$file_url=cmf_get_file_download_url($url);</php>
-                                <php>$file_id=hash("sha256", $url);</php>
+                                <php>$file_id=hash("sha256", uniqid() . $url);</php>
                                 <div id="{$file_id}">
                                     <upload_span></upload_span>
                                     <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>

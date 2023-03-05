@@ -50,7 +50,7 @@
                     <notempty name="files">
                         <foreach name="files" key="url" item="name">
                             <php>$file_url=cmf_get_file_download_url($url);</php>
-                            <php>$file_id=hash("sha256", $url);</php>
+                            <php>$file_id=hash("sha256", uniqid() . $url);</php>
                             <div class="col">
                                 <div class="card shadow-sm">
                                     <div class="card-body d-flex flex-column">

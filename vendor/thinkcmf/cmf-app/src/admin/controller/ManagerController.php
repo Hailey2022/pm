@@ -729,7 +729,7 @@ class ManagerController extends AdminBaseController
     {
         if ($this->request->isPost()) {
             $request = $this->request->param();
-            $projectName = $request['projectName'];
+            $projectName = $request['project-name'];
             $projectId = $request['projectId'];
             if (Db::name('project')->where('projectName', $projectName)->where('projectId', '<>', $projectId)->find() != null) {
                 $this->error('存在相同名字的工程，请检查');

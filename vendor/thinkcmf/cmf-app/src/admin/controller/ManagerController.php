@@ -330,26 +330,27 @@ class ManagerController extends AdminBaseController
     public function updateContract()
     {
         $cid = $this->request->param("contractId");
+        $projectName = $this->getProjectNameByProjectId($this->getProjectIdByContractId($cid));
+        $this->assign("projectName", $projectName);
         $all = Db::name('contract c, pm_user u')
             ->where("c.clientId=u.id")
             ->where('c.contractId', $cid)
             ->find();
-        $this->assign("data", $all);
-        $urls = json_decode($all["file_urls"]);
-        $names = json_decode($all["file_names"]);
-        if ($urls != null and $names != null) {
-            $files = array_combine($urls, $names);
-            $this->assign("files", $files);
+        for ($x = 1; $x <= 5; $x++) {
+            $names = json_decode($all['file_name_' . $x]);
+            $urls = json_decode($all['file_url_' . $x]);
+            if ($urls != null and $names != null) {
+                $files = array_combine($urls, $names);
+                $this->assign('file_' . $x, $files);
+            }
         }
+        $this->assign("data", $all);
         return $this->fetch();
     }
     public function postContractUpdate()
+    // TODO: handle file deletes
     {
         $request = $this->request->param();
-        if (!(array_key_exists('file_urls', $request) && array_key_exists('file_names', $request))) {
-            $request['file_urls'] = null;
-            $request['file_names'] = null;
-        }
         $res = Db::name('contract')->where('contractId', $request["contractId"])->update($request);
         if ($res !== false) {
             $this->calculateProjectAmount($this->getProjectIdByContractId($request["contractId"]));
@@ -360,8 +361,6 @@ class ManagerController extends AdminBaseController
     }
     public function postProjectAdd()
     {
-        // var_dump($this->request->param());
-        // return;
         if ($this->request->isPost()) {
             $request = $this->request->param();
             $projectName = $request['project-name'];
@@ -689,10 +688,10 @@ class ManagerController extends AdminBaseController
                 'contractNumber' => $request["contractNumber"],
                 'paid' => 0,
                 'paymentTerms' => $request["paymentTerms"],
-                'firstParty' => $request["paymentTerms"],
-                'secondParty' => $request["paymentTerms"],
-                'managerA' => $request["paymentTerms"],
-                'managerB' => $request["paymentTerms"],
+                'firstParty' => $request["firstParty"],
+                'secondParty' => $request["secondParty"],
+                'managerA' => $request["managerA"],
+                'managerB' => $request["managerB"],
             ];
             // if (array_key_exists('file_urls', $request) && array_key_exists('file_names', $request)) {
             //     $urls = $request["file_urls"];
@@ -737,6 +736,7 @@ class ManagerController extends AdminBaseController
         }
     }
     public function postProjectUpdate()
+    // TODO: handle file deletes
     {
         if ($this->request->isPost()) {
             $request = $this->request->param();

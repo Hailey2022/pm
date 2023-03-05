@@ -67,13 +67,15 @@
                 </li>
                 <li>
                     <span>合同金额：</span>
-                    <input type="number" min="0" step="0.01" name="contractAmount" value="{$data.contractAmount}" />
+                    <input id="contractAmount" type="number" min="0" step="0.01" name="contractAmount"
+                        value="{$data.contractAmount}" />
+                    <span class="xf_ser">万元：</span>
+                    <input id="10k-contractAmount" type="text" autocomplete="off" disabled value="">
                 </li>
                 <li>
                     <span>中文金额：</span>
-                    <input type="text" autocomplete="off" disabled value="">
-                    <span class="xf_ser">万元：</span>
-                    <input type="text" autocomplete="off" disabled value="">
+                    <input id="cn-contractAmount" type="text" autocomplete="off" disabled value="">
+
                 </li>
                 <li>
                     <span>合同编号：</span>
@@ -187,5 +189,14 @@
     </form>
 
 </body>
+<script>
+    $("#contractAmount").on("change keyup paste click", function () {
+        to10k($(this))
+        $("#cn-contractAmount").val(convertCurrency($(this).val()))
+    })
+    $(function () {
+        $("#contractAmount").trigger("keyup")
+    })
+</script>
 
 </html>

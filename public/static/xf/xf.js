@@ -1,3 +1,5 @@
+function convertCurrency(r) { var t = ["零", "壹", "贰", "叁", "肆", "伍", "陆", "柒", "捌", "玖"], e = ["", "拾", "佰", "仟"], n = ["", "万", "亿", "兆"], s = ["角", "分", "毫", "厘"], a = "整", f = "元", i = 1e15, u, o, v = "", l; if ("" == r) return ""; if ((r = parseFloat(r)) >= 1e15) return ""; if (0 == r) return v = "零元整"; if (-1 == (r = r.toString()).indexOf(".") ? (u = r, o = "") : (u = (l = r.split("."))[0], o = l[1].substr(0, 4)), parseInt(u, 10) > 0) { for (var p = 0, b = u.length, c = 0; c < b; c++) { var g, h = b - c - 1, I = h / 4, d = h % 4; "0" == (g = u.substr(c, 1)) ? p++ : (p > 0 && (v += "零"), p = 0, v += t[parseInt(g)] + e[d]), 0 == d && p < 4 && (v += n[I]) } v += "元" } if ("" != o) for (var x = o.length, c = 0; c < x; c++) { var g; "0" != (g = o.substr(c, 1)) && (v += t[+g] + s[c]) } return "" == v ? v += "零元整" : "" == o && (v += "整"), v }
+
 function formatNum(num) {
     return Math.round(num * Math.pow(10, 6)) / Math.pow(10, 6);
 }

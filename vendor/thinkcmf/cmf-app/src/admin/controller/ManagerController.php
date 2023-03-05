@@ -317,7 +317,7 @@ class ManagerController extends AdminBaseController
     public function listContract()
     {
         $projectId = $this->request->param("projectId");
-        $all = Db::name('contract c, pm_project p, pm_type t, pm_user u')
+        $all = Db::name('user u, pm_project p, pm_type t, pm_contract c')
             ->where("c.projectId=p.projectId")
             ->where("c.clientType=t.id")
             ->where("c.clientId=u.id")
@@ -440,14 +440,14 @@ class ManagerController extends AdminBaseController
     {
         $projectId = $this->request->param('projectId');
         $projectName = $this->getProjectNameByProjectId($projectId);
-        if ($projectName === null){
+        if ($projectName === null) {
             $this->error('非法访问');
             // $this->assign("projectName", "dev");
-        }else{
+        } else {
             $this->assign("projectName", $projectName);
         }
         $contracts = Db::name('contract')->where('projectId', $projectId)->select();
-        if (count($contracts) == 0){
+        if (count($contracts) == 0) {
             $this->error('先录入合同再录入支付');
         }
         $this->assign('contracts', $contracts);

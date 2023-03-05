@@ -36,7 +36,7 @@ class IndexController extends AdminBaseController
                     "icon" => "",
                     "id" => $project['projectId'],
                     "name" => $project['projectName'],
-                    "parent" => 162, //TODO: 改成auto
+                    // "parent" => 162, //TODO: 改成auto
                     "url" => url("manager/listProjectPayments", ['projectId'=>$project['projectId']]),
                     "lang" => "ADMIN_MANAGER_VIEW",
                     "items" => [
@@ -62,6 +62,22 @@ class IndexController extends AdminBaseController
                             "name" => "支付录入",
                             "parent" =>  $project['projectId'],
                             "url" => url("manager/pay", ['projectId'=>$project['projectId']]),
+                            "lang" => "",
+                        ],
+                        "合同列表" =>[
+                            "icon" => "",
+                            "id" => $project['projectId'] . "DDD",
+                            "name" => "合同列表",
+                            "parent" =>  $project['projectId'],
+                            "url" => url("manager/listContract", ['projectId'=>$project['projectId']]),
+                            "lang" => "",
+                        ],
+                        "支付记录" =>[
+                            "icon" => "",
+                            "id" => $project['projectId'] . "EEE",
+                            "name" => "支付记录",
+                            "parent" =>  $project['projectId'],
+                            "url" => url("manager/listprojectpayments", ['projectId'=>$project['projectId']]),
                             "lang" => "",
                         ]
                     ]

@@ -46,13 +46,13 @@ div.main {
 
 div.left_menu {
     float: left;
-    width: 160px;
+    width: 150px;
     overflow: hidden;
     height: 360px;
     background-color: #5B6A8A;
     position: fixed;
     left: 0;
-    top: 60px;
+    top: 37px;
     padding: 10px 0 0 0;
     font-size: 14px;
     /* border-left: 1px solid #143E63; */
@@ -60,14 +60,17 @@ div.left_menu {
 
 div.left_menu a {
     display:block;
-    line-height: 40px;
+    line-height: 45px;
     text-align: center;color: #fcfcfc;
 }
 
 div.left_menu a:hover,div.left_menu a.on {
     background-color: bisque;color: #000;
+   
 }
-
+div.left_menu a.on {
+    cursor:default ;
+}
 
 
 div.xf_input {

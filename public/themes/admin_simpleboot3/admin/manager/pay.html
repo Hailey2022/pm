@@ -28,6 +28,12 @@
 <script src="__STATIC__/xf/xf.js"></script>
 
 <body>
+    <include file="manager/left_menu" projectID="${projectId|default=''}" />
+    <div class="main">
+        <div class="main_menu">
+            <a href="{:url('manager/listProjectPayments', ['projectId'=>$projectId])}">支付信息</a>
+            <a href="{:url('manager/pay', ['projectId'=>$projectId])}" class="on add">新增支付</a>
+        </div>
     <form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('manager/postPaymentAdd')}">
         <div class="xf_input">
             <h4 class="xf_input_h4">工程支付</h4>
@@ -113,6 +119,7 @@
         <xf_submit><button id="project_submit">提交</button></xf_submit>
 
     </form>
+    </div>
     <script>
         $(".to10k").on("change keyup", function () {
             var s = 0;

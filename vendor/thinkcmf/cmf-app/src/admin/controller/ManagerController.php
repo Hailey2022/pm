@@ -422,6 +422,7 @@ class ManagerController extends AdminBaseController
     public function pay()
     {
         $projectId = $this->request->param('projectId');
+        $this->assign("projectId", $projectId);
         $projectName = $this->getProjectNameByProjectId($projectId);
         if ($projectName === null) {
             $this->error('非法访问');
@@ -528,6 +529,10 @@ class ManagerController extends AdminBaseController
     }
     public function updatePayment()
     {
+        $projectId = $this->request->param("projectId");
+        $this->assign('projectId', $projectId);
+        $projectName = $this->getProjectNameByProjectId($projectId);
+        $this->assign('projectName', $projectName);
         $paymentId = $this->request->param("paymentId");
         $all = Db::name("contract c, pm_payment p, pm_user u")
             ->where("p.contractId=c.contractId")
@@ -535,17 +540,13 @@ class ManagerController extends AdminBaseController
             ->where("p.paymentId", $paymentId)
             ->find();
         $this->assign("data", $all);
-        $urls = json_decode($all["file_urls"]);
-        $names = json_decode($all["file_names"]);
-        if ($urls != null and $names != null) {
-            $files = array_combine($urls, $names);
-            $this->assign("files", $files);
-        }
-        $urls = json_decode($all["file1_urls"]);
-        $names = json_decode($all["file1_names"]);
-        if ($urls != null and $names != null) {
-            $files = array_combine($urls, $names);
-            $this->assign("files1", $files);
+        for ($x = 1; $x <= 2; $x++) {
+            $names = json_decode($all['file_name_' . $x]);
+            $urls = json_decode($all['file_url_' . $x]);
+            if ($urls != null and $names != null) {
+                $files = array_combine($urls, $names);
+                $this->assign('file_' . $x, $files);
+            }
         }
         return $this->fetch();
     }

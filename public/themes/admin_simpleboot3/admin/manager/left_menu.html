@@ -1,25 +1,40 @@
 <div class="left_menu">
     <ul>
-        <li> 
-            <a href="{:url('manager/listProjectInfo',array('projectId'=>$projectId))}">工程信息</a>
+        <li>
+            <a class="m" href="{:url('manager/listProjectInfo',array('projectId'=>$projectId))}">工程信息</a>
         </li>
-        <li> 
-            <a href="{:url('manager/listContract',array('projectId'=>$projectId))}">合同录入</a>
+        <li>
+            <a class="m" href="{:url('manager/listContract',array('projectId'=>$projectId))}">合同录入</a>
         </li>
-        <li> 
-            <a href="{:url('manager/listProjectPayments',array('projectId'=>$projectId))}">支付录入</a>
+        <li>
+            <a class="m" href="{:url('manager/listProjectPayments',array('projectId'=>$projectId))}">支付录入</a>
         </li>
-        <li> 
-            <a href="#">施工录入</a>
+        <li>
+            <a class="m" href="javascript:void(0)">施工录入</a>
         </li>
-        <li> 
-            <a href="#">监理录入</a>
+        <li>
+            <a class="m" href="javascript:void(0)">监理录入</a>
         </li>
-        <li> 
-            <a href="#">工程设计</a>
+        <li>
+            <a class="m" href="javascript:void(0)">工程设计</a>
         </li>
-        <li> 
-            <a href="#">安监录入</a>
+        <li>
+            <a class="m" href="javascript:void(0)">安监录入</a>
         </li>
     </ul>
 </div>
+<script src="__STATIC__/js/jquery.js"></script>
+<script>
+    // $(function () {
+    //     $("li.m").on('click', function () {
+    //         alert('hi')
+    //         $(".m").removeClass("selected");
+    //         $(this).addClass("selected");
+    //     })
+    // })
+</script>
+<style>
+    .m.selected {
+        background-color: bisque;
+    }
+</style>

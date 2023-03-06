@@ -16,7 +16,7 @@
 
     * {
         user-select: none;
-        font-size: 2px;
+        /* font-size: 2px; */
     }
 </style>
 <link href="__STATIC__/css/xf_ui.css" rel="stylesheet" type="text/css">
@@ -221,7 +221,7 @@
                                 <td class="multilines" style="text-align: center;">{$d.comment}</td> -->
                                 <td style="text-align: center;">
                                     <a class="btn"
-                                        href="{:url('manager/updatePayment',array('paymentId'=>$d['paymentId']))}">修改支付</a>
+                                        href="{:url('manager/updatePayment',array('paymentId'=>$d['paymentId'], 'projectId'=>$projectId))}">修改支付</a>
                                     <a class="btn" style="color: #ff0000;"
                                         onclick="deletePayment('{$d.paymentId}')">删除支付</a>
                                 </td>

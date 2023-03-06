@@ -88,6 +88,14 @@ $(function () {
     });
 
     calcTaskContentWidth();
+    var tw = window.top;
+    var twa =tw.location.href.split("#");
+    if (twa.length == 2){
+        url = twa[1]
+        $("iframe").attr('src', url)
+        // openapp(url, "rec", "当前工程", true)
+    }
+    
 });
 
 function calcTaskContentWidth() {

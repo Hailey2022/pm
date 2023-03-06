@@ -345,7 +345,6 @@ class ManagerController extends AdminBaseController
         return $this->fetch();
     }
     public function postContractUpdate()
-    // TODO: handle file deletes
     {
         $request = $this->request->param();
         for ($i = 1; $i <= 5; $i++) {
@@ -768,7 +767,6 @@ class ManagerController extends AdminBaseController
         }
     }
     public function postProjectUpdate()
-    // TODO: handle file deletes
     {
         if ($this->request->isPost()) {
             $request = $this->request->param();

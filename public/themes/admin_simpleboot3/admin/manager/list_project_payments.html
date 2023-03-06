@@ -31,8 +31,8 @@
             <a href="{:url('manager/listProjectPayments', ['projectId'=>$projectId])}">支付信息</a>
             <a href="{:url('manager/pay', ['projectId'=>$projectId])}" class="on add">新增支付</a>
         </div>
-        <table class="table table-hover table-bordered list_project_payments" style="font-size: 10px;">
-            <thead>
+        <table class="table table-hover table-bordered list_project_payments" style="font-size: 12px;">
+            <thead style="font-size: 14px;">
                 <tr style="background-color: #ddd">
                     <th style=" width: 60px;" rowspan="3">序号</th>
                     <th style="max-width: 350px;" rowspan="3">合同名称</th>
@@ -123,11 +123,11 @@
                 <a class="btn" style="color: #ff0000;" href="{:url('manager/view')}">返回</a>
             </td> -->
                 <foreach name="contracts" item="c" key="key">
-                    <tr style='background-color:rgb(245, 247, 250)'>
+                    <tr style='background-color:#f3f3f3'>
                         <td class="contracts" style="" onclick="showOrHide('{$c.contractId}')">{$key
                             + 1}
                         </td>
-                        <td style=" font-size:10px; text-align: left;" onclick="showOrHide('{$c.contractId}')">
+                        <td style=" text-align: left;" onclick="showOrHide('{$c.contractId}')">
                            合同：{$c.contractName|default='合同名称未填写'}<br>企业：{$c.user_login}</td>
                         <td style="" class="money" 만원="{:round($c.contractAmount / 10000, 6)}"
                             원="{$c.contractAmount}" onclick="showOrHide('{$c.contractId}')">{$c.contractAmount}</td>

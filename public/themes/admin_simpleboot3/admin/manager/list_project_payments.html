@@ -15,6 +15,9 @@
     .table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td {
     vertical-align: middle;text-align: center; 
 }
+body{
+    overflow-y: scroll;
+}
 </style>
 
 
@@ -37,7 +40,7 @@
             <thead style="font-size: 14px;">
                 <tr style="background-color: #ddd">
                     <th style=" width: 60px;" rowspan="3">序号</th>
-                    <th style="width: 450px;" rowspan="3">合同名称</th>
+                    <th style="max-width: 300px;" rowspan="3">合同名称</th>
                     <th style="" rowspan="3">
                         合同总价<br>申请拨付金额
                     </th>
@@ -52,17 +55,17 @@
                 </tr>
                 <tr style="background-color: #ddd">
                     <th rowspan="2">中央</th>
-                    <th style="" rowspan="2">省</th>
-                    <th style="" rowspan="2">市</th>
-                    <th style="" colspan="2">区</th>
+                    <th style="width: 110px;" rowspan="2">省</th>
+                    <th style="width: 110px;" rowspan="2">市</th>
+                    <th style="width: 110px;" colspan="2">区</th>
                     <if condition="$project.othersProjectSum != 0">
-                        <th style="" rowspan="2">其他</th>
+                        <th style="width: 110px;" rowspan="2">其他</th>
                     </if>
                     <th style="" rowspan="2">小计</th>
                 </tr>
                 <tr style="background-color: #ddd">
-                    <th style="">专项债</th>
-                    <th style="">预算</th>
+                    <th style="width: 110px;">专项债</th>
+                    <th style="width: 110px;">预算</th>
                 </tr>
             </thead>
             <tbody>
@@ -164,6 +167,9 @@
                                 2)}
                                 (请检查)</td>
                         </egt>
+                        <td style="" >
+                           
+                        </td>
                         <!-- <td style=""> -->
                         <!-- <if condition="$c.file_url_5 && $c.file_url_5 != 'null'">
                             <a class="btn"

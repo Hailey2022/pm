@@ -94,7 +94,8 @@
                                     </div>
                                 </foreach>
                                 <else />
-                                <xfupload file_id="1">上传 </xfupload>
+                                <input type="text" autocomplete="off" required name="project-name"
+                                value="录入人员没有上传">
                             </notempty>
                         </li>
                         <li id="{:md5(uniqid(md5(microtime(true)),true))}">

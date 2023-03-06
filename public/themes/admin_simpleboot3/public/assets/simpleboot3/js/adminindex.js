@@ -140,7 +140,7 @@ function openapp(url, appId, appname, refresh) {
     if ($app.length == 0) {
         var task = $(task_item_tpl).attr("app-id", appId).attr("app-url", url).attr("app-name", appname).addClass("active");
         task.find(".cmf-tabs-item-text").html(appname).attr("title", appname);
-        $taskContentInner.append(task);
+        // $taskContentInner.append(task);
         $(".appiframe").hide();
         $loading.show();
         $appiframe = $(appiframe_tpl).attr("src", url).attr("id", "appiframe-" + appId);

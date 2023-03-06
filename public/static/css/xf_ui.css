@@ -315,3 +315,10 @@ div.main_menu a:not(.on):hover {
     background-color: #257db9;
     color: #fff;
 }
+table.list_contract th,table.list_contract td{
+    text-align: center;
+
+}
+table.list_project_payments th,table.list_project_payments td{
+    text-align: center; 
+}

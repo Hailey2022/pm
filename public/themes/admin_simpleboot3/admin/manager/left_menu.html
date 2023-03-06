@@ -37,12 +37,10 @@
         菜单列表[2]=支付录入;
         $.each( 菜单列表, function(i, n){
             var 顶部菜单位置=$.inArray(action_name, n)
-           
-
             if (顶部菜单位置 >=0){
-                console.log(顶部菜单位置);
-                $("div.left_menu li").eq(i).addClass('on');
-
+                // console.log(顶部菜单位置);
+                $("div.left_menu li").eq(i).addClass('on').siblings().removeClass('on');
+                $("div.left_menu li a")
                 $("div.main_menu a").eq(顶部菜单位置).addClass('on').siblings().removeClass('on');
                 return false;
 

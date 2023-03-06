@@ -65,7 +65,7 @@ div.left_menu li:hover,div.left_menu li.on {
     background-color: bisque;
 }
 
-div.left_menu li:hover a {
+div.left_menu li:hover a,div.left_menu li.on a{
     color: #000;
 }
 

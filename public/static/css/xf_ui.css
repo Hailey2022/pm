@@ -48,30 +48,26 @@ div.left_menu {
     float: left;
     width: 160px;
     overflow: hidden;
-    height: 70%;
+    height: 360px;
     background-color: #5B6A8A;
     position: fixed;
     left: 0;
     top: 60px;
     padding: 10px 0 0 0;
+    font-size: 14px;
 }
 
-div.left_menu li {
+div.left_menu a {
+    display:block;
     line-height: 40px;
-    text-align: center;
+    text-align: center;color: #fcfcfc;
 }
 
-div.left_menu li:hover,div.left_menu li.on {
-    background-color: bisque;
+div.left_menu a:hover,div.left_menu a.on {
+    background-color: bisque;color: #000;
 }
 
-div.left_menu li:hover a,div.left_menu li.on a{
-    color: #000;
-}
 
-div.left_menu li a {
-    color: #fcfcfc;
-}
 
 div.xf_input {
     background-color: #F9F9F9;

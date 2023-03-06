@@ -1,36 +1,29 @@
 <div class="left_menu">
-    <ul>
-        <li>
+
+
             <a href="{:url('manager/listProjectInfo',array('projectId'=>$projectId))}">工程信息</a>
-        </li>
-        <li>
+   
             <a href="{:url('manager/listContract',array('projectId'=>$projectId))}">合同录入</a>
-        </li>
-        <li>
+
             <a href="{:url('manager/listProjectPayments',array('projectId'=>$projectId))}">支付录入</a>
-        </li>
-        <li>
+
             <a href="javascript:void(0)">施工录入</a>
-        </li>
-        <li>
+
             <a href="javascript:void(0)">监理录入</a>
-        </li>
-        <li>
+ 
             <a href="javascript:void(0)">工程设计</a>
-        </li>
-        <li>
+
             <a href="javascript:void(0)">安监录入</a>
-        </li>
-    </ul>
+ 
 </div>
 <script src="__STATIC__/xf/left_menu.js"></script>
 <script type="text/javascript">
     var action_name='{$Request.action}'.toLowerCase();
     
     $(function () {
-        var 工程信息=['listProjectInfo','updateProject','addProject',],
-        合同录入=['listContract','addContract','updateContract'],
-        支付录入=['listprojectpayments', 'updatePayment','pay'];
+        var 工程信息=['listprojectinfo','updateproject','addproject',],
+        合同录入=['listcontract','addcontract','updatecontract'],
+        支付录入=['listprojectpayments', 'updatepayment','pay'];
         var 菜单列表=[];
         菜单列表[0]=工程信息;
         菜单列表[1]=合同录入;
@@ -40,8 +33,8 @@
             if (顶部菜单位置 >=0){
                 // console.log(顶部菜单位置);
                 $("div.left_menu li").eq(i).addClass('on').siblings().removeClass('on');
-                $("div.left_menu li a")
-                $("div.main_menu a").eq(顶部菜单位置).addClass('on').siblings().removeClass('on');
+                $("div.left_menu li a").eq(i).attr('href','javascript:void(0)');
+                $("div.main_menu a").eq(顶部菜单位置).addClass('on').attr('href','javascript:void(0)').siblings().removeClass('on');
                 return false;
 
             }

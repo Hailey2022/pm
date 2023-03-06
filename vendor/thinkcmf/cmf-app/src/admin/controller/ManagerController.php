@@ -10,9 +10,17 @@ class ManagerController extends AdminBaseController
     {
         return $this->request->ip();
     }
+    public function checkProject($projectId = null)
+    {
+        $project = Db::name('project')->where('projectId', $projectId)->find();
+        return $project !== null;
+    }
     public function addProject()
     {
         $projectId = $this->request->param('projectId');
+        if (!$this->checkProject($projectId)) {
+            $this->error('非法访问项目');
+        }
         $this->assign("projectId", $projectId);
         $users = Db::name('user')
             ->where('id', '<>', '1')
@@ -297,6 +305,9 @@ class ManagerController extends AdminBaseController
     public function listContract()
     {
         $projectId = $this->request->param("projectId");
+        if (!$this->checkProject($projectId)) {
+            $this->error('非法访问项目');
+        }
         $this->assign('projectId', $projectId);
         $all = Db::name('user u, pm_project p, pm_type t, pm_contract c')
             ->where("c.projectId=p.projectId")
@@ -311,6 +322,9 @@ class ManagerController extends AdminBaseController
     public function updateContract()
     {
         $projectId = $this->request->param("projectId");
+        if (!$this->checkProject($projectId)) {
+            $this->error('非法访问项目');
+        }
         $this->assign('projectId', $projectId);
         $cid = $this->request->param("contractId");
         $projectName = $this->getProjectNameByProjectId($this->getProjectIdByContractId($cid));
@@ -422,6 +436,9 @@ class ManagerController extends AdminBaseController
     public function pay()
     {
         $projectId = $this->request->param('projectId');
+        if (!$this->checkProject($projectId)) {
+            $this->error('非法访问项目');
+        }
         $this->assign("projectId", $projectId);
         $projectName = $this->getProjectNameByProjectId($projectId);
         if ($projectName === null) {
@@ -530,6 +547,9 @@ class ManagerController extends AdminBaseController
     public function updatePayment()
     {
         $projectId = $this->request->param("projectId");
+        if (!$this->checkProject($projectId)) {
+            $this->error('非法访问项目');
+        }
         $this->assign('projectId', $projectId);
         $projectName = $this->getProjectNameByProjectId($projectId);
         $this->assign('projectName', $projectName);
@@ -588,6 +608,9 @@ class ManagerController extends AdminBaseController
     public function deleteProject()
     {
         $projectId = $this->request->param("projectId");
+        if (!$this->checkProject($projectId)) {
+            $this->error('非法访问项目');
+        }
         $contracts = Db::name("contract")
             ->where("projectId", $projectId)
             ->select();
@@ -635,6 +658,9 @@ class ManagerController extends AdminBaseController
     public function listProjectPayments()
     {
         $projectId = $this->request->param("projectId");
+        if (!$this->checkProject($projectId)) {
+            $this->error('非法访问项目');
+        }
         $data = Db::name("contract c, pm_payment p")
             ->where("p.contractId=c.contractId")
             ->where("projectId", $projectId)->select();
@@ -656,6 +682,9 @@ class ManagerController extends AdminBaseController
     public function addContract()
     {
         $projectId = $this->request->param("projectId");
+        if (!$this->checkProject($projectId)) {
+            $this->error('非法访问项目');
+        }
         $this->assign("projectId", $projectId);
         $this->assign("projectName", $this->getProjectNameByProjectId($projectId));
         $users = Db::name('user')
@@ -781,6 +810,9 @@ class ManagerController extends AdminBaseController
     public function updateProject()
     {
         $projectId = $this->request->param('projectId');
+        if (!$this->checkProject($projectId)) {
+            $this->error('非法访问项目');
+        }
         $this->assign('projectId', $projectId);
         $project = Db::name('project')
             ->where('projectId', $projectId)
@@ -805,6 +837,9 @@ class ManagerController extends AdminBaseController
     {
 
         $projectId = $this->request->param('projectId');
+        if (!$this->checkProject($projectId)) {
+            $this->error('非法访问项目');
+        }
         $this->assign('projectId', $projectId);
         $project = Db::name('project')
             ->where('projectId', $projectId)

@@ -87,6 +87,7 @@ div.xf_input {
     float: left;
     min-width: 1000px;
 }
+div.xf_input:last-child{ margin-bottom: 50px;}
 
 h4.xf_input_h4 {
     background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAGBAMAAAD9IJlFAAAAJ1BMVEUAAACAgIBqcHVqcHVuc3ltcHhtcnducXhtcnhtcXhtcndtcndtcnh84727AAAADHRSTlMAADAxX2COkN7f7u/sMiwUAAAAH0lEQVQIHWMAgyIGoQQGTQULBQamLYsYGBhiAhjAAAA1JQOK8B+6tAAAAABJRU5ErkJggg==") no-repeat 5px;

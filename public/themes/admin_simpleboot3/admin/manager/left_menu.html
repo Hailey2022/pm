@@ -24,6 +24,7 @@
         var 工程信息=['listprojectinfo','updateproject','addproject',],
         合同录入=['listcontract','addcontract','updatecontract'],
         支付录入=['listprojectpayments', 'updatepayment','pay'];
+        // 新增类按钮=['addproject','addcontract','pay'];
         var 菜单列表=[];
         菜单列表[0]=工程信息;
         菜单列表[1]=合同录入;
@@ -34,6 +35,7 @@
                 // console.log(顶部菜单位置);
                 $("div.left_menu a").eq(i).addClass('on').attr('href','javascript:void(0)').siblings().removeClass('on');
                 $("div.main_menu a").eq(顶部菜单位置).addClass('on').attr('href','javascript:void(0)').siblings().removeClass('on');
+                // if($.inArray(action_name, 新增类按钮)) 
                 return false;
 
             }

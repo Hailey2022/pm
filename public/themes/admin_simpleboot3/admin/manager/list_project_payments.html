@@ -27,10 +27,12 @@
     <!-- </h2> -->
     <include file="manager/left_menu" projectID="${projectId|default=''}" />
     <div class="main">
+        
         <div class="main_menu">
             <a href="{:url('manager/listProjectPayments', ['projectId'=>$projectId])}">支付信息</a>
             <a href="{:url('manager/pay', ['projectId'=>$projectId])}" class="on add">新增支付</a>
         </div>
+        <div style="margin: 0 10px 0 0; padding-bottom: 20px; height: auto;">
         <table class="table table-hover table-bordered list_project_payments" style="font-size: 12px;">
             <thead style="font-size: 14px;">
                 <tr style="background-color: #ddd">
@@ -123,7 +125,7 @@
                 <a class="btn" style="color: #ff0000;" href="{:url('manager/view')}">返回</a>
             </td> -->
                 <foreach name="contracts" item="c" key="key">
-                    <tr style='background-color:#f3f3f3'>
+                    <tr style='background-color:#f1f1f1'>
                         <td class="contracts" style="" onclick="showOrHide('{$c.contractId}')">{$key
                             + 1}
                         </td>
@@ -229,6 +231,8 @@
                 </foreach>
             </tbody>
         </table>
+        
+    </div>
     </div>
 </body>
 <script>

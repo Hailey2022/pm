@@ -328,6 +328,6 @@ table.list_project_payments>tbody>tr>td{
     text-align: center; vertical-align:middle; border: 1px solid #000;
     border-collapse: collapse;
 }
-table.list_project_payments{margin-right: 100px; float: left;}
+table.list_project_payments{ float: left;}
 
 table.list_project_payments>tbody>tr:hover{background-color: #ddd}

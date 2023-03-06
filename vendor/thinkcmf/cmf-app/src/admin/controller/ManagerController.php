@@ -348,6 +348,12 @@ class ManagerController extends AdminBaseController
     // TODO: handle file deletes
     {
         $request = $this->request->param();
+        for ($i = 1; $i <= 5; $i++) {
+            if (!(array_key_exists("file_name_" . $i, $request) && array_key_exists("file_url_" . $i, $request))) {
+                $request["file_name_" . $i] = "null";
+                $request["file_url_" . $i] = "null";
+            }
+        }
         $res = Db::name('contract')->where('contractId', $request["contractId"])->update($request);
         if ($res !== false) {
             $this->calculateProjectAmount($this->getProjectIdByContractId($request["contractId"]));
@@ -794,7 +800,7 @@ class ManagerController extends AdminBaseController
                 if (array_key_exists("file_name_" . $i, $request) && array_key_exists("file_url_" . $i, $request)) {
                     $data["file_name_" . $i] = $request["file_name_" . $i];
                     $data["file_url_" . $i] = $request["file_url_" . $i];
-                }else{
+                } else {
                     $data["file_name_" . $i] = "null";
                     $data["file_url_" . $i] = "null";
                 }

@@ -1,12 +1,6 @@
 <include file="public@header" />
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>合同</title>
+<title>合同</title>
+<link href="__STATIC__/css/xf_ui.css" rel="stylesheet" type="text/css">
 </head>
 <style>
     .btns {
@@ -18,11 +12,14 @@
         user-select: none;
         /* font-size: 2px; */
     }
+    .table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td {
+    vertical-align: middle;text-align: center; 
+}
 </style>
-<link href="__STATIC__/css/xf_ui.css" rel="stylesheet" type="text/css">
+
 
 <body>
-    <!-- <h2 style="text-align: center;" class="title">{$projectName} -->
+    <!-- <h2 style="" class="title">{$projectName} -->
     <!-- <div class="btns">
             <a id="pay" class='btn btn-primary' href="{:url('manager/pay', ['projectId'=>$projectId])}">新增支付</a>
             <a class='btn btn-primary' href="{:url('manager/view')}">返回</a>
@@ -34,147 +31,147 @@
             <a href="{:url('manager/listProjectPayments', ['projectId'=>$projectId])}">支付信息</a>
             <a href="{:url('manager/pay', ['projectId'=>$projectId])}" class="on add">新增支付</a>
         </div>
-        <table class="table table-hover table-bordered">
+        <table class="table table-hover table-bordered list_project_payments" style="font-size: 10px;">
             <thead>
                 <tr>
-                    <th style="width: 30px;  text-align: center; vertical-align: middle;" rowspan="3">序号</th>
-                    <th style="min-width: 110px;  text-align: center; vertical-align: middle;" rowspan="3">合同名称</th>
-                    <th style="min-width: 100px;  text-align: center; vertical-align: middle;" rowspan="3">
+                    <th style=" width: 60px;" rowspan="3">序号</th>
+                    <th style="max-width: 350px;" rowspan="3">合同名称</th>
+                    <th style="" rowspan="3">
                         合同总价<br>申请拨付金额
                     </th>
-                    <th style="min-width: 100px;  text-align: center; vertical-align: text-top;"
+                    <th style=""
                         colspan="{$project.othersProjectSum == 0? '5' : '6'}">资金来源</th>
-                    <th style="min-width: 100px;  text-align: center; vertical-align: text-top;">已支付</th>
-                    <th style="min-width: 100px;  text-align: center; vertical-align: middle; " rowspan="3">未付款</th>
-                    <!-- <th style="min-width: 100px;  text-align: center; vertical-align: middle;" rowspan="3">支付凭证</th>
-                <th style="min-width: 100px;  text-align: center; vertical-align: middle;" rowspan="3">支金来源凭证</th>
-                <th style="min-width: 100px;  text-align: center; vertical-align: middle;" rowspan="3">备注</th> -->
-                <th style="min-width: 100px;  text-align: center; vertical-align: middle;" rowspan="3">操作</th>
+                    <th style="">已支付</th>
+                    <th style="" rowspan="3">未付款</th>
+                    <!-- <th style="min-width: 100px;   vertical-align: middle;" rowspan="3">支付凭证</th>
+                <th style="min-width: 100px;   vertical-align: middle;" rowspan="3">支金来源凭证</th>
+                <th style="min-width: 100px;   vertical-align: middle;" rowspan="3">备注</th> -->
+                <th  style="width: 80px;"rowspan="3">操作</th>
                 </tr>
                 <tr>
-                    <th style="min-width: 100px;  text-align: center; vertical-align: text-top;" rowspan="2">中央</th>
-                    <th style="min-width: 100px;  text-align: center; vertical-align: text-top;" rowspan="2">省</th>
-                    <th style="min-width: 100px;  text-align: center; vertical-align: text-top;" rowspan="2">市</th>
-                    <th style="min-width: 100px;  text-align: center; vertical-align: text-top;" colspan="2">区</th>
+                    <th rowspan="2">中央</th>
+                    <th style="" rowspan="2">省</th>
+                    <th style="" rowspan="2">市</th>
+                    <th style="" colspan="2">区</th>
                     <if condition="$project.othersProjectSum != 0">
-                        <th style="min-width: 100px;  text-align: center; vertical-align: text-top;" rowspan="2">其他</th>
+                        <th style="" rowspan="2">其他</th>
                     </if>
-                    <th style="min-width: 100px;  text-align: center; vertical-align: text-top;" rowspan="2">小计</th>
+                    <th style="" rowspan="2">小计</th>
                 </tr>
                 <tr>
-                    <th style="min-width: 100px;  text-align: center; vertical-align: text-top;">专项债</th>
-                    <th style="min-width: 100px;  text-align: center; vertical-align: text-top;">预算</th>
+                    <th style="">专项债</th>
+                    <th style="">预算</th>
                 </tr>
             </thead>
             <tbody>
-                <th style="min-width: 30px; text-align: center;background-color:#f8f9fa">
-                    <a class="btn" id='showAll' style="color: #1880bc;" onclick="showAll()">展开</a>
-                    <a class="btn" id='hideAll' style="color: #1880bc; display: none;" onclick="hideAll()">收合</a>
+                <th style=" background-color:#f8f9fa">
+                    <a id='showAll' style="color: #1880bc;" onclick="showAll()">展开+</a>
+                    <a id='hideAll' style="color: #1880bc; display: none;" onclick="hideAll()">收合-</a>
                 </th>
-                <th style="min-width: 100px; text-align: center;background-color:#f8f9fa" colspan="1">
+                <th style=" background-color:#f8f9fa" colspan="1">
                     <a style="color: #000" id="unit">合计（单位：元）</a>
-                    <a class="btn" id='원' style="color: #1880bc;" onclick="unit(10000)">转换成万元</a>
-                    <a class="btn" id='만원' style="color: #1880bc; display: none;" onclick="unit(1)">转换成元</a>
+                    <a id='원' style="color: #1880bc;" onclick="unit(10000)">转换成万元</a>
+                    <a id='만원' style="color: #1880bc; display: none;" onclick="unit(1)">转换成元</a>
                     <!-- <a class="btn" id='showAll' style="color: #1880bc;" onclick="showAll()">展开全部</a>
                 <a class="btn" id='hideAll' style="color: #1880bc; display: none;" onclick="hideAll()">收合全部</a> -->
                 </th>
-                <td style="min-width: 100px; text-align: center;background-color:#f8f9fa" class="money"
+                <td style="background-color:#f8f9fa" class="money"
                     만원="{:round($project.total / 10000, 6)}" 원="{$project.total}">{$project.total}</td>
-                <td style="min-width: 100px; text-align: center;background-color:#f8f9fa" class="money"
+                <td style=" background-color:#f8f9fa" class="money"
                     만원="{:round($project.ccpProjectSum / 10000, 6)}" 원="{$project.ccpProjectSum}">
                     {$project.ccpProjectSum}
                 </td>
-                <td style="min-width: 100px; text-align: center;background-color:#f8f9fa" class="money"
+                <td style="background-color:#f8f9fa" class="money"
                     만원="{:round($project.provinceProjectSum / 10000, 6)}" 원="{$project.provinceProjectSum}">
                     {$project.provinceProjectSum}</td>
-                <td style="min-width: 100px; text-align: center;background-color:#f8f9fa" class="money"
+                <td style="background-color:#f8f9fa" class="money"
                     만원="{:round($project.cityProjectSum / 10000, 6)}" 원="{$project.cityProjectSum}">
                     {$project.cityProjectSum}
                 </td>
-                <td style="min-width: 100px; text-align: center;background-color:#f8f9fa" class="money"
+                <td style="background-color:#f8f9fa" class="money"
                     만원="{:round($project.bondProjectSum / 10000, 6)}" 원="{$project.bondProjectSum}">
                     {$project.bondProjectSum}
                 </td>
-                <td style="min-width: 100px; text-align: center;background-color:#f8f9fa" class="money"
+                <td style=" background-color:#f8f9fa" class="money"
                     만원="{:round($project.budgetProjectSum / 10000, 6)}" 원="{$project.budgetProjectSum}">
                     {$project.budgetProjectSum}</td>
                 <if condition="$project.othersProjectSum != 0">
-                    <td style="min-width: 100px; text-align: center;background-color:#f8f9fa" class="money"
+                    <td style="background-color:#f8f9fa" class="money"
                         만원="{:round($project.othersProjectSum / 10000, 6)}" 원="{$project.othersProjectSum}">
                         {$project.othersProjectSum}</td>
                 </if>
-                <td style="min-width: 100px; text-align: center;background-color:#f8f9fa" class="money"
+                <td style="background-color:#f8f9fa" class="money"
                     만원="{:round($project.paid / 10000, 6)}" 원="{$project.paid}">{$project.paid}</td>
                 <egt name="$project.total - $project.paid" value="0">
-                    <td style="text-align: center; background-color:rgb(245, 247, 250)" class="money"
+                    <td style=" background-color:rgb(245, 247, 250)" class="money"
                         만원="{:round(($project.total - $project.paid) / 10000, 6)}"
                         원="{:round(($project.total - $project.paid), 2)}">{:round(($project.total - $project.paid), 2)}
                     </td>
                     <else />
-                    <td style="text-align: center; background-color:rgb(245, 247, 250); color: #ff0000;" class="money"
+                    <td style=" background-color:rgb(245, 247, 250); color: #ff0000;" class="money"
                         만원="{:round(($project.total - $project.paid) / 10000, 6)} (请检查)"
                         원="{:round(($project.total - $project.paid), 2)} (请检查)">{:round(($project.total -
                         $project.paid),
                         2)}
                         (请检查)</td>
                 </egt>
-                <td style="text-align: center;background-color:#f8f9fa"></td>
-                <!-- <td style="text-align: center;background-color:#f8f9fa" colspan="3"></td>
-            <td style="text-align: center; background-color:rgb(245, 247, 250)">
+                <td style="background-color:#f8f9fa"></td>
+                <!-- <td style="background-color:#f8f9fa" colspan="3"></td>
+            <td style=" background-color:rgb(245, 247, 250)">
                 <a class="btn" style="color: #18BC9C;"
                     href="{:url('manager/addContract',array('projectId'=>$projectId))}">新增合同</a>
                 <a class="btn" style="color: #ff0000;" href="{:url('manager/view')}">返回</a>
             </td> -->
                 <foreach name="contracts" item="c" key="key">
                     <tr style='background-color:rgb(245, 247, 250)'>
-                        <td class="contracts" style="text-align: center;" onclick="showOrHide('{$c.contractId}')">{$key
+                        <td class="contracts" style="" onclick="showOrHide('{$c.contractId}')">{$key
                             + 1}
                         </td>
-                        <td style="text-align: center; font-size:10px" onclick="showOrHide('{$c.contractId}')">
-                            {$c.contractName|default='合同名称未填写'}<br>（{$c.user_login}）</td>
-                        <td style="text-align: center;" class="money" 만원="{:round($c.contractAmount / 10000, 6)}"
+                        <td style=" font-size:10px; text-align: left;" onclick="showOrHide('{$c.contractId}')">
+                           合同：{$c.contractName|default='合同名称未填写'}<br>企业：{$c.user_login}</td>
+                        <td style="" class="money" 만원="{:round($c.contractAmount / 10000, 6)}"
                             원="{$c.contractAmount}" onclick="showOrHide('{$c.contractId}')">{$c.contractAmount}</td>
-                        <td style="text-align: center;" class="money" 만원="{:round($c.ccpSum / 10000, 6)}"
+                        <td style="" class="money" 만원="{:round($c.ccpSum / 10000, 6)}"
                             원="{$c.ccpSum}" onclick="showOrHide('{$c.contractId}')">{$c.ccpSum}</td>
-                        <td style="text-align: center;" class="money" 만원="{:round($c.provinceSum / 10000, 6)}"
+                        <td style="" class="money" 만원="{:round($c.provinceSum / 10000, 6)}"
                             원="{$c.provinceSum}" onclick="showOrHide('{$c.contractId}')">{$c.provinceSum}</td>
-                        <td style="text-align: center;" class="money" 만원="{:round($c.citySum / 10000, 6)}"
+                        <td style="" class="money" 만원="{:round($c.citySum / 10000, 6)}"
                             원="{$c.citySum}" onclick="showOrHide('{$c.contractId}')">{$c.citySum}</td>
-                        <td style="text-align: center;" class="money" 만원="{:round($c.bondSum / 10000, 6)}"
+                        <td style="" class="money" 만원="{:round($c.bondSum / 10000, 6)}"
                             원="{$c.bondSum}" onclick="showOrHide('{$c.contractId}')">{$c.bondSum}</td>
-                        <td style="text-align: center;" class="money" 만원="{:round($c.budgetSum / 10000, 6)}"
+                        <td style="" class="money" 만원="{:round($c.budgetSum / 10000, 6)}"
                             원="{$c.budgetSum}" onclick="showOrHide('{$c.contractId}')">{$c.budgetSum}</td>
                         <if condition="$project.othersProjectSum != 0">
-                            <td style="text-align: center;" onclick="showOrHide('{$c.contractId}')" class="money"
+                            <td style="" onclick="showOrHide('{$c.contractId}')" class="money"
                                 만원="{:round($c.othersSum / 10000, 6)}" 원="{$c.othersSum}">{$c.othersSum}</td>
                         </if>
-                        <td style="text-align: center;" class="money" 만원="{:round($c.paid / 10000, 6)}" 원="{$c.paid}">
+                        <td style="" class="money" 만원="{:round($c.paid / 10000, 6)}" 원="{$c.paid}">
                             {$c.paid}
                         </td>
                         <egt name="$c.contractAmount - $c.paid" value="0">
-                            <td style="text-align: center;" class="money"
+                            <td style="" class="money"
                                 만원="{:round(($c.contractAmount - $c.paid) / 10000, 6)}"
                                 원="{:round(($c.contractAmount - $c.paid), 2)}">{:round(($c.contractAmount - $c.paid),
                                 2)}
                             </td>
                             <else />
-                            <td style="text-align: center; color: #ff0000;" class="money"
+                            <td style=" color: #ff0000;" class="money"
                                 만원="{:round(($c.contractAmount - $c.paid) / 10000, 6)} (请检查)"
                                 원="{:round(($c.contractAmount - $c.paid), 2)} (请检查)">{:round(($c.contractAmount -
                                 $c.paid),
                                 2)}
                                 (请检查)</td>
                         </egt>
-                        <!-- <td style="text-align: center;"> -->
+                        <!-- <td style=""> -->
                         <!-- <if condition="$c.file_url_5 && $c.file_url_5 != 'null'">
                             <a class="btn"
                                 href="javascript:handlePreview('{:url('manager/viewContracts',array('contractId'=>$c['contractId']))}', '{$c.contractName} 附件')">合同附件</a>
                         </if> -->
                         <!-- </td> -->
                         <!-- <td></td>
-                    <td style="text-align: center; background-color:rgb(245, 247, 250)"
+                    <td style=" background-color:rgb(245, 247, 250)"
                         onclick="showOrHide('{$c.contractId}')">{$c.clientAlias}</td>
-                    <td style="text-align: center; background-color:rgb(245, 247, 250)">
+                    <td style=" background-color:rgb(245, 247, 250)">
                         <a style="color: #18BC9C;"
                             href="{:url('manager/updateContract',array('contractId'=>$c['contractId']))}"
                             class="btn">修改合同</a>
@@ -185,45 +182,45 @@
                         <foreach name="data" item="d" key="k">
                             <if condition="$d['contractId']==$c['contractId']">
                                 <tr class="{$d['contractId']} payments" style="display: none;">
-                                    <td class="{$d['contractId']}-id" style="text-align: center;">{$k + 1}</td>
-                                    <td style="text-align: center;">{$d.installment}</td>
-                                    <td style="text-align: center;"></td>
-                                    <td style="text-align: center;" class="money" 만원="{:round($d.ccp / 10000, 6)}"
+                                    <td class="{$d['contractId']}-id" style="">{$k + 1}</td>
+                                    <td style="">{$d.installment}</td>
+                                    <td style=""></td>
+                                    <td style="" class="money" 만원="{:round($d.ccp / 10000, 6)}"
                                         원="{$d.ccp}">
                                         {$d.ccp}</td>
-                                    <td style="text-align: center;" class="money" 만원="{:round($d.province / 10000, 6)}"
+                                    <td style="" class="money" 만원="{:round($d.province / 10000, 6)}"
                                         원="{$d.province}">{$d.province}</td>
-                                    <td style="text-align: center;" class="money" 만원="{:round($d.city / 10000, 6)}"
+                                    <td style="" class="money" 만원="{:round($d.city / 10000, 6)}"
                                         원="{$d.city}">{$d.city}</td>
-                                    <td style="text-align: center;" class="money" 만원="{:round($d.bond / 10000, 6)}"
+                                    <td style="" class="money" 만원="{:round($d.bond / 10000, 6)}"
                                         원="{$d.bond}">{$d.bond}</td>
-                                    <td style="text-align: center;" class="money" 만원="{:round($d.budget / 10000, 6)}"
+                                    <td style="" class="money" 만원="{:round($d.budget / 10000, 6)}"
                                         원="{$d.budget}">{$d.budget}</td>
                                     <if condition="$project.othersProjectSum != 0">
-                                        <td style="text-align: center;" class="money"
+                                        <td style="" class="money"
                                             만원="{:round($d.others / 10000, 6)}" 원="{$d.others}">{$d.others}</td>
                                     </if>
-                                    <td style="text-align: center;" class="money" 만원="{:round($d.total / 10000, 6)}"
+                                    <td style="" class="money" 만원="{:round($d.total / 10000, 6)}"
                                         원="{$d.total}">{$d.total}</td>
                                     <td></td>
-                                    <!-- <td style="text-align: center;">
+                                    <!-- <td style="">
                                     <if condition="$d.file_url_1 && $d.file_url_1 != 'null'">
                                         <a class="btn "
                                             href="javascript:handlePreview('{:url('manager/viewPaymentFiles',array('paymentId'=>$d['paymentId']))}','{$c['contractName']} {$d['installment']} 支付凭证')">点击查看</a>
                                     </if>
                                 </td>
-                                <td style="text-align: center;">
+                                <td style="">
                                     <if condition="$d.file_url_2 && $d.file_url_2 != 'null'">
                                         <a class="btn "
                                             href="javascript:handlePreview('{:url('manager/viewPaymentFiles',array('type'=>1, 'paymentId'=>$d['paymentId']))}','{$c['contractName']} {$d['installment']} 支金来源凭证')">点击查看</a>
                                     </if>
                                 </td>
-                                <td class="multilines" style="text-align: center;">{$d.comment}</td> -->
-                                <td style="text-align: center;">
-                                    <a class="btn"
-                                        href="{:url('manager/updatePayment',array('paymentId'=>$d['paymentId'], 'projectId'=>$projectId))}">修改支付</a>
-                                    <a class="btn" style="color: #ff0000;"
-                                        onclick="deletePayment('{$d.paymentId}')">删除支付</a>
+                                <td class="multilines" style="">{$d.comment}</td> -->
+                                <td style="">
+                                    <a 
+                                        href="{:url('manager/updatePayment',array('paymentId'=>$d['paymentId'], 'projectId'=>$projectId))}">修改</a>
+                                    <a  style="color: #ff0000;"
+                                        onclick="deletePayment('{$d.paymentId}')">删除</a>
                                 </td>
                                 </tr>
                             </if>

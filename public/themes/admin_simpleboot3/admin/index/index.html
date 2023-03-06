@@ -63,21 +63,21 @@
         }
 
         .nav-list>li .submenu>li>a:hover {
-            background-color: #5b6a8a;
-            color: #fff;
+            background-color: bisque;
+            color: #000;
         }
 
         .sidebar-shortcuts {
             background-color: #22507b;
         }
 
-        .nav-list>li>a:hover {
+        /* .nav-list>li>a:hover {
             background-color: #ccc;
-        }
+        } */
 
         ul.submenu>li.selected>a {
-            background-color: #5b6a8a;
-            color: #fff;
+            background-color: bisque;
+            color: #000;
         }
 
         li.xf-menu {
@@ -113,17 +113,19 @@
                 $menu_name=$menu['lang']==$menu_name?$menu['name']:$menu_name;
             </php>
             <php>if(empty($menu['items'])){</php>
-            <a href="javascript:openapp('{$menu.url}','{$menu.id}','{$menu_name}',true);">
+            <a class="{$menu.icon} AAA" href="javascript:openapp('{$menu.url}','{$menu.id}','{$menu_name}',true);">
                 <i class="fa fa-{$menu.icon|default='desktop'}"></i>
-                <span style="font-size: 2px;" class="menu-text"> {$menu_name} </span>
+                <span class="menu-text"> {$menu_name} </span>
+                <!-- {$menu_name} -->
             </a>
             <php>}else{</php>
-            <a href="#" class="dropdown-toggle">
+            <a href="#" class="dropdown-toggle {$menu.icon} BBB">
                 <i class="fa fa-{$menu.icon|default='desktop'} normal"></i>
-                <span class="menu-text normal" style="font-size: 2px;"> {$menu_name} </span>
+                <!-- <span class="menu-text normal" style="font-size: 2px;"> {$menu_name} </span> -->
                 <!-- <b class="arrow fa fa-angle-right normal"></b> -->
-                <i class="fa fa-reply back"></i>
+                <!-- <i class="fa fa-reply back"></i> -->
                 <!-- <span class="menu-text back">返回</span> -->
+                {$menu_name}
             </a>
             <ul class="submenu">
                 <php>getsubmenu1($menu['items'])</php>
@@ -147,19 +149,19 @@
             $menu_name=$menu['lang']==$menu_name?$menu['name']:$menu_name;
         </php>
         <php>if(empty($menu['items'])){</php>
-        <a href="javascript:openapp('{$menu.url}','{$menu.id}','{$menu_name}',true);">
-            <i class="fa fa-caret-right"></i>
-            <span class="menu-text">
+        <a href="javascript:openapp('{$menu.url}','{$menu.id}','{$menu_name}',true);" class="{$menu.icon} CCC"> 
+            <!-- <i class="fa fa-caret-right"></i> -->
+            <!-- <span class="menu-text"> -->
                 {$menu_name}
-            </span>
+            <!-- </span> -->
         </a>
         <php>}else{</php>
         <a href="#" class="dropdown-toggle">
-            <i class="fa fa-caret-right"></i>
-            <span class="menu-text"  style="font-size: 8px">
+            <!-- <i class="fa fa-caret-right"></i> -->
+            <span class="menu-text {$menu.icon} DDD" style="font-size: 8px">
                 {$menu_name}
             </span>
-            <b class="arrow fa fa-angle-right"></b>
+            <!-- <b class="arrow fa fa-angle-right"></b> -->
         </a>
         <ul class="submenu">
             <php>getsubmenu2($menu['items'])</php>
@@ -199,6 +201,22 @@
     .navbar-nav>.cmf-component-tabitem.active>a{
         color: aqua!important;
         background-color:#073468!important;
+    }
+    .year.BBB{
+        text-align: center;
+        height: 40px;
+        padding: 0 0 0 0px!important;
+        font-size: 2px;
+    }
+    .year.BBB:hover{
+        background-color: #143E63!important;
+        color: #fff;
+    }
+    .projectName.CCC{
+        text-align: center;
+        height: 40px;
+        padding: 0!important;
+        font-size: 2px;
     }
 </style>
 <body style="min-width:900px;overflow: hidden;" bgcolor="#">
@@ -337,7 +355,7 @@
         </div>
         <div class="main-content">
             <div class="page-content" id="content">
-                <iframe src="{:url('Main/index')}" style="width:100%;height: 100%;" frameborder="0" id="appiframe-0"
+                <iframe src="{:url('Main/index')}" style="width:99%;height: 100%;" frameborder="0" id="appiframe-0"
                     class="appiframe"></iframe>
             </div>
         </div>
@@ -370,11 +388,13 @@
                     }
                 }
             }
+            $(".year").next('ul').css('display', 'block')
+            $(".year").children('i').css('display', 'none')
         });
         var ismenumin = $("#sidebar").hasClass("menu-min");
         $(".nav-list").on("click", function (event) {
             var closest_a = $(event.target).closest("a");
-            if (!closest_a || closest_a.length == 0) {
+            if (!closest_a || closest_a.length == 0 || closest_a.hasClass('year')) {
                 return
             }
             if (!closest_a.hasClass("dropdown-toggle")) {

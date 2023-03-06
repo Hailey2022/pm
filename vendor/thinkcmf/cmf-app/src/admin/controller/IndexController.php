@@ -40,7 +40,7 @@ class IndexController extends AdminBaseController
                     $year = "未知";
                 }
                 $menus["year" . $year] = [
-                    "icon" => "",
+                    "icon" => "year",
                     "id" => "year" . $year,
                     "name" => $year . "年份工程",
                     "url" => "o",
@@ -48,7 +48,7 @@ class IndexController extends AdminBaseController
                 ];
                 foreach ($projects as $project) {
                     $menus["year" . $year]["items"][$project['projectId']] = [
-                        "icon" => "",
+                        "icon" => "projectName",
                         "id" => $project['projectId'],
                         "name" => $project['projectName'],
                         "parent" => $project['projectId'],

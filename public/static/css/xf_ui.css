@@ -41,7 +41,7 @@ body {
 
 div.main {
     overflow-x: hidden;
-    margin-left: 190px;
+    margin-left: 170px;
 }
 
 div.left_menu {
@@ -319,6 +319,8 @@ table.list_contract th,table.list_contract td{
     text-align: center;
 
 }
-table.list_project_payments th,table.list_project_payments td{
-    text-align: center; 
+/* .list_project_payments 不能移除，前面有bootstrap影响 */
+table.list_project_payments>thead>tr>th,table.list_project_payments>tbody>th td,table.list_project_payments>tbody>td{
+    text-align: center; vertical-align:middle;
 }
+table.list_project_payments{margin-right: 100px; float: left;}

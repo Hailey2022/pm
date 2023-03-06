@@ -38,6 +38,7 @@ $(function () {
     // window.onbeforeunload = function () {
     //     return "Leaving this page may cause loss all your data!";
     // };
+    
     $('.to10k').each(function () {
         to10k($(this))
     })

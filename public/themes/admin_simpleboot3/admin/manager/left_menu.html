@@ -1,44 +1,56 @@
 <div class="left_menu">
 
 
-            <a href="{:url('manager/listProjectInfo',array('projectId'=>$projectId))}">工程信息</a>
-   
-            <a href="{:url('manager/listContract',array('projectId'=>$projectId))}">合同录入</a>
+    <a href="{:url('manager/listProjectInfo',array('projectId'=>$projectId))}">工程信息</a>
 
-            <a href="{:url('manager/listProjectPayments',array('projectId'=>$projectId))}">支付录入</a>
+    <a href="{:url('manager/listContract',array('projectId'=>$projectId))}">合同录入</a>
 
-            <a href="javascript:void(0)">施工录入</a>
+    <a href="{:url('manager/listProjectPayments',array('projectId'=>$projectId))}">支付录入</a>
 
-            <a href="javascript:void(0)">监理录入</a>
- 
-            <a href="javascript:void(0)">工程设计</a>
+    <a href="javascript:void(0)">施工录入</a>
 
-            <a href="javascript:void(0)">安监录入</a>
- 
+    <a href="javascript:void(0)">监理录入</a>
+
+    <a href="javascript:void(0)">工程设计</a>
+
+    <a href="javascript:void(0)">安监录入</a>
+
 </div>
 <script src="__STATIC__/xf/left_menu.js"></script>
 <script type="text/javascript">
-    var action_name='{$Request.action}'.toLowerCase();
-    
+    var action_name = '{$Request.action}'.toLowerCase();
+
     $(function () {
-        var 工程信息=['listprojectinfo','updateproject','addproject',],
-        合同录入=['listcontract','addcontract','updatecontract'],
-        支付录入=['listprojectpayments', 'updatepayment','pay'];
+        var 工程信息 = ['listprojectinfo', 'updateproject', 'addproject',],
+            合同录入 = ['listcontract', 'addcontract', 'updatecontract'],
+            支付录入 = ['listprojectpayments', 'pay', 'updatepayment'];
         // 新增类按钮=['addproject','addcontract','pay'];
-        var 菜单列表=[];
-        菜单列表[0]=工程信息;
-        菜单列表[1]=合同录入;
-        菜单列表[2]=支付录入;
-        $.each( 菜单列表, function(i, n){
-            var 顶部菜单位置=$.inArray(action_name, n)
-            if (顶部菜单位置 >=0){
+        var 菜单列表 = [];
+        菜单列表[0] = 工程信息;
+        菜单列表[1] = 合同录入;
+        菜单列表[2] = 支付录入;
+        $.each(菜单列表, function (i, n) {
+            var 顶部菜单位置 = $.inArray(action_name, n)
+            if (顶部菜单位置 >= 0) {
                 // console.log(顶部菜单位置);
-                $("div.left_menu a").eq(i).addClass('on').attr('href','javascript:void(0)').siblings().removeClass('on');
-                $("div.main_menu a").eq(顶部菜单位置).addClass('on').attr('href','javascript:void(0)').siblings().removeClass('on');
+                $("div.left_menu a").eq(i).addClass('on').attr('href', 'javascript:void(0)').siblings().removeClass('on');
+                $("div.main_menu a").eq(顶部菜单位置).addClass('on').attr('href', 'javascript:void(0)').siblings().removeClass('on');
                 // if($.inArray(action_name, 新增类按钮)) 
                 return false;
 
             }
         });
+
+        $('div.left_menu>a').on('click', function () {
+            url = $(this).attr('href')
+            if (!url.startsWith('/admin')) {
+                return false
+            } else if (window.history && history.pushState) {
+                var tw = window.top;
+                var twa = tw.location.href.split("#");
+                var newUrl = twa[0] + "#" + url;
+                tw.history.replaceState(null, null, newUrl);
+            }
+        })
     });
 </script>

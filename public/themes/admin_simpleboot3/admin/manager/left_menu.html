@@ -26,23 +26,24 @@
 <script src="__STATIC__/xf/left_menu.js"></script>
 <script type="text/javascript">
     var action_name='{$Request.action}'.toLowerCase();
-    console.log(action_name);
-
+    
     $(function () {
         var 工程信息=['listProjectInfo','updateProject','addProject',],
         合同录入=['listContract','addContract','updateContract'],
-        支付录入=['listProjectPayments', 'updatePayment','pay'];
+        支付录入=['listprojectpayments', 'updatePayment','pay'];
         var 菜单列表=[];
         菜单列表[0]=工程信息;
         菜单列表[1]=合同录入;
         菜单列表[2]=支付录入;
         $.each( 菜单列表, function(i, n){
             var 顶部菜单位置=$.inArray(action_name, n)
-            if (顶部菜单位置 >0){
-                
-                $("div.left_menu li").eq(i).addClass('on')
+           
 
-                
+            if (顶部菜单位置 >=0){
+                console.log(顶部菜单位置);
+                $("div.left_menu li").eq(i).addClass('on');
+
+                $("div.main_menu a").eq(顶部菜单位置).addClass('on').siblings().removeClass('on');
                 return false;
 
             }

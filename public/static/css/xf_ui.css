@@ -61,7 +61,7 @@ div.left_menu li {
     text-align: center;
 }
 
-div.left_menu li:hover {
+div.left_menu li:hover,div.left_menu li.on {
     background-color: bisque;
 }
 

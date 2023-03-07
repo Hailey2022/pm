@@ -61,10 +61,6 @@
                     <!-- <span class="xf_ser">万元：</span>
                     <input id="10k-contractAmount" type="text" autocomplete="off" disabled value=""> -->
                 </li>
-                <!-- <li>
-                    <span>中文金额：</span>
-                    <input id="cn-contractAmount" type="text" autocomplete="off" disabled value="">
-                </li> -->
                 <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                     <span>中央：</span>
                     <input required class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="ccp">
@@ -115,7 +111,6 @@
                 </li>
             </ul>
         </div>
-                <!-- <xf_submit><button id="project_submit">提交</button><button>取消</button></xf_submit> -->
         <xf_submit><button id="project_submit">提交</button></xf_submit>
 
     </form>

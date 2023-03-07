@@ -35,117 +35,123 @@
             <a href="{:url('manager/pay', ['projectId'=>$projectId])}" class="on add">新增支付</a>
             <a>修改支付</a>
         </div>
-    <form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('manager/postPaymentAdd')}">
-        <div class="xf_input">
-            <h4 class="xf_input_h4">工程支付</h4>
-            <ul>
-                <li>
-                    <span>工程名称：</span>
-                    <input type="text" autocomplete="off" value="{$projectName}" disabled>
-                </li>
-                <li>
-                    <span>合同名称：</span>
-                    <input type="text" autocomplete="off" disabled value="{$data.contractName}"> 
-                </li>
-                <li>
-                    <span>进度款（期数）：</span>
-                    <input type="text" autocomplete="off" name="installment" value="{$data.installment}">
-                </li>
-                <li>
-                    <span>合计：</span>
-                    <input id="sum" disabled />
-                    <!-- <span class="xf_ser">万元：</span>
+        <form method="post" class="form-horizontal js-ajax-form margin-top-20"
+            action="{:url('manager/postPaymentAdd')}">
+            <div class="xf_input">
+                <h4 class="xf_input_h4">工程支付</h4>
+                <ul>
+                    <li>
+                        <span>工程名称：</span>
+                        <input type="text" autocomplete="off" value="{$projectName}" disabled>
+                    </li>
+                    <li>
+                        <span>合同名称：</span>
+                        <input type="text" autocomplete="off" disabled value="{$data.contractName}">
+                    </li>
+                    <li>
+                        <span>进度款（期数）：</span>
+                        <input type="text" autocomplete="off" name="installment" value="{$data.installment}">
+                    </li>
+                    <li>
+                        <span>合计：</span>
+                        <input id="sum" disabled />
+                        <!-- <span class="xf_ser">万元：</span>
                     <input id="10k-contractAmount" type="text" autocomplete="off" disabled value=""> -->
-                </li>
-                <!-- <li>
+                    </li>
+                    <!-- <li>
                     <span>中文金额：</span>
                     <input id="cn-contractAmount" type="text" autocomplete="off" disabled value="">
                 </li> -->
-                <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                    <span>中央：</span>
-                    <input required class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="ccp" value="{$data.ccp}">
-                    <span class="xf_ser">万元：</span>
-                    <input type="text" autocomplete="off" value="" disabled>
-                </li>
-                <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                    <span>省：</span>
-                    <input required class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="province" value="{$data.province}">
-                    <span class="xf_ser">万元：</span>
-                    <input type="text" autocomplete="off" value="" disabled>
-                </li>
-                <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                    <span>市：</span>
-                    <input required class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="city" value="{$data.city}">
-                    <span class="xf_ser">万元：</span>
-                    <input type="text" autocomplete="off" value="" disabled>
-                </li>
-                <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                    <span>专项债(区)：</span>
-                    <input required class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="bond" value="{$data.bond}">
-                    <span class="xf_ser">万元：</span>
-                    <input type="text" autocomplete="off" value="" disabled>
-                </li>
-                <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                    <span>预算(区)：</span>
-                    <input required class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="budget" value="{$data.budget}">
-                    <span class="xf_ser">万元：</span>
-                    <input type="text" autocomplete="off" value="" disabled>
-                </li>
-                <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                    <span>其他：</span>
-                    <input required class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="others" value="{$data.others}">
-                    <span class="xf_ser">万元：</span>
-                    <input type="text" autocomplete="off" value="" disabled>
-                </li>
-                <li>
-                    <span>备注：</span>
-                    <textarea type="text" rows="4" cols="40" autocomplete="off" name="comment" value="{$data.comment}"></textarea>
-                </li>
-                <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                    <span>支付凭证附件：</span>
-                    <notempty name="file_1">
-                        <xfupload file_id="1">增加</xfupload>
-                        <foreach name="file_1" key="url" item="name">
-                            <php>$file_url=cmf_get_file_download_url($url);</php>
-                            <php>$file_id=hash("sha256", uniqid() . $url);</php>
-                            <div id="{$file_id}">
-                                <upload_span></upload_span>
-                                <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
-                                <xfdelete onclick="javascript:handleDelete('#{$file_id}');">删除</xfdelete>
-                                <input type="text" autocomplete="off" name="file_name_{key}[]" value="{$name}">
-                                <input type="text" autocomplete="off" hidden name="file_url_{key}[]"
-                                    value='{$url}'>
-                            </div>
-                        </foreach>
-                        <else />
-                        <xfupload file_id="1">上传 </xfupload>
-                    </notempty>
-                </li>
-                <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                    <span>支金来源凭证附件：</span>
-                    <notempty name="file_2">
-                        <xfupload file_id="2">增加</xfupload>
-                        <foreach name="file_2" key="url" item="name">
-                            <php>$file_url=cmf_get_file_download_url($url);</php>
-                            <php>$file_id=hash("sha256", uniqid() . $url);</php>
-                            <div id="{$file_id}">
-                                <upload_span></upload_span>
-                                <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
-                                <xfdelete onclick="javascript:handleDelete('#{$file_id}');">删除</xfdelete>
-                                <input type="text" autocomplete="off" name="file_name_2[]" value="{$name}">
-                                <input type="text" autocomplete="off" hidden name="file_url_2[]" value='{$url}'>
-                            </div>
-                        </foreach>
-                        <else />
-                        <xfupload file_id="2">上传</xfupload>
-                    </notempty>
-                </li>
-            </ul>
-        </div>
-                <!-- <xf_submit><button id="project_submit">提交</button><button>取消</button></xf_submit> -->
-        <xf_submit><button id="project_submit">提交</button></xf_submit>
+                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                        <span>中央：</span>
+                        <input required class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="ccp"
+                            value="{$data.ccp}">
+                        <span class="xf_ser">万元：</span>
+                        <input type="text" autocomplete="off" value="" disabled>
+                    </li>
+                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                        <span>省：</span>
+                        <input required class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="province"
+                            value="{$data.province}">
+                        <span class="xf_ser">万元：</span>
+                        <input type="text" autocomplete="off" value="" disabled>
+                    </li>
+                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                        <span>市：</span>
+                        <input required class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="city"
+                            value="{$data.city}">
+                        <span class="xf_ser">万元：</span>
+                        <input type="text" autocomplete="off" value="" disabled>
+                    </li>
+                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                        <span>专项债(区)：</span>
+                        <input required class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="bond"
+                            value="{$data.bond}">
+                        <span class="xf_ser">万元：</span>
+                        <input type="text" autocomplete="off" value="" disabled>
+                    </li>
+                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                        <span>预算(区)：</span>
+                        <input required class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="budget"
+                            value="{$data.budget}">
+                        <span class="xf_ser">万元：</span>
+                        <input type="text" autocomplete="off" value="" disabled>
+                    </li>
+                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                        <span>其他：</span>
+                        <input required class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="others"
+                            value="{$data.others}">
+                        <span class="xf_ser">万元：</span>
+                        <input type="text" autocomplete="off" value="" disabled>
+                    </li>
+                    <li>
+                        <span>备注：</span>
+                        <textarea type="text" rows="4" cols="40" autocomplete="off" name="comment"
+                            value="{$data.comment}"></textarea>
+                    </li>
+                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                        <span>支付凭证附件：</span>
+                        <notempty name="file_1">
+                            <xfupload file_id="1">增加</xfupload>
+                            <foreach name="file_1" key="url" item="name">
+                                <php>$file_url=cmf_get_file_download_url($url);</php>
+                                <php>$file_id=hash("sha256", uniqid() . $url);</php>
+                                <div id="{$file_id}">
+                                    <upload_span></upload_span>
+                                    <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
+                                    <xfdelete onclick="javascript:handleDelete('#{$file_id}');">删除</xfdelete>
+                                    <input type="text" autocomplete="off" name="file_name_{key}[]" value="{$name}">
+                                    <input type="text" autocomplete="off" hidden name="file_url_{key}[]" value='{$url}'>
+                                </div>
+                            </foreach>
+                            <else />
+                            <xfupload file_id="1">上传 </xfupload>
+                        </notempty>
+                    </li>
+                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                        <span>支金来源凭证附件：</span>
+                        <notempty name="file_2">
+                            <xfupload file_id="2">增加</xfupload>
+                            <foreach name="file_2" key="url" item="name">
+                                <php>$file_url=cmf_get_file_download_url($url);</php>
+                                <php>$file_id=hash("sha256", uniqid() . $url);</php>
+                                <div id="{$file_id}">
+                                    <upload_span></upload_span>
+                                    <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
+                                    <xfdelete onclick="javascript:handleDelete('#{$file_id}');">删除</xfdelete>
+                                    <input type="text" autocomplete="off" name="file_name_2[]" value="{$name}">
+                                    <input type="text" autocomplete="off" hidden name="file_url_2[]" value='{$url}'>
+                                </div>
+                            </foreach>
+                            <else />
+                            <xfupload file_id="2">上传</xfupload>
+                        </notempty>
+                    </li>
+                </ul>
+            </div>
+            <xf_submit><button id="project_submit">提交</button></xf_submit>
 
-    </form>
+        </form>
     </div>
     <script>
         $(".to10k").on("change keyup", function () {

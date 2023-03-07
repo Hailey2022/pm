@@ -27,7 +27,6 @@
                     <th>合同名称</th>
                     <th>合同总金额</th>
                     <th>已支付金额</th>
-                    <!-- <th>附件</th> -->
                     <th>操作</th>
                 </tr>
             </thead>
@@ -44,9 +43,6 @@
                     <td>{$d.contractName}</td>
                     <td>{$d.contractAmount}</td>
                     <td>{$d.paid}</td>
-                    <!-- <td><a class="btn "
-                        href="javascript:handlePreview('{:url('manager/viewContracts',array('contractId'=>$d['contractId']))}')">查看</a>
-                </td> -->
                     <td>
                         <a href="{:url('manager/updateContract',array('projectId'=>$projectId,'contractId'=>$d['contractId']))}"
                             class="btn">修改</a>

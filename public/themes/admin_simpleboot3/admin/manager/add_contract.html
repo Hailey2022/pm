@@ -9,8 +9,6 @@
         <div id="file-{id}">
             <upload_span></upload_span>
             <xfpreview onclick="xfPreview('/upload/{filepath}')">预览</xfpreview>
-            <!-- <xfreplace onclick="javascript:uploadOne('文件替换','#file-{id}','file');">替换</xfreplace> -->
-            <!-- <xfdelete onclick="javascript:(function(){$('#file-{id}').remove();})();">删除</xfdelete> -->
             <xfdelete onclick="javascript:handleDelete('#file-{id}');">删除</xfdelete>
             <input type="text" autocomplete="off" name="file_name_{key}[]" value="{name}">
             <input type="text" autocomplete="off" hidden name="file_url_{key}[]" value="{filepath}">
@@ -128,7 +126,6 @@
                 </li>
             </ul>
         </div>
-                <!-- <xf_submit><button id="project_submit">提交</button><button>取消</button></xf_submit> -->
         <xf_submit><button id="project_submit">提交</button></xf_submit>
 
     </form>

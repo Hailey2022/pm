@@ -48,11 +48,11 @@
                 </li>
                 <li>
                     <span>合同名称：</span>
-                    <input type="text" autocomplete="off" name="contractName" value="">
+                    <input type="text" autocomplete="off" name="contractName" required>
                 </li>
                 <li>
                     <span>服务商：</span>
-                    <input type="text" autocomplete="off" list="clientName" name="clientName">
+                    <input type="text" autocomplete="off" list="clientName" name="clientName" required>
                     <datalist id="clientName">
                         <option name="clientName" value="">实施单位名称</option>
                         <foreach name="users" item="u">
@@ -66,7 +66,7 @@
                 </li>
                 <li>
                     <span>合同类别：</span>
-                    <select name="clientType">
+                    <select name="clientType" required>
                         <option value="">合同类别</option>
                         <foreach name="types" item="u">
                             <option value="{$u.id}"> {$u.name}</option>

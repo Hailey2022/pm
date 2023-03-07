@@ -68,6 +68,9 @@ class UserController extends AdminBaseController
         if ($this->request->isPost()) {
             $roleIds = $this->request->param('role_id/a');
             if (!empty($roleIds) && is_array($roleIds)) {
+                if (count($roleIds) != 1){
+                    $this->error("不可以选多个角色！");
+                }
                 $data = $this->request->param();
                 $result = $this->validate($data, 'User');
                 if ($result !== true) {
@@ -112,6 +115,9 @@ class UserController extends AdminBaseController
         if ($this->request->isPost()) {
             $roleIds = $this->request->param('role_id/a');
             if (!empty($roleIds) && is_array($roleIds)) {
+                if (count($roleIds) != 1){
+                    $this->error("不可以选多个角色！");
+                }
                 $data = $this->request->param();
                 if (empty($data['user_pass'])) {
                     unset($data['user_pass']);

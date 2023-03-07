@@ -44,10 +44,11 @@
                 </li>
                 <li>
                     <span>合同名称：</span>
-                    <select name="contractId" required>
+                    <select name="contractId" required style="width: 650px;">
                         <option value="">请选择合同</option>
                         <foreach name="contracts" item="c">
-                            <option value="{$c.contractId}"> {$c.contractName}</option>
+                            <php>var_dump($c)</php>
+                            <option value="{$c.contractId}">{$c.user_login} - {$c.contractName}</option>
                         </foreach>
                     </select>
                 </li>

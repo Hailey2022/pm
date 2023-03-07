@@ -1,6 +1,7 @@
 <include file="public@header" />
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,51 +10,51 @@
 
     <title>合同</title>
 </head>
+
 <body>
-    <include file="manager/left_menu" /> 
+    <include file="manager/left_menu" />
     <div class="main">
         <div class="main_menu">
             <a>合同信息</a>
             <a href="{:url('manager/addContract', ['projectId'=>$projectId])}" class="on add">新增合同</a>
         </div>
-    <!-- <h3 style="text-align: center;">{$projectName}合同清单</h3> -->
-    <!-- <a class="btn btn-primary" href="javascript:history.go(-1)">返回</a> -->
-    <table class="table table-hover table-bordered list_contract">
-        <thead>
-            <tr>
-                <th>序号</th>
-                <th>合同类型</th>
-                <th>服务商</th>
-                <th>合同名称</th>
-                <th>合同总金额</th>
-                <th>已支付金额</th>
-                <!-- <th>附件</th> -->
-                <th>操作</th>
-            </tr>
-        </thead>
-        <tbody>
-            <foreach name="data" item="d" key="k">
-                <if condition="$k%2!=0">
-                    <tr>
-                        <else />
-                    <tr style='background-color:#EDEDED'>
-                </if>
-                <th>{$k + 1}</th>
-                <td>{$d.name}</td>
-                <td>{$d.user_login}</td>
-                <td>{$d.contractName}</td>
-                <td>{$d.contractAmount}</td>
-                <td>{$d.paid}</td>
-                <!-- <td><a class="btn "
+        <table class="table table-hover table-bordered list_contract">
+            <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>合同类型</th>
+                    <th>服务商</th>
+                    <th>合同名称</th>
+                    <th>合同总金额</th>
+                    <th>已支付金额</th>
+                    <!-- <th>附件</th> -->
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <foreach name="data" item="d" key="k">
+                    <if condition="$k%2!=0">
+                        <tr>
+                            <else />
+                        <tr style='background-color:#EDEDED'>
+                    </if>
+                    <th>{$k + 1}</th>
+                    <td>{$d.name}</td>
+                    <td>{$d.user_login}</td>
+                    <td>{$d.contractName}</td>
+                    <td>{$d.contractAmount}</td>
+                    <td>{$d.paid}</td>
+                    <!-- <td><a class="btn "
                         href="javascript:handlePreview('{:url('manager/viewContracts',array('contractId'=>$d['contractId']))}')">查看</a>
                 </td> -->
-                <td>
-                    <a href="{:url('manager/updateContract',array('projectId'=>$projectId,'contractId'=>$d['contractId']))}" class="btn">修改</a>
-                </td>
-                </tr>
-            </foreach>
-        </tbody>
-    </table>
+                    <td>
+                        <a href="{:url('manager/updateContract',array('projectId'=>$projectId,'contractId'=>$d['contractId']))}"
+                            class="btn">修改</a>
+                    </td>
+                    </tr>
+                </foreach>
+            </tbody>
+        </table>
     </div>
 </body>
 <script>
@@ -61,4 +62,5 @@
         parent.openIframeLayer(url, '附件');
     }
 </script>
+
 </html>

@@ -292,16 +292,6 @@ class ManagerController extends AdminBaseController
         $this->assign("data", $all);
         return $this->fetch();
     }
-    public function listContracts()
-    {
-        $all = Db::name('project p, pm_type t, pm_contract c, pm_user u')
-            ->where("c.projectId=p.projectId")
-            ->where("c.clientId=u.id")
-            ->where("c.clientType=t.id")
-            ->select();
-        $this->assign("data", $all);
-        return $this->fetch();
-    }
     public function listContract()
     {
         $projectId = $this->request->param("projectId");
@@ -316,7 +306,6 @@ class ManagerController extends AdminBaseController
             ->where("c.projectId", $projectId)
             ->select();
         $this->assign("data", $all);
-        $this->assign("projectName", $this->getProjectNameByProjectId($projectId));
         return $this->fetch();
     }
     public function updateContract()
@@ -447,12 +436,14 @@ class ManagerController extends AdminBaseController
         $this->assign("projectId", $projectId);
         $projectName = $this->getProjectNameByProjectId($projectId);
         if ($projectName === null) {
-            $this->error('非法访问');
-            // $this->assign("projectName", "dev");
+            $this->error('非法访问..');
         } else {
             $this->assign("projectName", $projectName);
         }
-        $contracts = Db::name('contract')->where('projectId', $projectId)->select();
+        $contracts = Db::name('user u, pm_contract c')
+            ->where('u.id = c.clientId')
+            ->where('projectId', $projectId)
+            ->select();
         if (count($contracts) == 0) {
             $this->error('先录入合同再录入支付');
         }

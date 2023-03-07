@@ -16,6 +16,45 @@
     <a href="javascript:void(0)">安监录入</a>
 
 </div>
+<script>
+    $.cookie = function (name, value, options) {
+        if (typeof value != 'undefined') {
+            options = options || {};
+            if (value === null) {
+                value = '';
+                options.expires = -1;
+            }
+            var expires = '';
+            if (options.expires && (typeof options.expires == 'number' || options.expires.toUTCString)) {
+                var date;
+                if (typeof options.expires == 'number') {
+                    date = new Date();
+                    date.setTime(date.getTime() + (options.expires * 24 * 60 * 60 * 1000));
+                } else {
+                    date = options.expires;
+                }
+                expires = '; expires=' + date.toUTCString();
+            }
+            var path = options.path ? '; path=' + options.path : '; path=/';
+            var domain = options.domain ? '; domain=' + options.domain : '';
+            var secure = options.secure ? '; secure' : '';
+            document.cookie = [name, '=', encodeURIComponent(value), expires, path, domain, secure].join('');
+        } else {
+            var cookieValue = null;
+            if (document.cookie && document.cookie != '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    };
+</script>
 <script type="text/javascript">
     var action_name = '{$Request.action}'.toLowerCase();
 
@@ -23,7 +62,6 @@
         var 工程信息 = ['listprojectinfo', 'updateproject', 'addproject',],
             合同录入 = ['listcontract', 'addcontract', 'updatecontract'],
             支付录入 = ['listprojectpayments', 'pay', 'updatepayment'];
-        // 新增类按钮=['addproject','addcontract','pay'];
         var 菜单列表 = [];
         菜单列表[0] = 工程信息;
         菜单列表[1] = 合同录入;
@@ -31,10 +69,8 @@
         $.each(菜单列表, function (i, n) {
             var 顶部菜单位置 = $.inArray(action_name, n)
             if (顶部菜单位置 >= 0) {
-                // console.log(顶部菜单位置);
                 $("div.left_menu a").eq(i).addClass('on').attr('href', 'javascript:void(0)').siblings().removeClass('on');
                 $("div.main_menu a").eq(顶部菜单位置).addClass('on').attr('href', 'javascript:void(0)').siblings().removeClass('on');
-                // if($.inArray(action_name, 新增类按钮)) 
                 return false;
 
             }
@@ -52,4 +88,5 @@
             }
         })
     });
+    $.cookie("action", "{$Request.action}".replace('/',''))
 </script>

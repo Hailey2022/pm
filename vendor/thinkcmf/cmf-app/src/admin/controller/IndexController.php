@@ -52,7 +52,7 @@ class IndexController extends AdminBaseController
                         "id" => $project['projectId'],
                         "name" => $project['projectName'],
                         "parent" => $project['projectId'],
-                        "url" => url("manager/listProjectInfo", ['projectId' => $project['projectId']]),
+                        "url" => url("manager/{action}", ['projectId' => $project['projectId']]),
                         "lang" => "ADMIN_MANAGER_VIEW"
                     ];
                 }

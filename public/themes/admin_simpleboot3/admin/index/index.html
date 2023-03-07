@@ -12,6 +12,7 @@
     <link href="__TMPL__/public/assets/simpleboot3/css/simplebootadmin.css" rel="stylesheet">
     <link href="__STATIC__/font-awesome/css/font-awesome.min.css?page=index" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="__TMPL__/public/assets/themes/{:cmf_get_admin_style()}/simplebootadminindex.min.css">
+
     <style>
         .nav-list>li.open {
             position: relative;
@@ -94,7 +95,7 @@
         }
 
         .BBB:focus {
-            background-color: #143E63!important;
+            background-color: #143E63 !important;
         }
     </style>
     <script>
@@ -154,10 +155,10 @@
             $menu_name=$menu['lang']==$menu_name?$menu['name']:$menu_name;
         </php>
         <php>if(empty($menu['items'])){</php>
-        <a href="javascript:openapp('{$menu.url}','{$menu.id}','{$menu_name}',true);" class="{$menu.icon} CCC"> 
+        <a href="javascript:openapp('{$menu.url}','{$menu.id}','{$menu_name}',true);" class="{$menu.icon} CCC">
             <!-- <i class="fa fa-caret-right"></i> -->
             <!-- <span class="menu-text"> -->
-                {$menu_name}
+            {$menu_name}
             <!-- </span> -->
         </a>
         <php>}else{</php>
@@ -199,34 +200,36 @@
     </php>
 </head>
 <style>
-    .navbar-nav>.active>a{
-        /* color: aqua!important; */
-        background-color:#073468!important;
+    .navbar-nav>.active>a {
+        background-color: #073468 !important;
     }
-    .navbar-nav>.cmf-component-tabitem.active>a{
-        color: aqua!important;
-        background-color:#073468!important;
+
+    .navbar-nav>.cmf-component-tabitem.active>a {
+        color: aqua !important;
+        background-color: #073468 !important;
     }
-    .year.BBB{
+
+    .year.BBB {
         text-align: center;
         height: 40px;
-        padding: 0 0 0 0px!important;
-        font-size: 13px!important;
+        padding: 0 0 0 0px !important;
+        font-size: 13px !important;
     }
-    .year.BBB:hover{
-        background-color: #143E63!important;
+
+    .year.BBB:hover {
+        background-color: #143E63 !important;
         color: #fff;
     }
-    .projectName.CCC{
+
+    .projectName.CCC {
         text-align: center;
         height: 40px;
-        padding: 0!important;
+        padding: 0 !important;
         font-size: 2px;
-        /* background-color: #5b6a8a!important;
-        color: #fff!important; */
     }
 </style>
-<body style="min-width:900px;overflow: hidden;" bgcolor="#">
+
+<body style="min-width:900px;overflow: hidden;">
     <div id="loading"><i class="loadingicon"></i><span>{:lang('LOADING')}</span></div>
     <div id="right-tools-wrapper">
     </div>
@@ -373,6 +376,45 @@
     <script src="__STATIC__/js/admin.js"></script>
     <script src="__TMPL__/public/assets/simpleboot3/js/adminindex.js"></script>
     <script>
+        $.cookie = function (name, value, options) {
+            if (typeof value != 'undefined') {
+                options = options || {};
+                if (value === null) {
+                    value = '';
+                    options.expires = -1;
+                }
+                var expires = '';
+                if (options.expires && (typeof options.expires == 'number' || options.expires.toUTCString)) {
+                    var date;
+                    if (typeof options.expires == 'number') {
+                        date = new Date();
+                        date.setTime(date.getTime() + (options.expires * 24 * 60 * 60 * 1000));
+                    } else {
+                        date = options.expires;
+                    }
+                    expires = '; expires=' + date.toUTCString();
+                }
+                var path = options.path ? '; path=' + options.path : '; path=/';
+                var domain = options.domain ? '; domain=' + options.domain : '';
+                var secure = options.secure ? '; secure' : '';
+                document.cookie = [name, '=', encodeURIComponent(value), expires, path, domain, secure].join('');
+            } else {
+                var cookieValue = null;
+                if (document.cookie && document.cookie != '') {
+                    var cookies = document.cookie.split(';');
+                    for (var i = 0; i < cookies.length; i++) {
+                        var cookie = jQuery.trim(cookies[i]);
+                        if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+        };
+    </script>
+    <script>
         $(function () {
             $("[data-toggle='tooltip']").tooltip();
             $("li.dropdown").hover(function () {
@@ -380,24 +422,33 @@
             }, function () {
                 $(this).removeClass("open");
             });
-            var menus = {$menus_js_var};
-            if (typeof (menus) != "undefined") {
-                var tw = window.top;
-                var twa = tw.location.href.split("#");
-                var url = twa[1];
-                var urlTmp = url;
-                if (url != null) {
-                    urlTmp = urlTmp.replace(/[\\/|_|]/g, "");
-                    urlTmp = urlTmp.replace(".html", "");
-                    var menu = menus[urlTmp];
-                    if (menu) {
-                        openapp(url, menu.id + menu.app, menu.name, true);
-                    }
+            $(".year").each(function () {
+                $(this).removeAttr("href")
+            })
+            $(".projectName").each(function () {
+                href = $(this).attr("href")
+                $(this).attr("link", href)
+                $(this).removeAttr("href")
+                if ($.cookie("project") == $(this).attr("link")) {
+                    $(this).parent("li").addClass("selected")
                 }
-            }
+
+            })
             $(".year").next('ul').css('display', 'block')
             $(".year").children('i').css('display', 'none')
         });
+        $(".projectName").on('click', function () {
+            link = $(this).attr("link")
+            defaultAction = "listprojectinfo" //TODO: 改成 sql 读取允许的action
+            action = $.cookie("action") || defaultAction
+            href = link.replace("{action}", action)
+            $(this).attr("href", href)
+            $.cookie("project", link)
+            me = $(this)
+            setTimeout(function () {
+                me.removeAttr("href")
+            }, 10);
+        })
         var ismenumin = $("#sidebar").hasClass("menu-min");
         $(".nav-list").on("click", function (event) {
             var closest_a = $(event.target).closest("a");

@@ -85,7 +85,7 @@
                 <ul>
                     <li>
                         <span>图纸版本号：</span>
-                        <input type="text" name="version" value="">
+                        <input type="text" name="version" value="{:date('YmdHi')}" required>
                     </li>
                     <li>
                         <span>版本说明：</span>
@@ -93,7 +93,7 @@
                     </li>
                     <li>
                         <span>修订时间：</span>
-                        <input type="datetime-local" name="commitTime" value="{:date('Y-m-d')}T{:date('H:i')}">
+                        <input type="datetime-local" name="commitTime" value="{:date('Y-m-d')}T{:date('H:i')}" required>
                     </li>
                     <li>
                         <span>修订人：</span>

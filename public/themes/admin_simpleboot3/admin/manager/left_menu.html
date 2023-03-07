@@ -89,4 +89,6 @@
         })
     });
     $.cookie("action", "{$Request.action}".replace('/',''))
+    function disableF5(e) { if ((e.which || e.keyCode) == 116) e.preventDefault(); };
+    $(document).on("keydown", disableF5);
 </script>

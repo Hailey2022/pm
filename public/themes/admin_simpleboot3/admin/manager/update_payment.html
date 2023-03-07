@@ -114,7 +114,7 @@
                                 <xfdelete onclick="javascript:handleDelete('#{$file_id}');">删除</xfdelete>
                                 <input type="text" autocomplete="off" name="file_name_{key}[]" value="{$name}">
                                 <input type="text" autocomplete="off" hidden name="file_url_{key}[]"
-                                    value="{$file_url}">
+                                    value='{$url}'>
                             </div>
                         </foreach>
                         <else />
@@ -133,7 +133,7 @@
                                 <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
                                 <xfdelete onclick="javascript:handleDelete('#{$file_id}');">删除</xfdelete>
                                 <input type="text" autocomplete="off" name="file_name_2[]" value="{$name}">
-                                <input type="text" autocomplete="off" hidden name="file_url_2[]" value='{$file_url}'>
+                                <input type="text" autocomplete="off" hidden name="file_url_2[]" value='{$url}'>
                             </div>
                         </foreach>
                         <else />

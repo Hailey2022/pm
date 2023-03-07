@@ -857,4 +857,60 @@ class ManagerController extends AdminBaseController
         $this->assign("theProjectStatus", $theProjectStatus);
         return $this->fetch();
     }
+    public function addDesign()
+    {
+        $projectId = $this->request->param('projectId');
+        if (!$this->checkProject($projectId)) {
+            $this->error('非法访问项目');
+        }
+        $this->assign('projectId', $projectId);
+        return $this->fetch();
+    }
+
+    public function postDesignAdd()
+    {
+        if ($this->request->isPost()) {
+            $projectId = $this->request->param('projectId');
+            if (!$this->checkProject($projectId)) {
+                $this->error('非法访问项目');
+            }
+            $this->assign('projectId', $projectId);
+        } else {
+            $this->error("非法提交..");
+        }
+        $request = $this->request->param();
+        if (array_key_exists("version", $request) && array_key_exists("contractId", $request)) {
+            $res = Db::name('design')->where('version', $request['version'])->where('contractId', $request['contractId'])->find();
+            if ($res != null) {
+                $this->error("已有相同版本");
+            }
+        } else {
+            $this->error("非法提交");
+        }
+
+        $data = [
+            'contractId' => $request['contractId'],
+            'designer' => $request['designer'],
+            'budget' => $request['budget'],
+            'version' => $request['version'],
+            'comment' => $request['comment'],
+            'commitTime' => $request['commitTime'],
+            'contributer' => $request['contributer'],
+        ];
+        for ($i = 1; $i <= 1; $i++) {
+            if (array_key_exists("file_name_" . $i, $request) && array_key_exists("file_url_" . $i, $request)) {
+                $data["file_name_" . $i] = $request["file_name_" . $i];
+                $data["file_url_" . $i] = $request["file_url_" . $i];
+            } else {
+                $data["file_name_" . $i] = "null";
+                $data["file_url_" . $i] = "null";
+            }
+        }
+        Db::name("design")->insert($data);
+        $this->success("提交成功", url("manager/listDesign"));
+    }
+    public function listDesign()
+    {
+        echo ("hi");
+    }
 }

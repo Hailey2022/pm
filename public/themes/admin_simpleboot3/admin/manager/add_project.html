@@ -12,28 +12,16 @@
         <title>工程录入</title>
         <link href="__STATIC__/css/xf_ui.css" rel="stylesheet" type="text/css">
         <script type="text/html" id="tpl">
-    <div id="file-{id}">
-        <upload_span></upload_span>
-        <xfpreview onclick="xfPreview('/upload/{filepath}')">预览</xfpreview>
-        <!-- <xfreplace onclick="javascript:uploadOne('文件替换','#file-{id}','file');">替换</xfreplace> -->
-        <!-- <xfdelete onclick="javascript:(function(){$('#file-{id}').remove();})();">删除</xfdelete> -->
-        <xfdelete onclick="javascript:handleDelete('#file-{id}');">删除</xfdelete>
-        <input type="text" autocomplete="off" name="file_name_{key}[]" value="{name}">
-        <input type="text" autocomplete="off" hidden name="file_url_{key}[]" value="{filepath}">
-    </div>
-    </script>
-
-        <!-- <script type="text/html" id="tpl_with_date">
-    <div id="file-{id}">
-        <upload_span></upload_span>
-        <xfpreview onclick="xfPreview('/upload/{filepath}')">预览</xfpreview>
-        <xfdelete onclick="javascript:handleDelete('#file-{id}');">删除</xfdelete>
-        <input type="text" autocomplete="off" name="file_name_{key}[]" value="{name}">
-        <input type="text" autocomplete="off" hidden name="file_url_{key}[]" value="{filepath}">
-        <span class="xf_ser">批复日期：</span>
-        <input type="date" name="file_date_{key}[]" autocomplete="off" value="">
-    </div>
-    </script> -->
+            <div id="file-{id}">
+                <upload_span></upload_span>
+                <xfpreview onclick="xfPreview('/upload/{filepath}')">预览</xfpreview>
+                <!-- <xfreplace onclick="javascript:uploadOne('文件替换','#file-{id}','file');">替换</xfreplace> -->
+                <!-- <xfdelete onclick="javascript:(function(){$('#file-{id}').remove();})();">删除</xfdelete> -->
+                <xfdelete onclick="javascript:handleDelete('#file-{id}');">删除</xfdelete>
+                <input type="text" autocomplete="off" name="file_name_{key}[]" value="{name}">
+                <input type="text" autocomplete="off" hidden name="file_url_{key}[]" value="{filepath}">
+            </div>
+        </script>
     </head>
     <script type="text/javascript">
         var GV = {
@@ -48,7 +36,7 @@
     <script src="__STATIC__/xf/xf.js"></script>
 
 <body>
-    <include file="manager/left_menu" projectID="${projectId|default=''} " />
+    <include file="manager/left_menu" />
     <div class="main">
         <div class="main_menu">
             <a href="{:url('manager/listProjectInfo', ['projectId'=>$projectId])}">工程信息</a>
@@ -259,8 +247,6 @@
                     </li>
                 </ul>
             </div>
-
-            <!-- <xf_submit><button id="project_submit">提交</button><button>取消</button></xf_submit> -->
             <xf_submit><button id="project_submit">提交</button></xf_submit>
         </form>
 

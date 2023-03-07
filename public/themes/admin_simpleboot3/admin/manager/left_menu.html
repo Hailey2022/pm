@@ -11,7 +11,7 @@
 
     <a href="javascript:void(0)">监理录入</a>
 
-    <a href="javascript:void(0)">工程设计</a>
+    <a href="{:url('manager/listDesign',array('projectId'=>$projectId))}">工程设计</a>
 
     <a href="javascript:void(0)">安监录入</a>
 
@@ -61,18 +61,22 @@
     $(function () {
         var 工程信息 = ['listprojectinfo', 'updateproject', 'addproject',],
             合同录入 = ['listcontract', 'addcontract', 'updatecontract'],
-            支付录入 = ['listprojectpayments', 'pay', 'updatepayment'];
+            支付录入 = ['listprojectpayments', 'pay', 'updatepayment'],
+            工程设计 = ['listdesign', 'listdesigns', 'adddesign'];
         var 菜单列表 = [];
         菜单列表[0] = 工程信息;
         菜单列表[1] = 合同录入;
         菜单列表[2] = 支付录入;
+        菜单列表[3] = 0;
+        菜单列表[4] = 0;
+        菜单列表[5] = 工程设计;
+        菜单列表[6] = 0;
         $.each(菜单列表, function (i, n) {
             var 顶部菜单位置 = $.inArray(action_name, n)
             if (顶部菜单位置 >= 0) {
                 $("div.left_menu a").eq(i).addClass('on').attr('href', 'javascript:void(0)').siblings().removeClass('on');
                 $("div.main_menu a").eq(顶部菜单位置).addClass('on').attr('href', 'javascript:void(0)').siblings().removeClass('on');
                 return false;
-
             }
         });
 
@@ -88,7 +92,10 @@
             }
         })
     });
-    $.cookie("action", "{$Request.action}".replace('/',''))
+    action = "{$Request.action}".replace('/', '')
+    if (!action.startsWith("update")) {
+        $.cookie("action", action)
+    }
     function disableF5(e) { if ((e.which || e.keyCode) == 116) e.preventDefault(); };
     $(document).on("keydown", disableF5);
 </script>

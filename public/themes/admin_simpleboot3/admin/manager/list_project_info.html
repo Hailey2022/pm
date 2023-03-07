@@ -80,14 +80,11 @@
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>可研报告：</span>
                         <notempty name="file_1">
-
                             <foreach name="file_1" key="url" item="name">
                                 <php>$file_url=cmf_get_file_download_url($url);</php>
                                 <php>$file_id=hash("sha256", uniqid() . $url);</php>
                                 <div id="{$file_id}">
-
                                     <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
-
                                     <input type="text" autocomplete="off" name="file_name_{key}[]" value="{$name}">
                                     <input type="text" autocomplete="off" hidden name="file_url_{key}[]"
                                         value='{$url}'>
@@ -100,14 +97,11 @@
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>可研审批文件：</span>
                         <notempty name="file_7">
-
                             <foreach name="file_7" key="url" item="name">
                                 <php>$file_url=cmf_get_file_download_url($url);</php>
                                 <php>$file_id=hash("sha256", uniqid() . $url);</php>
                                 <div id="{$file_id}">
-
                                     <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
-
                                     <input type="text" autocomplete="off" name="file_name_7[]" value="{$name}">
                                     <input type="text" autocomplete="off" hidden name="file_url_7[]"
                                         value='{$url}'>

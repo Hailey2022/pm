@@ -47,7 +47,6 @@
                     <select name="contractId" required style="width: 650px;">
                         <option value="">请选择合同</option>
                         <foreach name="contracts" item="c">
-                            <php>var_dump($c)</php>
                             <option value="{$c.contractId}">{$c.user_login} - {$c.contractName}</option>
                         </foreach>
                     </select>

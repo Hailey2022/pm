@@ -715,12 +715,6 @@ class ManagerController extends AdminBaseController
                 'managerA' => $request["managerA"],
                 'managerB' => $request["managerB"],
             ];
-            // if (array_key_exists('file_urls', $request) && array_key_exists('file_names', $request)) {
-            //     $urls = $request["file_urls"];
-            //     $names = $request["file_names"];
-            //     $contract['file_urls'] = $urls;
-            //     $contract['file_names'] = $names;
-            // }
             for ($i = 1; $i <= 5; $i++) {
                 if (array_key_exists("file_name_" . $i, $request) && array_key_exists("file_url_" . $i, $request)) {
                     $contract["file_name_" . $i] = $request["file_name_" . $i];
@@ -864,6 +858,14 @@ class ManagerController extends AdminBaseController
             $this->error('非法访问项目');
         }
         $this->assign('projectId', $projectId);
+        $designContracts = Db::name('role_user r, pm_user u, pm_project p, pm_contract c')
+            ->where("c.projectId = p.projectId")
+            ->where("c.clientId = r.user_id")
+            ->where("r.user_id = u.id")
+            ->where("p.projectId", $projectId)
+            ->where("r.role_id", 5)
+            ->select();
+        $this->assign('contracts', $designContracts);
         return $this->fetch();
     }
 
@@ -907,10 +909,57 @@ class ManagerController extends AdminBaseController
             }
         }
         Db::name("design")->insert($data);
-        $this->success("提交成功", url("manager/listDesign"));
+        $this->success("提交成功", url("manager/listDesign", ["projectId", $projectId]));
     }
     public function listDesign()
     {
-        echo ("hi");
+        $projectId = $this->request->param('projectId');
+        if (!$this->checkProject($projectId)) {
+            $this->error('非法访问项目');
+        }
+        $this->assign('projectId', $projectId);
+        $designContracts = Db::name('role_user r, pm_user u, pm_project p, pm_contract c')
+            ->where("c.projectId = p.projectId")
+            ->where("c.clientId = r.user_id")
+            ->where("r.user_id = u.id")
+            ->where("p.projectId", $projectId)
+            ->where("r.role_id", 5)
+            ->select();
+        $this->assign('contracts', $designContracts);
+        $data = Db::name('contract c, pm_design d')
+            ->where('d.contractId=c.contractId')
+            ->where('c.projectId', $projectId)
+            ->order('commitTime', 'desc')
+            ->select();
+        if (count($data) > 0) {
+            $this->assign('data', $data);
+        }
+        return $this->fetch();
+    }
+
+    public function listDesigns()
+    {
+        $projectId = $this->request->param('projectId');
+        if (!$this->checkProject($projectId)) {
+            $this->error('非法访问项目');
+        }
+        $this->assign('projectId', $projectId);
+        $designContracts = Db::name('role_user r, pm_user u, pm_project p, pm_contract c')
+            ->where("c.projectId = p.projectId")
+            ->where("c.clientId = r.user_id")
+            ->where("r.user_id = u.id")
+            ->where("p.projectId", $projectId)
+            ->where("r.role_id", 5)
+            ->select();
+        $this->assign('contracts', $designContracts);
+        $data = Db::name('contract c, pm_design d')
+            ->where('d.contractId=c.contractId')
+            ->where('c.projectId', $projectId)
+            ->order('commitTime', 'desc')
+            ->select();
+        if (count($data) > 0) {
+            $this->assign('data', $data);
+        }
+        return $this->fetch();
     }
 }

@@ -38,25 +38,25 @@
             <a href="{:url('manager/listDesigns', ['projectId'=>$projectId])}">全部图纸</a>
             <a href="{:url('manager/addDesign', ['projectId'=>$projectId])}" class="on add">新增图纸</a>
         </div>
-        <form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('manager/postDesignAdd')}">
+
+        <notempty name="data">
             <input name="projectId" hidden value="{$projectId}">
             <div class="xf_input">
                 <h4 class="xf_input_h4">工程图纸</h4>
                 <ul>
-                    <li>
+                    <!-- <li>
                         <span>合同名称：</span>
                         <select name="contractId" required style="width: 650px;">
-                            <!-- <option value="">请选择合同</option> -->
                             <foreach name="contracts" item="c">
                                 <option value="{$c.contractId}">{$c.user_login} - {$c.contractName}</option>
                             </foreach>
                         </select>
-                    </li>
+                    </li> -->
                     <!-- <li>
                         <span>合同：</span>
                         <input type="text"  disabled value="">
                     </li>
-
+    
                     <li>
                         <span>服务商：</span>
                         <input type="text"  disabled value="">
@@ -64,13 +64,13 @@
 
                     <li>
                         <span>设计师：</span>
-                        <input type="text" name="designer" value="" required>
+                        <input type="text" name="designer" value="{$data[0]['designer']}" required>
                     </li>
 
                     <li>
                         <span>预算：</span>
-                        <input class="to10k" type="number" name="budget" id="budget" min="0" step="0.01" value=""
-                            required />
+                        <input class="to10k" type="number" name="budget" id="budget" min="0" step="0.01"
+                            value="{$data[0]['budget']}" required />
                         <span class="xf_ser">万元：</span>
                         <input type="text" value="" disabled>
                     </li>
@@ -80,39 +80,68 @@
                     </li>
                 </ul>
             </div>
+            <foreach name="data" item="d" length="1">
+                <div class="xf_input">
+                    <h4 class="xf_input_h4">图纸</h4>
+                    <ul>
+                        <li>
+                            <span>图纸版本号：</span>
+                            <input type="text" name="version" value="{$d.version}">
+                        </li>
+                        <li>
+                            <span>版本说明：</span>
+                            <input type="text" name="comment" value="{$d.comment}">
+                        </li>
+                        <li>
+                            <span>修订时间：</span>
+                            <input type="datetime-local" name="commitTime" value="{$d.commitTime}">
+                        </li>
+                        <li>
+                            <span>修订人：</span>
+                            <input type="text" name="contributer" value="{$d.contributer}">
+                        </li>
+                        <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                            <span>图纸：</span>
+                            <notempty name="file_1">
+                                <foreach name="file_1" key="url" item="name">
+                                    <php>$file_url=cmf_get_file_download_url($url);</php>
+                                    <php>$file_id=hash("sha256", uniqid() . $url);</php>
+                                    <div id="{$file_id}">
+                                        <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
+                                        <input type="text" name="file_name_{key}[]" value="{$name}">
+                                        <input type="text" hidden name="file_url_{key}[]" value='{$url}'>
+                                    </div>
+                                </foreach>
+                                <else />
+                                <input type="text" required name="project-name" value="录入人员没有上传">
+                            </notempty>
+                        </li>
+                    </ul>
+                </div>
+            </foreach>
+            <else />
             <div class="xf_input">
-                <h4 class="xf_input_h4">图纸</h4>
+                <h4 class="xf_input_h4">提示</h4>
                 <ul>
                     <li>
-                        <span>图纸版本号：</span>
-                        <input type="text" name="version" value="">
-                    </li>
-                    <li>
-                        <span>版本说明：</span>
-                        <input type="text" name="comment" value="">
-                    </li>
-                    <li>
-                        <span>修订时间：</span>
-                        <input type="datetime-local" name="commitTime" value="{:date('Y-m-d')}T{:date('H:i')}">
-                    </li>
-                    <li>
-                        <span>修订人：</span>
-                        <input type="text" name="contributer" value="">
-                    </li>
-                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                        <span>图纸：</span>
-                        <xfupload file_id="1">上传</xfupload>
+                        <span>注意：</span>
+                        <input type="text" value="请先加入设计合同">
                     </li>
 
                 </ul>
             </div>
-            <xf_submit><button id="project_submit">提交</button></xf_submit>
-        </form>
+        </notempty>
     </div>
 </body>
 <script>
     $("#budget").on("change keyup", function () {
         $("#cn-budget").val(convertCurrency($(this).val()))
+    })
+    $(function () {
+        $("#budget").trigger('keyup')
+    })
+    $('input').each(function () {
+        $(this).attr('disabled', 'disabled')
     })
 </script>
 

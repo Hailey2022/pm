@@ -36,11 +36,12 @@
             <a href="{:url('manager/listDesigns', ['projectId'=>$projectId])}">全部图纸</a>
             <a href="{:url('manager/addDesign', ['projectId'=>$projectId])}" class="on add">新增图纸</a>
         </div>
-        <form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('manager/postSupervisionAdd')}">
+        <form method="post" class="form-horizontal js-ajax-form margin-top-20"
+            action="{:url('manager/postSupervisionAdd')}">
             <input name="projectId" hidden value="{$projectId}">
             <div class="xf_input">
                 <h4 class="xf_input_h4">监理</h4>
-                <ul>        
+                <ul>
                     <li>
                         <span>合同名称：</span>
                         <select name="contractId" required style="width: 650px;">
@@ -49,201 +50,64 @@
                             </foreach>
                         </select>
                     </li>
-        
-                    <li>
+
+                    <!-- <li>
                         <span>监理单位：</span>
-                        <input type="text" autocomplete="off" disabled value="">
-                    </li>
-        
+                        <input  type="text" autocomplete="off" disabled value="">
+                    </li> -->
+
                     <li>
                         <span>监理总监：</span>
-                        <input type="text" autocomplete="off" value="">
+                        <input name="supervisor" type="text" autocomplete="off" value="">
                     </li>
                 </ul>
             </div>
             <div class="xf_input">
                 <h4 class="xf_input_h4">监理</h4>
                 <ul>
-        
                     <li>
-                        <xfupload>上传</xfupload>
+                        <span>报告类型：</span>
+                        <select name="type" required>
+                            <option value="1">日报</option>
+                            <option selected value="2">周报</option>
+                            <option value="3">月报</option>
+                            <option value="4">季报</option>
+                            <option value="5">年报</option>
+                        </select>
+                    </li>
+                    <li>
                         <span>监理日志：</span>
-                        <input type="text" autocomplete="off">
-                        <xfupload>预览</xfupload>
-                        <xfupload>替换</xfupload>
-                        <xfupload>删除</xfupload>
-                        <!-- <br>
-                        <xfupload_fix></xfupload_fix>
-                        <input type="text" autocomplete="off">
-                        <xfupload>预览</xfupload>
-                        <xfupload>替换</xfupload>
-                        <xfupload>删除</xfupload><br>
-                        <xfupload_fix></xfupload_fix>
-                        <input type="text" autocomplete="off">
-                        <xfupload>预览</xfupload>
-                        <xfupload>替换</xfupload>
-                        <xfupload>删除</xfupload><br>
-                        <xfupload_fix></xfupload_fix>
-                        <input type="text" autocomplete="off">
-                        <xfupload>预览</xfupload>
-                        <xfupload>替换</xfupload>
-                        <xfupload>删除</xfupload> -->
+                        <xfupload file_id="1">上传</xfupload>
                     </li>
                     <li>
-                        <xfupload>上传</xfupload>
                         <span>开工报告：</span>
-                        <input type="text" autocomplete="off">
-                        <xfupload>预览</xfupload>
-                        <xfupload>替换</xfupload>
-                        <xfupload>删除</xfupload>
-                        <!-- <br>
-                        <xfupload_fix></xfupload_fix>
-                        <input type="text" autocomplete="off">
-                        <xfupload>预览</xfupload>
-                        <xfupload>替换</xfupload>
-                        <xfupload>删除</xfupload><br>
-                        <xfupload_fix></xfupload_fix>
-                        <input type="text" autocomplete="off">
-                        <xfupload>预览</xfupload>
-                        <xfupload>替换</xfupload>
-                        <xfupload>删除</xfupload><br>
-                        <xfupload_fix></xfupload_fix>
-                        <input type="text" autocomplete="off">
-                        <xfupload>预览</xfupload>
-                        <xfupload>替换</xfupload>
-                        <xfupload>删除</xfupload> -->
+                        <xfupload file_id="2">上传</xfupload>
                     </li>
                     <li>
-                        <xfupload>上传</xfupload>
                         <span>监理通知：</span>
-                        <input type="text" autocomplete="off">
-                        <xfupload>预览</xfupload>
-                        <xfupload>替换</xfupload>
-                        <xfupload>删除</xfupload>
-                        <!-- <br>
-                        <xfupload_fix></xfupload_fix>
-                        <input type="text" autocomplete="off">
-                        <xfupload>预览</xfupload>
-                        <xfupload>替换</xfupload>
-                        <xfupload>删除</xfupload><br>
-                        <xfupload_fix></xfupload_fix>
-                        <input type="text" autocomplete="off">
-                        <xfupload>预览</xfupload>
-                        <xfupload>替换</xfupload>
-                        <xfupload>删除</xfupload><br>
-                        <xfupload_fix></xfupload_fix>
-                        <input type="text" autocomplete="off">
-                        <xfupload>预览</xfupload>
-                        <xfupload>替换</xfupload>
-                        <xfupload>删除</xfupload> -->
+                        <xfupload file_id="3">上传</xfupload>
                     </li>
                     <li>
-                        <xfupload>上传</xfupload>
                         <span>会议纪要：</span>
-                        <input type="text" autocomplete="off">
-                        <xfupload>预览</xfupload>
-                        <xfupload>替换</xfupload>
-                        <xfupload>删除</xfupload>
-                        <!-- <br>
-                        <xfupload_fix></xfupload_fix>
-                        <input type="text" autocomplete="off">
-                        <xfupload>预览</xfupload>
-                        <xfupload>替换</xfupload>
-                        <xfupload>删除</xfupload><br>
-                        <xfupload_fix></xfupload_fix>
-                        <input type="text" autocomplete="off">
-                        <xfupload>预览</xfupload>
-                        <xfupload>替换</xfupload>
-                        <xfupload>删除</xfupload><br>
-                        <xfupload_fix></xfupload_fix>
-                        <input type="text" autocomplete="off">
-                        <xfupload>预览</xfupload>
-                        <xfupload>替换</xfupload>
-                        <xfupload>删除</xfupload> -->
+                        <xfupload file_id="4">上传</xfupload>
                     </li>
                     <li>
-                        <xfupload>上传</xfupload>
                         <span>监理计划：</span>
-                        <input type="text" autocomplete="off">
-                        <xfupload>预览</xfupload>
-                        <xfupload>替换</xfupload>
-                        <xfupload>删除</xfupload>
-                        <!-- <br>
-                        <xfupload_fix></xfupload_fix>
-                        <input type="text" autocomplete="off">
-                        <xfupload>预览</xfupload>
-                        <xfupload>替换</xfupload>
-                        <xfupload>删除</xfupload><br>
-                        <xfupload_fix></xfupload_fix>
-                        <input type="text" autocomplete="off">
-                        <xfupload>预览</xfupload>
-                        <xfupload>替换</xfupload>
-                        <xfupload>删除</xfupload><br>
-                        <xfupload_fix></xfupload_fix>
-                        <input type="text" autocomplete="off">
-                        <xfupload>预览</xfupload>
-                        <xfupload>替换</xfupload>
-                        <xfupload>删除</xfupload> -->
+                        <xfupload file_id="5">上传</xfupload>
                     </li>
                     <li>
-                        <xfupload>上传</xfupload>
                         <span>监理周报：</span>
-                        <input type="text" autocomplete="off">
-                        <xfupload>预览</xfupload>
-                        <xfupload>替换</xfupload>
-                        <xfupload>删除</xfupload>
-                        <!-- <br>
-                        <xfupload_fix></xfupload_fix>
-                        <input type="text" autocomplete="off">
-                        <xfupload>预览</xfupload>
-                        <xfupload>替换</xfupload>
-                        <xfupload>删除</xfupload><br>
-                        <xfupload_fix></xfupload_fix>
-                        <input type="text" autocomplete="off">
-                        <xfupload>预览</xfupload>
-                        <xfupload>替换</xfupload>
-                        <xfupload>删除</xfupload><br>
-                        <xfupload_fix></xfupload_fix>
-                        <input type="text" autocomplete="off">
-                        <xfupload>预览</xfupload>
-                        <xfupload>替换</xfupload>
-                        <xfupload>删除</xfupload> -->
+                        <xfupload file_id="6">上传</xfupload>
                     </li>
                     <li>
-                        <xfupload>上传</xfupload>
                         <span>监理图片：</span>
-                        <input type="text" autocomplete="off">
-                        <xfupload>预览</xfupload>
-                        <xfupload>替换</xfupload>
-                        <xfupload>删除</xfupload>
-                        <br>
-                        <xfupload_fix></xfupload_fix>
-                        <input type="text" autocomplete="off">
-                        <xfupload>预览</xfupload>
-                        <xfupload>替换</xfupload>
-                        <xfupload>删除</xfupload><br>
-                        <xfupload_fix></xfupload_fix>
-                        <input type="text" autocomplete="off">
-                        <xfupload>预览</xfupload>
-                        <xfupload>替换</xfupload>
-                        <xfupload>删除</xfupload><br>
-                        <xfupload_fix></xfupload_fix>
-                        <input type="text" autocomplete="off">
-                        <xfupload>预览</xfupload>
-                        <xfupload>替换</xfupload>
-                        <xfupload>删除</xfupload>
+                        <xfupload file_id="7">上传</xfupload>
                     </li>
-        
                 </ul>
             </div>
             <xf_submit><button id="project_submit">提交</button></xf_submit>
         </form>
     </div>
 </body>
-<script>
-    $("#budget").on("change keyup", function () {
-        $("#cn-budget").val(convertCurrency($(this).val()))
-    })
-</script>
 
 </html>

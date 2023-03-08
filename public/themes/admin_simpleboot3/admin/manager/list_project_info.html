@@ -41,7 +41,7 @@
             <ul>
                 <li>
                     <span>工程名称：</span>
-                    <input type="text" autocomplete="off" required name="project-name" value="{$project.projectName}">
+                    <input type="text" autocomplete="off" required value="{$project.projectName}">
                 </li>
                 <li>
                     <span>建设单位：</span>
@@ -72,7 +72,7 @@
                             </div>
                         </foreach>
                         <else />
-                        <input type="text" autocomplete="off" required name="project-name" value="录入人员没有上传">
+                        <input type="text" autocomplete="off" required value="录入人员没有上传">
                     </notempty>
                 </li>
                 <li id="{:md5(uniqid(md5(microtime(true)),true))}">
@@ -88,20 +88,18 @@
                             </div>
                         </foreach>
                         <else />
-                        <input type="text" autocomplete="off" required name="project-name" value="录入人员没有上传">
+                        <input type="text" autocomplete="off" required value="录入人员没有上传">
                     </notempty>
                 </li>
                 <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                     <span>可研批复：</span>
                     <notempty name="file_2">
-
                         <span class="xf_ser">批复日期：</span>
                         <input type="text" autocomplete="off" name="file_date_2" value="{$project.file_date_2}"><br>
                         <foreach name="file_2" key="url" item="name">
                             <php>$file_url=cmf_get_file_download_url($url);</php>
                             <php>$file_id=hash("sha256", uniqid() . $url);</php>
                             <div id="{$file_id}">
-
                                 <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
                                 <upload_span></upload_span>
                                 <input type="text" autocomplete="off" name="file_name_2[]" value="{$name}">
@@ -142,7 +140,7 @@
                             </div>
                         </foreach>
                         <else />
-                        <input type="text" autocomplete="off" required name="project-name" value="录入人员没有上传">
+                        <input type="text" autocomplete="off" required value="录入人员没有上传">
                     </notempty>
                 </li>
                 <li id="{:md5(uniqid(md5(microtime(true)),true))}">
@@ -161,7 +159,7 @@
                             </div>
                         </foreach>
                         <else />
-                        <input type="text" autocomplete="off" required name="project-name" value="录入人员没有上传">
+                        <input type="text" autocomplete="off" required value="录入人员没有上传">
                     </notempty>
                 </li>
                 <li id="{:md5(uniqid(md5(microtime(true)),true))}">
@@ -224,7 +222,7 @@
                             </div>
                         </foreach>
                         <else />
-                        <input type="text" autocomplete="off" required name="project-name" value="录入人员没有上传">
+                        <input type="text" autocomplete="off" required value="录入人员没有上传">
                     </notempty>
                 </li>
                 <li id="{:md5(uniqid(md5(microtime(true)),true))}">
@@ -305,7 +303,7 @@
                             </div>
                         </foreach>
                         <else />
-                        <input type="text" autocomplete="off" required name="project-name" value="录入人员没有上传">
+                        <input type="text" autocomplete="off" required value="录入人员没有上传">
                     </notempty>
                 </li>
                 <li id="{:md5(uniqid(md5(microtime(true)),true))}">
@@ -324,7 +322,7 @@
                             </div>
                         </foreach>
                         <else />
-                        <input type="text" autocomplete="off" required name="project-name" value="录入人员没有上传">
+                        <input type="text" autocomplete="off" required value="录入人员没有上传">
                     </notempty>
                 </li>
                 <li id="{:md5(uniqid(md5(microtime(true)),true))}">
@@ -343,7 +341,7 @@
                             </div>
                         </foreach>
                         <else />
-                        <input type="text" autocomplete="off" required name="project-name" value="录入人员没有上传">
+                        <input type="text" autocomplete="off" required value="录入人员没有上传">
                     </notempty>
 
                 </li>
@@ -363,7 +361,7 @@
                             </div>
                         </foreach>
                         <else />
-                        <input type="text" autocomplete="off" required name="project-name" value="录入人员没有上传">
+                        <input type="text" autocomplete="off" required value="录入人员没有上传">
                     </notempty>
                 </li>
             </ul>
@@ -403,7 +401,7 @@
                             </div>
                         </foreach>
                         <else />
-                        <input type="text" autocomplete="off" required name="project-name" value="录入人员没有上传">
+                        <input type="text" autocomplete="off" required value="录入人员没有上传">
                     </notempty>
                 </li>
                 <li id="{:md5(uniqid(md5(microtime(true)),true))}">
@@ -422,7 +420,7 @@
                             </div>
                         </foreach>
                         <else />
-                        <input type="text" autocomplete="off" required name="project-name" value="录入人员没有上传">
+                        <input type="text" autocomplete="off" required value="录入人员没有上传">
                     </notempty>
                 </li>
                 <li id="{:md5(uniqid(md5(microtime(true)),true))}">
@@ -441,7 +439,7 @@
                             </div>
                         </foreach>
                         <else />
-                        <input type="text" autocomplete="off" required name="project-name" value="录入人员没有上传">
+                        <input type="text" autocomplete="off" required value="录入人员没有上传">
                     </notempty>
 
                 </li>
@@ -461,7 +459,7 @@
                             </div>
                         </foreach>
                         <else />
-                        <input type="text" autocomplete="off" required name="project-name" value="录入人员没有上传">
+                        <input type="text" autocomplete="off" required value="录入人员没有上传">
                     </notempty>
                 </li>
                 <li id="{:md5(uniqid(md5(microtime(true)),true))}">
@@ -480,7 +478,7 @@
                             </div>
                         </foreach>
                         <else />
-                        <input type="text" autocomplete="off" required name="project-name" value="录入人员没有上传">
+                        <input type="text" autocomplete="off" required value="录入人员没有上传">
                     </notempty>
                 </li>
                 <li id="{:md5(uniqid(md5(microtime(true)),true))}">
@@ -499,7 +497,7 @@
                             </div>
                         </foreach>
                         <else />
-                        <input type="text" autocomplete="off" required name="project-name" value="录入人员没有上传">
+                        <input type="text" autocomplete="off" required value="录入人员没有上传">
                     </notempty>
                 </li>
                 <li id="{:md5(uniqid(md5(microtime(true)),true))}">
@@ -518,7 +516,7 @@
                             </div>
                         </foreach>
                         <else />
-                        <input type="text" autocomplete="off" required name="project-name" value="录入人员没有上传">
+                        <input type="text" autocomplete="off" required value="录入人员没有上传">
                     </notempty>
 
                 </li>
@@ -536,7 +534,7 @@
                             </div>
                         </foreach>
                         <else />
-                        <input type="text" autocomplete="off" required name="project-name" value="录入人员没有上传">
+                        <input type="text" autocomplete="off" required value="录入人员没有上传">
                     </notempty>
                 </li>
                 <li id="{:md5(uniqid(md5(microtime(true)),true))}">
@@ -555,7 +553,7 @@
                             </div>
                         </foreach>
                         <else />
-                        <input type="text" autocomplete="off" required name="project-name" value="录入人员没有上传">
+                        <input type="text" autocomplete="off" required value="录入人员没有上传">
                     </notempty>
                 </li>
             </ul>

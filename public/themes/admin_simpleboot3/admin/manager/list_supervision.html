@@ -96,7 +96,7 @@
                         <xfupload file_id="5">上传</xfupload>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                        <span id="report">监理周报：</span>
+                        <span>监理周报：</span>
                         <xfupload file_id="6">上传</xfupload>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
@@ -109,12 +109,5 @@
         </form>
     </div>
 </body>
-<script>
-    $("select[name='type']").on('change', function(){
-        n = $(this).val()
-        text = $(this).children()[n-1].innerText
-        text = "监理" + text + "："
-        $("#report").text(text)
-    })
-</script>
+
 </html>

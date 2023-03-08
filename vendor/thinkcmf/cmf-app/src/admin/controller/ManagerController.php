@@ -1037,7 +1037,7 @@ class ManagerController extends AdminBaseController
 
     public function listSupervision()
     {
-
+        return $this->fetch();
     }
 
     public function updateSupervision()

@@ -962,4 +962,49 @@ class ManagerController extends AdminBaseController
         }
         return $this->fetch();
     }
+
+    public function updateDesign(){
+
+    }
+
+    public function deleteDesign(){
+
+    }
+
+    public function addSupervision(){
+        $projectId = $this->request->param('projectId');
+        if (!$this->checkProject($projectId)) {
+            $this->error('非法访问项目');
+        }
+        $this->assign('projectId', $projectId);
+        $contracts = Db::name('role_user r, pm_user u, pm_project p, pm_contract c')
+            ->where("c.projectId = p.projectId")
+            ->where("c.clientId = r.user_id")
+            ->where("r.user_id = u.id")
+            ->where("p.projectId", $projectId)
+            ->where("r.role_id", 5)
+            ->select();
+        $this->assign('contracts', $contracts);
+        return $this->fetch();
+    }
+
+    public function postSupervisionAdd(){
+
+    }
+
+    public function postSupervisionUpdate(){
+        
+    }
+
+    public function listSupervision(){
+
+    }
+
+    public function updateSupervision(){
+
+    }
+
+    public function deleteSupervision(){
+
+    }
 }

@@ -1037,6 +1037,17 @@ class ManagerController extends AdminBaseController
 
     public function listSupervision()
     {
+        $projectId = $this->request->param('projectId');
+        if (!$this->checkProject($projectId)) {
+            $this->error('非法访问项目');
+        }
+        $this->assign('projectId', $projectId);
+        $data = Db::name('project p, pm_contract c, pm_supervision s')
+            ->where('p.projectId = c.projectId')
+            ->where('c.contractId = s.contractId')
+            // ->where('')
+            ->select();
+        $this->assign('data', $data);
         return $this->fetch();
     }
 

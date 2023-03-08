@@ -9,7 +9,7 @@
 
     <a href="javascript:void(0)">施工录入</a>
 
-    <a href="javascript:void(0)">监理录入</a>
+    <a href="{:url('manager/listSupervision',array('projectId'=>$projectId))}">监理录入</a>
 
     <a href="{:url('manager/listDesign',array('projectId'=>$projectId))}">工程设计</a>
 
@@ -62,13 +62,15 @@
         var 工程信息 = ['listprojectinfo', 'updateproject', 'addproject',],
             合同录入 = ['listcontract', 'addcontract', 'updatecontract'],
             支付录入 = ['listprojectpayments', 'pay', 'updatepayment'],
+            施工录入 = [],
+            监理录入 = ['listsupervision', 'addsupervision']
             工程设计 = ['listdesign', 'listdesigns', 'adddesign'];
         var 菜单列表 = [];
         菜单列表[0] = 工程信息;
         菜单列表[1] = 合同录入;
         菜单列表[2] = 支付录入;
-        菜单列表[3] = 0;
-        菜单列表[4] = 0;
+        菜单列表[3] = 施工录入;
+        菜单列表[4] = 监理录入;
         菜单列表[5] = 工程设计;
         菜单列表[6] = 0;
         $.each(菜单列表, function (i, n) {

@@ -32,28 +32,27 @@
 
     <div class="main">
         <div class="main_menu">
-            <a href="{:url('manager/listDesign', ['projectId'=>$projectId])}">工程图纸</a>
-            <a href="{:url('manager/listDesigns', ['projectId'=>$projectId])}">全部图纸</a>
-            <a href="{:url('manager/addDesign', ['projectId'=>$projectId])}" class="on add">新增图纸</a>
+            <a href="{:url('manager/listsupervision', ['projectId'=>$projectId])}">监理</a>
+            <a href="{:url('manager/addsupervision', ['projectId'=>$projectId])}" class="on add">新增监理</a>
         </div>
-        <form method="post" class="form-horizontal js-ajax-form margin-top-20"
-            action="{:url('manager/postSupervisionAdd')}">
-            <input name="projectId" hidden value="{$projectId}">
+
+        <input name="projectId" hidden value="{$projectId}">
+        <notempty name="data">
             <div class="xf_input">
                 <h4 class="xf_input_h4">监理</h4>
                 <ul>
                     <li>
                         <span>监理总监：</span>
-                        <input name="supervisor" type="text" autocomplete="off" value="">
+                        <input name="supervisor" type="text" autocomplete="off" value="{$data[0]['supervisor']}">
                     </li>
                 </ul>
             </div>
             <div class="xf_input">
-                <h4 class="xf_input_h4">监理</h4>
+                <h4 class="xf_input_h4">附件</h4>
                 <ul>
                     <li>
                         <span>报告类型：</span>
-                        <select name="type" required>
+                        <select name="type">
                             <option value="1">日报</option>
                             <option selected value="2">周报</option>
                             <option value="3">月报</option>
@@ -74,7 +73,7 @@
                                 </div>
                             </foreach>
                             <else />
-                            <input type="text" autocomplete="off" required value="录入人员没有上传">
+                            <input type="text" autocomplete="off" value="录入人员没有上传">
                         </notempty>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
@@ -93,7 +92,7 @@
                                 </div>
                             </foreach>
                             <else />
-                            <input type="text" autocomplete="off" required value="录入人员没有上传">
+                            <input type="text" autocomplete="off" value="录入人员没有上传">
                         </notempty>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
@@ -115,7 +114,6 @@
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>会议纪要：</span>
                         <notempty name="file_4">
-
                             <span class="xf_ser">批复日期：</span>
                             <input type="text" autocomplete="off" name="file_date_4" value="{$project.file_date_4}"><br>
                             <foreach name="file_4" key="url" item="name">
@@ -146,7 +144,7 @@
                                 </div>
                             </foreach>
                             <else />
-                            <input type="text" autocomplete="off" required value="录入人员没有上传">
+                            <input type="text" autocomplete="off" value="录入人员没有上传">
                         </notempty>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
@@ -162,7 +160,7 @@
                                 </div>
                             </foreach>
                             <else />
-                            <input type="text" autocomplete="off" required value="录入人员没有上传">
+                            <input type="text" autocomplete="off" value="录入人员没有上传">
                         </notempty>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
@@ -178,13 +176,13 @@
                                 </div>
                             </foreach>
                             <else />
-                            <input type="text" autocomplete="off" required value="录入人员没有上传">
+                            <input type="text" autocomplete="off" value="录入人员没有上传">
                         </notempty>
                     </li>
                 </ul>
             </div>
-            <xf_submit><button id="project_submit">提交</button></xf_submit>
-        </form>
+        </notempty>
+        <xf_submit><button id="project_submit">提交</button></xf_submit>
     </div>
 </body>
 <script>
@@ -193,6 +191,9 @@
         text = $(this).children()[n - 1].innerText
         text = "监理" + text + "："
         $("#report").text(text)
+    })
+    $("input").each(function(){
+        $(this).attr("disabled", "disabled")
     })
 </script>
 

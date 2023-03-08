@@ -1008,11 +1008,26 @@ class ManagerController extends AdminBaseController
                 $this->error('非法访问项目');
             }
             $request = $this->request->param();
-            var_dump($request);
+            $data = [
+                "contractId" => $request["contractId"],
+                "type" => $request["type"],
+                "supervisor" => $request["supervisor"],
+            ];
+            for ($i = 1; $i <= 7; $i++) {
+                if (array_key_exists("file_name_" . $i, $request) && array_key_exists("file_url_" . $i, $request)) {
+                    $data["file_name_" . $i] = $request["file_name_" . $i];
+                    $data["file_url_" . $i] = $request["file_url_" . $i];
+                }
+            }
+            $res = Db::name('supervision')->insert($data);
+            if ($res !== false) {
+                $this->success("提交成功", url('manager/listsupervision', ['projectId' => $projectId]));
+            } else {
+                $this->error("提交失败");
+            }
         } else {
             $this->error("非法提交..");
         }
-        
     }
 
     public function postSupervisionUpdate()

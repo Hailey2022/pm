@@ -49,7 +49,7 @@ class ManagerController extends AdminBaseController
         }
         return null;
     }
-    public function getClientIdByClientName($clientName = null)
+    public function getClientIdByClientName($clientName = null, $type = null)
     {
         if ($clientName != null) {
             $res = Db::name('user')->where('user_login', $clientName)->find();
@@ -76,7 +76,16 @@ class ManagerController extends AdminBaseController
                         'user_activation_key' => '',
                         'mobile' => ''
                     ]);
-                Db::name('role_user')->insert(['role_id' => 3, 'user_id' => $id]);
+                $role = 3;
+                if ($type != null) {
+                    $role = Db::name('type')->where('id', $type)->find();
+                    if ($role == null) {
+                        $role = 3;
+                    } else {
+                        $role = $role['role'];
+                    }
+                }
+                Db::name('role_user')->insert(['role_id' => $role, 'user_id' => $id]);
                 return $id;
             } else {
                 return $res['id'];
@@ -699,7 +708,7 @@ class ManagerController extends AdminBaseController
             $request = $this->request->param();
             $contract = [
                 'contractId' => uniqid(),
-                'clientId' => $this->getClientIdByClientName($request["clientName"]),
+                'clientId' => $this->getClientIdByClientName($request["clientName"], $request["clientType"]),
                 // 'clientAlias' => $request["clientAlias"],
                 'projectId' => $request["projectId"],
                 'clientType' => $request["clientType"],
@@ -963,15 +972,18 @@ class ManagerController extends AdminBaseController
         return $this->fetch();
     }
 
-    public function updateDesign(){
+    public function updateDesign()
+    {
 
     }
 
-    public function deleteDesign(){
+    public function deleteDesign()
+    {
 
     }
 
-    public function addSupervision(){
+    public function addSupervision()
+    {
         $projectId = $this->request->param('projectId');
         if (!$this->checkProject($projectId)) {
             $this->error('非法访问项目');
@@ -982,29 +994,44 @@ class ManagerController extends AdminBaseController
             ->where("c.clientId = r.user_id")
             ->where("r.user_id = u.id")
             ->where("p.projectId", $projectId)
-            ->where("r.role_id", 5)
+            ->where("r.role_id", 6)
             ->select();
         $this->assign('contracts', $contracts);
         return $this->fetch();
     }
 
-    public function postSupervisionAdd(){
-
-    }
-
-    public function postSupervisionUpdate(){
+    public function postSupervisionAdd()
+    {
+        if ($this->request->isPost()) {
+            $projectId = $this->request->param('projectId');
+            if (!$this->checkProject($projectId)) {
+                $this->error('非法访问项目');
+            }
+            $request = $this->request->param();
+            var_dump($request);
+        } else {
+            $this->error("非法提交..");
+        }
         
     }
 
-    public function listSupervision(){
+    public function postSupervisionUpdate()
+    {
 
     }
 
-    public function updateSupervision(){
+    public function listSupervision()
+    {
 
     }
 
-    public function deleteSupervision(){
+    public function updateSupervision()
+    {
+
+    }
+
+    public function deleteSupervision()
+    {
 
     }
 }

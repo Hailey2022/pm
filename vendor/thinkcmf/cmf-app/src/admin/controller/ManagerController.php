@@ -1220,18 +1220,20 @@ class ManagerController extends AdminBaseController
         $data = [
             'name' => $request['name'],
             'comment' => $request['comment'],
-            'ccp' => $request['ccp'],
-            'province' => $request['province'],
-            'city' => $request['city'],
-            'bond' => $request['bond'],
-            'budget' => $request['budget'],
-            'others' => $request['others'],
-            'total' => $request['province'] + $request['city'] + $request['bond'] + $request['budget'] + $request['others'],
+            // 'ccp' => $request['ccp'],
+            // 'province' => $request['province'],
+            // 'city' => $request['city'],
+            // 'bond' => $request['bond'],
+            // 'budget' => $request['budget'],
+            // 'others' => $request['others'],
+            // 'total' => $request['province'] + $request['city'] + $request['bond'] + $request['budget'] + $request['others'],
             "paid" => 0,
             "staff" => $request['staff'],
             "year" => $request['year'],
             "projectId" => $request['projectId']
         ];
+        $data[$request['who']] = $request['price'];
+        $data['total'] = $request['price'];
         $res = Db::name('income')->insert($data);
         if ($res !== false) {
             $this->success("成功", url('manager/listincome', ['projectId' => $projectId]));

@@ -61,13 +61,29 @@
             <div class="xf_input">
                 <h4 class="xf_input_h4">资金来源分类</h4>
                 <ul>
-                    <li>
+                    <!-- <li>
                         <span>合计：</span>
                         <input id="sum" disabled value="0" />
-                        <!-- <span class="xf_ser">万元：</span>
-                    <input id="10k-contractAmount" type="text" autocomplete="off" disabled value=""> -->
+                    </li> -->
+                    <li>
+                        <span>来源：</span>
+                        <select required name="who">
+                            <option value="">请选择</option>
+                            <option value="ccp">中央</option>
+                            <option value="province">省</option>
+                            <option value="city">市</option>
+                            <option value="bond">专项债(区)</option>
+                            <option value="budget">预算(区)</option>
+                            <option value="others">其他</option>
+                        </select>
+                        <input required class="to10k" type="number" step="0.01" min=0 max=0 autocomplete="off"
+                            name="price" placeholder="金额">
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                        <span>资金来源凭证附件：</span>
+                        <xfupload file_id="1">上传</xfupload>
+                    </li>
+                    <!-- <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>中央：</span>
                         <input required class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="ccp"
                             value="0">
@@ -132,7 +148,7 @@
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>资金来源凭证附件：</span>
                         <xfupload file_id="6">上传</xfupload>
-                    </li>
+                    </li> -->
                 </ul>
 
             </div>

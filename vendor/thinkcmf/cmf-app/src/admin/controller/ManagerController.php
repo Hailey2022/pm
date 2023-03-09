@@ -974,12 +974,20 @@ class ManagerController extends AdminBaseController
 
     public function updateDesign()
     {
-
+        $projectId = $this->request->param('projectId');
+        if (!$this->checkProject($projectId)) {
+            $this->error('非法访问项目');
+        }
+        $this->assign("projectId", $projectId);
     }
 
     public function deleteDesign()
     {
-
+        $projectId = $this->request->param('projectId');
+        if (!$this->checkProject($projectId)) {
+            $this->error('非法访问项目');
+        }
+        $this->assign("projectId", $projectId);
     }
 
     public function addSupervision()
@@ -1040,7 +1048,11 @@ class ManagerController extends AdminBaseController
 
     public function postSupervisionUpdate()
     {
-
+        $projectId = $this->request->param('projectId');
+        if (!$this->checkProject($projectId)) {
+            $this->error('非法访问项目');
+        }
+        $this->assign("projectId", $projectId);
     }
 
     public function listSupervision()
@@ -1070,12 +1082,20 @@ class ManagerController extends AdminBaseController
 
     public function updateSupervision()
     {
-
+        $projectId = $this->request->param('projectId');
+        if (!$this->checkProject($projectId)) {
+            $this->error('非法访问项目');
+        }
+        $this->assign("projectId", $projectId);
     }
 
     public function deleteSupervision()
     {
-
+        $projectId = $this->request->param('projectId');
+        if (!$this->checkProject($projectId)) {
+            $this->error('非法访问项目');
+        }
+        $this->assign("projectId", $projectId);
     }
 
     public function addConstruction()
@@ -1098,12 +1118,20 @@ class ManagerController extends AdminBaseController
 
     public function updateConstruction()
     {
-
+        $projectId = $this->request->param('projectId');
+        if (!$this->checkProject($projectId)) {
+            $this->error('非法访问项目');
+        }
+        $this->assign("projectId", $projectId);
     }
 
     public function deleteConstruction()
     {
-
+        $projectId = $this->request->param('projectId');
+        if (!$this->checkProject($projectId)) {
+            $this->error('非法访问项目');
+        }
+        $this->assign("projectId", $projectId);
     }
 
     public function listConstruction()
@@ -1118,7 +1146,11 @@ class ManagerController extends AdminBaseController
 
     public function postConstructionUpdate()
     {
-
+        $projectId = $this->request->param('projectId');
+        if (!$this->checkProject($projectId)) {
+            $this->error('非法访问项目');
+        }
+        $this->assign("projectId", $projectId);
     }
 
     public function postConstructionAdd()
@@ -1143,56 +1175,100 @@ class ManagerController extends AdminBaseController
 
     public function updateIncome()
     {
-
+        $projectId = $this->request->param('projectId');
+        if (!$this->checkProject($projectId)) {
+            $this->error('非法访问项目');
+        }
+        $this->assign("projectId", $projectId);
     }
 
     public function deleteIncome()
     {
-
+        $projectId = $this->request->param('projectId');
+        if (!$this->checkProject($projectId)) {
+            $this->error('非法访问项目');
+        }
+        $this->assign("projectId", $projectId);
     }
 
     public function listIncome()
     {
-
+        $projectId = $this->request->param('projectId');
+        if (!$this->checkProject($projectId)) {
+            $this->error('非法访问项目');
+        }
+        $this->assign("projectId", $projectId);
     }
 
     public function postIncomeAdd()
     {
-
+        $projectId = $this->request->param('projectId');
+        if (!$this->checkProject($projectId)) {
+            $this->error('非法访问项目');
+        }
+        $this->assign("projectId", $projectId);
     }
 
     public function postIncomeUpdate()
     {
-
+        $projectId = $this->request->param('projectId');
+        if (!$this->checkProject($projectId)) {
+            $this->error('非法访问项目');
+        }
+        $this->assign("projectId", $projectId);
     }
 
     public function addSavety()
     {
-
+        $projectId = $this->request->param('projectId');
+        if (!$this->checkProject($projectId)) {
+            $this->error('非法访问项目');
+        }
+        $this->assign("projectId", $projectId);
     }
 
     public function updateSavety()
     {
-
+        $projectId = $this->request->param('projectId');
+        if (!$this->checkProject($projectId)) {
+            $this->error('非法访问项目');
+        }
+        $this->assign("projectId", $projectId);
     }
 
     public function deleteSavety()
     {
-
+        $projectId = $this->request->param('projectId');
+        if (!$this->checkProject($projectId)) {
+            $this->error('非法访问项目');
+        }
+        $this->assign("projectId", $projectId);
     }
 
     public function listSavety()
     {
-
+        $projectId = $this->request->param('projectId');
+        if (!$this->checkProject($projectId)) {
+            $this->error('非法访问项目');
+        }
+        $this->assign("projectId", $projectId);
     }
     public function postSavetyAdd()
     {
-
+        $projectId = $this->request->param('projectId');
+        if (!$this->checkProject($projectId)) {
+            $this->error('非法访问项目');
+        }
+        $this->assign("projectId", $projectId);
     }
 
     public function postSavetyUpdate()
     {
-
+        $projectId = $this->request->param('projectId');
+        if (!$this->checkProject($projectId)) {
+            $this->error('非法访问项目');
+        }
+        $this->assign("projectId", $projectId);
     }
 
 // public function 

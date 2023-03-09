@@ -136,26 +136,6 @@
                 </ul>
 
             </div>
-            <div class="xf_input">
-                <h4 class="xf_input_h4">资金支付情况</h4>
-                <ul>
-                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                        <span>已支付：</span>
-                        <input id="paid" name="paid" required type="number" step="0.01" min=0 autocomplete="off"
-                            value="0">
-                    </li>
-                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                        <span>未支付：</span>
-                        <input id="unpaid" disabled type="number" step="0.01" min=0 autocomplete="off"
-                            value="0">
-                    </li>
-                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                        <span>支付率：</span>
-                        <input id="percentage" required value="" disabled>
-                    </li>
-                </ul>
-
-            </div>
             <xf_submit><button id="project_submit">提交</button></xf_submit>
 
         </form>
@@ -167,20 +147,20 @@
                 s += Number($(this).val())
             })
             $("#sum").val(s)
-            paid = $("#paid").val()
-            if (paid > s){
-                $("#paid").val(s)
-                $("#percentage").val("100.00%")
-                return
-            }
-            if (s > 0) {
-                percentage = (Number(paid) * 100 / Number(s)).toFixed(2)
-                percentage = percentage + "%"
-            } else {
-                percentage = ""
-            }
-            $("#unpaid").val(Number(s)-Number(paid))
-            $("#percentage").val(percentage)
+            // paid = $("#paid").val()
+            // if (paid > s){
+            //     $("#paid").val(s)
+            //     $("#percentage").val("100.00%")
+            //     return
+            // }
+            // if (s > 0) {
+            //     percentage = (Number(paid) * 100 / Number(s)).toFixed(2)
+            //     percentage = percentage + "%"
+            // } else {
+            //     percentage = ""
+            // }
+            // $("#unpaid").val(Number(s)-Number(paid))
+            // $("#percentage").val(percentage)
         })
     </script>
 </body>

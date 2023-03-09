@@ -1219,12 +1219,17 @@ class ManagerController extends AdminBaseController
             'budget' => $request['budget'],
             'others' => $request['others'],
             'total' => $request['province'] + $request['city'] + $request['bond'] + $request['budget'] + $request['others'],
-            "paid" => $request['paid'],
+            "paid" => 0,
             "staff" => $request['staff'],
             "year" => $request['year'],
             "projectId" => $request['projectId']
         ];
-        var_dump($data);
+        $res = Db::name('income')->insert($data);
+        if ($res !== false) {
+            $this->success("成功", url('manager/listincome', ['porjectId' => $projectId]));
+        } else {
+            $this->error("出现错误");
+        }
     }
 
     public function postIncomeUpdate()

@@ -1054,8 +1054,17 @@ class ManagerController extends AdminBaseController
             ->where('p.projectId = c.projectId')
             ->where('c.contractId = s.contractId')
             ->order('s.id', 'desc')
-            ->select();
+            ->find();
         $this->assign('data', $data);
+        // var_dump($data);
+        // for ($x = 1; $x <= 7; $x++) {
+        //     $names = json_decode($data['file_name_' . $x]);
+        //     $urls = json_decode($data['file_url_' . $x]);
+        //     if ($urls != null and $names != null) {
+        //         $files = array_combine($urls, $names);
+        //         $this->assign('file_' . $x, $files);
+        //     }
+        // }
         return $this->fetch();
     }
 
@@ -1128,4 +1137,35 @@ class ManagerController extends AdminBaseController
     {
 
     }
+
+    public function addSavety()
+    {
+
+    }
+
+    public function updateSavety()
+    {
+
+    }
+
+    public function deleteSavety()
+    {
+
+    }
+
+    public function listSavety()
+    {
+
+    }
+    public function postSavetyAdd()
+    {
+
+    }
+
+    public function postSavetyUpdate()
+    {
+
+    }
+
+    // public function 
 }

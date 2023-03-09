@@ -64,6 +64,7 @@
         var 工程信息 = ['listprojectinfo', 'updateproject', 'addproject',],
             合同录入 = ['listcontract', 'addcontract', 'updatecontract'],
             支付录入 = ['listprojectpayments', 'pay', 'updatepayment'],
+            资金来源 = ['listincome', 'addincome']
             施工录入 = ['listconstruction', 'addconstruction'],
             监理录入 = ['listsupervision', 'addsupervision']
             工程设计 = ['listdesign', 'listdesigns', 'adddesign'];
@@ -71,10 +72,10 @@
         菜单列表[0] = 工程信息;
         菜单列表[1] = 合同录入;
         菜单列表[2] = 支付录入;
-        菜单列表[3] = 施工录入;
-        菜单列表[4] = 监理录入;
-        菜单列表[5] = 工程设计;
-        菜单列表[6] = 0;
+        菜单列表[3] = 资金来源;
+        菜单列表[4] = 施工录入;
+        菜单列表[5] = 监理录入;
+        菜单列表[6] = 工程设计;
         $.each(菜单列表, function (i, n) {
             var 顶部菜单位置 = $.inArray(action_name, n)
             if (顶部菜单位置 >= 0) {

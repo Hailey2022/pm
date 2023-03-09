@@ -449,6 +449,10 @@ class ManagerController extends AdminBaseController
         } else {
             $this->assign("projectName", $projectName);
         }
+        $incomes = Db::name('income')
+            ->where('projectId', $projectId)
+            ->select();
+        $this->assign('incomes', $incomes);
         $contracts = Db::name('user u, pm_contract c')
             ->where('u.id = c.clientId')
             ->where('projectId', $projectId)
@@ -466,6 +470,7 @@ class ManagerController extends AdminBaseController
     }
     public function postPaymentAdd()
     {
+        $this->error('系统更新中');
         $request = $this->request->param();
         if ($this->request->isPost()) {
             $request = $this->request->param();
@@ -502,6 +507,7 @@ class ManagerController extends AdminBaseController
     }
     public function postPaymentUpdate()
     {
+        $this->error("系统更新中");
         $request = $this->request->param();
         if ($this->request->isPost()) {
             $request = $this->request->param();
@@ -649,6 +655,7 @@ class ManagerController extends AdminBaseController
     }
     public function postPaymentDelete()
     {
+        $this->error('系统更新中');
         $paymentId = $this->request->param("paymentId");
         $contractId = $this->getContractIdByPaymentId($paymentId);
         $res = Db::name("payment")
@@ -1211,7 +1218,7 @@ class ManagerController extends AdminBaseController
         $this->assign("projectId", $projectId);
         $request = $this->request->param();
         $data = [
-            'name'=>$request['name'],
+            'name' => $request['name'],
             'comment' => $request['comment'],
             'ccp' => $request['ccp'],
             'province' => $request['province'],

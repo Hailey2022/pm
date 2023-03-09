@@ -14,6 +14,30 @@
             <input type="text" autocomplete="off" hidden name="file_url_{key}[]" value="{filepath}">
         </div>
     </script>
+
+    <script type="text/html" id="money">
+        <li class="source">
+            <span>来源：</span>
+            <select class="source" required style="width: 300px;" name="income[]">
+                <option value="">请选择一份资金来源</option>
+                <foreach name="incomes" item="income">
+                    <option value="{$income.id}">{$income.name}</option>
+                </foreach>
+            </select>
+            <select required name="who[]">
+                    <option value="">请选择</option>
+                    <option value="ccp">中央</option>
+                    <option value="province">省</option>
+                    <option value="city">市</option>
+                    <option value="bond">专项债(区)</option>
+                    <option value="budget">预算(区)</option>
+                    <option value="others">其他</option>
+            </select>
+            <input required class="to10k" type="number" step="0.01" min=0 max=0 autocomplete="off" name="price[]" placeholder="金额">
+            <xfremove>删除</xfremove>
+        </li>
+    </script>
+
 </head>
 <script type="text/javascript">
     var GV = {
@@ -26,6 +50,7 @@
 <script src="__STATIC__/js/wind.js"></script>
 <script src="__STATIC__/js/admin.js"></script>
 <script src="__STATIC__/xf/xf.js"></script>
+
 
 <body>
     <include file="manager/left_menu" projectID="${projectId|default=''}" />
@@ -62,7 +87,7 @@
                         <!-- <span class="xf_ser">万元：</span>
                     <input id="10k-contractAmount" type="text" autocomplete="off" disabled value=""> -->
                     </li>
-                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                    <!-- <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>中央：</span>
                         <input required class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="ccp">
                         <span class="xf_ser">万元：</span>
@@ -70,8 +95,7 @@
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>省：</span>
-                        <input required class="to10k" type="number" step="0.01" min=0 autocomplete="off"
-                            name="province">
+                        <input required class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="province">
                         <span class="xf_ser">万元：</span>
                         <input type="text" autocomplete="off" value="" disabled>
                     </li>
@@ -98,7 +122,8 @@
                         <input required class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="others">
                         <span class="xf_ser">万元：</span>
                         <input type="text" autocomplete="off" value="" disabled>
-                    </li>
+                    </li> -->
+
                     <li>
                         <span>备注：</span>
                         <textarea type="text" rows="4" cols="40" autocomplete="off" name="comment" value=""></textarea>
@@ -106,6 +131,20 @@
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>支付凭证附件：</span>
                         <xfupload file_id="1">上传</xfupload>
+                    </li>
+                </ul>
+            </div>
+
+
+            <div class="xf_input">
+                <h4 class="xf_input_h4">支付明细</h4>
+                <ul id="here">
+                    <li id="control">
+                        <xfadd>增加</xfadd>
+                    </li>
+                    <li>
+                        <span>合计：</span>
+                        <input id="sum" disabled />
                     </li>
                 </ul>
             </div>
@@ -121,6 +160,18 @@
             })
             $("#sum").val(s)
         })
+    </script>
+    <script>
+        $("xfadd").on("click", function () {
+            var tmp_html = $('#money').html();
+            id = "lala"
+            html = tmp_html.replace(/\{id\}/g, id);
+            $('#here').append(html);
+            $("xfremove").on('click', function () {
+                $(this).parent('li').remove()
+            })
+        })
+
     </script>
 </body>
 

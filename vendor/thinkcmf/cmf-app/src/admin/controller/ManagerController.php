@@ -1054,7 +1054,7 @@ class ManagerController extends AdminBaseController
             ->where('p.projectId = c.projectId')
             ->where('c.contractId = s.contractId')
             ->order('s.id', 'desc')
-            ->find();
+            ->select();
         $this->assign('data', $data);
         // var_dump($data);
         // for ($x = 1; $x <= 7; $x++) {
@@ -1080,7 +1080,20 @@ class ManagerController extends AdminBaseController
 
     public function addConstruction()
     {
-
+        $projectId = $this->request->param('projectId');
+        if (!$this->checkProject($projectId)) {
+            $this->error('非法访问项目');
+        }
+        $this->assign("projectId", $projectId);
+        $contracts = Db::name('role_user r, pm_user u, pm_project p, pm_contract c')
+            ->where("c.projectId = p.projectId")
+            ->where("c.clientId = r.user_id")
+            ->where("r.user_id = u.id")
+            ->where("p.projectId", $projectId)
+            ->where("r.role_id", 4)
+            ->select();
+        $this->assign('contracts', $contracts);
+        return $this->fetch();
     }
 
     public function updateConstruction()
@@ -1095,7 +1108,12 @@ class ManagerController extends AdminBaseController
 
     public function listConstruction()
     {
-
+        $projectId = $this->request->param('projectId');
+        if (!$this->checkProject($projectId)) {
+            $this->error('非法访问项目');
+        }
+        $this->assign("projectId", $projectId);
+        return $this->fetch();
     }
 
     public function postConstructionUpdate()
@@ -1105,12 +1123,22 @@ class ManagerController extends AdminBaseController
 
     public function postConstructionAdd()
     {
-
+        $projectId = $this->request->param('projectId');
+        if (!$this->checkProject($projectId)) {
+            $this->error('非法访问项目');
+        }
+        $this->assign("projectId", $projectId);
+        $request = $this->request->param();
+        var_dump($request);
     }
 
     public function addIncome()
     {
-
+        $projectId = $this->request->param('projectId');
+        if (!$this->checkProject($projectId)) {
+            $this->error('非法访问项目');
+        }
+        $this->assign("projectId", $projectId);
     }
 
     public function updateIncome()
@@ -1167,5 +1195,5 @@ class ManagerController extends AdminBaseController
 
     }
 
-    // public function 
+// public function 
 }

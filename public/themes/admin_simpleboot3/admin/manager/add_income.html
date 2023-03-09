@@ -41,7 +41,7 @@
                 <ul>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>下达资金名称：</span>
-                        <input required autocomplete="off" name="year">
+                        <input required autocomplete="off" name="name">
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>资金下达年份：</span>
@@ -49,12 +49,12 @@
                             value="{:date('Y')}">
                     </li>
                     <li>
-                        <span>备注：</span>
-                        <textarea type="text" rows="4" cols="40" autocomplete="off" name="comment" value=""></textarea>
-                    </li>
-                    <li>
                         <span>录入员：</span>
                         <input required name="staff">
+                    </li>
+                    <li>
+                        <span>备注：</span>
+                        <textarea type="text" rows="4" cols="40" autocomplete="off" name="comment" value=""></textarea>
                     </li>
                 </ul>
             </div>

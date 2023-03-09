@@ -1211,6 +1211,7 @@ class ManagerController extends AdminBaseController
         $this->assign("projectId", $projectId);
         $request = $this->request->param();
         $data = [
+            'name'=>$request['name'],
             'comment' => $request['comment'],
             'ccp' => $request['ccp'],
             'province' => $request['province'],
@@ -1226,7 +1227,7 @@ class ManagerController extends AdminBaseController
         ];
         $res = Db::name('income')->insert($data);
         if ($res !== false) {
-            $this->success("成功", url('manager/listincome', ['porjectId' => $projectId]));
+            $this->success("成功", url('manager/listincome', ['projectId' => $projectId]));
         } else {
             $this->error("出现错误");
         }

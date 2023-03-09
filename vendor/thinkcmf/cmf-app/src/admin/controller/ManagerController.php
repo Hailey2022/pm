@@ -1171,6 +1171,7 @@ class ManagerController extends AdminBaseController
             $this->error('非法访问项目');
         }
         $this->assign("projectId", $projectId);
+        return $this->fetch();
     }
 
     public function updateIncome()

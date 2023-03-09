@@ -35,14 +35,32 @@
             <a href="{:url('manager/addincome', ['projectId'=>$projectId])}" class="on add">新增来源</a>
         </div>
         <form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('manager/postIncomeAdd')}">
+            <input name="projectId" hidden value="{$projectId}">
             <div class="xf_input">
                 <h4 class="xf_input_h4">资金来源</h4>
                 <ul>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                        <span>下达年份：</span>
+                        <span>下达资金名称：</span>
+                        <input required autocomplete="off" name="year">
+                    </li>
+                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                        <span>资金下达年份：</span>
                         <input required type="number" step="1" min=1900 max=9999 autocomplete="off" name="year"
                             value="{:date('Y')}">
                     </li>
+                    <li>
+                        <span>备注：</span>
+                        <textarea type="text" rows="4" cols="40" autocomplete="off" name="comment" value=""></textarea>
+                    </li>
+                    <li>
+                        <span>录入员：</span>
+                        <input required name="staff">
+                    </li>
+                </ul>
+            </div>
+            <div class="xf_input">
+                <h4 class="xf_input_h4">资金来源分类</h4>
+                <ul>
                     <li>
                         <span>合计：</span>
                         <input id="sum" disabled value="0" />
@@ -57,11 +75,19 @@
                         <input type="text" autocomplete="off" value="" disabled>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                        <span>资金来源凭证附件：</span>
+                        <xfupload file_id="1">上传</xfupload>
+                    </li>
+                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>省：</span>
                         <input required class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="province"
                             value="0">
                         <span class="xf_ser">万元：</span>
                         <input type="text" autocomplete="off" value="" disabled>
+                    </li>
+                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                        <span>资金来源凭证附件：</span>
+                        <xfupload file_id="2">上传</xfupload>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>市：</span>
@@ -71,11 +97,19 @@
                         <input type="text" autocomplete="off" value="" disabled>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                        <span>资金来源凭证附件：</span>
+                        <xfupload file_id="3">上传</xfupload>
+                    </li>
+                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>专项债(区)：</span>
                         <input required class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="bond"
                             value="0">
                         <span class="xf_ser">万元：</span>
                         <input type="text" autocomplete="off" value="" disabled>
+                    </li>
+                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                        <span>资金来源凭证附件：</span>
+                        <xfupload file_id="4">上传</xfupload>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>预算(区)：</span>
@@ -85,6 +119,10 @@
                         <input type="text" autocomplete="off" value="" disabled>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                        <span>资金来源凭证附件：</span>
+                        <xfupload file_id="5">上传</xfupload>
+                    </li>
+                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>其他：</span>
                         <input required class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="others"
                             value="0">
@@ -92,25 +130,28 @@
                         <input type="text" autocomplete="off" value="" disabled>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                        <span>资金来源凭证附件：</span>
+                        <xfupload file_id="6">上传</xfupload>
+                    </li>
+                </ul>
+
+            </div>
+            <div class="xf_input">
+                <h4 class="xf_input_h4">资金支付情况</h4>
+                <ul>
+                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>已支付：</span>
                         <input id="paid" name="paid" required type="number" step="0.01" min=0 autocomplete="off"
                             value="0">
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                        <span>支付率：</span>
-                        <input id="percentage" required value="" disabled>
-                    </li>
-                    <li>
-                        <span>备注：</span>
-                        <textarea type="text" rows="4" cols="40" autocomplete="off" name="comment" value=""></textarea>
-                    </li>
-                    <li>
-                        <span>录入员：</span>
-                        <input required class="to10k" name="staff">
+                        <span>未支付：</span>
+                        <input id="unpaid" disabled type="number" step="0.01" min=0 autocomplete="off"
+                            value="0">
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                        <span>资金来源凭证附件：</span>
-                        <xfupload file_id="1">上传</xfupload>
+                        <span>支付率：</span>
+                        <input id="percentage" required value="" disabled>
                     </li>
                 </ul>
 
@@ -138,8 +179,8 @@
             } else {
                 percentage = ""
             }
+            $("#unpaid").val(Number(s)-Number(paid))
             $("#percentage").val(percentage)
-
         })
     </script>
 </body>

@@ -1210,7 +1210,20 @@ class ManagerController extends AdminBaseController
         }
         $this->assign("projectId", $projectId);
         $request = $this->request->param();
-        var_dump($request);
+        $data = [
+            'comment' => $request['comment'],
+            'ccp' => $request['ccp'],
+            'province' => $request['province'],
+            'city' => $request['city'],
+            'bond' => $request['bond'],
+            'budget' => $request['budget'],
+            'others' => $request['others'],
+            'total' => $request['province'] + $request['city'] + $request['bond'] + $request['budget'] + $request['others'],
+            "paid" => $request['paid'],
+            "staff" => $request['staff'],
+            "year" => $request['year']
+        ];
+        var_dump($data);
     }
 
     public function postIncomeUpdate()
@@ -1275,5 +1288,4 @@ class ManagerController extends AdminBaseController
         $this->assign("projectId", $projectId);
     }
 
-// public function 
 }

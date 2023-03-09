@@ -1060,4 +1060,34 @@ class ManagerController extends AdminBaseController
     {
 
     }
+
+    public function addConstruction()
+    {
+
+    }
+
+    public function updateConstruction()
+    {
+
+    }
+
+    public function deleteConstruction()
+    {
+
+    }
+
+    public function listConstruction()
+    {
+
+    }
+
+    public function postConstructionUpdate()
+    {
+
+    }
+
+    public function postConstructionAdd()
+    {
+
+    }
 }

@@ -34,11 +34,15 @@
             <a href="{:url('manager/listincome', ['projectId'=>$projectId])}">资金来源</a>
             <a href="{:url('manager/addincome', ['projectId'=>$projectId])}" class="on add">新增来源</a>
         </div>
-        <form method="post" class="form-horizontal js-ajax-form margin-top-20"
-            action="{:url('manager/postIncomeAdd')}">
+        <form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('manager/postIncomeAdd')}">
             <div class="xf_input">
                 <h4 class="xf_input_h4">资金来源</h4>
                 <ul>
+                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                        <span>下达年份：</span>
+                        <input required type="number" step="1" min=1900 max=9999 autocomplete="off" name="year"
+                            value="{:date('Y')}">
+                    </li>
                     <li>
                         <span>合计：</span>
                         <input id="sum" disabled value="0" />
@@ -47,40 +51,54 @@
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>中央：</span>
-                        <input required class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="ccp" value="0">
+                        <input required class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="ccp"
+                            value="0">
                         <span class="xf_ser">万元：</span>
                         <input type="text" autocomplete="off" value="" disabled>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>省：</span>
-                        <input required class="to10k" type="number" step="0.01" min=0 autocomplete="off"
-                            name="province" value="0">
+                        <input required class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="province"
+                            value="0">
                         <span class="xf_ser">万元：</span>
                         <input type="text" autocomplete="off" value="" disabled>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>市：</span>
-                        <input required class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="city" value="0">
+                        <input required class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="city"
+                            value="0">
                         <span class="xf_ser">万元：</span>
                         <input type="text" autocomplete="off" value="" disabled>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>专项债(区)：</span>
-                        <input required class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="bond" value="0">
+                        <input required class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="bond"
+                            value="0">
                         <span class="xf_ser">万元：</span>
                         <input type="text" autocomplete="off" value="" disabled>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>预算(区)：</span>
-                        <input required class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="budget" value="0">
+                        <input required class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="budget"
+                            value="0">
                         <span class="xf_ser">万元：</span>
                         <input type="text" autocomplete="off" value="" disabled>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>其他：</span>
-                        <input required class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="others" value="0">
+                        <input required class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="others"
+                            value="0">
                         <span class="xf_ser">万元：</span>
                         <input type="text" autocomplete="off" value="" disabled>
+                    </li>
+                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                        <span>已支付：</span>
+                        <input id="paid" name="paid" required type="number" step="0.01" min=0 autocomplete="off"
+                            value="0">
+                    </li>
+                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                        <span>支付率：</span>
+                        <input id="percentage" required value="" disabled>
                     </li>
                     <li>
                         <span>备注：</span>
@@ -102,12 +120,26 @@
         </form>
     </div>
     <script>
-        $(".to10k").on("change keyup", function () {
+        $("input").on("change keyup", function () {
             var s = 0;
             $(".to10k").each(function () {
                 s += Number($(this).val())
             })
             $("#sum").val(s)
+            paid = $("#paid").val()
+            if (paid > s){
+                $("#paid").val(s)
+                $("#percentage").val("100.00%")
+                return
+            }
+            if (s > 0) {
+                percentage = (Number(paid) * 100 / Number(s)).toFixed(2)
+                percentage = percentage + "%"
+            } else {
+                percentage = ""
+            }
+            $("#percentage").val(percentage)
+
         })
     </script>
 </body>

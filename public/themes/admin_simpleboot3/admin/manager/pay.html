@@ -14,16 +14,20 @@
             <input type="text" autocomplete="off" hidden name="file_url_{key}[]" value="{filepath}">
         </div>
     </script>
-
+    <input id="incomes" value='{$incomes}' style="display: none;" />
     <script type="text/html" id="money">
         <li class="source">
             <span>来源：</span>
-            <select class="source" required style="width: 300px;" name="income[]">
+            <select class="income" required style="width: 300px;" name="income[]">
                 <option value="">请选择一份资金来源</option>
                 <foreach name="incomes" item="income">
-                    <option value="{$income.id}">{$income.name}</option>
+                    <option class="income" value="{$income.id}">{$income.name}</option>
                 </foreach>
+                <!-- <foreach name="incomes" item="income">
+                    <option class="income" cpp="{$income.ccp}" province="{$income.province}" city="{$income.city}" bond="{$income.bond}" budget="{$income.budget}" others="{$income.others}" value="{$income.id}">{$income.name}</option>
+                </foreach> -->
             </select>
+            
             <select required name="who[]">
                     <option value="">请选择</option>
                     <option value="ccp">中央</option>
@@ -162,15 +166,55 @@
         })
     </script>
     <script>
-        $("xfadd").on("click", function () {
-            var tmp_html = $('#money').html();
-            id = "lala"
-            html = tmp_html.replace(/\{id\}/g, id);
-            $('#here').append(html);
+        function init() {
             $("xfremove").on('click', function () {
                 $(this).parent('li').remove()
             })
+            // $(".income").on('change', function () {
+            //     sources = ['ccp', 'province', 'city', 'bond', 'budget', 'others']
+            //     prices = []
+            //     for (i = 0; i < 6; i++) {
+            //         prices[i] = Number($(this).attr(sources[i])) // 没有这个东西
+            //     }
+            //     max = Math.max(prices)
+            //     $(this).next('input').attr('max', max)
+            // })
+            incomes = $('#incomes').val()
+            incomes = JSON.parse(incomes)
+            $(".income").on('change', function () {
+                sources = ['ccp', 'province', 'city', 'bond', 'budget', 'others']
+                for (var i = 0; i < incomes.length; i++) {
+                    console.log(incomes)
+                    if (incomes[i]['id'] == $(this).val()) {
+                        for (a = 0; a < 6; a++) {
+                            if (incomes[i][sources[a]] > 0) {
+                                max = incomes[i][sources[a]]
+                            }
+                        }
+                    }
+                }
+                $(this).next().next().attr('max', max)
+            })
+
+
+        }
+        $("xfadd").on("click", function () {
+            var tmp_html = $('#money').html();
+            html = tmp_html
+            // id = Math.random(); //TODO: auto
+            // html = tmp_html.replace(/\{id\}/g, id);
+            $('#here').append(html);
+            init()
         })
+        // $(".income").each(function () {
+        //     sources = ['ccp', 'province', 'city', 'bond', 'budget', 'others']
+        //     prices = []
+        //     for (i = 0; i < 6; i++) {
+        //         prices[i] = $(this).attr(sources[i])
+        //     }
+        //     max = Math.max(prices)
+        //     $(this).next('input').attr('max', max)
+        // })
 
     </script>
 </body>

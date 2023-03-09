@@ -1221,7 +1221,8 @@ class ManagerController extends AdminBaseController
             'total' => $request['province'] + $request['city'] + $request['bond'] + $request['budget'] + $request['others'],
             "paid" => $request['paid'],
             "staff" => $request['staff'],
-            "year" => $request['year']
+            "year" => $request['year'],
+            "projectId" => $request['projectId']
         ];
         var_dump($data);
     }

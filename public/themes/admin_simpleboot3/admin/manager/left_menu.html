@@ -5,9 +5,9 @@
 
     <a href="{:url('manager/listContract',array('projectId'=>$projectId))}">合同录入</a>
 
-    <a href="{:url('manager/listProjectPayments',array('projectId'=>$projectId))}">支付录入</a>
-
     <a href="{:url('manager/listIncome',array('projectId'=>$projectId))}">资金来源</a>
+
+    <a href="{:url('manager/listProjectPayments',array('projectId'=>$projectId))}">支付录入</a>
 
     <a href="{:url('manager/listConstruction',array('projectId'=>$projectId))}">施工录入</a>
 
@@ -63,16 +63,16 @@
     $(function () {
         var 工程信息 = ['listprojectinfo', 'updateproject', 'addproject',],
             合同录入 = ['listcontract', 'addcontract', 'updatecontract'],
-            支付录入 = ['listprojectpayments', 'pay', 'updatepayment'],
             资金来源 = ['listincome', 'addincome']
+            支付录入 = ['listprojectpayments', 'pay', 'updatepayment'],
             施工录入 = ['listconstruction', 'addconstruction'],
             监理录入 = ['listsupervision', 'addsupervision']
             工程设计 = ['listdesign', 'listdesigns', 'adddesign'];
         var 菜单列表 = [];
         菜单列表[0] = 工程信息;
         菜单列表[1] = 合同录入;
-        菜单列表[2] = 支付录入;
-        菜单列表[3] = 资金来源;
+        菜单列表[2] = 资金来源;
+        菜单列表[3] = 支付录入;
         菜单列表[4] = 施工录入;
         菜单列表[5] = 监理录入;
         菜单列表[6] = 工程设计;

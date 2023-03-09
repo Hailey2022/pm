@@ -1209,6 +1209,8 @@ class ManagerController extends AdminBaseController
             $this->error('非法访问项目');
         }
         $this->assign("projectId", $projectId);
+        $request = $this->request->param();
+        var_dump($request);
     }
 
     public function postIncomeUpdate()

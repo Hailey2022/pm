@@ -1098,4 +1098,34 @@ class ManagerController extends AdminBaseController
     {
 
     }
+
+    public function addIncome()
+    {
+
+    }
+
+    public function updateIncome()
+    {
+
+    }
+
+    public function deleteIncome()
+    {
+
+    }
+
+    public function listIncome()
+    {
+
+    }
+
+    public function postIncomeAdd()
+    {
+
+    }
+
+    public function postIncomeUpdate()
+    {
+
+    }
 }

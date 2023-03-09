@@ -35,85 +35,94 @@
             <a href="{:url('manager/listsupervision', ['projectId'=>$projectId])}">监理</a>
             <a href="{:url('manager/addsupervision', ['projectId'=>$projectId])}" class="on add">新增监理</a>
         </div>
-        <form method="post" class="form-horizontal js-ajax-form margin-top-20"
-            action="{:url('manager/postSupervisionAdd')}">
-            <input name="projectId" hidden value="{$projectId}">
+        <notempty name="contracts">
+            <form method="post" class="form-horizontal js-ajax-form margin-top-20"
+                action="{:url('manager/postSupervisionAdd')}">
+                <input name="projectId" hidden value="{$projectId}">
+                <div class="xf_input">
+                    <h4 class="xf_input_h4">监理</h4>
+                    <ul>
+                        <li>
+                            <span>合同名称：</span>
+                            <select name="contractId" required style="width: 650px;">
+                                <foreach name="contracts" item="c">
+                                    <option value="{$c.contractId}">{$c.user_login} - {$c.contractName}</option>
+                                </foreach>
+                            </select>
+                        </li>
+
+                        <li>
+                            <span>监理总监：</span>
+                            <input name="supervisor" type="text" autocomplete="off" value="{$supervisor | default=''}">
+                        </li>
+                    </ul>
+                </div>
+                <div class="xf_input">
+                    <h4 class="xf_input_h4">监理</h4>
+                    <ul>
+                        <li>
+                            <span>报告类型：</span>
+                            <select name="type" required>
+                                <option value="1">日报</option>
+                                <option selected value="2">周报</option>
+                                <option value="3">月报</option>
+                                <option value="4">季报</option>
+                                <option value="5">年报</option>
+                            </select>
+                        </li>
+                        <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                            <span>监理日志：</span>
+                            <xfupload file_id="1">上传</xfupload>
+                        </li>
+                        <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                            <span>开工报告：</span>
+                            <xfupload file_id="2">上传</xfupload>
+                        </li>
+                        <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                            <span>监理通知：</span>
+                            <xfupload file_id="3">上传</xfupload>
+                        </li>
+                        <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                            <span>会议纪要：</span>
+                            <xfupload file_id="4">上传</xfupload>
+                        </li>
+                        <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                            <span>监理计划：</span>
+                            <xfupload file_id="5">上传</xfupload>
+                        </li>
+                        <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                            <span id="report">监理周报：</span>
+                            <xfupload file_id="6">上传</xfupload>
+                        </li>
+                        <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                            <span>监理图片：</span>
+                            <xfupload file_id="7">上传</xfupload>
+                        </li>
+                    </ul>
+                </div>
+                <xf_submit><button id="project_submit">提交</button></xf_submit>
+            </form>
+            <else />
+
             <div class="xf_input">
                 <h4 class="xf_input_h4">监理</h4>
                 <ul>
                     <li>
-                        <span>合同名称：</span>
-                        <select name="contractId" required style="width: 650px;">
-                            <foreach name="contracts" item="c">
-                                <option value="{$c.contractId}">{$c.user_login} - {$c.contractName}</option>
-                            </foreach>
-                        </select>
-                    </li>
-
-                    <!-- <li>
-                        <span>监理单位：</span>
-                        <input  type="text" autocomplete="off" disabled value="">
-                    </li> -->
-
-                    <li>
-                        <span>监理总监：</span>
-                        <input name="supervisor" type="text" autocomplete="off" value="">
+                        <span>提示：</span>
+                        <input type="text" value="请先加入监理合同" disabled>
                     </li>
                 </ul>
             </div>
-            <div class="xf_input">
-                <h4 class="xf_input_h4">监理</h4>
-                <ul>
-                    <li>
-                        <span>报告类型：</span>
-                        <select name="type" required>
-                            <option value="1">日报</option>
-                            <option selected value="2">周报</option>
-                            <option value="3">月报</option>
-                            <option value="4">季报</option>
-                            <option value="5">年报</option>
-                        </select>
-                    </li>
-                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                        <span>监理日志：</span>
-                        <xfupload file_id="1">上传</xfupload>
-                    </li>
-                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                        <span>开工报告：</span>
-                        <xfupload file_id="2">上传</xfupload>
-                    </li>
-                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                        <span>监理通知：</span>
-                        <xfupload file_id="3">上传</xfupload>
-                    </li>
-                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                        <span>会议纪要：</span>
-                        <xfupload file_id="4">上传</xfupload>
-                    </li>
-                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                        <span>监理计划：</span>
-                        <xfupload file_id="5">上传</xfupload>
-                    </li>
-                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                        <span id="report">监理周报：</span>
-                        <xfupload file_id="6">上传</xfupload>
-                    </li>
-                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                        <span>监理图片：</span>
-                        <xfupload file_id="7">上传</xfupload>
-                    </li>
-                </ul>
-            </div>
-            <xf_submit><button id="project_submit">提交</button></xf_submit>
-        </form>
+        </notempty>
     </div>
 </body>
 <script>
-    $("select[name='type']").on('change', function(){
+    $("select[name='type']").on('change', function () {
         n = $(this).val()
-        text = $(this).children()[n-1].innerText
+        text = $(this).children()[n - 1].innerText
         text = "监理" + text + "："
         $("#report").text(text)
     })
 </script>
+
 </html>

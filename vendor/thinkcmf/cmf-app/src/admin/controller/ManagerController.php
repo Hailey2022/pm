@@ -997,6 +997,14 @@ class ManagerController extends AdminBaseController
             ->where("r.role_id", 6)
             ->select();
         $this->assign('contracts', $contracts);
+        $data = Db::name('project p, pm_contract c, pm_supervision s')
+            ->where('p.projectId = c.projectId')
+            ->where('c.contractId = s.contractId')
+            ->order('s.id', 'desc')
+            ->find();
+        if ($data != null) {
+            $this->assign('supervisor', $data['supervisor']);
+        }
         return $this->fetch();
     }
 
@@ -1045,7 +1053,7 @@ class ManagerController extends AdminBaseController
         $data = Db::name('project p, pm_contract c, pm_supervision s')
             ->where('p.projectId = c.projectId')
             ->where('c.contractId = s.contractId')
-            // ->where('')
+            ->order('s.id', 'desc')
             ->select();
         $this->assign('data', $data);
         return $this->fetch();

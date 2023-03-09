@@ -48,7 +48,7 @@ div.left_menu {
     float: left;
     width: 150px;
     overflow: hidden;
-    height: 360px;
+    height: 382px!important;
     background-color: #5B6A8A;
     position: fixed;
     left: 0;

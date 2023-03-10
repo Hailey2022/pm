@@ -10,6 +10,17 @@ class ManagerController extends AdminBaseController
     {
         return $this->request->ip();
     }
+
+    public function getUsername()
+    {
+        $id = cmf_get_current_admin_id();
+        $u = Db::name('user')->where('id', $id)->find();
+        if ($u != null) {
+            return $u['user_login'];
+        } else {
+            return null;
+        }
+    }
     public function checkProject($projectId = null)
     {
         $project = Db::name('project')->where('projectId', $projectId)->find();
@@ -1178,6 +1189,7 @@ class ManagerController extends AdminBaseController
             $this->error('非法访问项目');
         }
         $this->assign("projectId", $projectId);
+        $this->assign('username', $this->getUsername());
         return $this->fetch();
     }
 

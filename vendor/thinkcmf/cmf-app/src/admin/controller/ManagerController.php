@@ -1222,6 +1222,19 @@ class ManagerController extends AdminBaseController
             ->order('id', 'desc')
             ->order('year', 'desc')
             ->select();
+        foreach ($incomes as $i => $income) {
+            // $urls = json_decode($income["file_url_1"]);
+            // $names = json_decode($income["file_name_1"]);
+            // if ($urls != null && $names != null) {
+            //     $files_1 = array_combine($urls, $names);
+            // }
+
+            // if ($income['file_url_1'] != null && $income['file_url_1'] != '') {
+            //     $incomes[$i]['file_count_1'] = count($urls);
+            // } else {
+            //     $incomes[$i]['file_count_1'] = 0;
+            // }
+        }
         $this->assign('incomes', $incomes);
         $this->assign("projectName", $this->getProjectNameByProjectId($projectId));
         $this->assign("projectId", $projectId);

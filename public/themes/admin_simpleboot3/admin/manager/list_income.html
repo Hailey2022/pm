@@ -16,6 +16,8 @@
 <script src="__STATIC__/js/wind.js"></script>
 <script src="__STATIC__/js/admin.js"></script>
 <script src="__STATIC__/xf/xf.js"></script>
+<script src="__STATIC__/js/print.min.js"></script>
+<link rel="stylesheet" type="text/css" href="__STATIC__/css/print.min.css" />
 <link rel="stylesheet" type="text/css" href="__STATIC__/css/xf_ui.css" />
 <style>
     .btns {
@@ -94,7 +96,23 @@
                             <td>{$i.paid}</td>
                             <td>{$i.total-$i.paid}</td>
                             <td></td>
-                            <td>查看</td>
+                            <td>
+                                <!-- <if condition="$i['file_url_1'] == null || $i['file_url_1'] == ''">
+                                    <xfviewfile file='{$i.file_url_1}'>查看</xfviewfile>
+                                    <xfdownloadfile>下载</xfdownloadfile>
+                                    <else />
+                                    <if condition="$i['file_url_1'] != null && $i['file_url_1'] != '' && $i['file_url_1']">
+                                        <xfviewfile file='{$i.file_url_1}'>查看</xfviewfile>
+                                        <xfdownloadfile>下载</xfdownloadfile>
+                                    </if>
+                                </if> -->
+                                <switch name="$i.file_count_1">
+                                    <case value="0">0000</case>
+                                    <case value="1">1111</case>
+                                    <default />
+                                    more
+                                </switch>
+                            </td>
                             <td></td>
                         </tr>
                     </foreach>

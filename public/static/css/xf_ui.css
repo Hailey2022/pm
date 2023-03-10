@@ -37,7 +37,8 @@ a {
 }
 
 body {
-    display: block; overflow-x: hidden;
+    display: block;
+    overflow-x: hidden;
 }
 
 div.main {
@@ -49,7 +50,7 @@ div.left_menu {
     float: left;
     width: 150px;
     overflow: hidden;
-    height: 380px!important;
+    height: 380px !important;
     background-color: #5B6A8A;
     position: fixed;
     left: 0;
@@ -60,17 +61,21 @@ div.left_menu {
 }
 
 div.left_menu a {
-    display:block;
+    display: block;
     line-height: 45px;
-    text-align: center;color: #fcfcfc;
+    text-align: center;
+    color: #fcfcfc;
 }
 
-div.left_menu a:hover,div.left_menu a.on {
-    background-color: bisque;color: #000;
-   
-}
+div.left_menu a:hover,
 div.left_menu a.on {
-    cursor:default ;
+    background-color: bisque;
+    color: #000;
+
+}
+
+div.left_menu a.on {
+    cursor: default;
 }
 
 
@@ -88,7 +93,10 @@ div.xf_input {
     float: left;
     min-width: 1000px;
 }
-div.xf_input:last-child{ margin-bottom: 50px;}
+
+div.xf_input:last-child {
+    margin-bottom: 50px;
+}
 
 h4.xf_input_h4 {
     background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAGBAMAAAD9IJlFAAAAJ1BMVEUAAACAgIBqcHVqcHVuc3ltcHhtcnducXhtcnhtcXhtcndtcndtcnh84727AAAADHRSTlMAADAxX2COkN7f7u/sMiwUAAAAH0lEQVQIHWMAgyIGoQQGTQULBQamLYsYGBhiAhjAAAA1JQOK8B+6tAAAAABJRU5ErkJggg==") no-repeat 5px;
@@ -317,19 +325,29 @@ div.main_menu a:not(.on):hover {
     background-color: #257db9;
     color: #fff;
 }
-table.list_contract th,table.list_contract td{
+
+table.list_contract th,
+table.list_contract td {
     text-align: center;
 
 }
+
 /* .list_project_payments 不能移除，前面有bootstrap影响 */
 table.list_project_payments>thead>tr,
 table.list_project_payments>thead>tr>th,
 table.list_project_payments>tbody>th,
 table.list_project_payments>tbody>tr>th,
-table.list_project_payments>tbody>tr>td{
-    text-align: center; vertical-align:middle; border: 1px solid #000;
+table.list_project_payments>tbody>tr>td {
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid #000;
     border-collapse: collapse;
 }
-table.list_project_payments{ float: left;}
 
-table.list_project_payments>tbody>tr:hover{background-color: #ddd}
+table.list_project_payments {
+    float: left;
+}
+
+table.list_project_payments>tbody>tr:hover {
+    background-color: #ddd
+}

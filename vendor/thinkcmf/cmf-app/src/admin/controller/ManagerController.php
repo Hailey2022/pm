@@ -1217,6 +1217,13 @@ class ManagerController extends AdminBaseController
         if (!$this->checkProject($projectId)) {
             $this->error('非法访问项目');
         }
+        $incomes = Db::name("income")
+            ->where('projectId', $projectId)
+            ->order('id', 'desc')
+            ->order('year', 'desc')
+            ->select();
+        $this->assign('incomes', $incomes);
+        $this->assign("projectName", $this->getProjectNameByProjectId($projectId));
         $this->assign("projectId", $projectId);
         return $this->fetch();
     }

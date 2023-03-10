@@ -700,11 +700,12 @@ function openUploadDialog(dialog_title, callback, extra_params, multi, filetype,
             fixed: true,
             background: "#CCCCCC",
             opacity: 0,
+            y: 'top',
+            top: '10%',
             ok: function () {
                 if (typeof callback == 'function') {
                     var iframewindow = this.iframe.contentWindow;
                     var files = iframewindow.get_selected_files();
-                    console.log(files);
                     if (files && files.length > 0) {
                         callback.apply(this, [this, files, extra_params]);
                     } else {

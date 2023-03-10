@@ -1210,7 +1210,16 @@ class ManagerController extends AdminBaseController
         }
         $this->assign("projectId", $projectId);
     }
-
+    public function expIncome(){
+        // $projectId = $this->request->param('projectId');
+        // if (!$this->checkProject($projectId)) {
+        //     $this->error('非法访问项目');
+        // }
+        require_once dirname(__FILE__) . '/../../../../../phpoffice/phpexcel/Classes/PHPExcel/IOFactory.php';  
+        require_once dirname(__FILE__) . '/../../../../../phpoffice/phpexcel/Classes/PHPExcel.php';  
+        require_once dirname(__FILE__) . '/../../../../../phpoffice/phpexcel/Classes/PHPExcel/Writer/Excel2007.php';
+        $objPHPExcel = \PHPExcel_IOFactory::load("__STATIC__/excel/demo.xls");
+    }
     public function listIncome()
     {
         $projectId = $this->request->param('projectId');
@@ -1222,19 +1231,19 @@ class ManagerController extends AdminBaseController
             ->order('id', 'desc')
             ->order('year', 'desc')
             ->select();
-        foreach ($incomes as $i => $income) {
-            // $urls = json_decode($income["file_url_1"]);
-            // $names = json_decode($income["file_name_1"]);
-            // if ($urls != null && $names != null) {
-            //     $files_1 = array_combine($urls, $names);
-            // }
+        // foreach ($incomes as $i => $income) {
+        //     $urls = json_decode($income["file_url_1"]);
+        //     $names = json_decode($income["file_name_1"]);
+        //     if ($urls != null && $names != null) {
+        //         $files_1 = array_combine($urls, $names);
+        //     }
 
-            // if ($income['file_url_1'] != null && $income['file_url_1'] != '') {
-            //     $incomes[$i]['file_count_1'] = count($urls);
-            // } else {
-            //     $incomes[$i]['file_count_1'] = 0;
-            // }
-        }
+        //     if ($income['file_url_1'] != null && $income['file_url_1'] != '') {
+        //         $incomes[$i]['file_count_1'] = count($urls);
+        //     } else {
+        //         $incomes[$i]['file_count_1'] = 0;
+        //     }
+        // }
         $this->assign('incomes', $incomes);
         $this->assign("projectName", $this->getProjectNameByProjectId($projectId));
         $this->assign("projectId", $projectId);

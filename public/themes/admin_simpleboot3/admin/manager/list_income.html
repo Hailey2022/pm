@@ -16,6 +16,7 @@
 <script src="__STATIC__/js/wind.js"></script>
 <script src="__STATIC__/js/admin.js"></script>
 <script src="__STATIC__/xf/xf.js"></script>
+<link rel="stylesheet" type="text/css" href="__STATIC__/css/xf_ui.css" />
 <style>
     .btns {
         float: right;
@@ -36,10 +37,9 @@
         overflow-y: scroll;
     }
 </style>
-<link rel="stylesheet" type="text/css" href="__STATIC__/css/xf_ui.css" />
 
 <body>
-    <include file="manager/left_menu" projectID="${projectId|default=''}" />
+    <include file="manager/left_menu" />
     <div class="main">
         <div class="main_menu">
             <a href="{:url('manager/listincome', ['projectId'=>$projectId])}">资金来源</a>

@@ -49,18 +49,8 @@
                     <input type="text" autocomplete="off" name="contractName" required>
                 </li>
                 <li>
-                    <span>服务商：</span>
-                    <input type="text" autocomplete="off" list="clientName" name="clientName" required>
-                    <datalist id="clientName">
-                        <option name="clientName" value="">实施单位名称</option>
-                        <foreach name="users" item="u">
-                            <option name="clientName" value="{$u.user_login}"> {$u.user_login}</option>
-                        </foreach>
-                    </datalist>
-                </li>
-                <li>
-                    <span>支付条件：</span>
-                    <input type="text" autocomplete="off" name="paymentTerms" value="">
+                    <span>合同编号：</span>
+                    <input type="text" autocomplete="off" name="contractNumber" value="">
                 </li>
                 <li>
                     <span>合同类别：</span>
@@ -71,6 +61,18 @@
                         </foreach>
                     </select>
                 </li>
+                <li>
+                    <span>服务商：</span>
+                    <input type="text" autocomplete="off" list="clientName" name="clientName" required>
+                    <datalist id="clientName">
+                        <option name="clientName" value="">实施单位名称</option>
+                        <foreach name="users" item="u">
+                            <option name="clientName" value="{$u.user_login}"> {$u.user_login}</option>
+                        </foreach>
+                    </datalist>
+                </li>
+
+
                 <li>
                     <span>甲方名称：</span>
                     <input type="text" autocomplete="off" name="firstParty" value="">
@@ -94,9 +96,10 @@
                     <span>中文金额：</span>
                     <input id="cn-contractAmount" type="text" autocomplete="off" disabled value="">
                 </li>
+
                 <li>
-                    <span>合同编号：</span>
-                    <input type="text" autocomplete="off" name="contractNumber" value="">
+                    <span>支付条件：</span>
+                    <input type="text" autocomplete="off" name="paymentTerms" value="">
                 </li>
                 <li>
                     <span>合同起始时间：</span>

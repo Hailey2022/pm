@@ -108,7 +108,9 @@
                                     </if>
                                 </if> -->
                             </td>
-                            <td></td>
+                            <td><a class="deleteIncomeBtn"
+                                    href="{:url('manager/deleteincome', ['projectId'=>$projectId, 'incomeId'=>$i.id])}">删除</a>
+                            </td>
                         </tr>
                     </foreach>
                 </tbody>
@@ -117,5 +119,13 @@
         </div>
 
 </body>
+<script>
+    $('.deleteIncomeBtn').on('click', function () {
+        res = confirm("确定删除？")
+        if (!res) {
+            return false
+        }
+    })
+</script>
 
 </html>

@@ -1209,14 +1209,24 @@ class ManagerController extends AdminBaseController
             $this->error('非法访问项目');
         }
         $this->assign("projectId", $projectId);
+        $incomeId = $this->request->param('incomeId');
+        $res = Db::name('income')
+            ->where('id', $incomeId)
+            ->delete();
+        if ($res !== false) {
+            $this->success("已删除", url('manager/listincome', ['projectId' => $projectId]));
+        } else {
+            $this->error("无法错误");
+        }
     }
-    public function expIncome(){
+    public function expIncome()
+    {
         // $projectId = $this->request->param('projectId');
         // if (!$this->checkProject($projectId)) {
         //     $this->error('非法访问项目');
         // }
-        require_once dirname(__FILE__) . '/../../../../../phpoffice/phpexcel/Classes/PHPExcel/IOFactory.php';  
-        require_once dirname(__FILE__) . '/../../../../../phpoffice/phpexcel/Classes/PHPExcel.php';  
+        require_once dirname(__FILE__) . '/../../../../../phpoffice/phpexcel/Classes/PHPExcel/IOFactory.php';
+        require_once dirname(__FILE__) . '/../../../../../phpoffice/phpexcel/Classes/PHPExcel.php';
         require_once dirname(__FILE__) . '/../../../../../phpoffice/phpexcel/Classes/PHPExcel/Writer/Excel2007.php';
         $objPHPExcel = \PHPExcel_IOFactory::load("__STATIC__/excel/demo.xls");
     }

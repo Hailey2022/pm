@@ -10,6 +10,48 @@ class ManagerController extends AdminBaseController
     {
         return $this->request->ip();
     }
+    public function getExcelHeaderArray()
+    {
+        return array(
+            'A',
+            'B',
+            'C',
+            'D',
+            'E',
+            'F',
+            'G',
+            'H',
+            'I',
+            'J',
+            'K',
+            'L',
+            'M',
+            'N',
+            'O',
+            'P',
+            'Q',
+            'R',
+            'S',
+            'T',
+            'U',
+            'V',
+            'W',
+            'X',
+            'Y',
+            'Z',
+            'AA',
+            'AB',
+            'AC',
+            'AD',
+            'AE',
+            'AF',
+            'AG',
+            'AH',
+            'AI',
+            'AJ',
+            'AK'
+        );
+    }
     public function exportExcel($filename, $objWriter)
     {
         ob_end_clean();
@@ -1268,45 +1310,7 @@ class ManagerController extends AdminBaseController
         $objPHPExcel = \PHPExcel_IOFactory::load($root . "excel/income.xlsx");
         $objPHPExcel->setActiveSheetIndex(0);
         $objPHPExcel->getActiveSheet();
-        $header_arr = array(
-            'A',
-            'B',
-            'C',
-            'D',
-            'E',
-            'F',
-            'G',
-            'H',
-            'I',
-            'J',
-            'K',
-            'L',
-            'M',
-            'N',
-            'O',
-            'P',
-            'Q',
-            'R',
-            'S',
-            'T',
-            'U',
-            'V',
-            'W',
-            'X',
-            'Y',
-            'Z',
-            'AA',
-            'AB',
-            'AC',
-            'AD',
-            'AE',
-            'AF',
-            'AG',
-            'AH',
-            'AI',
-            'AJ',
-            'AK'
-        );
+        $header_arr = $this->getExcelHeaderArray();
         $incomes = Db::name("income")
             ->where('projectId', $projectId)
             ->order('id', 'desc')

@@ -67,7 +67,7 @@
                     </li> -->
                     <li>
                         <span>来源：</span>
-                        <select required name="who">
+                        <select required name="from">
                             <option value="">请选择</option>
                             <option value="ccp">中央</option>
                             <option value="province">省</option>
@@ -76,7 +76,7 @@
                             <option value="budget">预算(区)</option>
                             <option value="others">其他</option>
                         </select>
-                        <input required class="to10k" type="number" step="0.01" min=0 max=0 autocomplete="off"
+                        <input required class="to10k" type="number" step="0.01" min=0 autocomplete="off"
                             name="price" placeholder="金额">
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">

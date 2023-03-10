@@ -28,7 +28,7 @@
                 </foreach> -->
             </select>
             
-            <select required name="who[]">
+            <select required name="from[]" disabled>
                     <option value="">请选择</option>
                     <option value="ccp">中央</option>
                     <option value="province">省</option>
@@ -184,11 +184,12 @@
             $(".income").on('change', function () {
                 sources = ['ccp', 'province', 'city', 'bond', 'budget', 'others']
                 for (var i = 0; i < incomes.length; i++) {
-                    console.log(incomes)
                     if (incomes[i]['id'] == $(this).val()) {
                         for (a = 0; a < 6; a++) {
                             if (incomes[i][sources[a]] > 0) {
                                 max = incomes[i][sources[a]]
+                                $(this).next().val(sources[a]).change()
+                                //TODO: 如果有多个
                             }
                         }
                     }

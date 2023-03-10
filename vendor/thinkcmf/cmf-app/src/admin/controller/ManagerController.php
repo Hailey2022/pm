@@ -1229,6 +1229,13 @@ class ManagerController extends AdminBaseController
         }
         $this->assign("projectId", $projectId);
         $request = $this->request->param();
+        $res = Db::name('income')
+            ->where('name', $request['name'])
+            ->where('projectId', $projectId)
+            ->find();
+        if ($res != null) {
+            $this->error('有相同的资金来源');
+        }
         $data = [
             'name' => $request['name'],
             'comment' => $request['comment'],
@@ -1244,8 +1251,14 @@ class ManagerController extends AdminBaseController
             "year" => $request['year'],
             "projectId" => $request['projectId']
         ];
-        $data[$request['who']] = $request['price'];
+        $data[$request['from']] = $request['price'];
         $data['total'] = $request['price'];
+        for ($i = 1; $i <= 1; $i++) {
+            if (array_key_exists("file_name_" . $i, $request) && array_key_exists("file_url_" . $i, $request)) {
+                $data["file_name_" . $i] = $request["file_name_" . $i];
+                $data["file_url_" . $i] = $request["file_url_" . $i];
+            }
+        }
         $res = Db::name('income')->insert($data);
         if ($res !== false) {
             $this->success("成功", url('manager/listincome', ['projectId' => $projectId]));

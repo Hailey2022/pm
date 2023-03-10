@@ -10,7 +10,30 @@ class ManagerController extends AdminBaseController
     {
         return $this->request->ip();
     }
+    public function exportExcel($filename, $objWriter)
+    {
+        ob_end_clean();
+        ob_start();
+        header('Content-Disposition: attachment; filename=' . $filename);
+        header('Content-Type: application/vnd.ms-excel');
+        header('Cache-Control: max-age=0');
+        header('Cache-Control: max-age=1');
+        header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+        header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
+        header('Cache-Control: cache, must-revalidate');
+        header('Pragma: public');
 
+        header("Expires: 0");
+        header("Cache-Control:must-revalidate, post-check=0, pre-check=0");
+        header("Content-Type:application/force-download");
+        header("Content-Type:application/octet-stream");
+        header("Content-Type:application/download");
+        ;
+        header("Content-Transfer-Encoding:binary");
+
+        $objWriter->save('php://output');
+        exit;
+    }
     public function getUsername()
     {
         $id = cmf_get_current_admin_id();
@@ -1213,23 +1236,129 @@ class ManagerController extends AdminBaseController
         $incomeId = $this->request->param('incomeId');
         $res = Db::name('income')
             ->where('id', $incomeId)
-            ->delete();
-        if ($res !== false) {
-            $this->success("已删除", url('manager/listincome', ['projectId' => $projectId]));
+            ->find();
+        if ($res != null) {
+            if ($res['paid'] > 0) {
+                $this->error('这个来源有支付，不可删除');
+            }
+            $res = Db::name('income')
+                ->where('id', $incomeId)
+                ->delete();
+            if ($res !== false) {
+                $this->success("已删除", url('manager/listincome', ['projectId' => $projectId]));
+            } else {
+                $this->error("有个错误");
+            }
         } else {
-            $this->error("无法错误");
+            $this->error('不存在的来源');
         }
+
+        $this->error("错误");
     }
     public function expIncome()
     {
-        // $projectId = $this->request->param('projectId');
-        // if (!$this->checkProject($projectId)) {
-        //     $this->error('非法访问项目');
-        // }
+        $projectId = $this->request->param('projectId');
+        if (!$this->checkProject($projectId)) {
+            $this->error('非法访问项目');
+        }
         require_once dirname(__FILE__) . '/../../../../../phpoffice/phpexcel/Classes/PHPExcel/IOFactory.php';
         require_once dirname(__FILE__) . '/../../../../../phpoffice/phpexcel/Classes/PHPExcel.php';
         require_once dirname(__FILE__) . '/../../../../../phpoffice/phpexcel/Classes/PHPExcel/Writer/Excel2007.php';
-        $objPHPExcel = \PHPExcel_IOFactory::load("__STATIC__/excel/demo.xls");
+        $root = dirname(__FILE__) . '/../../../../../../public/static/';
+        $objPHPExcel = \PHPExcel_IOFactory::load($root . "excel/income.xlsx");
+        $objPHPExcel->setActiveSheetIndex(0);
+        $objPHPExcel->getActiveSheet();
+        $header_arr = array(
+            'A',
+            'B',
+            'C',
+            'D',
+            'E',
+            'F',
+            'G',
+            'H',
+            'I',
+            'J',
+            'K',
+            'L',
+            'M',
+            'N',
+            'O',
+            'P',
+            'Q',
+            'R',
+            'S',
+            'T',
+            'U',
+            'V',
+            'W',
+            'X',
+            'Y',
+            'Z',
+            'AA',
+            'AB',
+            'AC',
+            'AD',
+            'AE',
+            'AF',
+            'AG',
+            'AH',
+            'AI',
+            'AJ',
+            'AK'
+        );
+        $incomes = Db::name("income")
+            ->where('projectId', $projectId)
+            ->order('id', 'desc')
+            ->order('year', 'desc')
+            ->select();
+        $firstRow = 4;
+        $projectName = $this->getProjectNameByProjectId($projectId);
+        foreach ($incomes as $key => $income) {
+            $row = $key + 4;
+            $total = $income['total'];
+            $paid = $income['paid'];
+            $unpaid = $total - $paid;
+            $percentage = round($paid * 100 / $total, 2) . '%';
+            $objPHPExcel->getActiveSheet()->setCellValue($header_arr[0] . $row, $key + 1);
+            $objPHPExcel->getActiveSheet()->setCellValue($header_arr[2] . $row, $projectName);
+            $objPHPExcel->getActiveSheet()->setCellValue($header_arr[12] . $row, $unpaid);
+            foreach ($income as $k => $i) {
+                if ($k == 'name') {
+                    $objPHPExcel->getActiveSheet()->setCellValue($header_arr[1] . $row, $i);
+                }
+                if ($k == 'year') {
+                    $objPHPExcel->getActiveSheet()->setCellValue($header_arr[3] . $row, $i);
+                }
+                if ($k == 'ccp') {
+                    $objPHPExcel->getActiveSheet()->setCellValue($header_arr[4] . $row, $i);
+                }
+                if ($k == 'province') {
+                    $objPHPExcel->getActiveSheet()->setCellValue($header_arr[5] . $row, $i);
+                }
+                if ($k == 'city') {
+                    $objPHPExcel->getActiveSheet()->setCellValue($header_arr[6] . $row, $i);
+                }
+                if ($k == 'bond') {
+                    $objPHPExcel->getActiveSheet()->setCellValue($header_arr[7] . $row, $i);
+                }
+                if ($k == 'budget') {
+                    $objPHPExcel->getActiveSheet()->setCellValue($header_arr[8] . $row, $i);
+                }
+                if ($k == 'others') {
+                    $objPHPExcel->getActiveSheet()->setCellValue($header_arr[9] . $row, $i);
+                }
+                if ($k == 'total') {
+                    $objPHPExcel->getActiveSheet()->setCellValue($header_arr[10] . $row, $i);
+                }
+                if ($k == 'paid') {
+                    $objPHPExcel->getActiveSheet()->setCellValue($header_arr[11] . $row, $i);
+                }
+            }
+        }
+        $PHPWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, "Excel2007");
+        $filename = $projectName . "资金来源.xlsx";
+        $this->exportExcel($filename, $PHPWriter);
     }
     public function listIncome()
     {

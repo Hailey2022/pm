@@ -3,6 +3,7 @@
     padding: 0;
     border: none;
     list-style-type: none;
+    user-select: none;
     -moz-user-select: none;
     -webkit-user-select: none
 }
@@ -229,6 +230,7 @@ input[type=number]::-webkit-outer-spin-button {
 
 input[type=number] {
     -moz-appearance: textfield;
+    appearance: textfield;
 }
 
 xf_submit {

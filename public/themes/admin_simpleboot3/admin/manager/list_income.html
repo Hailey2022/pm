@@ -96,7 +96,10 @@
                             <td>{$i.total}</td>
                             <td>{$i.paid}</td>
                             <td>{$i.total-$i.paid}</td>
-                            <td></td>
+                            <if condition="$i.total == 0">
+                                <td>100%</td>
+                            </if>
+                            <td>{:round($i.paid * 100 / $i.total , 2)}%</td>
                             <td>
                                 <!-- <if condition="$i['file_url_1'] == null || $i['file_url_1'] == ''">
                                     <xfviewfile file='{$i.file_url_1}'>查看</xfviewfile>

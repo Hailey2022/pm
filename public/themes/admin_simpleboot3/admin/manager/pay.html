@@ -180,7 +180,7 @@
                     if (incomes[i]['id'] == $(this).val()) {
                         for (a = 0; a < 6; a++) {
                             if (incomes[i][sources[a]] > 0) {
-                                max = incomes[i][sources[a]]
+                                max = formatNum(incomes[i][sources[a]] - incomes[i]['paid'])
                                 $(this).next().val(sources[a]).change()
                                 $(this).next().next().next().val(sources[a])
                                 $(this).next().next().attr('max', max)

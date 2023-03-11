@@ -8,7 +8,7 @@
     <script type="text/html" id="tpl">
         <div id="file-{id}"> 
             <xfpreview onclick="xfPreview('/upload/{filepath}')">预览</xfpreview>
-            <xfdelete onclick="javascript:handleDelete('#file-{id}');">删除</xfdelete>
+            <xfdelete onclick="javascript:handleDelete('#file-{id}');renameButton();">删除</xfdelete>
             <input type="text" autocomplete="off" name="file_name_{key}[]" value="{name}">
             <input type="text" autocomplete="off" hidden name="file_url_{key}[]" value="{filepath}">
         </div>

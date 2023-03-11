@@ -10,8 +10,8 @@ function handleDelete(id_str) {
     $(id_str).remove();
 
 }
-// TODO: rename it to 上传 when there isn't 
 function renameButton() {
+    $('div.xf_input li').find('xfupload').text('上传');
     $('div.xf_input li:has(input:hidden)').find('xfupload').text('增加');
 }
 // function upload() {
@@ -34,25 +34,15 @@ function to10k(that) {
 // window.onbeforeunload = function () {
 //     return "Leaving this page may cause loss all your data!";
 // };
-$(function () {
-    // window.onbeforeunload = function () {
-    //     return "Leaving this page may cause loss all your data!";
-    // };
-    
+$(function () {  
     $('.to10k').each(function () {
         to10k($(this))
     })
     $("xfupload").on("click", function () {
         var title = $(this).prev('span').text().replace("：", "") + "上传"
         var id = $(this).parent().attr('id')
-        // var attr = $(this).attr('date')
         var key = $(this).attr('file_id')
         var tpl = "tpl";
-        // if (typeof attr !== 'undefined' && attr !== false) {
-        //     var tpl = "tpl_with_date";
-        // } else {
-        //     var tpl = "tpl";
-        // }
         openUploadDialog(title, function (dialog, files) {
             var self_tpl = $('#' + tpl).html();
             var html = '';
@@ -70,10 +60,8 @@ $(function () {
             files.length && renameButton();
         }, null, 1, 'file');
     });
-    //TODO: sometimes onkeyup not working!!!!!!!!!!!!!!
     $('.to10k').on('change keyup', function () {
         to10k($(this))
     });
-
     renameButton();
 })

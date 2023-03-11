@@ -9,7 +9,7 @@
         <div id="file-{id}">
             <upload_span></upload_span>
             <xfpreview onclick="xfPreview('/upload/{filepath}')">预览</xfpreview>
-            <xfdelete onclick="javascript:handleDelete('#file-{id}');">删除</xfdelete>
+            <xfdelete onclick="javascript:handleDelete('#file-{id}');renameButton();">删除</xfdelete>
             <input type="text"  name="file_name_{key}[]" value="{name}">
             <input type="text"  hidden name="file_url_{key}[]" value="{filepath}">
         </div>

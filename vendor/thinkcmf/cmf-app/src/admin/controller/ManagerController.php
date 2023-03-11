@@ -546,63 +546,87 @@ class ManagerController extends AdminBaseController
     }
     public function postPaymentAdd()
     {
-        // var_dump($this->request->param());
-        $request = $this->request->param();
-        $incomeCount = count($request['income']);
-        if ($incomeCount != count($request['from']) || count($request['price']) != $incomeCount || $incomeCount == 0) {
-            $this->error("请选择支付来源");
-        }
-        $fromList = ['ccp', 'province', 'city', 'bond', 'budget', 'others'];
-        $result = [];
-        for ($i = 0; $i < $incomeCount; $i++) {
-            $id = $request['income'][$i];
-            $from = $request['from'][$i];
-            $price = $request['price'][$i];
-            if (!array_key_exists($from, $fromList)) {
-                $this->error('不要乱post');
-            }
-            $res = Db::name('income')->where('id', $id)->find();
-            if ($res != null) {
-                if ($res['paid'] + $price > $res['total']) {
-                    $this->error("金额不够了， 请检查");
-                }
-                if ($price > $res[$from]) {
-                    $this->error("不合理的金额");
-                }
-                
-            } else {
-                $this->error("404 not found...");
-            }
-        }
-
-
-
-
-
-        $this->error('系统更新中');
-        $request = $this->request->param();
         if ($this->request->isPost()) {
             $request = $this->request->param();
+            $incomeCount = count($request['income']);
+            if ($incomeCount != count($request['from']) || count($request['price']) != $incomeCount || $incomeCount == 0) {
+                $this->error("请选择支付来源");
+            }
+            $fromList = ['ccp', 'province', 'city', 'bond', 'budget', 'others'];
+            $incomes = [];
+            $result = [];
+            foreach ($fromList as $from) {
+                $result[$from] = 0;
+            }
+            $incomeIds = [];
+            for ($i = 0; $i < $incomeCount; $i++) {
+                $id = $request['income'][$i];
+                if (in_array($id, $incomeIds)) {
+                    $this->error("不要有相同的来源");
+                } else {
+                    array_push($incomeIds, $id);
+                }
+                $from = $request['from'][$i];
+                $price = $request['price'][$i];
+                $incomes[$i] = [
+                    'income' => $request['income'][$i],
+                    'from' => $request['from'][$i],
+                    'price' => $request['price'][$i]
+                ];
+                if (!is_numeric($price)) {
+                    $this->error("非正常金额");
+                }
+                if (!in_array($from, $fromList)) {
+                    $this->error('不要乱post');
+                }
+                $res = Db::name('income')->where('id', $id)->find();
+                if ($res != null) {
+                    if (round($res['paid'] + $price, 2) > $res['total']) {
+                        $this->error("金额不够了， 请检查");
+                    }
+                    if ($price > $res[$from]) {
+                        $this->error("不合理的金额");
+                    }
+                } else {
+                    $this->error("404 not found...");
+                }
+                $result[$from] += $price;
+            }
+            $res = Db::name('payment')->where('contractId', $request['contractId'])->where('installment', $request['installment'])->find();
+            if ($res != null) {
+                $this->error("有相同期数进度款");
+            }
             $data = [
                 'paymentId' => uniqid(),
                 'comment' => $request['comment'],
                 'contractId' => $request['contractId'],
                 'installment' => $request['installment'],
-                'ccp' => $request['ccp'],
-                'province' => $request['province'],
-                'city' => $request['city'],
-                'bond' => $request['bond'],
-                'budget' => $request['budget'],
-                'others' => $request['others'],
-                'total' => $request['province'] + $request['city'] + $request['bond'] + $request['budget'] + $request['others']
+                'ccp' => $result['ccp'],
+                'province' => $result['province'],
+                'city' => $result['city'],
+                'bond' => $result['bond'],
+                'budget' => $result['budget'],
+                'others' => $result['others'],
+                'total' => $result['ccp'] + $result['province'] + $result['city'] + $result['bond'] + $result['budget'] + $result['others'],
+                'incomes' => $incomes
             ];
             if (array_key_exists('file_url_1', $request) && array_key_exists('file_name_1', $request)) {
                 $data['file_url_1'] = $request['file_url_1'];
                 $data['file_name_1'] = $request['file_name_1'];
             }
-            if (array_key_exists('file_url_2', $request) && array_key_exists('file_name_2', $request)) {
-                $data['file_url_2'] = $request['file_url_2'];
-                $data['file_name_2'] = $request['file_name_2'];
+            for ($i = 0; $i < $incomeCount; $i++) {
+                $id = $request['income'][$i];
+                $from = $request['from'][$i];
+                $price = $request['price'][$i];
+
+                $res = Db::name('income')->where('id', $id)->find();
+                $newPaid = round($res['paid'] + $price, 2);
+                $res = Db::name('income')->where('id', $id)->update([
+                    'paid' => $newPaid
+                ]);
+                if ($res === false) {
+                    $this->error("unknown error...");
+                }
             }
             $res = Db::name('payment')->insert($data);
             if ($res !== false) {
@@ -611,8 +635,10 @@ class ManagerController extends AdminBaseController
             } else {
                 $this->error("保存时出错！");
             }
+
+        } else {
+            $this->error("非法支付请求");
         }
-        $this->error("非法支付请求");
     }
     public function postPaymentUpdate()
     {

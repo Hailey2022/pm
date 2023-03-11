@@ -10,8 +10,8 @@
             <upload_span></upload_span>
             <xfpreview onclick="xfPreview('/upload/{filepath}')">预览</xfpreview>
             <xfdelete onclick="javascript:handleDelete('#file-{id}');">删除</xfdelete>
-            <input type="text" autocomplete="off" name="file_name_{key}[]" value="{name}">
-            <input type="text" autocomplete="off" hidden name="file_url_{key}[]" value="{filepath}">
+            <input type="text"  name="file_name_{key}[]" value="{name}">
+            <input type="text"  hidden name="file_url_{key}[]" value="{filepath}">
         </div>
     </script>
     <input id="incomes" value='{$incomes}' style="display: none;" />
@@ -34,7 +34,7 @@
                     <option value="budget">预算(区)</option>
                     <option value="others">其他</option>
             </select>
-            <input required class="to10k" type="number" step="0.01" min=0 max=0 autocomplete="off" name="price[]" placeholder="金额">
+            <input required class="price" type="number" step="0.01" min=0 max=0  name="price[]" placeholder="金额">
             <input required name="from[]" style="display: none;">
             <xfremove>删除</xfremove>
         </li>
@@ -61,14 +61,14 @@
             <a href="{:url('manager/listProjectPayments', ['projectId'=>$projectId])}">支付信息</a>
             <a href="{:url('manager/pay', ['projectId'=>$projectId])}" class="on add">新增支付</a>
         </div>
-        <form method="post" class="form-horizontal js-ajax-form margin-top-20"
-            action="{:url('manager/postPaymentAdd')}">
+        <form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('manager/postPaymentAdd')}"
+            autocomplete="off">
             <div class="xf_input">
                 <h4 class="xf_input_h4">工程支付</h4>
                 <ul>
                     <li>
                         <span>工程名称：</span>
-                        <input type="text" autocomplete="off" value="{$projectName}" disabled>
+                        <input type="text" value="{$projectName}" disabled>
                     </li>
                     <li>
                         <span>合同名称：</span>
@@ -81,54 +81,53 @@
                     </li>
                     <li>
                         <span>进度款（期数）：</span>
-                        <input type="text" autocomplete="off" name="installment" value="">
+                        <input type="text" name="installment" value="">
                     </li>
-                    <li>
+                    <!-- <li>
                         <span>合计：</span>
                         <input id="sum" disabled />
-                        <!-- <span class="xf_ser">万元：</span>
-                    <input id="10k-contractAmount" type="text" autocomplete="off" disabled value=""> -->
-                    </li>
+
+                    </li> -->
                     <!-- <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>中央：</span>
-                        <input required class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="ccp">
+                        <input required class="to10k" type="number" step="0.01" min=0  name="ccp">
                         <span class="xf_ser">万元：</span>
-                        <input type="text" autocomplete="off" value="" disabled>
+                        <input type="text"  value="" disabled>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>省：</span>
-                        <input required class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="province">
+                        <input required class="to10k" type="number" step="0.01" min=0  name="province">
                         <span class="xf_ser">万元：</span>
-                        <input type="text" autocomplete="off" value="" disabled>
+                        <input type="text"  value="" disabled>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>市：</span>
-                        <input required class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="city">
+                        <input required class="to10k" type="number" step="0.01" min=0  name="city">
                         <span class="xf_ser">万元：</span>
-                        <input type="text" autocomplete="off" value="" disabled>
+                        <input type="text"  value="" disabled>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>专项债(区)：</span>
-                        <input required class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="bond">
+                        <input required class="to10k" type="number" step="0.01" min=0  name="bond">
                         <span class="xf_ser">万元：</span>
-                        <input type="text" autocomplete="off" value="" disabled>
+                        <input type="text"  value="" disabled>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>预算(区)：</span>
-                        <input required class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="budget">
+                        <input required class="to10k" type="number" step="0.01" min=0  name="budget">
                         <span class="xf_ser">万元：</span>
-                        <input type="text" autocomplete="off" value="" disabled>
+                        <input type="text"  value="" disabled>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>其他：</span>
-                        <input required class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="others">
+                        <input required class="to10k" type="number" step="0.01" min=0  name="others">
                         <span class="xf_ser">万元：</span>
-                        <input type="text" autocomplete="off" value="" disabled>
+                        <input type="text"  value="" disabled>
                     </li> -->
 
                     <li>
                         <span>备注：</span>
-                        <textarea type="text" rows="4" cols="40" autocomplete="off" name="comment" value=""></textarea>
+                        <textarea type="text" rows="4" cols="40" name="comment" value=""></textarea>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>支付凭证附件：</span>
@@ -155,28 +154,24 @@
         </form>
     </div>
     <script>
-        $(".to10k").on("change keyup", function () {
-            var s = 0;
-            $(".to10k").each(function () {
-                s += Number($(this).val())
-            })
-            $("#sum").val(s)
-        })
-    </script>
-    <script>
+        function beforePost() {
+            // TODO: 检查有没有相同的来源
+            return false
+        }
+
         function init() {
+            $(".price").on("change keyup", function () {
+                var s = 0;
+                $(".price").each(function () {
+                    s += Number($(this).val())
+                })
+                s = s.toFixed(2)
+                $("#sum").val(s)
+            })
             $("xfremove").on('click', function () {
                 $(this).parent('li').remove()
             })
-            // $(".income").on('change', function () {
-            //     sources = ['ccp', 'province', 'city', 'bond', 'budget', 'others']
-            //     prices = []
-            //     for (i = 0; i < 6; i++) {
-            //         prices[i] = Number($(this).attr(sources[i])) // 没有这个东西
-            //     }
-            //     max = Math.max(prices)
-            //     $(this).next('input').attr('max', max)
-            // })
+
             incomes = $('#incomes').val()
             incomes = JSON.parse(incomes)
             $(".income").on('change', function () {
@@ -189,13 +184,12 @@
                                 $(this).next().val(sources[a]).change()
                                 $(this).next().next().next().val(sources[a])
                                 $(this).next().next().attr('max', max)
-                                $(this).next().next().val(max)
+                                $(this).next().next().attr('placeholder', '请输入 0-' + max)
                                 //TODO: 如果有多个?
                             }
                         }
                     }
                 }
-                
             })
         }
         $("xfadd").on("click", function () {
@@ -215,7 +209,9 @@
         //     max = Math.max(prices)
         //     $(this).next('input').attr('max', max)
         // })
-
+        $(function () {
+            $("xfadd").trigger('click')
+        })
     </script>
 </body>
 

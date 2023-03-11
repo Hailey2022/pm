@@ -184,7 +184,12 @@
                                 $(this).next().val(sources[a]).change()
                                 $(this).next().next().next().val(sources[a])
                                 $(this).next().next().attr('max', max)
-                                $(this).next().next().attr('placeholder', '请输入 0-' + max + '，共' + incomes[i][sources[a]] + '元，已用' + incomes[i]['paid']+'元')
+                                if (max == 0){
+                                    $(this).next().next().attr('placeholder', '本资金已用完')
+                                }else{
+                                    $(this).next().next().attr('placeholder', '请输入 0-' + max + '，共' + incomes[i][sources[a]] + '元，已用' + incomes[i]['paid']+'元')
+                                }
+                                
                                 //TODO: 如果有多个?
                             }
                         }

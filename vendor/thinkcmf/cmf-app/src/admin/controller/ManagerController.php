@@ -1347,6 +1347,24 @@ class ManagerController extends AdminBaseController
             $this->error('非法访问项目');
         }
         $this->assign("projectId", $projectId);
+        $incomeId = $this->request->param('incomeId');
+        $data = Db::name('income')
+            ->where('id', $incomeId)
+            ->find();
+        if ($data == null) {
+            $this->error("不存在的来源");
+        }else{
+            $this->assign('data', $data);
+        }
+        for ($x = 1; $x <= 1; $x++) {
+            $names = json_decode($data['file_name_' . $x]);
+            $urls = json_decode($data['file_url_' . $x]);
+            if ($urls != null and $names != null) {
+                $files = array_combine($urls, $names);
+                $this->assign('file_' . $x, $files);
+            }
+        }
+        return $this->fetch();
     }
 
     public function deleteIncome()

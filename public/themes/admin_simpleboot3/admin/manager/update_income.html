@@ -32,7 +32,7 @@
     <div class="main">
         <div class="main_menu">
             <a href="{:url('manager/listincome', ['projectId'=>$projectId])}">资金来源</a>
-            <a href="{:url('manager/addincome', ['projectId'=>$projectId])}" class="on add">新增来源</a>
+            <a href="{:url('manager/updateincome', ['projectId'=>$projectId])}" class="on">修改来源</a>
         </div>
         <form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('manager/postIncomeAdd')}">
             <input name="projectId" hidden value="{$projectId}">
@@ -41,20 +41,21 @@
                 <ul>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>下达资金名称：</span>
-                        <input required autocomplete="off" name="name">
+                        <input required autocomplete="off" name="name" value="{$data.name}">
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>资金下达年份：</span>
                         <input required type="number" step="1" min=1900 max=9999 autocomplete="off" name="year"
-                            value="{:date('Y')}">
+                            value="{$data.year}">
                     </li>
                     <li>
                         <span>录入员：</span>
-                        <input required name="staff" value="{$username}">
+                        <input required name="staff" value="{$data.staff}">
                     </li>
                     <li>
                         <span>用途：</span>
-                        <textarea type="text" rows="4" cols="40" autocomplete="off" name="comment" value=""></textarea>
+                        <textarea type="text" rows="4" cols="40" autocomplete="off" name="comment"
+                            text="{$data.comment}" value=""></textarea>
                     </li>
                 </ul>
             </div>
@@ -76,12 +77,27 @@
                             <option value="budget">预算(区)</option>
                             <option value="others">其他</option>
                         </select>
-                        <input required class="to10k" type="number" step="0.01" min=0 autocomplete="off"
-                            name="price" placeholder="金额">
+                        <input required class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="price"
+                            placeholder="金额">
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>资金来源凭证附件：</span>
-                        <xfupload file_id="1">上传</xfupload>
+                        <notempty name="file_1">
+                            <xfupload file_id="1">增加</xfupload>
+                            <foreach name="file_1" key="url" item="name">
+                                <php>$file_url=cmf_get_file_download_url($url);</php>
+                                <php>$file_id=hash("sha256", uniqid() . $url);</php>
+                                <div id="{$file_id}">
+                                    <upload_span></upload_span>
+                                    <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
+                                    <xfdelete onclick="javascript:handleDelete('#{$file_id}');">删除</xfdelete>
+                                    <input type="text" autocomplete="off" name="file_name_{key}[]" value="{$name}">
+                                    <input type="text" autocomplete="off" hidden name="file_url_{key}[]" value='{$url}'>
+                                </div>
+                            </foreach>
+                            <else />
+                            <xfupload file_id="1">上传 </xfupload>
+                        </notempty>
                     </li>
                     <!-- <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>中央：</span>

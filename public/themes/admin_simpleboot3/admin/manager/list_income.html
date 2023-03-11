@@ -107,7 +107,10 @@
                                     </xfdownloadfile>
                                 </if>
                             </td>
-                            <td><a class="deleteIncomeBtn"
+                            <td>
+                                <a class="updateIncomeBtn"
+                                href="{:url('manager/updateincome', ['projectId'=>$projectId, 'incomeId'=>$i.id])}">修改</a>
+                                <a class="deleteIncomeBtn"
                                     href="{:url('manager/deleteincome', ['projectId'=>$projectId, 'incomeId'=>$i.id])}">删除</a>
                             </td>
                         </tr>

@@ -14,6 +14,30 @@
             <input type="text" autocomplete="off" hidden name="file_url_{key}[]" value="{filepath}">
         </div>
     </script>
+    <script type="text/html" id="money">
+        <li class="source">
+            <span>来源：</span>
+            <select class="income" required style="width: 300px;" name="income[]">
+                <option value="">请选择一份资金来源</option>
+                <foreach name="incomes" item="income">
+                    <option class="income" value="{$income.id}">{$income.name}</option>
+                </foreach>
+            </select>
+            
+            <select disabled>
+                    <option value="">请选择</option>
+                    <option value="ccp">中央</option>
+                    <option value="province">省</option>
+                    <option value="city">市</option>
+                    <option value="bond">专项债(区)</option>
+                    <option value="budget">预算(区)</option>
+                    <option value="others">其他</option>
+            </select>
+            <input required class="price" type="number" step="0.01" min=0 max=0  name="price[]" placeholder="金额">
+            <input required name="from[]" style="display: none;">
+            <xfremove>删除</xfremove>
+        </li>
+    </script>
 </head>
 <script type="text/javascript">
     var GV = {
@@ -43,6 +67,8 @@
                     <li>
                         <span>工程名称：</span>
                         <input type="text" autocomplete="off" value="{$projectName}" disabled>
+                        <input type="text" autocomplete="off" value="{$paymentId}" name="paymentId"
+                            style="display: none;">
                     </li>
                     <li>
                         <span>合同名称：</span>
@@ -55,8 +81,6 @@
                     <li>
                         <span>合计：</span>
                         <input id="sum" disabled />
-                        <!-- <span class="xf_ser">万元：</span>
-                    <input id="10k-contractAmount" type="text" autocomplete="off" disabled value=""> -->
                     </li>
                     <!-- <li>
                     <span>中文金额：</span>
@@ -65,101 +89,183 @@
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>中央：</span>
                         <input required class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="ccp"
-                            value="{$data.ccp}">
+                            disabled value="{$data.ccp}">
                         <span class="xf_ser">万元：</span>
                         <input type="text" autocomplete="off" value="" disabled>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>省：</span>
                         <input required class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="province"
-                            value="{$data.province}">
+                            disabled value="{$data.province}">
                         <span class="xf_ser">万元：</span>
                         <input type="text" autocomplete="off" value="" disabled>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>市：</span>
                         <input required class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="city"
-                            value="{$data.city}">
+                            disabled value="{$data.city}">
                         <span class="xf_ser">万元：</span>
                         <input type="text" autocomplete="off" value="" disabled>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>专项债(区)：</span>
                         <input required class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="bond"
-                            value="{$data.bond}">
+                            disabled value="{$data.bond}">
                         <span class="xf_ser">万元：</span>
                         <input type="text" autocomplete="off" value="" disabled>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>预算(区)：</span>
                         <input required class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="budget"
-                            value="{$data.budget}">
+                            disabled value="{$data.budget}">
                         <span class="xf_ser">万元：</span>
                         <input type="text" autocomplete="off" value="" disabled>
                     </li>
                     <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                         <span>其他：</span>
                         <input required class="to10k" type="number" step="0.01" min=0 autocomplete="off" name="others"
-                            value="{$data.others}">
+                            disabled value="{$data.others}">
                         <span class="xf_ser">万元：</span>
                         <input type="text" autocomplete="off" value="" disabled>
                     </li>
                     <li>
                         <span>备注：</span>
                         <textarea type="text" rows="4" cols="40" autocomplete="off" name="comment"
-                            value="{$data.comment}"></textarea>
+                            text="{$data.comment}"></textarea>
                     </li>
-                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                        <span>支付凭证附件：</span>
-                        <notempty name="file_1">
-                            <xfupload file_id="1">增加</xfupload>
-                            <foreach name="file_1" key="url" item="name">
-                                <php>$file_url=cmf_get_file_download_url($url);</php>
-                                <php>$file_id=hash("sha256", uniqid() . $url);</php>
-                                <div id="{$file_id}">
-                                    <upload_span></upload_span>
-                                    <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
-                                    <xfdelete onclick="javascript:handleDelete('#{$file_id}');">删除</xfdelete>
-                                    <input type="text" autocomplete="off" name="file_name_{key}[]" value="{$name}">
-                                    <input type="text" autocomplete="off" hidden name="file_url_{key}[]" value='{$url}'>
-                                </div>
-                            </foreach>
-                            <else />
-                            <xfupload file_id="1">上传 </xfupload>
-                        </notempty>
-                    </li>
-                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                        <span>支金来源凭证附件：</span>
-                        <notempty name="file_2">
-                            <xfupload file_id="2">增加</xfupload>
-                            <foreach name="file_2" key="url" item="name">
-                                <php>$file_url=cmf_get_file_download_url($url);</php>
-                                <php>$file_id=hash("sha256", uniqid() . $url);</php>
-                                <div id="{$file_id}">
-                                    <upload_span></upload_span>
-                                    <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
-                                    <xfdelete onclick="javascript:handleDelete('#{$file_id}');">删除</xfdelete>
-                                    <input type="text" autocomplete="off" name="file_name_2[]" value="{$name}">
-                                    <input type="text" autocomplete="off" hidden name="file_url_2[]" value='{$url}'>
-                                </div>
-                            </foreach>
-                            <else />
-                            <xfupload file_id="2">上传</xfupload>
-                        </notempty>
-                    </li>
+
                 </ul>
             </div>
-            <xf_submit><button id="project_submit">提交</button></xf_submit>
+            <div class="xf_input">
+                <h4 class="xf_input_h4">支付明细</h4>
+                <ul id="here">
+                    <li id="control">
+                        <!-- <xfadd>增加</xfadd> -->
+                    </li>
+                    <!-- <li>
+                        <span>合计：</span>
+                        <input id="sum" disabled />
+                    </li> -->
+                    <foreach name="oldIncomes" key="key" item="item">
+                        <li class="source">
+                            <span>来源：</span>
+                            <select class="income" required style="width: 300px;" name="income[]" disabled>
+                                <option value="">请选择一份资金来源</option>
+                                <foreach name="incomes" item="income">
+                                    <option class="income" value="{$income.id}">{$income.name}</option>
+                                </foreach>
+                            </select>
 
+                            <select disabled>
+                                <option value="">请选择</option>
+                                <option value="ccp">中央</option>
+                                <option value="province">省</option>
+                                <option value="city">市</option>
+                                <option value="bond">专项债(区)</option>
+                                <option value="budget">预算(区)</option>
+                                <option value="others">其他</option>
+                            </select>
+                            <input required class="price" type="number" step="0.01" min=0 max=0 name="price[]"
+                                placeholder="金额" value="{$item->price}" disabled>
+                            <input required name="from[]" style="display: none;">
+                            <xfremove style="display: none;">删除</xfremove>
+                            <oldIncome style="display: none;" oldFrom="{$item->from}" oldId="{$item->income}">
+                            </oldIncome>
+                        </li>
+                    </foreach>
+                </ul>
+                <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                    <span>支付凭证附件：</span>
+                    <notempty name="file_1">
+                        <xfupload file_id="1">增加</xfupload>
+                        <foreach name="file_1" key="url" item="name">
+                            <php>$file_url=cmf_get_file_download_url($url);</php>
+                            <php>$file_id=hash("sha256", uniqid() . $url);</php>
+                            <div id="{$file_id}">
+                                <upload_span></upload_span>
+                                <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
+                                <xfdelete onclick="javascript:handleDelete('#{$file_id}');">删除</xfdelete>
+                                <input type="text" autocomplete="off" name="file_name_{key}[]" value="{$name}">
+                                <input type="text" autocomplete="off" hidden name="file_url_{key}[]" value='{$url}'>
+                            </div>
+                        </foreach>
+                        <else />
+                        <xfupload file_id="1">上传 </xfupload>
+                    </notempty>
+                </li>
+            </div>
+            <xf_submit><button id="project_submit">提交</button></xf_submit>
+            <input id="incomes" value='{$incomes}' style="display: none;" />
         </form>
     </div>
     <script>
-        $(".to10k").on("change keyup", function () {
+        function init() {
+            $(".price").on("change keyup", function () {
+                var s = 0;
+                $(".price").each(function () {
+                    s += Number($(this).val())
+                })
+                s = s.toFixed(2)
+                $("#sum").val(s)
+            })
+            $("xfremove").on('click', function () {
+                $(this).parent('li').remove()
+            })
+
+            incomes = $('#incomes').val()
+            incomes = JSON.parse(incomes)
+            $(".income").on('change', function () {
+                sources = ['ccp', 'province', 'city', 'bond', 'budget', 'others']
+                for (var i = 0; i < incomes.length; i++) {
+                    if (incomes[i]['id'] == $(this).val()) {
+                        for (a = 0; a < 6; a++) {
+                            if (incomes[i][sources[a]] > 0) {
+                                max = incomes[i][sources[a]]
+                                $(this).next().val(sources[a]).change()
+                                $(this).next().next().next().val(sources[a])
+                                $(this).next().next().attr('max', max)
+                                if (max == 0) {
+                                    $(this).next().next().attr('placeholder', '本资金已用完')
+                                } else {
+                                    $(this).next().next().attr('placeholder', '请输入 0-' + max + '，共' + incomes[i][sources[a]] + '元，已用' + incomes[i]['paid'] + '元')
+                                }
+                                //TODO: 如果有多个?
+                            }
+                        }
+                    }
+                }
+            })
+        }
+        $("xfadd").on("click", function () {
+            var tmp_html = $('#money').html();
+            html = tmp_html
+            // id = Math.random(); //TODO: auto
+            // html = tmp_html.replace(/\{id\}/g, id);
+            $('#here').append(html);
+            init()
+        })
+        $(".price").on("change keyup", function () {
             var s = 0;
-            $(".to10k").each(function () {
+            $(".price").each(function () {
                 s += Number($(this).val())
             })
+            s = formatNum(s)
             $("#sum").val(s)
+        })
+        $(function () {
+            init()
+            $('textarea').each(function () {
+                text = $(this).attr('text')
+                text = text.replaceAll('\r\n', '<br>').replaceAll('\n', '<br>').replaceAll('\r', '<br>');
+                $(this).val(text)
+            })
+            $('oldIncome').each(function () {
+                id = $(this).attr('oldId')
+                from = $(this).attr('oldFrom')
+                $(this).prev().prev().prev().prev().val(from).change()
+                $(this).prev().prev().prev().prev().prev().val(id).change()
+            })
+            $(".price").trigger('keyup')
         })
     </script>
 </body>

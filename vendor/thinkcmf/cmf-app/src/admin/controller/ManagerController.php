@@ -1360,6 +1360,7 @@ class ManagerController extends AdminBaseController
         }
         $this->assign("projectId", $projectId);
         $incomeId = $this->request->param('incomeId');
+        $this->assign('incomeId', $incomeId);
         $data = Db::name('income')
             ->where('id', $incomeId)
             ->find();
@@ -1557,6 +1558,50 @@ class ManagerController extends AdminBaseController
             $this->error('非法访问项目');
         }
         $this->assign("projectId", $projectId);
+        $incomeId = $this->request->param('incomeId');
+        $request = $this->request->param();
+        $res = Db::name('income')
+            ->where('id', $incomeId)
+            ->find();
+        if ($res == null) {
+            $this->error('이것 없어');
+        }
+        $fromList = ['ccp', 'province', 'city', 'bond', 'budget', 'others'];
+        $data = [
+            'name' => $request['name'],
+            'comment' => $request['comment'],
+            "staff" => $request['staff'],
+            "year" => $request['year'],
+            "projectId" => $request['projectId'],
+            "total" => 0
+        ];
+        foreach ($fromList as $i) {
+            if ($request['from'] == $i) {
+                $data[$i] = $request['price'];
+            } else {
+                $data[$i] = 0;
+            }
+
+            if ($data[$i] < $res[$i . 'Paid']) {
+                $this->error('不能改，因为有下达资金的使用比下达的资金还多');
+            }
+            $data['total'] = $data['total'] + $data[$i];
+        }
+        for ($i = 1; $i <= 1; $i++) {
+            if (array_key_exists("file_name_" . $i, $request) && array_key_exists("file_url_" . $i, $request)) {
+                $data["file_name_" . $i] = $request["file_name_" . $i];
+                $data["file_url_" . $i] = $request["file_url_" . $i];
+            }
+        }
+        $res = Db::name('income')
+            ->where('id', $incomeId)
+            ->update($data);
+        if ($res !== false) {
+            $this->success("更新成功", url('manager/listincome', ['projectId' => $projectId]));
+        } else {
+            $this->error("出现错误");
+        }
+
     }
 
     public function addSavety()

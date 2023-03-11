@@ -122,23 +122,6 @@
 
 </body>
 <script>
-    function handlePreview(url) {
-        if (url.slice(-3) == 'pdf') {
-            window.open(url, '预览pdf');
-            return;
-        } else if (url.slice(-3) == 'png' || url.slice(-3) == 'jpg' || url.slice(-4) == 'jepg') {
-            var openstr = '<img align="center" height="550" style="margin-top:8px;margin-left:8px" src="' + url + '" />';
-        } else {
-            var openstr = '此格式暂不支持预览,请<a href="' + url + '" target="_blank">下载</a>后再查看'
-        }
-        parent.openIframeLayer(openstr, '预览', {
-            type: 1,
-            skin: 'layui-layer-rim',
-            closeBtn: 1,
-            shadeClose: true,
-            area: ['900px', '600px']
-        })
-    }
     function handleDownload(url, name) {
         const link = document.createElement('a');
         link.href = url;
@@ -156,12 +139,12 @@
         files = JSON.parse(files)
         if (files.length == 1) {
             url = '/upload/' + files[0]
-            handlePreview(url)
+            xfPreview(url)
         } else {
             // TODO: 正确的多文件处理
             for (var i = 0; i < files.length; i++) {
                 url = '/upload/' + files[i]
-                handlePreview(url)
+                xfPreview(url)
             }
         }
     })

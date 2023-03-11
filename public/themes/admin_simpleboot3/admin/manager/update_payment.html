@@ -256,7 +256,7 @@
             init()
             $('textarea').each(function () {
                 text = $(this).attr('text')
-                text = text.replaceAll('\r\n', '<br>').replaceAll('\n', '<br>').replaceAll('\r', '<br>');
+                // text = text.replaceAll('\r\n', '<br>').replaceAll('\n', '<br>').replaceAll('\r', '<br>');
                 $(this).val(text)
             })
             $('oldIncome').each(function () {

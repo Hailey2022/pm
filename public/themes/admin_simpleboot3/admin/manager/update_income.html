@@ -32,10 +32,12 @@
     <div class="main">
         <div class="main_menu">
             <a href="{:url('manager/listincome', ['projectId'=>$projectId])}">资金来源</a>
-            <a href="{:url('manager/updateincome', ['projectId'=>$projectId])}" class="on">修改来源</a>
+            <a class="on">修改来源</a>
         </div>
-        <form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('manager/postIncomeAdd')}">
+        <form method="post" class="form-horizontal js-ajax-form margin-top-20"
+            action="{:url('manager/postIncomeUpdate')}">
             <input name="projectId" hidden value="{$projectId}">
+            <input name="incomeId" hidden value="{$incomeId}">
             <div class="xf_input">
                 <h4 class="xf_input_h4">资金来源</h4>
                 <ul>
@@ -193,6 +195,13 @@
             // }
             // $("#unpaid").val(Number(s)-Number(paid))
             // $("#percentage").val(percentage)
+        })
+        $(function () {
+            $('textarea').each(function () {
+                text = $(this).attr('text')
+                // text = text.replaceAll('\r\n', '<br>').replaceAll('\n', '<br>').replaceAll('\r', '<br>');
+                $(this).val(text)
+            })
         })
     </script>
 </body>

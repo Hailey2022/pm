@@ -1049,7 +1049,7 @@ class ManagerController extends AdminBaseController
             ->where("c.clientId = r.user_id")
             ->where("r.user_id = u.id")
             ->where("p.projectId", $projectId)
-            ->where("r.role_id", 5)
+            ->where("r.role_id = 5 OR c.clientType = 2")
             ->select();
         $this->assign('contracts', $designContracts);
         return $this->fetch();
@@ -1179,7 +1179,7 @@ class ManagerController extends AdminBaseController
             ->where("c.clientId = r.user_id")
             ->where("r.user_id = u.id")
             ->where("p.projectId", $projectId)
-            ->where("r.role_id", 6)
+            ->where("r.role_id = 6 OR c.clientType = 3")
             ->select();
         $this->assign('contracts', $contracts);
         $data = Db::name('project p, pm_contract c, pm_supervision s')
@@ -1287,7 +1287,7 @@ class ManagerController extends AdminBaseController
             ->where("c.clientId = r.user_id")
             ->where("r.user_id = u.id")
             ->where("p.projectId", $projectId)
-            ->where("r.role_id", 4)
+            ->where("r.role_id = 4 OR c.clientType = 1")
             ->select();
         $this->assign('contracts', $contracts);
         return $this->fetch();
@@ -1591,7 +1591,7 @@ class ManagerController extends AdminBaseController
             if (array_key_exists("file_name_" . $i, $request) && array_key_exists("file_url_" . $i, $request)) {
                 $data["file_name_" . $i] = $request["file_name_" . $i];
                 $data["file_url_" . $i] = $request["file_url_" . $i];
-            }else{
+            } else {
                 $data["file_name_" . $i] = null;
                 $data["file_url_" . $i] = null;
             }

@@ -1350,7 +1350,6 @@ class ManagerController extends AdminBaseController
     }
 
     public function deleteIncome()
-    //TODO: 检查支付
     {
         $projectId = $this->request->param('projectId');
         if (!$this->checkProject($projectId)) {

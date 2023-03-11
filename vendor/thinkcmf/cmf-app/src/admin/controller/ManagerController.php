@@ -555,10 +555,11 @@ class ManagerController extends AdminBaseController
             $fromList = ['ccp', 'province', 'city', 'bond', 'budget', 'others'];
             $incomes = [];
             $result = [];
+            $updatedIncome = [];
+            $incomeIds = [];
             foreach ($fromList as $from) {
                 $result[$from] = 0;
             }
-            $incomeIds = [];
             for ($i = 0; $i < $incomeCount; $i++) {
                 $id = $request['income'][$i];
                 if (in_array($id, $incomeIds)) {
@@ -569,9 +570,9 @@ class ManagerController extends AdminBaseController
                 $from = $request['from'][$i];
                 $price = $request['price'][$i];
                 $incomes[$i] = [
-                    'income' => $request['income'][$i],
-                    'from' => $request['from'][$i],
-                    'price' => $request['price'][$i]
+                    'income' => $id,
+                    'from' => $from,
+                    'price' => $price
                 ];
                 if (!is_numeric($price)) {
                     $this->error("非正常金额");
@@ -581,15 +582,13 @@ class ManagerController extends AdminBaseController
                 }
                 $res = Db::name('income')->where('id', $id)->find();
                 if ($res != null) {
-                    if (round($res['paid'] + $price, 2) > $res['total']) {
+                    if (round($res[$from . 'Paid'] + $price, 2) > $res[$from]) {
                         $this->error("金额不够了， 请检查");
-                    }
-                    if ($price > $res[$from]) {
-                        $this->error("不合理的金额");
                     }
                 } else {
                     $this->error("404 not found...");
                 }
+
                 $result[$from] += $price;
             }
             $res = Db::name('payment')->where('contractId', $request['contractId'])->where('installment', $request['installment'])->find();
@@ -618,12 +617,16 @@ class ManagerController extends AdminBaseController
                 $id = $request['income'][$i];
                 $from = $request['from'][$i];
                 $price = $request['price'][$i];
-
                 $res = Db::name('income')->where('id', $id)->find();
-                $newPaid = round($res['paid'] + $price, 2);
-                $res = Db::name('income')->where('id', $id)->update([
-                    'paid' => $newPaid
-                ]);
+                foreach ($fromList as $f) {
+                    if ($from == $f) {
+                        $updatedIncome[$f . 'Paid'] = $res[$f . 'Paid'] + $price;
+                    }
+                }
+                $updatedIncome['paid'] = round($res['paid'] + $price, 2);
+                $res = Db::name('income')->where('id', $id)->update(
+                    $updatedIncome
+                );
                 if ($res === false) {
                     $this->error("unknown error...");
                 }

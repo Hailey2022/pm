@@ -790,9 +790,30 @@ class ManagerController extends AdminBaseController
     }
     public function postPaymentDelete()
     {
-        $this->error('系统更新中');
         $paymentId = $this->request->param("paymentId");
         $contractId = $this->getContractIdByPaymentId($paymentId);
+        $res = Db::name("payment")
+            ->where("paymentId", $paymentId)
+            ->find();
+        if ($res == null) {
+            $this->error("不存在的支付");
+        }
+        $incomes = $res['incomes'];
+        $incomes = json_decode($incomes);
+        foreach ($incomes as $income) {
+            $id = $income->income;
+            $price = $income->price;
+            $res = Db::name('income')->where('id', $id)->find();
+            if ($res != null) {
+                $oldPrice = $res['paid'];
+                $newPrice = round($oldPrice - $price, 2);
+                Db::name('income')->where('id', $id)->update(
+                    [
+                        'paid' => $newPrice
+                    ]
+                );
+            }
+        }
         $res = Db::name("payment")
             ->where("paymentId", $paymentId)
             ->delete();

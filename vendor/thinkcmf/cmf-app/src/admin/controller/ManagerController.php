@@ -645,64 +645,40 @@ class ManagerController extends AdminBaseController
     }
     public function postPaymentUpdate()
     {
-        $paymentId = $this->request->param("paymentId");
-        $contractId = $this->getContractIdByPaymentId($paymentId);
-        $res = Db::name("payment")
-            ->where("paymentId", $paymentId)
-            ->find();
-        if ($res == null) {
-            $this->error("不存在的支付");
-        }
-        $incomes = $res['incomes'];
-        if ($incomes != null && $incomes != "" && $incomes != 'null') {
-            $incomes = json_decode($incomes);
-            foreach ($incomes as $income) {
-                $id = $income->income;
-                $price = $income->price;
-                $res = Db::name('income')->where('id', $id)->find();
-                if ($res != null) {
-                    $oldPrice = $res['paid'];
-                    $newPrice = round($oldPrice - $price, 2);
-                    // Db::name('income')->where('id', $id)->update(
-                    //     [
-                    //         'paid' => $newPrice
-                    //     ]
-                    // );
-                }
-            }
-        }
-        $this->error("系统更新中");
-        $request = $this->request->param();
+        // $incomes = $res['incomes'];
+        // if ($incomes != null && $incomes != "" && $incomes != 'null') {
+        //     $incomes = json_decode($incomes);
+        //     foreach ($incomes as $income) {
+        //         $id = $income->income;
+        //         $price = $income->price;
+        //         $res = Db::name('income')->where('id', $id)->find();
+        //         if ($res != null) {
+        //             $oldPrice = $res['paid'];
+        //             $newPrice = round($oldPrice - $price, 2);
+        //             // Db::name('income')->where('id', $id)->update(
+        //             //     [
+        //             //         'paid' => $newPrice
+        //             //     ]
+        //             // );
+        //         }
+        //     }
+        // }
         if ($this->request->isPost()) {
             $request = $this->request->param();
             $data = [
                 'comment' => $request['comment'],
                 'installment' => $request['installment'],
-                'ccp' => $request['ccp'],
-                'province' => $request['province'],
-                'city' => $request['city'],
-                'bond' => $request['bond'],
-                'budget' => $request['budget'],
-                'others' => $request['others'],
-                'total' => $request['ccp'] + $request['province'] + $request['city'] + $request['bond'] + $request['budget'] + $request['others']
             ];
-            if (array_key_exists('file_urls', $request) && array_key_exists('file_names', $request)) {
-                $data['file_urls'] = $request['file_urls'];
-                $data['file_names'] = $request['file_names'];
+            if (array_key_exists('file_url_1', $request) && array_key_exists('file_name_1', $request)) {
+                $data['file_url_1'] = $request['file_url_1'];
+                $data['file_name_1'] = $request['file_name_1'];
             } else {
-                $data['file_urls'] = null;
-                $data['file_names'] = null;
-            }
-            if (array_key_exists('file1_urls', $request) && array_key_exists('file1_names', $request)) {
-                $data['file1_urls'] = $request['file1_urls'];
-                $data['file1_names'] = $request['file1_names'];
-            } else {
-                $data['file1_urls'] = null;
-                $data['file1_names'] = null;
+                $data['file_url_1'] = null;
+                $data['file_name_1'] = null;
             }
             $res = Db::name('payment')->where("paymentId", $request['paymentId'])->update($data);
             if ($res !== false) {
-                $this->calculateContractAmount($request['contractId']);
+                // $this->calculateContractAmount($request['contractId']);
                 $this->success("保存成功！", url('manager/listProjectPayments', ["projectId" => $this->getProjectIdByPaymentId($request['paymentId'])]));
             } else {
                 $this->error("保存时出错！");

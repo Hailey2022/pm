@@ -642,6 +642,32 @@ class ManagerController extends AdminBaseController
     }
     public function postPaymentUpdate()
     {
+        $paymentId = $this->request->param("paymentId");
+        $contractId = $this->getContractIdByPaymentId($paymentId);
+        $res = Db::name("payment")
+            ->where("paymentId", $paymentId)
+            ->find();
+        if ($res == null) {
+            $this->error("不存在的支付");
+        }
+        $incomes = $res['incomes'];
+        if ($incomes != null && $incomes != "" && $incomes != 'null') {
+            $incomes = json_decode($incomes);
+            foreach ($incomes as $income) {
+                $id = $income->income;
+                $price = $income->price;
+                $res = Db::name('income')->where('id', $id)->find();
+                if ($res != null) {
+                    $oldPrice = $res['paid'];
+                    $newPrice = round($oldPrice - $price, 2);
+                    // Db::name('income')->where('id', $id)->update(
+                    //     [
+                    //         'paid' => $newPrice
+                    //     ]
+                    // );
+                }
+            }
+        }
         $this->error("系统更新中");
         $request = $this->request->param();
         if ($this->request->isPost()) {
@@ -700,12 +726,19 @@ class ManagerController extends AdminBaseController
         $projectName = $this->getProjectNameByProjectId($projectId);
         $this->assign('projectName', $projectName);
         $paymentId = $this->request->param("paymentId");
+        $this->assign('paymentId', $paymentId);
         $all = Db::name("contract c, pm_payment p, pm_user u")
             ->where("p.contractId=c.contractId")
             ->where("c.clientId=u.id")
             ->where("p.paymentId", $paymentId)
             ->find();
         $this->assign("data", $all);
+        $incomes = Db::name('income')
+            ->where('projectId', $projectId)
+            ->select();
+        $this->assign('incomes', $incomes);
+        $oldIncomes = json_decode($all['incomes']);
+        $this->assign("oldIncomes", $oldIncomes);
         for ($x = 1; $x <= 2; $x++) {
             $names = json_decode($all['file_name_' . $x]);
             $urls = json_decode($all['file_url_' . $x]);
@@ -1353,7 +1386,7 @@ class ManagerController extends AdminBaseController
             ->find();
         if ($data == null) {
             $this->error("不存在的来源");
-        }else{
+        } else {
             $this->assign('data', $data);
         }
         for ($x = 1; $x <= 1; $x++) {
@@ -1511,13 +1544,12 @@ class ManagerController extends AdminBaseController
         $data = [
             'name' => $request['name'],
             'comment' => $request['comment'],
-            // 'ccp' => $request['ccp'],
-            // 'province' => $request['province'],
-            // 'city' => $request['city'],
-            // 'bond' => $request['bond'],
-            // 'budget' => $request['budget'],
-            // 'others' => $request['others'],
-            // 'total' => $request['province'] + $request['city'] + $request['bond'] + $request['budget'] + $request['others'],
+            'ccpPaid' => 0,
+            'provincePaid' => 0,
+            'cityPaid' => 0,
+            'bondPaid' => 0,
+            'budgetPaid' => 0,
+            'othersPaid' => 0,
             "paid" => 0,
             "staff" => $request['staff'],
             "year" => $request['year'],

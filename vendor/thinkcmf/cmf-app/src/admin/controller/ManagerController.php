@@ -546,6 +546,39 @@ class ManagerController extends AdminBaseController
     }
     public function postPaymentAdd()
     {
+        // var_dump($this->request->param());
+        $request = $this->request->param();
+        $incomeCount = count($request['income']);
+        if ($incomeCount != count($request['from']) || count($request['price']) != $incomeCount || $incomeCount == 0) {
+            $this->error("请选择支付来源");
+        }
+        $fromList = ['ccp', 'province', 'city', 'bond', 'budget', 'others'];
+        $result = [];
+        for ($i = 0; $i < $incomeCount; $i++) {
+            $id = $request['income'][$i];
+            $from = $request['from'][$i];
+            $price = $request['price'][$i];
+            if (!array_key_exists($from, $fromList)) {
+                $this->error('不要乱post');
+            }
+            $res = Db::name('income')->where('id', $id)->find();
+            if ($res != null) {
+                if ($res['paid'] + $price > $res['total']) {
+                    $this->error("金额不够了， 请检查");
+                }
+                if ($price > $res[$from]) {
+                    $this->error("不合理的金额");
+                }
+                
+            } else {
+                $this->error("404 not found...");
+            }
+        }
+
+
+
+
+
         $this->error('系统更新中');
         $request = $this->request->param();
         if ($this->request->isPost()) {

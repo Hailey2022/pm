@@ -23,12 +23,9 @@
                 <foreach name="incomes" item="income">
                     <option class="income" value="{$income.id}">{$income.name}</option>
                 </foreach>
-                <!-- <foreach name="incomes" item="income">
-                    <option class="income" cpp="{$income.ccp}" province="{$income.province}" city="{$income.city}" bond="{$income.bond}" budget="{$income.budget}" others="{$income.others}" value="{$income.id}">{$income.name}</option>
-                </foreach> -->
             </select>
             
-            <select required name="from[]" disabled>
+            <select disabled>
                     <option value="">请选择</option>
                     <option value="ccp">中央</option>
                     <option value="province">省</option>
@@ -38,6 +35,7 @@
                     <option value="others">其他</option>
             </select>
             <input required class="to10k" type="number" step="0.01" min=0 max=0 autocomplete="off" name="price[]" placeholder="金额">
+            <input required name="from[]" style="display: none;">
             <xfremove>删除</xfremove>
         </li>
     </script>
@@ -189,12 +187,15 @@
                             if (incomes[i][sources[a]] > 0) {
                                 max = incomes[i][sources[a]]
                                 $(this).next().val(sources[a]).change()
-                                //TODO: 如果有多个
+                                $(this).next().next().next().val(sources[a])
+                                $(this).next().next().attr('max', max)
+                                $(this).next().next().val(max)
+                                //TODO: 如果有多个?
                             }
                         }
                     }
                 }
-                $(this).next().next().attr('max', max)
+                
             })
         }
         $("xfadd").on("click", function () {

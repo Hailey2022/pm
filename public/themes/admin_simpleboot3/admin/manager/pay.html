@@ -83,48 +83,6 @@
                         <span>进度款（期数）：</span>
                         <input type="text" name="installment" value="">
                     </li>
-                    <!-- <li>
-                        <span>合计：</span>
-                        <input id="sum" disabled />
-
-                    </li> -->
-                    <!-- <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                        <span>中央：</span>
-                        <input required class="to10k" type="number" step="0.01" min=0  name="ccp">
-                        <span class="xf_ser">万元：</span>
-                        <input type="text"  value="" disabled>
-                    </li>
-                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                        <span>省：</span>
-                        <input required class="to10k" type="number" step="0.01" min=0  name="province">
-                        <span class="xf_ser">万元：</span>
-                        <input type="text"  value="" disabled>
-                    </li>
-                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                        <span>市：</span>
-                        <input required class="to10k" type="number" step="0.01" min=0  name="city">
-                        <span class="xf_ser">万元：</span>
-                        <input type="text"  value="" disabled>
-                    </li>
-                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                        <span>专项债(区)：</span>
-                        <input required class="to10k" type="number" step="0.01" min=0  name="bond">
-                        <span class="xf_ser">万元：</span>
-                        <input type="text"  value="" disabled>
-                    </li>
-                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                        <span>预算(区)：</span>
-                        <input required class="to10k" type="number" step="0.01" min=0  name="budget">
-                        <span class="xf_ser">万元：</span>
-                        <input type="text"  value="" disabled>
-                    </li>
-                    <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                        <span>其他：</span>
-                        <input required class="to10k" type="number" step="0.01" min=0  name="others">
-                        <span class="xf_ser">万元：</span>
-                        <input type="text"  value="" disabled>
-                    </li> -->
-
                     <li>
                         <span>备注：</span>
                         <textarea type="text" rows="4" cols="40" name="comment" value=""></textarea>
@@ -146,6 +104,7 @@
                     <li>
                         <span>合计：</span>
                         <input id="sum" disabled />
+                        <input id="10ksum" disabled />
                     </li>
                 </ul>
             </div>
@@ -165,8 +124,10 @@
                 $(".price").each(function () {
                     s += Number($(this).val())
                 })
-                s = s.toFixed(2)
-                $("#sum").val(s)
+                s = formatNum(s)
+                $("#sum").val(s + '元')
+                s = formatNum(s / 10000)
+                $("#10ksum").val(s + '万元')
             })
             $("xfremove").on('click', function () {
                 $(this).parent('li').remove()
@@ -180,16 +141,16 @@
                     if (incomes[i]['id'] == $(this).val()) {
                         for (a = 0; a < 6; a++) {
                             if (incomes[i][sources[a]] > 0) {
-                                max = formatNum(incomes[i][sources[a]] - incomes[i]['paid'])
+                                max = formatNum(incomes[i][sources[a]] - incomes[i][sources[a] + 'Paid'])
                                 $(this).next().val(sources[a]).change()
                                 $(this).next().next().next().val(sources[a])
                                 $(this).next().next().attr('max', max)
-                                if (max == 0){
+                                if (max == 0) {
                                     $(this).next().next().attr('placeholder', '本资金已用完')
-                                }else{
-                                    $(this).next().next().attr('placeholder', '请输入 0-' + max + '，共' + incomes[i][sources[a]] + '元，已用' + incomes[i]['paid']+'元')
+                                } else {
+                                    $(this).next().next().attr('placeholder', '请输入 0-' + max + '，共' + incomes[i][sources[a]] + '元，已用' + incomes[i]['paid'] + '元')
                                 }
-                                
+
                                 //TODO: 如果有多个?
                             }
                         }

@@ -1591,6 +1591,9 @@ class ManagerController extends AdminBaseController
             if (array_key_exists("file_name_" . $i, $request) && array_key_exists("file_url_" . $i, $request)) {
                 $data["file_name_" . $i] = $request["file_name_" . $i];
                 $data["file_url_" . $i] = $request["file_url_" . $i];
+            }else{
+                $data["file_name_" . $i] = null;
+                $data["file_url_" . $i] = null;
             }
         }
         $res = Db::name('income')

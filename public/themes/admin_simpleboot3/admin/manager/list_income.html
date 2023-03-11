@@ -101,9 +101,9 @@
                             </if>
                             <td>{:round($i.paid * 100 / $i.total , 2)}%</td>
                             <td>
-                                <if condition="$i['file_url_1'] != null && $i['file_url_1'] != ''">
+                                <if condition="$i['file_url_1'] != null && $i['file_url_1'] != 'null'">
                                     <xfviewfile files='{$i.file_url_1}'>查看</xfviewfile>
-                                    <xfdownloadfile files='{$i.file_url_1}' filenames="{$i.file_name_1}">下载
+                                    <xfdownloadfile files='{$i.file_url_1}' filenames='{$i.file_name_1}'>下载
                                     </xfdownloadfile>
                                 </if>
                             </td>

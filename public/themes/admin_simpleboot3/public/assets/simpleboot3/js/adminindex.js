@@ -1,13 +1,13 @@
 var $taskContentInner = null;
-var $mainIframe       = null;
-var tabwidth          = 118;
-var $loading          = null;
-var $navWraper        = $("#nav-wrapper");
+var $mainIframe = null;
+var tabwidth = 118;
+var $loading = null;
+var $navWraper = $("#nav-wrapper");
 var $content;
 $(function () {
-    $mainIframe      = $("#mainiframe");
-    $content         = $("#content");
-    $loading         = $("#loading");
+    $mainIframe = $("#mainiframe");
+    $content = $("#content");
+    $loading = $("#loading");
     var headerHeight = 48;
     $content.height($(window).height() - headerHeight);
 
@@ -41,24 +41,24 @@ $(function () {
     });
 
     $("#task-next").click(function () {
-        var marginLeft   = $taskContentInner.css("margin-left");
-        marginLeft       = marginLeft.replace("px", "");
+        var marginLeft = $taskContentInner.css("margin-left");
+        marginLeft = marginLeft.replace("px", "");
         var contentInner = $("#task-content-inner").width();
         var contentWidth = $("#task-content").width();
-        var lessWidth    = contentWidth - contentInner;
-        marginLeft       = marginLeft - tabwidth <= lessWidth ? lessWidth : marginLeft - tabwidth;
+        var lessWidth = contentWidth - contentInner;
+        marginLeft = marginLeft - tabwidth <= lessWidth ? lessWidth : marginLeft - tabwidth;
 
         $taskContentInner.stop();
-        $taskContentInner.animate({"margin-left": marginLeft + "px"}, 300, 'swing');
+        $taskContentInner.animate({ "margin-left": marginLeft + "px" }, 300, 'swing');
     });
 
     $("#task-pre").click(function () {
         var marginLeft = $taskContentInner.css("margin-left");
-        marginLeft     = parseInt(marginLeft.replace("px", ""));
-        marginLeft     = marginLeft + tabwidth > 0 ? 0 : marginLeft + tabwidth;
-        
+        marginLeft = parseInt(marginLeft.replace("px", ""));
+        marginLeft = marginLeft + tabwidth > 0 ? 0 : marginLeft + tabwidth;
+
         $taskContentInner.stop();
-        $taskContentInner.animate({"margin-left": marginLeft + "px"}, 300, 'swing');
+        $taskContentInner.animate({ "margin-left": marginLeft + "px" }, 300, 'swing');
     });
 
     $("#refresh-wrapper").click(function () {
@@ -89,13 +89,13 @@ $(function () {
 
     calcTaskContentWidth();
     var tw = window.top;
-    var twa =tw.location.href.split("#");
-    if (twa.length == 2){
+    var twa = tw.location.href.split("#");
+    if (twa.length == 2) {
         url = twa[1]
         $("iframe").attr('src', url)
         // openapp(url, "rec", "当前工程", true)
     }
-    
+
 });
 
 function calcTaskContentWidth() {
@@ -157,8 +157,8 @@ function openapp(url, appId, appname, refresh) {
         $app.addClass("active");
         $(".appiframe").hide();
         var $iframe = $("#appiframe-" + appId);
-        var src     = $iframe.get(0).contentWindow.location.href;
-        src         = src.substr(src.indexOf("://") + 3);
+        var src = $iframe.get(0).contentWindow.location.href;
+        src = src.substr(src.indexOf("://") + 3);
         if (refresh === true) {//刷新
             $loading.show();
             $iframe.attr("src", url);
@@ -173,26 +173,23 @@ function openapp(url, appId, appname, refresh) {
         $iframe.show();
     }
 
-    //url要添加参数。获取最外部的window.修改href
-    
-    if (window.history && history.pushState){
+    if (window.history && history.pushState) {
         var tw = window.top;
-        var twa =tw.location.href.split("#");
-        var newUrl =  twa[0]+"#"+url;
-        tw.history.replaceState(null,null,newUrl);
-        // alert(newUrl)
+        var twa = tw.location.href.split("#");
+        var newUrl = twa[0] + "#" + url;
+        tw.history.replaceState(null, null, newUrl);
     }
 
 
 
     var taskContentInner = $("#task-content-inner").width();
-    var contentWidth     = $("#task-content").width();
-    if (taskContentInner <= contentWidth) { //如果没有开始滚动就不用进行下去了
+    var contentWidth = $("#task-content").width();
+    if (taskContentInner <= contentWidth) {
         return;
     }
 
     var currentTabIndex = $("#task-content-inner li[app-id='" + appId + "']").index();
-    var itemOffset      = 0;
+    var itemOffset = 0;
     var currentTabWidth = $("#task-content-inner li[app-id='" + appId + "']").width();
 
     $("#task-content-inner li:lt(" + currentTabIndex + ')').each(function () {
@@ -208,13 +205,13 @@ function openapp(url, appId, appname, refresh) {
 
     if (marginLeft > 0) {
         marginLeft = -(currentTabWidth + itemOffset - contentWidth);
-        $taskContentInner.animate({"margin-left": marginLeft + "px"}, 300, 'swing');
+        $taskContentInner.animate({ "margin-left": marginLeft + "px" }, 300, 'swing');
         return;
     }
 
     if (itemOffset + cssMarginLeft < 0) {
         marginLeft = -itemOffset
-        $taskContentInner.animate({"margin-left": marginLeft + "px"}, 300, 'swing');
+        $taskContentInner.animate({ "margin-left": marginLeft + "px" }, 300, 'swing');
 
         return;
     }

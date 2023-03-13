@@ -1704,7 +1704,25 @@ class ManagerController extends AdminBaseController
 
     public function search()
     {
-        $request = $this->request->param();
-        var_dump($request);
+        $text = $this->request->param('text');
+        $sources = $this->request->param('sources');
+        $res = Db::name("project")->where('projectName', 'like', '%' . $text . '%')->cursor();
+        echo ('--项目--<br>');
+        foreach ($res as $r) {
+            echo ('<a href="/admin/manager/listprojectinfo?projectId=' . $r['projectId'] . '">' . $r['projectName'] . '</a><br>');
+        }
+        echo ('--项目--<br>');
+
+        $res = Db::name("contract")->where('contractName', 'like', '%' . $text . '%')->group('contractName')->cursor();
+        echo ('--合同--<br>');
+        foreach ($res as $r) {
+            echo ('<a href="/admin/manager/listcontract?projectId=' . $this->getProjectIdByContractId($r['contractId']) .'">'. $r['contractName'] . '</a><br>');
+        }
+        echo ('--合同--<br>');
+
+        // $res = Db::name("contract")->where('contractName', 'like', '%' . $text . '%')->cursor();
+        // foreach ($res as $r) {
+        //     echo ('<a>' . $r['contractName'] . '</a><br>');
+        // }
     }
 }

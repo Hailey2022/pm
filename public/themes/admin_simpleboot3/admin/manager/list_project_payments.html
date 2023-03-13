@@ -48,9 +48,9 @@
                         <th colspan="{$project.othersProjectSum == 0? '5' : '6'}">资金来源</th>
                         <th>已支付</th>
                         <th rowspan="3">未付款</th>
-                        <!-- <th style="min-width: 100px;   vertical-align: middle;" rowspan="3">支付凭证</th>
-                <th style="min-width: 100px;   vertical-align: middle;" rowspan="3">支金来源凭证</th>
-                <th style="min-width: 100px;   vertical-align: middle;" rowspan="3">备注</th> -->
+                        <th style="min-width: 100px;   vertical-align: middle;" rowspan="3">支付凭证</th>
+                        <th style="min-width: 100px;   vertical-align: middle;" rowspan="3">支金来源凭证</th>
+                        <th style="min-width: 100px;   vertical-align: middle;" rowspan="3">备注</th>
                         <th style="width: 80px;" rowspan="3">操作</th>
                     </tr>
                     <tr style="background-color: #ddd">
@@ -122,8 +122,10 @@
                             (请检查)</td>
                     </egt>
                     <td style="background-color:#f8f9fa"></td>
-                    <!-- <td style="background-color:#f8f9fa" colspan="3"></td>
-            <td style=" background-color:rgb(245, 247, 250)">
+                    <td style="background-color:#f8f9fa"></td>
+                    <td style="background-color:#f8f9fa"></td>
+                    <td style="background-color:#f8f9fa"></td>
+                    <!-- <td style=" background-color:rgb(245, 247, 250)">
                 <a class="btn" style="color: #18BC9C;"
                     href="{:url('manager/addContract',array('projectId'=>$projectId))}">新增合同</a>
                 <a class="btn" style="color: #ff0000;" href="{:url('manager/view')}">返回</a>
@@ -171,21 +173,22 @@
                             <td>
 
                             </td>
-                            <!-- <td > -->
-                            <!-- <if condition="$c.file_url_5 && $c.file_url_5 != 'null'">
-                            <a class="btn"
-                                href="javascript:handlePreview('{:url('manager/viewContracts',array('contractId'=>$c['contractId']))}', '{$c.contractName} 附件')">合同附件</a>
-                        </if> -->
-                            <!-- </td> -->
-                            <!-- <td></td>
-                    <td style=" background-color:rgb(245, 247, 250)"
-                        onclick="showOrHide('{$c.contractId}')">{$c.clientAlias}</td>
-                    <td style=" background-color:rgb(245, 247, 250)">
-                        <a style="color: #18BC9C;"
-                            href="{:url('manager/updateContract',array('contractId'=>$c['contractId']))}"
-                            class="btn">修改合同</a>
-                        <a class="btn" style="color: #ff0000;" onclick="deleteContract('{$c.contractId}')">删除合同</a>
-                    </td> -->
+                            <td>
+                                <!-- <if condition="$c.file_url_5 && $c.file_url_5 != 'null'">
+                                    <a class="btn"
+                                        href="javascript:handlePreview('{:url('manager/viewContracts',array('contractId'=>$c['contractId']))}', '{$c.contractName} 附件')">合同附件</a>
+                                </if> -->
+                            </td>
+                            <!-- <td></td> -->
+                            <td style=" background-color:rgb(245, 247, 250)" onclick="showOrHide('{$c.contractId}')">
+                                {$c.clientAlias}</td>
+                            <td style=" background-color:rgb(245, 247, 250)">
+                                <!-- <a style="color: #18BC9C;"
+                                    href="{:url('manager/updateContract',array('contractId'=>$c['contractId']))}"
+                                    class="btn">修改合同</a>
+                                <a class="btn" style="color: #ff0000;"
+                                    onclick="deleteContract('{$c.contractId}')">删除合同</a> -->
+                            </td>
                         </tr>
                         <div>
                             <foreach name="data" item="d" key="k">
@@ -209,19 +212,19 @@
                                         <td class="money" 만원="{:round($d.total / 10000, 6)}" 원="{$d.total}">{$d.total}
                                         </td>
                                         <td></td>
-                                        <!-- <td >
-                                    <if condition="$d.file_url_1 && $d.file_url_1 != 'null'">
-                                        <a class="btn "
-                                            href="javascript:handlePreview('{:url('manager/viewPaymentFiles',array('paymentId'=>$d['paymentId']))}','{$c['contractName']} {$d['installment']} 支付凭证')">点击查看</a>
-                                    </if>
-                                </td>
-                                <td >
-                                    <if condition="$d.file_url_2 && $d.file_url_2 != 'null'">
-                                        <a class="btn "
-                                            href="javascript:handlePreview('{:url('manager/viewPaymentFiles',array('type'=>1, 'paymentId'=>$d['paymentId']))}','{$c['contractName']} {$d['installment']} 支金来源凭证')">点击查看</a>
-                                    </if>
-                                </td>
-                                <td class="multilines" >{$d.comment}</td> -->
+                                        <td>
+                                            <if condition="$d.file_url_1 && $d.file_url_1 != 'null'">
+                                                <a class="btn "
+                                                    href="javascript:handlePreview('{:url('manager/viewPaymentFiles',array('paymentId'=>$d['paymentId']))}','{$c['contractName']} {$d['installment']} 支付凭证')">点击查看</a>
+                                            </if>
+                                        </td>
+                                        <td>
+                                            <if condition="$d.file_url_2 && $d.file_url_2 != 'null'">
+                                                <a class="btn "
+                                                    href="javascript:handlePreview('{:url('manager/viewPaymentFiles',array('type'=>1, 'paymentId'=>$d['paymentId']))}','{$c['contractName']} {$d['installment']} 支金来源凭证')">点击查看</a>
+                                            </if>
+                                        </td>
+                                        <td class="multilines">{$d.comment}</td>
                                         <td>
                                             <a
                                                 href="{:url('manager/updatePayment',array('paymentId'=>$d['paymentId'], 'projectId'=>$projectId))}">修改</a>

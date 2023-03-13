@@ -1659,5 +1659,10 @@ class ManagerController extends AdminBaseController
         }
         $this->assign("projectId", $projectId);
     }
-
+    public function viewFiles()
+    {
+        $files = $this->request->param();
+        $this->assign('files', $files);
+        return $this->fetch();
+    }
 }

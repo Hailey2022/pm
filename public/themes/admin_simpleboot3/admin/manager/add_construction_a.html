@@ -14,6 +14,18 @@
             <input type="text"  hidden name="file_url_{key}[]" value="{filepath}">
         </div>
     </script>
+
+    <script type="text/html" id="img-tpl">
+        <div id="file-{id}">
+            <upload_span></upload_span>
+            <xfpreview onclick="xfPreview('/upload/{filepath}')">预览</xfpreview>
+            <xfdelete onclick="javascript:handleDelete('#file-{id}');renameButton();">删除</xfdelete>
+            <input type="text" name="file_name_{key}[]" value="{name}">
+            <input type="text" hidden name="file_url_{key}[]" value="{filepath}">
+            <input type="text" hidden name="type[]" value="{type}">
+        </div>
+    </script>
+
 </head>
 <script type="text/javascript">
     var GV = {
@@ -36,7 +48,7 @@
             <a href="{:url('manager/listConstructionB', ['projectId'=>$projectId])}">施工资料</a>
             <a href="{:url('manager/addConstructionA', ['projectId'=>$projectId])}" class="on add">施工日志录入</a>
             <a href="{:url('manager/addConstructionB', ['projectId'=>$projectId])}" class="on add">施工资料录入</a>
-            <a href="{:url('manager/updateconstructiontype', ['projectId'=>$projectId])}">图片类型设定</a>
+            <a href="{:url('manager/updateconstructiontype', ['projectId'=>$projectId])}" class="on add">图片类型设定</a>
         </div>
         <notempty name="contracts">
             <form method="post" class="form-horizontal js-ajax-form margin-top-20"
@@ -56,23 +68,17 @@
                     </ul>
                 </div>
                 <div class="xf_input">
-                    <h4 class="xf_input_h4">监理</h4>
+                    <h4 class="xf_input_h4">施工录入</h4>
                     <ul>
                         <li>
-                            <span>报告类型：</span>
-                            <select name="type" required>
-                                <option value="1">日报</option>
-                                <option selected value="2">周报</option>
-                                <option value="3">月报</option>
-                                <option value="4">季报</option>
-                                <option value="5">年报</option>
-                            </select>
+                            <span>时间：</span>
+                            <input name="time" type="datetime-local" value="{:date('Y-m-d H:i',time())}">
                         </li>
                         <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                             <span>施工日志：</span>
                             <xfupload file_id="1">上传</xfupload>
                         </li>
-                        <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                        <!-- <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                             <span>施工计划：</span>
                             <xfupload file_id="2">上传</xfupload>
                         </li>
@@ -87,22 +93,25 @@
                         <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                             <span>单位工程验收：</span>
                             <xfupload file_id="5">上传</xfupload>
-                        </li>
-                        <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                            <span>施工前相片：</span>
-                            <xfupload file_id="6">上传</xfupload>
-                        </li>
-                        <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                            <span>施工后相片：</span>
-                            <xfupload file_id="7">上传</xfupload>
-                        </li>
-                        <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                            <span>竣工相片：</span>
-                            <xfupload file_id="7">上传</xfupload>
-                        </li>
+                        </li> -->
                     </ul>
                 </div>
-                <xf_submit><button id="project_submit">提交</button></xf_submit>
+                <div class="xf_input">
+                    <h4 class="xf_input_h4">施工相片</h4>
+                    <ul>
+                        <notempty name="types">
+                            <foreach name="types" key="key" item="type">
+                                <li id="{:md5(uniqid(md5(microtime(true)),true))}">
+                                    <span>{$type}：</span>
+                                    <xfuploadimg file_id="6" type_id="{$key}">上传</xfuploadimg>
+                                </li>
+                            </foreach>
+                        </notempty>
+                    </ul>
+                </div>
+
+
+                <!-- <xf_submit><button id="project_submit">提交</button></xf_submit> -->
             </form>
             <else />
 
@@ -111,7 +120,7 @@
                 <ul>
                     <li>
                         <span>提示：</span>
-                        <input type="text" value="请先录入施工资料" disabled>
+                        <input type="text" value="请先加入施工合同" disabled>
                     </li>
                 </ul>
             </div>
@@ -120,3 +129,30 @@
 </body>
 
 </html>
+
+<script>
+    $("xfuploadimg").on("click", function () {
+        var title = $(this).prev('span').text().replace("：", "") + "上传"
+        var id = $(this).parent().attr('id')
+        var key = $(this).attr('file_id')
+        var tpl = "img-tpl";
+        var type = $(this).attr('type_id')
+        openUploadDialog(title, function (dialog, files) {
+            var self_tpl = $('#' + tpl).html();
+            var html = '';
+            $.each(files, function (i, item) {
+                var itemtpl = self_tpl;
+                itemtpl = itemtpl.replace(/\{id\}/g, item.id);
+                itemtpl = itemtpl.replace(/\{url\}/g, item.url);
+                itemtpl = itemtpl.replace(/\{preview_url\}/g, item.preview_url);
+                itemtpl = itemtpl.replace(/\{filepath\}/g, item.filepath);
+                itemtpl = itemtpl.replace(/\{name\}/g, item.name);
+                itemtpl = itemtpl.replace(/\{key\}/g, key);
+                itemtpl = itemtpl.replace(/\{type\}/g, type);
+                html += itemtpl;
+            });
+            $('#' + id).append(html);
+            files.length && renameButton();
+        }, null, 1, 'file');
+    });
+</script>

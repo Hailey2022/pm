@@ -1301,7 +1301,32 @@ class ManagerController extends AdminBaseController
         $this->assign("projectId", $projectId);
     }
 
-    public function addConstruction()
+    public function addConstructionA()
+    {
+        $projectId = $this->request->param('projectId');
+        if (!$this->checkProject($projectId)) {
+            $this->error('非法访问项目');
+        }
+        $this->assign("projectId", $projectId);
+        $contracts = Db::name('role_user r, pm_user u, pm_project p, pm_contract c')
+            ->where("c.projectId = p.projectId")
+            ->where("c.clientId = r.user_id")
+            ->where("r.user_id = u.id")
+            ->where("p.projectId", $projectId)
+            ->where("r.role_id = 4 OR c.clientType = 1")
+            ->select();
+        $this->assign('contracts', $contracts);
+        $data = Db::name('construction_img_type')->where('projectId', $projectId)->find();
+        if ($data != null) {
+            $types = $data['type'];
+            if ($types != null){
+                $this->assign('types', json_decode($types));
+            }
+        }
+        return $this->fetch();
+    }
+
+    public function addConstructionB()
     {
         $projectId = $this->request->param('projectId');
         if (!$this->checkProject($projectId)) {
@@ -1337,7 +1362,90 @@ class ManagerController extends AdminBaseController
         $this->assign("projectId", $projectId);
     }
 
+    public function updateConstructionType()
+    {
+        $projectId = $this->request->param('projectId');
+        if (!$this->checkProject($projectId)) {
+            $this->error('非法访问项目');
+        }
+        $this->assign("projectId", $projectId);
+        $data = Db::name('construction_img_type')->where('projectId', $projectId)->find();
+        if ($data != null) {
+            $types = $data['type'];
+            if ($types != null){
+                $this->assign('types', json_decode($types));
+            }
+        }
+        return $this->fetch();
+    }
+
+
+    public function postConstructionTypeUpdate()
+    {
+        $projectId = $this->request->param('projectId');
+        if (!$this->checkProject($projectId)) {
+            $this->error('非法访问项目');
+        }
+        $this->assign("projectId", $projectId);
+        $request = $this->request->param();
+        $type = $request['type'];
+        $status = $request['status'];
+        if (count($type) != count($status)) {
+            $this->error("hacker???");
+        }
+        $res = Db::name('construction_img_type')->where('projectId', $projectId)->find();
+        if ($res == null) {
+            $res = Db::name('construction_img_type')
+                ->insert([
+                    'projectId' => $projectId,
+                    'type' => $type,
+                    'status' => $status
+                ]);
+            if ($res !== false) {
+                $this->success("更新成功", url('manager/listconstruction', ['projectId' => $projectId]));
+            } else {
+                $this->error("未知错误");
+            }
+        } else {
+            if ($res['type'] == null || count(json_decode($res['type'])) <= count($type)) {
+                $res = Db::name('construction_img_type')
+                    ->where('projectId', $projectId)
+                    ->update([
+                        'type' => $type,
+                        'status' => $status
+                    ]);
+                if ($res !== false) {
+                    $this->success("更新成功", url('manager/listconstruction', ['projectId' => $projectId]));
+                } else {
+                    $this->error("未知错误");
+                }
+            } else {
+                $this->error("不能删!!!!!!");
+            }
+        }
+    }
+
     public function listConstruction()
+    {
+        $projectId = $this->request->param('projectId');
+        if (!$this->checkProject($projectId)) {
+            $this->error('非法访问项目');
+        }
+        $this->assign("projectId", $projectId);
+        return $this->fetch();
+    }
+
+    public function listConstructionA()
+    {
+        $projectId = $this->request->param('projectId');
+        if (!$this->checkProject($projectId)) {
+            $this->error('非法访问项目');
+        }
+        $this->assign("projectId", $projectId);
+        return $this->fetch();
+    }
+
+    public function listConstructionB()
     {
         $projectId = $this->request->param('projectId');
         if (!$this->checkProject($projectId)) {
@@ -1708,23 +1816,23 @@ class ManagerController extends AdminBaseController
         $type = $this->request->param('type');
         $res = Db::name("project")->where('projectName', 'like', '%' . $text . '%')->cursor();
         echo ('--项目--<br>');
-        echo('<div class="projects">');
+        echo ('<div class="projects">');
         foreach ($res as $r) {
             echo ('<a href="/admin/manager/listprojectinfo?projectId=' . $r['projectId'] . '">' . $r['projectName'] . '</a><br>');
         }
-        echo('</div>');
+        echo ('</div>');
         echo ('--项目--<br>');
 
-        
+
         $res = Db::name("contract")->where('contractName', 'like', '%' . $text . '%')->group('contractName')->cursor();
         echo ('--合同--<br>');
-        echo('<div class="contracts">');
+        echo ('<div class="contracts">');
         foreach ($res as $r) {
-            echo ('<a href="/admin/manager/listcontract?projectId=' . $this->getProjectIdByContractId($r['contractId']) .'">'. $r['contractName'] . '</a><br>');
+            echo ('<a href="/admin/manager/listcontract?projectId=' . $this->getProjectIdByContractId($r['contractId']) . '">' . $r['contractName'] . '</a><br>');
         }
-        echo('</div>');
+        echo ('</div>');
         echo ('--合同--<br>');
-        
+
         // $res = Db::name("contract")->where('contractName', 'like', '%' . $text . '%')->cursor();
         // foreach ($res as $r) {
         //     echo ('<a>' . $r['contractName'] . '</a><br>');

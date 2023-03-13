@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>施工录入</title>
+    <link href="__STATIC__/css/xf_ui.css" rel="stylesheet" type="text/css">
+    <script type="text/html" id="types">
+        <li>
+            <span>名字：</span>
+            <input required autocomplete="off" name="type[]">
+            <input required autocomplete="off" name="status[]" value="1" hidden>
+        </li>
+    </script>
+
+</head>
+<script type="text/javascript">
+    var GV = {
+        ROOT: "__ROOT__/",
+        WEB_ROOT: "__WEB_ROOT__/",
+        JS_ROOT: "static/js/",
+    };
+</script>
+<script src="__STATIC__/js/jquery.js"></script>
+<script src="__STATIC__/js/wind.js"></script>
+<script src="__STATIC__/js/admin.js"></script>
+<script src="__STATIC__/xf/xf.js"></script>
+
+<body>
+    <include file="manager/left_menu" />
+
+    <div class="main">
+        <div class="main_menu">
+            <a href="{:url('manager/listConstructionA', ['projectId'=>$projectId])}">施工信息</a>
+            <a href="{:url('manager/listConstructionB', ['projectId'=>$projectId])}">施工资料</a>
+            <a href="{:url('manager/addConstructionA', ['projectId'=>$projectId])}" class="add">施工日志录入</a>
+            <a href="{:url('manager/addConstructionB', ['projectId'=>$projectId])}" class="add">施工资料录入</a>
+            <a href="{:url('manager/updateconstructiontype', ['projectId'=>$projectId])}" class="on add">施工部位设定</a>
+        </div>
+        <form method="post" class="form-horizontal js-ajax-form margin-top-20"
+            action="{:url('manager/postConstructionTypeUpdate')}">
+            <input name="projectId" hidden value="{$projectId}">
+            <div class="xf_input">
+                <h4 class="xf_input_h4">施工部位</h4>
+                <ul id="here">
+                    <xfadd>添加</xfadd>
+                    <notempty name="types">
+                        <foreach name="types" item="type">
+                            <li>
+                                <span>部位：</span>
+                                <input required autocomplete="off" name="type[]" value="{$type}">
+                                <input required autocomplete="off" name="status[]" value="1" hidden>
+                            </li>
+                        </foreach>
+                    </notempty>
+                </ul>
+            </div>
+            <xf_submit><button id="project_submit">提交</button></xf_submit>
+        </form>
+    </div>
+</body>
+
+</html>
+
+<script>
+    $("xfadd").on("click", function () {
+        var tmp_html = $('#types').html();
+        html = tmp_html
+        $('#here').append(html);
+        init()
+    })
+
+    // $(function () {
+    //     $("xfadd").trigger('click')
+    // })
+</script>

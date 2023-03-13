@@ -60,6 +60,7 @@ $(function () {
             files.length && renameButton();
         }, null, 1, 'file');
     });
+
     $('.to10k').on('change keyup', function () {
         to10k($(this))
     });

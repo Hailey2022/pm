@@ -1705,7 +1705,7 @@ class ManagerController extends AdminBaseController
     public function search()
     {
         $text = $this->request->param('text');
-        $sources = $this->request->param('sources');
+        $type = $this->request->param('type');
         $res = Db::name("project")->where('projectName', 'like', '%' . $text . '%')->cursor();
         echo ('--项目--<br>');
         echo('<div class="projects">');
@@ -1724,7 +1724,7 @@ class ManagerController extends AdminBaseController
         }
         echo('</div>');
         echo ('--合同--<br>');
-
+        
         // $res = Db::name("contract")->where('contractName', 'like', '%' . $text . '%')->cursor();
         // foreach ($res as $r) {
         //     echo ('<a>' . $r['contractName'] . '</a><br>');

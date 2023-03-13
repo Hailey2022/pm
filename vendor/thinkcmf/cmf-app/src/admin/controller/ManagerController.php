@@ -1319,7 +1319,7 @@ class ManagerController extends AdminBaseController
         $data = Db::name('construction_img_type')->where('projectId', $projectId)->find();
         if ($data != null) {
             $types = $data['type'];
-            if ($types != null){
+            if ($types != null) {
                 $this->assign('types', json_decode($types));
             }
         }
@@ -1372,7 +1372,7 @@ class ManagerController extends AdminBaseController
         $data = Db::name('construction_img_type')->where('projectId', $projectId)->find();
         if ($data != null) {
             $types = $data['type'];
-            if ($types != null){
+            if ($types != null) {
                 $this->assign('types', json_decode($types));
             }
         }
@@ -1464,7 +1464,59 @@ class ManagerController extends AdminBaseController
         $this->assign("projectId", $projectId);
     }
 
-    public function postConstructionAdd()
+    public function postConstructionAAdd()
+    {
+        $projectId = $this->request->param('projectId');
+        if (!$this->checkProject($projectId)) {
+            $this->error('非法访问项目');
+        }
+        $this->assign("projectId", $projectId);
+        $request = $this->request->param();
+        // var_dump($request);
+        $data = [
+            'contractId' => $request['contractId'],
+            'date' => $request['time'],
+        ];
+        for ($i = 1; $i <= 1; $i++) {
+            if (array_key_exists("file_name_" . $i, $request) && array_key_exists("file_url_" . $i, $request)) {
+                $data["file_name_" . $i] = $request["file_name_" . $i];
+                $data["file_url_" . $i] = $request["file_url_" . $i];
+            } else {
+                $data["file_name_" . $i] = "null";
+                $data["file_url_" . $i] = "null";
+            }
+        }
+
+        for ($i = 6; $i <= 6; $i++) {
+            if (array_key_exists("file_name_" . $i, $request) && array_key_exists("file_url_" . $i, $request) && array_key_exists("file_type_" . $i, $request)) {
+                $names = $request["file_name_" . $i];
+                $urls = $request["file_url_" . $i];
+                $types = $request["file_type_" . $i];
+                if (count($names) != count($urls) || count($names) != count($types)) {
+                    $this->error("are you a hacker???");
+                }
+                $data["file_name_" . $i] = $request["file_name_" . $i];
+                $data["file_url_" . $i] = $request["file_url_" . $i];
+                $data["file_type_" . $i] = $request["file_type_" . $i];
+            } else {
+                $data["file_name_" . $i] = "null";
+                $data["file_url_" . $i] = "null";
+                $data["file_type_" . $i] = "null";
+            }
+        }
+        // var_dump($data);
+        $res = Db::name('construction')->insert(
+            $data
+        );
+        if ($res != false) {
+            $this->success("已加入");
+        } else {
+            $this->error("未知error");
+        }
+
+    }
+
+    public function postConstructionBAdd()
     {
         $projectId = $this->request->param('projectId');
         if (!$this->checkProject($projectId)) {

@@ -22,7 +22,7 @@
             <xfdelete onclick="javascript:handleDelete('#file-{id}');renameButton();">删除</xfdelete>
             <input type="text" name="file_name_{key}[]" value="{name}">
             <input type="text" hidden name="file_url_{key}[]" value="{filepath}">
-            <input type="text" hidden name="type[]" value="{type}">
+            <input type="text" hidden name="file_type_{key}[]" value="{type}">
         </div>
     </script>
 
@@ -52,7 +52,7 @@
         </div>
         <notempty name="contracts">
             <form method="post" class="form-horizontal js-ajax-form margin-top-20"
-                action="{:url('manager/postConstructionAdd')}">
+                action="{:url('manager/postConstructionAAdd')}">
                 <input name="projectId" hidden value="{$projectId}">
                 <div class="xf_input">
                     <h4 class="xf_input_h4">施工信息</h4>
@@ -111,7 +111,7 @@
                 </div>
 
 
-                <!-- <xf_submit><button id="project_submit">提交</button></xf_submit> -->
+                <xf_submit><button id="project_submit">提交</button></xf_submit>
             </form>
             <else />
 

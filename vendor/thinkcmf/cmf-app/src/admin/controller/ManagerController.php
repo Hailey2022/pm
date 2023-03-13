@@ -747,15 +747,16 @@ class ManagerController extends AdminBaseController
             ->find();
         $this->assign("data", $all);
         if ($this->request->param("type") == 1) {
-            $urls = json_decode($all["file1_urls"]);
-            $names = json_decode($all["file1_names"]);
+            // 来源
+            $urls = json_decode($all["file_url_1"]);
+            $names = json_decode($all["file_name_1"]);
             if ($urls != null and $names != null) {
                 $files = array_combine($urls, $names);
                 $this->assign("files", $files);
             }
         } else {
-            $urls = json_decode($all["file_urls"]);
-            $names = json_decode($all["file_names"]);
+            $urls = json_decode($all["file_url_1"]);
+            $names = json_decode($all["file_name_1"]);
             if ($urls != null and $names != null) {
                 $files = array_combine($urls, $names);
                 $this->assign("files", $files);
@@ -1659,10 +1660,20 @@ class ManagerController extends AdminBaseController
         }
         $this->assign("projectId", $projectId);
     }
-    public function viewFiles()
-    {
-        $files = $this->request->param();
-        $this->assign('files', $files);
-        return $this->fetch();
-    }
+    // public function viewPaymentsFiles(){
+    //     return $this->viewFiles();
+    // }
+    // public function viewFiles()
+    // {
+        
+    //     $files = $this->request->param();
+    //     var_dump($files);
+    //     $names = $this->request->param('names');
+    //     $urls = $this->request->param('urls');
+    //     $names = json_decode($names);
+    //     $urls = json_decode($urls);
+    //     // $files = array_combine($urls, $names);
+    //     $this->assign('files', $files);
+    //     return $this->fetch();
+    // }
 }

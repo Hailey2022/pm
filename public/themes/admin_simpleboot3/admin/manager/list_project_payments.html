@@ -214,9 +214,13 @@
                                         <td></td>
                                         <td>
                                             <if condition="$d.file_url_1 && $d.file_url_1 != 'null'">
-                                                <a class="btn "
+                                                <!-- <a class="btn viewFiles" file_urls='{$d.file_url_1}'
+                                                file_names='{$d.file_name_1}' >点击查看</a> -->
+                                            
+                                                    <a class="btn" file_urls='{$d.file_url_1}'
                                                     href="javascript:handlePreview('{:url('manager/viewPaymentFiles',array('paymentId'=>$d['paymentId']))}','{$c['contractName']} {$d['installment']} 支付凭证')">点击查看</a>
-                                            </if>
+                                            
+                                                </if>
                                         </td>
                                         <td>
                                             <if condition="$d.file_url_2 && $d.file_url_2 != 'null'">
@@ -242,6 +246,18 @@
     </div>
 </body>
 <script>
+    // $('.viewFiles').on('click',function(){
+    //     urls = $(this).attr('file_urls')
+    //     urls_json = JSON.parse(urls)
+    //     names = $(this).attr('file_names')
+    //     names_json = JSON.parse(names)
+    //     console.log(urls)
+    //     console.log(names)
+
+    //     url = '/admin/manager/viewPaymentsFiles?' + 'urls=' + encodeURI(urls) + '&names=' + encodeURI(names)
+    //     alert(url)
+    //     handlePreview(url, 'lala')
+    // })
     function handlePreview(url, title) {
         parent.openIframeLayer(url, title, {
             skin: 'layui-layer-rim',

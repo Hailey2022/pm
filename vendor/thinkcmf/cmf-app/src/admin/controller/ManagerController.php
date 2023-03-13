@@ -741,26 +741,51 @@ class ManagerController extends AdminBaseController
     }
     public function viewPaymentFiles()
     {
-        $cid = $this->request->param("paymentId");
+        $paymentId = $this->request->param("paymentId");
         $all = Db::name('payment')
-            ->where('paymentId', $cid)
+            ->where('paymentId', $paymentId)
             ->find();
         $this->assign("data", $all);
+        $urls = [];
+        $names = [];
         if ($this->request->param("type") == 1) {
             // 来源
-            $urls = json_decode($all["file_url_1"]);
-            $names = json_decode($all["file_name_1"]);
-            if ($urls != null and $names != null) {
-                $files = array_combine($urls, $names);
-                $this->assign("files", $files);
+            $incomes = $all['incomes'];
+            if ($incomes != null && $incomes != "" && $incomes != "null") {
+                $incomes = json_decode($incomes);
+                foreach ($incomes as $income) {
+                    $incomeId = $income->income;
+                    $res = Db::name('income')->where('id', $incomeId)->find();
+                    if ($res == null) {
+                        continue;
+                    } else {
+                        $incomeFileNames = json_decode($res['file_name_1'], true);
+                        $incomeFileUrls = json_decode($res['file_url_1'], true);
+                        // var_dump($incomeFileNames);
+                        // $incomeFileNames = $res['file_name_1'];
+                        // $incomeFileUrls = $res['file_url_1'];
+                        // var_dump($incomeFileNames);
+                        if ($incomeFileNames == null or $incomeFileUrls == null){
+                            continue;
+                        }
+                        foreach ($incomeFileUrls as $u) {
+                            array_push($urls, $u);
+
+                        }
+                        foreach ($incomeFileNames as $n) {
+                            array_push($names, $n);
+                        }
+                    }
+                }
             }
         } else {
             $urls = json_decode($all["file_url_1"]);
             $names = json_decode($all["file_name_1"]);
-            if ($urls != null and $names != null) {
-                $files = array_combine($urls, $names);
-                $this->assign("files", $files);
-            }
+
+        }
+        if ($urls != null and $names != null) {
+            $files = array_combine($urls, $names);
+            $this->assign("files", $files);
         }
         return $this->fetch();
     }
@@ -1660,20 +1685,20 @@ class ManagerController extends AdminBaseController
         }
         $this->assign("projectId", $projectId);
     }
-    // public function viewPaymentsFiles(){
-    //     return $this->viewFiles();
-    // }
-    // public function viewFiles()
-    // {
-        
-    //     $files = $this->request->param();
-    //     var_dump($files);
-    //     $names = $this->request->param('names');
-    //     $urls = $this->request->param('urls');
-    //     $names = json_decode($names);
-    //     $urls = json_decode($urls);
-    //     // $files = array_combine($urls, $names);
-    //     $this->assign('files', $files);
-    //     return $this->fetch();
-    // }
+// public function viewPaymentsFiles(){
+//     return $this->viewFiles();
+// }
+// public function viewFiles()
+// {
+
+//     $files = $this->request->param();
+//     var_dump($files);
+//     $names = $this->request->param('names');
+//     $urls = $this->request->param('urls');
+//     $names = json_decode($names);
+//     $urls = json_decode($urls);
+//     // $files = array_combine($urls, $names);
+//     $this->assign('files', $files);
+//     return $this->fetch();
+// }
 }

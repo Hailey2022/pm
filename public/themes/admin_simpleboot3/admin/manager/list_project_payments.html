@@ -49,7 +49,7 @@
                         <th>已支付</th>
                         <th rowspan="3">未付款</th>
                         <th style="min-width: 100px;   vertical-align: middle;" rowspan="3">支付凭证</th>
-                        <th style="min-width: 100px;   vertical-align: middle;" rowspan="3">支金来源凭证</th>
+                        <th style="min-width: 100px;   vertical-align: middle;" rowspan="3">资金来源凭证</th>
                         <th style="min-width: 100px;   vertical-align: middle;" rowspan="3">备注</th>
                         <th style="width: 80px;" rowspan="3">操作</th>
                     </tr>
@@ -216,17 +216,17 @@
                                             <if condition="$d.file_url_1 && $d.file_url_1 != 'null'">
                                                 <!-- <a class="btn viewFiles" file_urls='{$d.file_url_1}'
                                                 file_names='{$d.file_name_1}' >点击查看</a> -->
-                                            
-                                                    <a class="btn" file_urls='{$d.file_url_1}'
+
+                                                <a class="btn" file_urls='{$d.file_url_1}'
                                                     href="javascript:handlePreview('{:url('manager/viewPaymentFiles',array('paymentId'=>$d['paymentId']))}','{$c['contractName']} {$d['installment']} 支付凭证')">点击查看</a>
-                                            
-                                                </if>
+
+                                            </if>
                                         </td>
                                         <td>
-                                            <if condition="$d.file_url_2 && $d.file_url_2 != 'null'">
-                                                <a class="btn "
-                                                    href="javascript:handlePreview('{:url('manager/viewPaymentFiles',array('type'=>1, 'paymentId'=>$d['paymentId']))}','{$c['contractName']} {$d['installment']} 支金来源凭证')">点击查看</a>
-                                            </if>
+
+                                            <a class="btn "
+                                                href="javascript:handlePreview('{:url('manager/viewPaymentFiles',array('type'=>1, 'paymentId'=>$d['paymentId']))}','{$c['contractName']} {$d['installment']} 资金来源凭证')">点击查看</a>
+
                                         </td>
                                         <td class="multilines">{$d.comment}</td>
                                         <td>

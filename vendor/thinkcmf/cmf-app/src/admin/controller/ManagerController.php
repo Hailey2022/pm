@@ -765,7 +765,7 @@ class ManagerController extends AdminBaseController
                         // $incomeFileNames = $res['file_name_1'];
                         // $incomeFileUrls = $res['file_url_1'];
                         // var_dump($incomeFileNames);
-                        if ($incomeFileNames == null or $incomeFileUrls == null){
+                        if ($incomeFileNames == null or $incomeFileUrls == null) {
                             continue;
                         }
                         foreach ($incomeFileUrls as $u) {
@@ -1685,13 +1685,13 @@ class ManagerController extends AdminBaseController
         }
         $this->assign("projectId", $projectId);
     }
-// public function viewPaymentsFiles(){
+    // public function viewPaymentsFiles(){
 //     return $this->viewFiles();
 // }
 // public function viewFiles()
 // {
 
-//     $files = $this->request->param();
+    //     $files = $this->request->param();
 //     var_dump($files);
 //     $names = $this->request->param('names');
 //     $urls = $this->request->param('urls');
@@ -1701,4 +1701,10 @@ class ManagerController extends AdminBaseController
 //     $this->assign('files', $files);
 //     return $this->fetch();
 // }
+
+    public function search()
+    {
+        $request = $this->request->param();
+        var_dump($request);
+    }
 }

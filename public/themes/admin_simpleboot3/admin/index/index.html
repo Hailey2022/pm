@@ -305,6 +305,8 @@
                     </li>
 
                 </ul>
+                <input id="search" placeholder="搜索"></input>
+                <button id="searchBtn">查找</button>
                 <ul class="nav navbar-nav navbar-right simplewind-nav">
                     <li class="cmf-component-tabitem noclose" app-id="0" app-url="{:url('main/index')}" app-name="首页">
                         <a class="cmf-tabs-item-text" onclick="window.location='/'">{:lang('HOME')}</a>
@@ -318,10 +320,6 @@
         </div>
     </div>
     <div class="main-container container-fluid">
-        <!-- <div class="page-content" id="content">
-            <iframe src="{:url('Main/index')}" style="width:100%;height: 100%;" frameborder="0" id="appiframe-0"
-                class="appiframe"></iframe>
-        </div> -->
         <div class="sidebar" id="sidebar" style="width:262px;background-color: #143E63;">
             <div class="sidebar-shortcuts" id="sidebar-shortcuts" style="display: none;">
                 <a class="btn btn-sm btn-warning" href="__ROOT__/" title="{:lang('WEBSITE_HOME_PAGE')}" target="_blank"
@@ -523,6 +521,13 @@
         })
         function disableF5(e) { if ((e.which || e.keyCode) == 116) e.preventDefault(); };
         $(document).on("keydown", disableF5);
+    </script>
+    <script>
+        $('#searchBtn').on('click',function(){
+            text = $('#search').val()
+            url = '/admin/manager/search?text=' + encodeURI(text)
+            $('iframe').attr('src', url);
+        })
     </script>
 </body>
 

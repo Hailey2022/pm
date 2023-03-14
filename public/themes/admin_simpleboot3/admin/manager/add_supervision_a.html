@@ -61,6 +61,10 @@
                 <div class="xf_input">
                     <h4 class="xf_input_h4">监理</h4>
                     <ul>
+                        <li>
+                            <span>时间：</span>
+                            <input name="time" type="date" value="{:date('Y-m-d',time())}">
+                        </li>
                         <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                             <span>监理日志：</span>
                             <xfupload file_id="1">上传</xfupload>

@@ -1,23 +1,6 @@
-<!doctype html>
-<html>
-
-<head>
-    <meta charset="utf-8">
+<include file="public@header" />
     <title>资金来源</title>
-</head>
-<script type="text/javascript">
-    var GV = {
-        ROOT: "__ROOT__/",
-        WEB_ROOT: "__WEB_ROOT__/",
-        JS_ROOT: "static/js/",
-    };
-</script>
-<script src="__STATIC__/js/jquery.js"></script>
-<script src="__STATIC__/js/wind.js"></script>
-<script src="__STATIC__/js/admin.js"></script>
-<script src="__STATIC__/xf/xf.js"></script>
-<script src="__STATIC__/js/print.min.js"></script>
-<link rel="stylesheet" type="text/css" href="__STATIC__/css/print.min.css" />
+
 <link rel="stylesheet" type="text/css" href="__STATIC__/css/xf_ui.css" />
 <style>
     .btns {
@@ -34,7 +17,15 @@
         vertical-align: middle;
         text-align: center;
     }
-
+    .table>thead>tr>th,
+    .table>tbody>tr>th,
+    .table>tfoot>tr>th,
+    .table>thead>tr>td,
+    .table>tbody>tr>td,
+    .table>tfoot>tr>td {
+        vertical-align: middle;
+        text-align: center;
+    }
     body {
         overflow-y: scroll;
     }
@@ -48,7 +39,7 @@
             <a href="{:url('manager/addincome', ['projectId'=>$projectId])}" class="add">新增来源</a>
             <a href="{:url('manager/expincome', ['projectId'=>$projectId])}">导出表格</a>
         </div>
-        <div style="margin: 0 10px 0 43px;">
+        <div style="margin: 0 10px 0 49px;">
             <table class="table table-hover table-bordered list_project_payments" style="font-size: 12px;">
                 <thead style="font-size: 14px;">
                     <tr style="background-color: #ddd">

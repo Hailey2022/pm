@@ -34,8 +34,8 @@
         <div class="main_menu">
             <a href="{:url('manager/listConstructionA', ['projectId'=>$projectId])}">施工信息</a>
             <a href="{:url('manager/listConstructionB', ['projectId'=>$projectId])}">施工资料</a>
-            <a href="{:url('manager/addConstructionA', ['projectId'=>$projectId])}" class="on add">施工日志录入</a>
-            <a href="{:url('manager/addConstructionB', ['projectId'=>$projectId])}" class="on add">施工资料录入</a>
+            <a href="{:url('manager/addConstructionA', ['projectId'=>$projectId])}" class="add">施工日志录入</a>
+            <a href="{:url('manager/addConstructionB', ['projectId'=>$projectId])}" class="add">施工资料录入</a>
             <a href="{:url('manager/updateconstructiontype', ['projectId'=>$projectId])}">图片类型设定</a>
         </div>
         <notempty name="contracts">

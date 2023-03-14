@@ -59,7 +59,7 @@
     <div class="main">
         <div class="main_menu">
             <a href="{:url('manager/listProjectPayments', ['projectId'=>$projectId])}">支付信息</a>
-            <a href="{:url('manager/pay', ['projectId'=>$projectId])}" class="on add">新增支付</a>
+            <a href="{:url('manager/pay', ['projectId'=>$projectId])}" class="add">新增支付</a>
         </div>
         <form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('manager/postPaymentAdd')}"
             autocomplete="off">

@@ -34,77 +34,20 @@
         <div class="main_menu">
             <a href="{:url('manager/listConstructionA', ['projectId'=>$projectId])}">施工信息</a>
             <a href="{:url('manager/listConstructionB', ['projectId'=>$projectId])}">施工资料</a>
-            <a href="{:url('manager/addConstructionA', ['projectId'=>$projectId])}" class="on add">施工日志录入</a>
-            <a href="{:url('manager/addConstructionB', ['projectId'=>$projectId])}" class="on add">施工资料录入</a>
-            <a href="{:url('manager/updateconstructiontype', ['projectId'=>$projectId])}" class="on add">图片类型设定</a>
+            <a href="{:url('manager/addConstructionA', ['projectId'=>$projectId])}" class="add">施工日志录入</a>
+            <a href="{:url('manager/addConstructionB', ['projectId'=>$projectId])}" class="add">施工资料录入</a>
+            <a href="{:url('manager/updateconstructiontype', ['projectId'=>$projectId])}" class="add">图片类型设定</a>
 
         </div>
-        <notempty name="contracts">
-            <form method="post" class="form-horizontal js-ajax-form margin-top-20"
-                action="{:url('manager/postConstructionAdd')}">
-                <input name="projectId" hidden value="{$projectId}">
-                <div class="xf_input">
-                    <h4 class="xf_input_h4">施工信息</h4>
-                    <ul>
-                        <li>
-                            <span>合同名称：</span>
-                            <select name="contractId" required style="width: 650px;">
-                                <foreach name="contracts" item="c">
-                                    <option value="{$c.contractId}">{$c.user_login} - {$c.contractName}</option>
-                                </foreach>
-                            </select>
-                        </li>
-                    </ul>
-                </div>
-                <div class="xf_input">
-                    <h4 class="xf_input_h4">监理</h4>
-                    <ul>
-                        <li>
-                            <span>报告类型：</span>
-                            <select name="type" required>
-                                <option value="1">日报</option>
-                                <option selected value="2">周报</option>
-                                <option value="3">月报</option>
-                                <option value="4">季报</option>
-                                <option value="5">年报</option>
-                            </select>
-                        </li>
-                        <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                            <span>施工日志：</span>
-                            <xfupload file_id="1">上传</xfupload>
-                        </li>
-                        <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                            <span>施工计划：</span>
-                            <xfupload file_id="2">上传</xfupload>
-                        </li>
-                        <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                            <span>单元工程验收：</span>
-                            <xfupload file_id="3">上传</xfupload>
-                        </li>
-                        <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                            <span>分部工程验收：</span>
-                            <xfupload file_id="4">上传</xfupload>
-                        </li>
-                        <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                            <span>单位工程验收：</span>
-                            <xfupload file_id="5">上传</xfupload>
-                        </li>
-                        <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                            <span>施工前相片：</span>
-                            <xfupload file_id="6">上传</xfupload>
-                        </li>
-                        <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                            <span>施工后相片：</span>
-                            <xfupload file_id="7">上传</xfupload>
-                        </li>
-                        <li id="{:md5(uniqid(md5(microtime(true)),true))}">
-                            <span>竣工相片：</span>
-                            <xfupload file_id="7">上传</xfupload>
-                        </li>
-                    </ul>
-                </div>
-                <xf_submit><button id="project_submit">提交</button></xf_submit>
-            </form>
+        <notempty name="constructions">
+            <input name="projectId" hidden value="{$projectId}">
+            <div class="xf_input">
+                <h4 class="xf_input_h4">监理</h4>
+                <ul>
+                    
+                </ul>
+            </div>
+
             <else />
 
             <div class="xf_input">

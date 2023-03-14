@@ -749,7 +749,6 @@ class ManagerController extends AdminBaseController
         $urls = [];
         $names = [];
         if ($this->request->param("type") == 1) {
-            // 来源
             $incomes = $all['incomes'];
             if ($incomes != null && $incomes != "" && $incomes != "null") {
                 $incomes = json_decode($incomes);
@@ -761,10 +760,6 @@ class ManagerController extends AdminBaseController
                     } else {
                         $incomeFileNames = json_decode($res['file_name_1'], true);
                         $incomeFileUrls = json_decode($res['file_url_1'], true);
-                        // var_dump($incomeFileNames);
-                        // $incomeFileNames = $res['file_name_1'];
-                        // $incomeFileUrls = $res['file_url_1'];
-                        // var_dump($incomeFileNames);
                         if ($incomeFileNames == null or $incomeFileUrls == null) {
                             continue;
                         }
@@ -1384,7 +1379,6 @@ class ManagerController extends AdminBaseController
             ->order('s.id', 'desc')
             ->select();
         $this->assign('data', $data);
-        // var_dump($data);
         // for ($x = 1; $x <= 7; $x++) {
         //     $names = json_decode($data['file_name_' . $x]);
         //     $urls = json_decode($data['file_url_' . $x]);
@@ -1631,7 +1625,6 @@ class ManagerController extends AdminBaseController
                 $data["file_type_" . $i] = "null";
             }
         }
-        // var_dump($data);
         $res = Db::name('construction')->insert(
             $data
         );

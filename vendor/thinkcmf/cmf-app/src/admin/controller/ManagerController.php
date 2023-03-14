@@ -1446,15 +1446,16 @@ class ManagerController extends AdminBaseController
             ->where('c.contractId = a.contractId')
             ->where('c.projectId', $projectId)
             ->where('a.for', 'a')
+            ->order('id', 'desc')
             ->select();
         $this->assign('constructions', $constructions);
         $type = Db::name('construction_img_type')->where('projectId', $projectId)->find();
-        if ($type != null && $type['type'] != null && $type['type'] != 'null' && $type['type'] != "" ){
+        if ($type != null && $type['type'] != null && $type['type'] != 'null' && $type['type'] != "") {
             $this->assign('file_types', json_decode($type['type']));
-        }else{
+        } else {
             $this->assign('file_types', []);
         }
-        
+
         return $this->fetch();
     }
 
@@ -1522,7 +1523,7 @@ class ManagerController extends AdminBaseController
             $data
         );
         if ($res != false) {
-            $this->success("已加入");
+            $this->success("已加入", url('manager/listConstructionA', ['projectId' => $projectId]));
         } else {
             $this->error("未知error");
         }

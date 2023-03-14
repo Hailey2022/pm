@@ -880,6 +880,10 @@ class ManagerController extends AdminBaseController
             ->where("projectId", $projectId)
             ->find();
         $this->assign("project", $project);
+        $incomes = Db::name("income")
+            ->where("projectId", $projectId)
+            ->select();
+        $this->assign("incomes", $incomes);
         return $this->fetch();
     }
     public function addContract()

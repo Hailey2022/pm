@@ -43,26 +43,26 @@ body {
 
 div.main {
     overflow-x: hidden;
-    margin-left: 170px;
+    margin-left: 90px;
 }
 
 div.left_menu {
     float: left;
-    width: 150px;
+    width: 100px;
     overflow: hidden;
-    height: 380px !important;
+    height: 330px !important;
     background-color: #5B6A8A;
     position: fixed;
     left: 0;
-    top: 37px;
+    top: 35px;
     padding: 10px 0 0 0;
-    font-size: 14px;
+    font-size: 12px;
     /* border-left: 1px solid #143E63; */
 }
 
 div.left_menu a {
     display: block;
-    line-height: 45px;
+    line-height: 40px;
     text-align: center;
     color: #fcfcfc;
 }
@@ -184,6 +184,7 @@ div.xf_input li b {
 xfadd,
 xfupload,
 xfuploadimg,
+xfdownload,
 xfpreview,
 xfreplace,
 xfdelete {

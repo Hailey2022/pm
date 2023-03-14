@@ -1448,6 +1448,13 @@ class ManagerController extends AdminBaseController
             ->where('a.for', 'a')
             ->select();
         $this->assign('constructions', $constructions);
+        $type = Db::name('construction_img_type')->where('projectId', $projectId)->find();
+        if ($type != null && $type['type'] != null && $type['type'] != 'null' && $type['type'] != "" ){
+            $this->assign('file_types', json_decode($type['type']));
+        }else{
+            $this->assign('file_types', []);
+        }
+        
         return $this->fetch();
     }
 

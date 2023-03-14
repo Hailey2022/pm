@@ -59,6 +59,21 @@
         white-space: nowrap;
         -webkit-overflow-scrolling: touch;
     }
+
+    .force {
+        font-family: "Microsoft Yahei", verdana;
+        font-size: 12px;
+        margin: 0;
+        padding: 0;
+        border: none;
+        list-style-type: none;
+        background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAGBAMAAAD9IJlFAAAAJ1BMVEUAAACAgIBqcHVqcHVuc3ltcHhtcnducXhtcnhtcXhtcndtcndtcnh84727AAAADHRSTlMAADAxX2COkN7f7u/sMiwUAAAAH0lEQVQIHWMAgyIGoQQGTQULBQamLYsYGBhiAhjAAAA1JQOK8B+6tAAAAABJRU5ErkJggg==") no-repeat 5px;
+        background-color: #E9E9E9;
+        width: 100%;
+        text-indent: 15px;
+        line-height: 34px;
+        margin-bottom: 10px;
+    }
 </style>
 <link href="__STATIC__/css/xf_ui.css" rel="stylesheet" type="text/css">
 
@@ -81,21 +96,103 @@
         </div>
         <notempty name="constructions">
             <input name="projectId" hidden value="{$projectId}">
+
             <foreach name="constructions" item="construction">
                 <div class="xf_input">
-                    <h4 class="xf_input_h4">监理</h4>
+                    <h4 class="xf_input_h4 force">{:str_replace('T', ' ', $construction.date)} 上传</h4>
                     <ul>
+                        <li>
                         <php>
-                            $urls = json_decode($construction['file_url_6']);
-                            $names = json_decode($construction['file_name_6']);
-                            $types = json_decode($construction['file_type_6']);
-                            $files = array_combine($urls, $names);
-                            $file_types = array_combine($urls, $names);
+                            $file_1 = null;
+                            $urls = json_decode($construction['file_url_1']);
+                            $names = json_decode($construction['file_name_1']);
+                            if($urls != null && $names != null){
+                                $file_1 = array_combine($urls, $names);
+                            }
                         </php>
+                        <notempty name="file_1">
+                            <span>支付凭证附件：</span>
+                            <xfdownloadall file_id="1" style="color: #E9E9E9;">.</xfdownloadall>
+                            <foreach name="file_1" key="url" item="name">
+                                <php>$file_url=cmf_get_file_download_url($url);</php>
+                                <php>$file_id=hash("sha256", uniqid() . $url);</php>
+                                <div id="{$file_id}">
+                                    <upload_span></upload_span>
+                                    <xfpreview onclick="xfPreview('{$file_url}')">预览</xfpreview>
+                                    <!-- <xfdownload >下载</xfdownload> -->
+                                    <input type="text" autocomplete="off" name="file_name_{key}[]" value="{$name}">
+                                    <input type="text" autocomplete="off" hidden name="file_url_{key}[]" value='{$url}'>
+                                </div>
+                            </foreach>
+                            <else />
+                            <!-- <xfupload file_id="1">上传</xfupload> -->
+                        </notempty>
+                        </li>
                         <main>
+                            
+                            <div class="album py-5 bg-light">
+                                
+                                <div class="container">
+                                    <div class="row row-cols-5 row-cols-sm-5 row-cols-md-5 g-5">
+
+                                        <php>
+                                            $urls = json_decode($construction['file_url_6']);
+                                            $names = json_decode($construction['file_name_6']);
+                                            $types = json_decode($construction['file_type_6']);
+                                        </php>
+                                        <notempty name="types">
+                                            <php>$oldType = -1;</php>
+                                            <foreach name="types" key="key" item="type">
+                                                <php>
+                                                    $url = $urls[$key];
+                                                    $name = $names[$key];
+                                                    $file_url=cmf_get_file_download_url($url);
+                                                    $file_id=hash("sha256", uniqid() . $url);
+                                                </php>
+                                                <if condition="$type gt $oldType">
+                                                    <br></div><br>
+                                                    <h4>{$file_types[$type]}:</h4><br>
+                                                    <div class="row row-cols-5 row-cols-sm-5 row-cols-md-5 g-5">
+                                                    <php>$oldType = $type</php>
+                                                </if>
+                                                <div class="col">
+                                                    <div class="card shadow-sm">
+                                                        <img data-src="{:str_replace('upload/default','upload/mini/default',$file_url)}"
+                                                            class="lazyload" alt=""
+                                                            onclick="imagePreviewDialog('{$file_url}','{:str_replace(\'upload/default\',\'upload/mini/default\',$file_url)}');">
+                                                        <div class="card-body">
+                                                            <p class="card-text">{$name}</p>
+                                                            <div
+                                                                class="d-flex justify-content-between align-items-center">
+                                                                <div class="btn-group">
+                                                                    <a type="button"
+                                                                        class="btn btn-sm btn-outline-secondary"
+                                                                        onclick="imagePreviewDialog('{$file_url}','{:str_replace(\'upload/default\',\'upload/mini/default\',$file_url)}');">查看</a>
+                                                                    <a type="button"
+                                                                        class="btn btn-sm btn-outline-secondary"
+                                                                        href="{$file_url}" target="_blank"
+                                                                        download="{$name}">下载</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </foreach>
+                                        </notempty>
+                                    </div>
+                                </div>
+                            </div>
+                        </main>
+
+
+
+
+
+                        <!-- <main>
                             <div class="album py-5 bg-light">
                                 <div class="container">
                                     <div class="row row-cols-5 row-cols-sm-5 row-cols-md-5 g-5">
+
                                         <notempty name="files">
                                             <foreach name="files" key="url" item="name">
                                                 <php>$file_url=cmf_get_file_download_url($url);</php>
@@ -127,7 +224,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </main>
+                        </main> -->
                     </ul>
                 </div>
             </foreach>

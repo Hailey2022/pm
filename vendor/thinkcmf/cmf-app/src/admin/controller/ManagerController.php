@@ -1342,7 +1342,7 @@ class ManagerController extends AdminBaseController
                 "contractId" => $request["contractId"],
                 "type" => $request["type"],
                 "supervisor" => $request["supervisor"],
-                "for" => "a",
+                "for" => "b",
                 "time" => $request["time"]
             ];
             for ($i = 6; $i <= 7; $i++) {

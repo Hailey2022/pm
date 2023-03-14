@@ -41,7 +41,7 @@
         </div>
         <notempty name="contracts">
             <form method="post" class="form-horizontal js-ajax-form margin-top-20"
-                action="{:url('manager/postConstructionAdd')}">
+                action="{:url('manager/postConstructionBAdd')}">
                 <input name="projectId" hidden value="{$projectId}">
                 <div class="xf_input">
                     <h4 class="xf_input_h4">施工信息</h4>
@@ -59,6 +59,10 @@
                 <div class="xf_input">
                     <h4 class="xf_input_h4">施工录入</h4>
                     <ul>
+                        <li>
+                            <span>时间：</span>
+                            <input name="time" type="datetime-local" value="{:date('Y-m-d H:i',time())}">
+                        </li>
                         <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                             <span>施工计划：</span>
                             <xfupload file_id="2">上传</xfupload>
@@ -77,7 +81,7 @@
                         </li>
                     </ul>
                 </div>
-                <!-- <xf_submit><button id="project_submit">提交</button></xf_submit> -->
+                <xf_submit><button id="project_submit">提交</button></xf_submit>
             </form>
             <else />
 

@@ -295,7 +295,7 @@ xf_submit button:hover {
     box-shadow: 0 0 2px #666;
 }
 
-div.main_menu {
+div.main_menu {min-width: 600px;overflow: hidden;
     margin: 10px 0 0 50px;
     float: left;
 }

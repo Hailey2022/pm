@@ -34,7 +34,18 @@ function to10k(that) {
 // window.onbeforeunload = function () {
 //     return "Leaving this page may cause loss all your data!";
 // };
-$(function () {  
+$(function () {
+    $(".xf_input_h4").on('click', function () {
+        if ($(this).next().is(":hidden")) {
+            $(this).next().show(200)
+            $(this).css('background', 'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAGBAMAAAD9IJlFAAAAJ1BMVEUAAACAgIBqcHVqcHVuc3ltcHhtcnducXhtcnhtcXhtcndtcndtcnh84727AAAADHRSTlMAADAxX2COkN7f7u/sMiwUAAAAH0lEQVQIHWMAgyIGoQQGTQULBQamLYsYGBhiAhjAAAA1JQOK8B+6tAAAAABJRU5ErkJggg==") no-repeat 5px')
+            $(this).css('background-color', '#E9E9E9')
+        } else {
+            $(this).next().hide(200)
+            $(this).css('background', 'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAHCAYAAAArkDztAAAAAXNSR0IArs4c6QAAAHNJREFUGFdjZGBgYMgrLO/78//fomkTui+A+CDACCKyCkoNmJmY1v399y8IJgmWAIGMoiJDVgbWvQz/GIsmT+hYAJcAG1lcGf////8Fk/s6GOESUOP2M/xjLITrAAsyMq//+/9vIIodeYUVE/78/7sA2VUAERozCCWDKzwAAAAASUVORK5CYII=") no-repeat 5px')
+            $(this).css('background-color', '#E9E9E9')
+        }
+    })
     $('.to10k').each(function () {
         to10k($(this))
     })

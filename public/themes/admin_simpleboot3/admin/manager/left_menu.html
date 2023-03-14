@@ -9,7 +9,7 @@
 
     <a href="{:url('manager/listProjectPayments',array('projectId'=>$projectId))}">支付录入</a>
 
-    <a href="{:url('manager/listConstruction',array('projectId'=>$projectId))}">施工录入</a>
+    <a href="{:url('manager/listConstructionA',array('projectId'=>$projectId))}">施工录入</a>
 
     <a href="{:url('manager/listSupervision',array('projectId'=>$projectId))}">监理录入</a>
 
@@ -65,7 +65,7 @@
             合同录入 = ['listcontract', 'addcontract', 'updatecontract'],
             资金来源 = ['listincome', 'addincome']
             支付录入 = ['listprojectpayments', 'pay', 'updatepayment'],
-            施工录入 = ['listconstruction', 'addconstruction'],
+            施工录入 = ['listconstructiona', 'listconstructionb', 'addconstructiona', 'addconstructionb', 'updateconstructiontype'],
             监理录入 = ['listsupervision', 'addsupervision']
             工程设计 = ['listdesign', 'listdesigns', 'adddesign'];
         var 菜单列表 = [];

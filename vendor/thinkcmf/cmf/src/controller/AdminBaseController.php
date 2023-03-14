@@ -1,6 +1,8 @@
 <?php
 namespace cmf\controller;
+
 use cmf\model\UserModel;
+
 class AdminBaseController extends BaseController
 {
     public function endsWith($haystack, $needle)
@@ -31,27 +33,29 @@ class AdminBaseController extends BaseController
         }
         $data = input();
         $allowExts = ['.jpg', '.jpeg', '.png', '.bmp', '.wbmp', '.gif'];
-        if (isset($data['file_urls'])) {
-            foreach ($data['file_urls'] as $k => $v) {
-                foreach ($allowExts as $allowExt) {
-                    if ($this->endsWith($v, $allowExt)) {
-                        $dir = WEB_ROOT . "upload/mini/default/" . date("Ymd");
-                        if (!file_exists($dir) || !is_dir($dir)) {
-                            mkdir($dir);
-                        }
-                        if (!file_exists(WEB_ROOT . "upload/mini/" . $v)) {
-                            $comporess = new ImgController('upload/' . $v);
-                            $comporess->compressImg('upload/mini/' . $v);
+        for ($i = 1; $i < 22; $i++) {
+            if (isset($data['file_url_' . $i])) {
+                foreach ($data['file_url_' . $i] as $k => $v) {
+                    foreach ($allowExts as $allowExt) {
+                        if ($this->endsWith($v, $allowExt)) {
+                            $dir = WEB_ROOT . "upload/mini/default/" . date("Ymd");
+                            if (!file_exists($dir) || !is_dir($dir)) {
+                                mkdir($dir);
+                            }
+                            if (!file_exists(WEB_ROOT . "upload/mini/" . $v)) {
+                                $comporess = new ImgController('upload/' . $v);
+                                $comporess->compressImg('upload/mini/' . $v);
+                            }
                         }
                     }
                 }
             }
-        }
-        if (isset($data['file_url']) && $data['file_url'] != '') {
-            foreach ($allowExts as $allowExt) {
-                if ($this->endsWith($data['file_url'], $allowExt)) {
-                    $comporess = new ImgController('upload/' . $data['file_url']);
-                    $comporess->compressImg('upload/mini/' . $data['file_url']);
+            if (isset($data['file_url']) && $data['file_url'] != '') {
+                foreach ($allowExts as $allowExt) {
+                    if ($this->endsWith($data['file_url'], $allowExt)) {
+                        $comporess = new ImgController('upload/' . $data['file_url']);
+                        $comporess->compressImg('upload/mini/' . $data['file_url']);
+                    }
                 }
             }
         }

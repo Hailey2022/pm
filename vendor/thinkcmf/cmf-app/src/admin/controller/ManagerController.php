@@ -1402,7 +1402,7 @@ class ManagerController extends AdminBaseController
                     'status' => $status
                 ]);
             if ($res !== false) {
-                $this->success("更新成功", url('manager/listconstruction', ['projectId' => $projectId]));
+                $this->success("更新成功", url('manager/listconstructiona', ['projectId' => $projectId]));
             } else {
                 $this->error("未知错误");
             }
@@ -1415,7 +1415,7 @@ class ManagerController extends AdminBaseController
                         'status' => $status
                     ]);
                 if ($res !== false) {
-                    $this->success("更新成功", url('manager/listconstruction', ['projectId' => $projectId]));
+                    $this->success("更新成功", url('manager/listconstructiona', ['projectId' => $projectId]));
                 } else {
                     $this->error("未知错误");
                 }
@@ -1442,6 +1442,12 @@ class ManagerController extends AdminBaseController
             $this->error('非法访问项目');
         }
         $this->assign("projectId", $projectId);
+        $constructions = Db::name('contract c, pm_construction a')
+            ->where('c.contractId = a.contractId')
+            ->where('c.projectId', $projectId)
+            ->where('a.for', 'a')
+            ->select();
+        $this->assign('constructions', $constructions);
         return $this->fetch();
     }
 
@@ -1472,10 +1478,10 @@ class ManagerController extends AdminBaseController
         }
         $this->assign("projectId", $projectId);
         $request = $this->request->param();
-        // var_dump($request);
         $data = [
             'contractId' => $request['contractId'],
             'date' => $request['time'],
+            'for' => 'a'
         ];
         for ($i = 1; $i <= 1; $i++) {
             if (array_key_exists("file_name_" . $i, $request) && array_key_exists("file_url_" . $i, $request)) {

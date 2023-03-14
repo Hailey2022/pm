@@ -33,7 +33,8 @@
     <div class="main">
         <div class="main_menu">
             <a href="{:url('manager/listsupervision', ['projectId'=>$projectId])}">监理</a>
-            <a href="{:url('manager/addsupervision', ['projectId'=>$projectId])}" class="add">新增监理</a>
+            <a href="{:url('manager/addsupervisionA', ['projectId'=>$projectId])}" class="add">新增监理资料</a>
+            <a href="{:url('manager/addsupervisionB', ['projectId'=>$projectId])}" class="add">新增监理报告</a>
         </div>
 
         <input name="projectId" hidden value="{$projectId}">

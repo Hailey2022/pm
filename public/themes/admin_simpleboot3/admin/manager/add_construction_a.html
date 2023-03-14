@@ -72,7 +72,7 @@
                     <ul>
                         <li>
                             <span>时间：</span>
-                            <input name="time" type="datetime-local" value="{:date('Y-m-d H:i',time())}">
+                            <input name="time" type="date" value="{:date('Y-m-d',time())}">
                         </li>
                         <li id="{:md5(uniqid(md5(microtime(true)),true))}">
                             <span>施工日志：</span>

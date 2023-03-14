@@ -1218,6 +1218,56 @@ class ManagerController extends AdminBaseController
         }
         return $this->fetch();
     }
+    public function addSupervisionA()
+    {
+        $projectId = $this->request->param('projectId');
+        if (!$this->checkProject($projectId)) {
+            $this->error('非法访问项目');
+        }
+        $this->assign('projectId', $projectId);
+        $contracts = Db::name('role_user r, pm_user u, pm_project p, pm_contract c')
+            ->where("c.projectId = p.projectId")
+            ->where("c.clientId = r.user_id")
+            ->where("r.user_id = u.id")
+            ->where("p.projectId", $projectId)
+            ->where("r.role_id = 6 OR c.clientType = 3")
+            ->select();
+        $this->assign('contracts', $contracts);
+        $data = Db::name('project p, pm_contract c, pm_supervision s')
+            ->where('p.projectId = c.projectId')
+            ->where('c.contractId = s.contractId')
+            ->order('s.id', 'desc')
+            ->find();
+        if ($data != null) {
+            $this->assign('supervisor', $data['supervisor']);
+        }
+        return $this->fetch();
+    }
+    public function addSupervisionB()
+    {
+        $projectId = $this->request->param('projectId');
+        if (!$this->checkProject($projectId)) {
+            $this->error('非法访问项目');
+        }
+        $this->assign('projectId', $projectId);
+        $contracts = Db::name('role_user r, pm_user u, pm_project p, pm_contract c')
+            ->where("c.projectId = p.projectId")
+            ->where("c.clientId = r.user_id")
+            ->where("r.user_id = u.id")
+            ->where("p.projectId", $projectId)
+            ->where("r.role_id = 6 OR c.clientType = 3")
+            ->select();
+        $this->assign('contracts', $contracts);
+        $data = Db::name('project p, pm_contract c, pm_supervision s')
+            ->where('p.projectId = c.projectId')
+            ->where('c.contractId = s.contractId')
+            ->order('s.id', 'desc')
+            ->find();
+        if ($data != null) {
+            $this->assign('supervisor', $data['supervisor']);
+        }
+        return $this->fetch();
+    }
 
     public function postSupervisionAdd()
     {

@@ -48,7 +48,6 @@
             <a href="{:url('manager/listConstructionB', ['projectId'=>$projectId])}">施工资料</a>
             <a href="{:url('manager/addConstructionA', ['projectId'=>$projectId])}" class="add">施工日志录入</a>
             <a href="{:url('manager/addConstructionB', ['projectId'=>$projectId])}" class="add">施工资料录入</a>
-            <a href="{:url('manager/updateconstructiontype', ['projectId'=>$projectId])}" class="add">图片类型设定</a>
         </div>
         <notempty name="contracts">
             <form method="post" class="form-horizontal js-ajax-form margin-top-20"
@@ -99,6 +98,10 @@
                 <div class="xf_input">
                     <h4 class="xf_input_h4">施工相片</h4>
                     <ul>
+                        <li>
+                            <span>图片类型：</span>
+                            <xfsettings href="{:url('manager/updateconstructiontype', ['projectId'=>$projectId])}">设定</xfsettings>
+                        </li>
                         <notempty name="types">
                             <foreach name="types" key="key" item="type">
                                 <li id="{:md5(uniqid(md5(microtime(true)),true))}">
@@ -131,6 +134,11 @@
 </html>
 
 <script>
+    $("xfsettings").on('click', function(){
+        const link = document.createElement('a');
+        link.href = $(this).attr('href');
+        link.click();
+    })
     $("xfuploadimg").on("click", function () {
         var title = $(this).prev('span').text().replace("：", "") + "上传"
         var id = $(this).parent().attr('id')

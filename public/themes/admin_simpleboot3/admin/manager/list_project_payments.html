@@ -36,25 +36,25 @@
             <a href="{:url('manager/listProjectPayments', ['projectId'=>$projectId])}">支付信息</a>
             <a href="{:url('manager/pay', ['projectId'=>$projectId])}" class="add">新增支付</a>
         </div>
-        <div style="margin: 0 10px 0 0;">
+        <div style="margin: 0 10px 0 19px;">
             <table class="table table-hover table-bordered list_project_payments" style="font-size: 12px;">
-                <thead style="font-size: 14px;">
+                <thead style="font-size: 13px;">
                     <tr style="background-color: #ddd">
                         <th style=" width: 60px;" rowspan="3">序号</th>
-                        <th style="max-width: 300px;" rowspan="3">合同名称</th>
+                        <th style="max-width: 250px;" rowspan="3">合同名称</th>
                         <th rowspan="3">
                             合同总价<br>申请拨付金额
                         </th>
                         <th colspan="{$project.othersProjectSum == 0? '5' : '6'}">资金来源</th>
                         <th>已支付</th>
                         <th rowspan="3">未付款</th>
-                        <th style="min-width: 100px;   vertical-align: middle;" rowspan="3">支付凭证</th>
-                        <th style="min-width: 100px;   vertical-align: middle;" rowspan="3">资金来源凭证</th>
+                        <th style="min-width: 70px;   vertical-align: middle;" rowspan="3">支付凭证</th>
+                        <th style="min-width: 70px;   vertical-align: middle;" rowspan="3">资金来源<br />凭证</th>
                         <th style="min-width: 100px;   vertical-align: middle;" rowspan="3">备注</th>
                         <th style="width: 80px;" rowspan="3">操作</th>
                     </tr>
                     <tr style="background-color: #ddd">
-                        <th rowspan="2">中央</th>
+                        <th  style="width: 60px;"rowspan="2">中央</th>
                         <th style="width: 110px;" rowspan="2">省</th>
                         <th style="width: 110px;" rowspan="2">市</th>
                         <th style="width: 110px;" colspan="2">区</th>
@@ -217,14 +217,14 @@
                                                 <!-- <a class="btn viewFiles" file_urls='{$d.file_url_1}'
                                                 file_names='{$d.file_name_1}' >点击查看</a> -->
 
-                                                <a class="btn" file_urls='{$d.file_url_1}'
+                                                <a file_urls='{$d.file_url_1}'
                                                     href="javascript:handlePreview('{:url('manager/viewPaymentFiles',array('paymentId'=>$d['paymentId']))}','{$c['contractName']} {$d['installment']} 支付凭证')">点击查看</a>
 
                                             </if>
                                         </td>
                                         <td>
 
-                                            <a class="btn "
+                                            <a 
                                                 href="javascript:handlePreview('{:url('manager/viewPaymentFiles',array('type'=>1, 'paymentId'=>$d['paymentId']))}','{$c['contractName']} {$d['installment']} 资金来源凭证')">点击查看</a>
 
                                         </td>
